@@ -152,10 +152,11 @@ export default function Navbar({ onOpenContact }) {
       <div className="container nav-main-container">
         <Link to="/" className="brand-logo" aria-label="IXAR East Africa, home">
           <img 
-            src="/images/ixar-logo.png" 
-            alt="IXAR East Africa" 
+            src="https://ixar.in/wp-content/uploads/2025/05/logo.png" 
+            alt="IXAR" 
             className="brand-logo-img" 
-            style={{ height: '42px', width: 'auto', objectFit: 'contain' }} 
+            onError={(e) => { e.currentTarget.src = '/images/ixar-logo-main.png'; }}
+            style={{ height: '48px', width: 'auto', objectFit: 'contain', display: 'block' }} 
           />
         </Link>
 

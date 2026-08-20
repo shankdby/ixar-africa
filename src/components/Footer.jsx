@@ -16,17 +16,14 @@ export default function Footer({ onOpenContact }) {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-col brand-col">
-            <div className="footer-brand">
+            <div className="footer-brand" style={{ marginBottom: '22px' }}>
               <img 
-                src="/images/ixar-logo.png" 
-                alt="IXAR East Africa" 
+                src="https://ixar.in/wp-content/uploads/2025/05/logo.png" 
+                alt="IXAR" 
                 className="footer-logo-img" 
-                style={{ height: '40px', width: 'auto', objectFit: 'contain' }} 
+                onError={(e) => { e.currentTarget.src = '/images/ixar-logo-main.png'; }}
+                style={{ height: '48px', width: 'auto', objectFit: 'contain', display: 'block' }} 
               />
-              <div>
-                <div className="brand-name">IXAR</div>
-                <div className="brand-sub">East Africa</div>
-              </div>
             </div>
 
             <p className="footer-bio">
