@@ -165,11 +165,92 @@ const INDUSTRIES = [
     title: 'Manufacturing and General Engineering',
     desc: 'Fabrication quality control, weld inspection, structural steel and pressure equipment certification.',
     slug: 'oil-gas',
-    img: '/images/east-africa/ea-svc-digital-radiography.webp',
   },
 ];
 
 const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
+
+const FEATURED_SERVICES = [
+  {
+    num: '01',
+    title: 'Radiography Testing (RT / CR / DR)',
+    category: 'Radiation NDT',
+    desc: 'X-ray and gamma radiography using Iridium-192, Selenium-75 and Cobalt-60 sources. Computed and Digital Radiography (CR/DR) for instant high-resolution digital image capture.',
+    standards: 'ASME Sec V · API 1104 · BARC / AERB Licensed',
+    img: '/images/east-africa/ea-svc-radiography.webp',
+  },
+  {
+    num: '02',
+    title: 'Ultrasonic Testing (UT / PAUT / TOFD / AUT)',
+    category: 'Ultrasonic NDT',
+    desc: 'Automated Ultrasonics (AUT) crawlers, Phased Array (PAUT), and Time of Flight Diffraction (TOFD) for cross-country crude oil pipeline girth weld inspection and accurate defect sizing.',
+    standards: 'ISO 9712 · ASNT Level II / III · ECA Criteria',
+    img: '/images/east-africa/ea-svc-digital-radiography.webp',
+  },
+  {
+    num: '03',
+    title: 'Pipeline Inspection & Intelligent Pigging',
+    category: 'Pipeline Integrity',
+    desc: 'X-ray crawler radiography on cross-country pipelines, combined with cleaning pigs and MFL intelligent inline inspection pigs to map wall loss, pitting, and geometry.',
+    standards: 'API 1163 · ASME B31.4 / B31.8 · IPLOCA Member',
+    img: '/images/east-africa/ea-svc-pipeline.webp',
+  },
+  {
+    num: '04',
+    title: 'Tank & Tube Inspection (MFL)',
+    category: 'Tank & Heat Exchanger NDT',
+    desc: 'Magnetic Flux Leakage (MFL) floor scanners for aboveground crude oil storage tanks, and electromagnetic tube testing for refinery heat exchangers.',
+    standards: 'API 653 · API 570 · ISO 9001 Certified',
+    img: '/images/east-africa/ea-ind-oil-gas.webp',
+  },
+  {
+    num: '05',
+    title: 'Underwater & Marine NDT',
+    category: 'Marine Integrity',
+    desc: 'Commercial diver NDT and ROV inspection on jetties, port berth pilings, marine crude terminals, and submerged dam intake structures.',
+    standards: 'IMCA / DNV Marine NDT Norms',
+    img: '/images/east-africa/ea-svc-underwater.jpg',
+  },
+  {
+    num: '06',
+    title: 'Radiation Safety & BARC NDT Training',
+    category: 'Training & Qualification',
+    desc: 'Industrial radiography radiation protection courses, Level II/III preparation, and practitioner certification accredited in collaboration with Bhabha Atomic Research Centre.',
+    standards: 'BARC / AERB Accredited · ASNT SNT-TC-1A',
+    img: '/images/east-africa/ea-backed-barc.webp',
+  },
+];
+
+const TRACK_RECORD = [
+  {
+    title: 'Tilenga CPF (Central Processing Facility)',
+    location: 'Buliisa & Nwoya, Uganda',
+    capability: 'Automated Ultrasonics (AUT) & Radiography',
+    desc: 'High-precision weld testing and NDT inspection on heavy pressure vessels, oil processing trains, and pipe spools.',
+    img: '/images/east-africa/ea-hero-tilenga-cpf.webp',
+  },
+  {
+    title: 'Tilenga Pipeline Feeder & Compound',
+    location: 'Albertine Graben, Uganda',
+    capability: 'Pipeline Girth Weld Inspection',
+    desc: 'X-ray crawler radiography and automated ultrasonic scanning across crude oil feeder pipeline compounds.',
+    img: '/images/east-africa/ea-svc-pipeline.webp',
+  },
+  {
+    title: 'Praj Bio-Refinery & Industrial Facility',
+    location: 'Dar es Salaam & Coast Region, Tanzania',
+    capability: 'Tank & Tube Ultrasonic Inspection',
+    desc: 'Thickness mapping, magnetic flux leakage, and weld flaw evaluation on process storage tanks and heat exchangers.',
+    img: '/images/east-africa/ea-svc-radiography.webp',
+  },
+  {
+    title: 'Tilenga Well Pad CSB Operations',
+    location: 'Murchison & Buliisa, Uganda',
+    capability: 'Digital Radiography (DR) & PAUT',
+    desc: 'Rapid digital radiography and phased array ultrasonic evaluation on live well pad piping manifolds.',
+    img: '/images/east-africa/ea-svc-digital-radiography.webp',
+  },
+];
 
 /* ==========================================================================
    Small presentational helpers
@@ -374,6 +455,9 @@ export default function EastAfricaPage() {
   const [validated, setValidated] = useState(false);
   const [sent, setSent] = useState(false);
   const [heroIdx, setHeroIdx] = useState(0);
+  const [activeServiceIdx, setActiveServiceIdx] = useState(0);
+  const [activeIndustryIdx, setActiveIndustryIdx] = useState(0);
+  const [activeComplianceIdx, setActiveComplianceIdx] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -902,80 +986,127 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= 4. LICENCES, APPROVALS AND COMPLIANCE ================= */}
-      <section className="ea-section ea-section--tint" id="ea-licences">
+      <section className="ea-section ea-section--tint" id="ea-licences" style={{ padding: '100px 0' }}>
         <div className="ea-wrap">
-          <SectionHead eyebrow="Compliance" title="Licences, Approvals and Compliance" center />
+          <SectionHead eyebrow="CLEARED TO WORK" title="Licences, Approvals & Compliance" center />
 
-          <div className="ea-grid ea-grid--4 ea-rev">
-            <article className="ea-lcard">
-              <span className="ea-lcard__icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9.2" />
-                  <circle cx="12" cy="12" r="2.4" />
-                  <path d="M12 3.1a8.9 8.9 0 0 0-4.5 1.2l3.3 5.7a2.4 2.4 0 0 1 1.2-.3Z" />
-                  <path d="M19.7 16.6a8.9 8.9 0 0 0 1.1-4.6h-6.6a2.4 2.4 0 0 1-.6 1.1Z" />
-                  <path d="M8.6 20.4a8.9 8.9 0 0 0 4.6.6l-3.3-5.7a2.4 2.4 0 0 1-1.1-.7Z" />
-                </svg>
-              </span>
-              <h3>Radiation Safety Authorisation</h3>
-              <p>
-                Licensed to own, store, transport and operate sealed radioactive sources by the
-                Uganda Atomic Energy Council and the Tanzania Atomic Energy Commission. Sources in
-                use include Iridium-192, Selenium-75 and Cobalt-60, alongside X-ray and close
-                proximity radiography systems.
-              </p>
-            </article>
+          {/* Editorial Vertical Compliance List */}
+          <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px', alignItems: 'center' }}>
+            <div style={{ gridColumn: 'span 5 / span 12', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[
+                { title: 'Radiation Safety Authorisation', sub: 'Licensed by Uganda AEC & Tanzania TAEC' },
+                { title: 'Certified Personnel', sub: 'ASNT Level II & Level III Inspectors' },
+                { title: 'Quality Management', sub: 'ISO 9001:2015 & Bureau Veritas Certified' },
+                { title: 'Industry Standing', sub: 'ASNT, AWS, ASTM, NACE, IPLOCA Member' },
+              ].map((c, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveComplianceIdx(idx)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                    padding: '20px 24px',
+                    background: activeComplianceIdx === idx ? '#001E57' : '#FFFFFF',
+                    color: activeComplianceIdx === idx ? '#FFFFFF' : '#001E57',
+                    border: '1px solid',
+                    borderColor: activeComplianceIdx === idx ? '#001E57' : '#E5E7EB',
+                    borderRadius: '10px',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s ease',
+                    boxShadow: activeComplianceIdx === idx ? '0 12px 28px rgba(0, 30, 87, 0.18)' : '0 2px 8px rgba(0,0,0,0.03)',
+                  }}
+                >
+                  <span style={{ fontSize: '1rem', fontWeight: 900, color: activeComplianceIdx === idx ? '#FF7A78' : '#DE0603' }}>
+                    0{idx + 1}
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: '1.05rem', fontWeight: 800 }}>{c.title}</div>
+                    <div style={{ fontSize: '0.8125rem', opacity: activeComplianceIdx === idx ? 0.85 : 0.6, marginTop: '2px' }}>
+                      {c.sub}
+                    </div>
+                  </div>
+                  <ChevronRightGlyph />
+                </button>
+              ))}
+            </div>
 
-            <article className="ea-lcard">
-              <span className="ea-lcard__icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="3.2" y="3.4" width="17.6" height="13" rx="1.8" />
-                  <path d="M6.8 7.6h10.4M6.8 10.8h6.6" />
-                  <circle cx="16.6" cy="17.4" r="3.1" />
-                  <path d="M14.4 19.8 13.6 23l3-1.4 3 1.4-.8-3.2" />
-                </svg>
-              </span>
-              <h3>Certified Personnel</h3>
-              <p>
-                Technicians qualified and certified to Level II and Level III in accordance with ASNT
-                SNT-TC-1A. Level III personnel carry 7 to 25 years of field experience, Level II
-                personnel 5 to 10 years. Qualified Radiation Protection Officers assigned to all
-                source handling work.
-              </p>
-            </article>
-
-            <article className="ea-lcard">
-              <span className="ea-lcard__icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 2.4 4.2 5.8v5.4c0 4.8 3.3 8.9 7.8 10 4.5-1.1 7.8-5.2 7.8-10V5.8Z" />
-                  <path d="M8.6 12.1 11 14.6l4.6-5" />
-                </svg>
-              </span>
-              <h3>Quality Management</h3>
-              <p>
-                ISO 9001 certified since 2003 with Bureau Veritas registration. Written practices and
-                procedures aligned to ASTM, ASME, API, BS, DIN and NACE, or to client specified standards.
-              </p>
-            </article>
-
-            <article className="ea-lcard">
-              <span className="ea-lcard__icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9.2" />
-                  <path d="M2.8 12h18.4" />
-                  <path d="M12 2.8a14.6 14.6 0 0 1 0 18.4 14.6 14.6 0 0 1 0-18.4Z" />
-                </svg>
-              </span>
-              <h3>Industry Standing</h3>
-              <p>
-                Member of the American Society for Non-Destructive Testing, the American Welding
-                Society, ASTM, NACE, ISNT and NANSO. Regular member of the International Pipeline and
-                Offshore Contractors Association (IPLOCA).
-              </p>
-            </article>
+            <div style={{ gridColumn: 'span 7 / span 12' }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeComplianceIdx}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    background: '#FFFFFF',
+                    border: '1px solid #EAEAEA',
+                    borderTop: '4px solid #DE0603',
+                    borderRadius: '12px',
+                    padding: '40px',
+                    boxShadow: '0 16px 40px rgba(0, 30, 87, 0.1)',
+                  }}
+                >
+                  {activeComplianceIdx === 0 && (
+                    <>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                        Radiation Safety Authorisation
+                      </h3>
+                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                        Licensed to own, store, transport, and operate sealed radioactive sources by the <strong>Uganda Atomic Energy Council (AEC)</strong> and the <strong>Tanzania Atomic Energy Commission (TAEC)</strong>.
+                      </p>
+                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
+                        Active radiation sources in deployment include Iridium-192, Selenium-75, and Cobalt-60, alongside directionally shielded X-ray crawlers and close proximity radiography systems.
+                      </p>
+                    </>
+                  )}
+                  {activeComplianceIdx === 1 && (
+                    <>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                        Certified ASNT Personnel
+                      </h3>
+                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                        All field technicians are qualified and certified to <strong>ASNT SNT-TC-1A Level II and Level III</strong> standards.
+                      </p>
+                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
+                        Level III site managers hold between 7 and 25 years of international field experience, and certified Radiation Protection Officers (RPOs) oversee every radiography assignment.
+                      </p>
+                    </>
+                  )}
+                  {activeComplianceIdx === 2 && (
+                    <>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                        Quality Management &amp; Standards
+                      </h3>
+                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                        ISO 9001 certified with Bureau Veritas registration.
+                      </p>
+                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
+                        Written practices, procedures, and inspection protocols strictly adhere to ASTM, ASME, API, BS, DIN, and NACE codes, or client-specified engineering standards.
+                      </p>
+                    </>
+                  )}
+                  {activeComplianceIdx === 3 && (
+                    <>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                        International Industry Standing
+                      </h3>
+                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                        Active organizational member of ASNT, AWS, ASTM, NACE, ISNT, and NANSO.
+                      </p>
+                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
+                        Regular member of the International Pipeline and Offshore Contractors Association (IPLOCA), supporting major international pipeline contractors across Africa.
+                      </p>
+                    </>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
 
-          <div className="ea-cert-row ea-rev">
+          <div className="ea-cert-row ea-rev" style={{ marginTop: '56px' }}>
             <p className="ea-cert-row__label">Accreditations &amp; Certifications</p>
             <div className="ea-cert-row__tiles">
               <div className="ea-cert-tile">ISO 9001:2015</div>
@@ -988,10 +1119,139 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 5. SERVICES WE OFFER ================= */}
-      <section className="ea-section" id="ea-services">
+      {/* ================= 5. SERVICES WE OFFER — FEATURED CAPABILITY SWITCHER ================= */}
+      <section className="ea-section" id="ea-services" style={{ background: '#FFFFFF', padding: '110px 0' }}>
         <div className="ea-wrap">
-          <SectionHead eyebrow="Capability" title="Services We Offer" center />
+          <SectionHead eyebrow="CORE EXPERTISE" title="Services We Offer" center />
+
+          {/* Interactive Capability Switcher */}
+          <div className="ea-capability-switcher" style={{ marginTop: '48px', marginBottom: '72px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '36px', alignItems: 'center' }}>
+              {/* Left Column: Index List */}
+              <div style={{ gridColumn: 'span 5 / span 12', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {FEATURED_SERVICES.map((feat, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveServiceIdx(idx)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      padding: '18px 20px',
+                      background: activeServiceIdx === idx ? '#001E57' : '#F9F9F9',
+                      color: activeServiceIdx === idx ? '#FFFFFF' : '#001E57',
+                      border: '1px solid',
+                      borderColor: activeServiceIdx === idx ? '#001E57' : '#EAEAEA',
+                      borderRadius: '8px',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease',
+                      boxShadow: activeServiceIdx === idx ? '0 10px 24px rgba(0, 30, 87, 0.18)' : 'none',
+                    }}
+                  >
+                    <span style={{ fontSize: '0.875rem', fontWeight: 900, color: activeServiceIdx === idx ? '#FF7A78' : '#DE0603' }}>
+                      {feat.num}
+                    </span>
+                    <span style={{ fontSize: '1.05rem', fontWeight: 800, flex: 1 }}>
+                      {feat.title}
+                    </span>
+                    <ChevronRightGlyph />
+                  </button>
+                ))}
+              </div>
+
+              {/* Right Column: Featured Image & Technical Details Panel */}
+              <div style={{ gridColumn: 'span 7 / span 12' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeServiceIdx}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4 }}
+                    style={{
+                      background: '#FFFFFF',
+                      border: '1px solid #EAEAEA',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      boxShadow: '0 14px 34px rgba(0, 30, 87, 0.12)',
+                    }}
+                  >
+                    <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
+                      <img
+                        src={FEATURED_SERVICES[activeServiceIdx].img}
+                        alt={FEATURED_SERVICES[activeServiceIdx].title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                      <div
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          background: 'linear-gradient(180deg, rgba(0,30,87,0.1) 0%, rgba(0,30,87,0.75) 100%)',
+                        }}
+                      />
+                      <span
+                        style={{
+                          position: 'absolute',
+                          top: '20px',
+                          left: '20px',
+                          background: '#DE0603',
+                          color: '#FFFFFF',
+                          fontSize: '0.75rem',
+                          fontWeight: 800,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.12em',
+                          padding: '6px 14px',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        {FEATURED_SERVICES[activeServiceIdx].category}
+                      </span>
+                    </div>
+
+                    <div style={{ padding: '32px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '12px' }}>
+                        {FEATURED_SERVICES[activeServiceIdx].title}
+                      </h3>
+                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.7', marginBottom: '20px' }}>
+                        {FEATURED_SERVICES[activeServiceIdx].desc}
+                      </p>
+
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          paddingTop: '20px',
+                          borderTop: '1px solid #EAEAEA',
+                          flexWrap: 'wrap',
+                          gap: '12px',
+                        }}
+                      >
+                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#0A2C6B', background: '#F0F4FA', padding: '6px 12px', borderRadius: '4px' }}>
+                          ✓ {FEATURED_SERVICES[activeServiceIdx].standards}
+                        </span>
+                        <a
+                          href="/services"
+                          className="ea-btn ea-btn--primary"
+                          style={{ textDecoration: 'none', padding: '10px 20px', fontSize: '0.875rem' }}
+                        >
+                          View Methodologies &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+
+          {/* Complete 12-Service Directory Below */}
+          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#001E57', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Full NDT &amp; Inspection Service Directory
+            </h4>
+          </div>
 
           <div className="ea-grid ea-grid--4 ea-rev">
             {SERVICES.map((s, idx) => (
@@ -1028,37 +1288,165 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 6. INDUSTRIES WE SERVE ================= */}
-      <section className="ea-section ea-section--tint" id="ea-industries">
+      {/* ================= 6. INDUSTRIES WE SERVE — INTERACTIVE SHOWCASE ================= */}
+      <section className="ea-section ea-section--tint" id="ea-industries" style={{ padding: '100px 0' }}>
         <div className="ea-wrap">
-          <SectionHead eyebrow="Sectors" title="Industries We Serve" center />
+          <SectionHead eyebrow="SECTOR FOOTPRINT" title="Industries We Serve" center />
 
-          <div className="ea-grid ea-grid--4 ea-rev">
-            {INDUSTRIES.map((s, idx) => (
-              <motion.article 
-                className="ea-card" 
+          {/* Interactive Sector Showcase */}
+          <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px', alignItems: 'center' }}>
+            {/* Left: Sector Selector Tabs */}
+            <div style={{ gridColumn: 'span 4 / span 12', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {INDUSTRIES.map((ind, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndustryIdx(idx)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '16px 20px',
+                    background: activeIndustryIdx === idx ? '#DE0603' : '#FFFFFF',
+                    color: activeIndustryIdx === idx ? '#FFFFFF' : '#001E57',
+                    border: '1px solid',
+                    borderColor: activeIndustryIdx === idx ? '#DE0603' : '#EAEAEA',
+                    borderRadius: '8px',
+                    textAlign: 'left',
+                    fontWeight: 800,
+                    fontSize: '0.95rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: activeIndustryIdx === idx ? '0 8px 20px rgba(222, 6, 3, 0.25)' : '0 2px 8px rgba(0,0,0,0.03)',
+                  }}
+                >
+                  <span style={{ flex: 1 }}>{ind.title}</span>
+                  {activeIndustryIdx === idx && <span>&rarr;</span>}
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Full-width Industrial Showcase Panel */}
+            <div style={{ gridColumn: 'span 8 / span 12' }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndustryIdx}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.35 }}
+                  style={{
+                    position: 'relative',
+                    height: '440px',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    boxShadow: '0 20px 48px rgba(0, 30, 87, 0.2)',
+                  }}
+                >
+                  <img
+                    src={INDUSTRIES[activeIndustryIdx].img}
+                    alt={INDUSTRIES[activeIndustryIdx].title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(0,30,87,0.15) 0%, rgba(0,30,87,0.85) 100%)',
+                    }}
+                  />
+                  <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px', color: '#FFFFFF' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF7A78', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '4px', display: 'inline-block', marginBottom: '12px' }}>
+                      Sector Capabilities
+                    </span>
+                    <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '12px', lineHeight: 1.15 }}>
+                      {INDUSTRIES[activeIndustryIdx].title}
+                    </h3>
+                    <p style={{ fontSize: '1.1rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
+                      {INDUSTRIES[activeIndustryIdx].desc}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= NEW: REGIONAL TRACK RECORD ================= */}
+      <section className="ea-section" id="ea-track-record" style={{ background: '#001E57', color: '#FFFFFF', padding: '110px 0' }}>
+        <div className="ea-wrap">
+          <SectionHead
+            eyebrow="FIELD EXCELLENCE"
+            title="Regional Track Record"
+            center
+          />
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '28px',
+              marginTop: '56px',
+            }}
+          >
+            {TRACK_RECORD.map((proj, idx) => (
+              <motion.div
                 key={idx}
-                whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
-                transition={{ duration: 0.25 }}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
-                {s.img ? (
-                  <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
-                    <motion.img 
-                      src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
-                      alt={s.title} 
-                      loading="lazy" 
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.35 }}
-                    />
-                  </figure>
-                ) : (
-                  <Placeholder imgRef="IMG-I" desc={`${s.title}, square or 4:3`} ratio="4x3" />
-                )}
-                <div className="ea-card__body">
-                  <h3 className="ea-card__title">{s.title}</h3>
-                  <p className="ea-card__text">{s.desc || s.text}</p>
+                <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+                  <img
+                    src={proj.img}
+                    alt={proj.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,30,87,0.85) 100%)',
+                    }}
+                  />
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: '14px',
+                      left: '16px',
+                      background: '#DE0603',
+                      color: '#FFFFFF',
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                      padding: '4px 10px',
+                      borderRadius: '4px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                    }}
+                  >
+                    📍 {proj.location}
+                  </span>
                 </div>
-              </motion.article>
+
+                <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#FF7A78', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
+                    {proj.capability}
+                  </span>
+                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '10px' }}>
+                    {proj.title}
+                  </h4>
+                  <p style={{ fontSize: '0.9375rem', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.6', margin: 0 }}>
+                    {proj.desc}
+                  </p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
