@@ -3,7 +3,7 @@ import CaseStudies from '../components/CaseStudies';
 
 export default function CaseStudiesPage({ onOpenContact }) {
   return (
-    <div className="page-wrapper" style={{ paddingTop: '150px' }}>
+    <div className="page-wrapper">
       <CaseStudies onOpenContact={onOpenContact} />
     </div>
   );

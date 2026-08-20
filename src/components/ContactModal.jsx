@@ -1,140 +1,202 @@
-import React, { useState } from 'react';
-import { X, Send, CheckCircle2, Shield } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, Send, Check } from 'lucide-react';
+
+/* Enquiry modal.
+
+   Country list is Uganda / Tanzania / Kenya / Other, matching the content
+   plan's form spec. The previous version offered five African "deployment
+   hubs" IXAR has no registration in, and the confirmation screen invented a
+   reference number and a two-hour response SLA — both removed, since neither
+   is backed by anything. */
+
+const SERVICES = [
+  'Conventional Radiography (RT)',
+  'Digital and Computed Radiography',
+  'Ultrasonic Testing (UT)',
+  'Advanced Ultrasonics (PAUT / TOFD / AUT)',
+  'Magnetic Particle and Liquid Penetrant Testing',
+  'Eddy Current and Pulsed Eddy Current',
+  'Pipeline Inspection',
+  'Pigging and Intelligent Pigging',
+  'Tank and Tube Inspection',
+  'Underwater Inspection',
+  'Destructive Testing and Laboratory Services',
+  'NDT Training and Certification',
+];
 
 export default function ContactModal({ isOpen, onClose, defaultScope }) {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: '',
+    company: '',
+    country: '',
     email: '',
     phone: '',
-    company: '',
-    region: 'South Africa',
-    details: defaultScope ? `Interested in: ${defaultScope}` : ''
+    service: '',
+    message: '',
   });
 
+  const dialogRef = useRef(null);
+  const firstFieldRef = useRef(null);
+  const previouslyFocused = useRef(null);
+
+  // Prefill the service when opened from a specific card.
+  useEffect(() => {
+    if (!isOpen) return;
+    setForm((f) => ({
+      ...f,
+      service: defaultScope && SERVICES.includes(defaultScope) ? defaultScope : f.service,
+      message: defaultScope && !f.message ? `Enquiry about: ${defaultScope}` : f.message,
+    }));
+  }, [isOpen, defaultScope]);
+
+  // Move focus in on open and hand it back on close, so keyboard and screen
+  // reader users are not dropped at the top of the page behind the overlay.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    previouslyFocused.current = document.activeElement;
+    const t = setTimeout(() => firstFieldRef.current?.focus(), 40);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      clearTimeout(t);
+      document.body.style.overflow = '';
+      if (previouslyFocused.current instanceof HTMLElement) previouslyFocused.current.focus();
+    };
+  }, [isOpen]);
+
+  // Escape closes; Tab is trapped inside the dialog while it is open.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = dialogRef.current.querySelectorAll(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
+
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
-  const handleReset = () => {
+  const handleClose = () => {
     setSubmitted(false);
     onClose();
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="clean-card modal-content-card">
-        <button onClick={onClose} className="modal-close-btn">
+    <div
+      className="modal-backdrop"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="enquiry-modal-title"
+        ref={dialogRef}
+      >
+        <button onClick={handleClose} className="modal-close-btn" aria-label="Close">
           <X size={20} />
         </button>
 
         {!submitted ? (
-          <div>
+          <>
             <div className="modal-header">
-              <div className="modal-icon-badge">
-                <Shield size={22} color="var(--primary)" />
-              </div>
-              <div>
-                <h3 className="modal-title">Request Inspection Proposal</h3>
-                <p className="modal-subtitle">Direct engineering desk inquiry for IXAR Africa.</p>
-              </div>
+              <span className="section-tag">Get in touch</span>
+              <h3 className="modal-title" id="enquiry-modal-title">Request a Quote</h3>
+              <span className="rule" />
             </div>
 
-            <form onSubmit={handleSubmit} className="modal-form">
+            <form onSubmit={handleSubmit} className="modal-form" noValidate={false}>
               <div className="form-grid">
                 <div className="form-field">
-                  <label>Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. David Mensah"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
+                  <label htmlFor="m-name" className="field-label">Full name *</label>
+                  <input id="m-name" ref={firstFieldRef} type="text" required autoComplete="name"
+                    className="field-input" value={form.name} onChange={set('name')} />
                 </div>
                 <div className="form-field">
-                  <label>Corporate Email *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="e.g. d.mensah@company.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
+                  <label htmlFor="m-company" className="field-label">Company *</label>
+                  <input id="m-company" type="text" required autoComplete="organization"
+                    className="field-input" value={form.company} onChange={set('company')} />
                 </div>
                 <div className="form-field">
-                  <label>Phone / WhatsApp *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. +27 82 123 4567"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  />
+                  <label htmlFor="m-country" className="field-label">Country *</label>
+                  <select id="m-country" required className="field-input"
+                    value={form.country} onChange={set('country')}>
+                    <option value="">Please select</option>
+                    <option>Uganda</option>
+                    <option>Tanzania</option>
+                    <option>Kenya</option>
+                    <option>Other</option>
+                  </select>
                 </div>
                 <div className="form-field">
-                  <label>Company Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Apex Energy Ltd"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  />
+                  <label htmlFor="m-email" className="field-label">Email *</label>
+                  <input id="m-email" type="email" required autoComplete="email"
+                    className="field-input" value={form.email} onChange={set('email')} />
+                </div>
+                <div className="form-field form-field--full">
+                  <label htmlFor="m-phone" className="field-label">Phone or WhatsApp number *</label>
+                  <input id="m-phone" type="text" required autoComplete="tel"
+                    className="field-input" value={form.phone} onChange={set('phone')} />
+                </div>
+                <div className="form-field form-field--full">
+                  <label htmlFor="m-service" className="field-label">
+                    Service of interest <span className="opt">Optional</span>
+                  </label>
+                  <select id="m-service" className="field-input" value={form.service} onChange={set('service')}>
+                    <option value="">Please select</option>
+                    {SERVICES.map((s) => <option key={s}>{s}</option>)}
+                  </select>
+                </div>
+                <div className="form-field form-field--full">
+                  <label htmlFor="m-message" className="field-label">Message *</label>
+                  <textarea id="m-message" rows="4" required className="field-input"
+                    value={form.message} onChange={set('message')} />
                 </div>
               </div>
 
-              <div className="form-field">
-                <label>Primary African Region / Deployment Hub *</label>
-                <select
-                  value={formData.region}
-                  onChange={(e) => setFormData({ ...formData, region: e.target.value })}
-                  className="modal-select"
-                >
-                  <option value="South Africa">South Africa (Johannesburg / Cape Town)</option>
-                  <option value="Nigeria">Nigeria (Lagos / Port Harcourt)</option>
-                  <option value="Ghana">Ghana (Takoradi / Accra)</option>
-                  <option value="Kenya">Kenya (Nairobi / Mombasa)</option>
-                  <option value="Uganda">Uganda (Kampala)</option>
-                  <option value="Mozambique">Mozambique (Maputo / Pemba)</option>
-                  <option value="Other Africa">Other Pan-African Region</option>
-                </select>
-              </div>
-
-              <div className="form-field">
-                <label>Inspection Scope / Technical Requirements *</label>
-                <textarea
-                  rows="3"
-                  required
-                  placeholder="Describe your NDT inspection requirements (e.g. Pipeline AUT, MFL Tube testing, USFD Rail Flaw Detection, API 653 Tank Floor Scanning)."
-                  value={formData.details}
-                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                ></textarea>
-              </div>
-
-              <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
-                <span>Send Proposal Inquiry to Engineering Desk</span>
-                <Send size={16} />
+              <button type="submit" className="btn btn-primary btn-lg modal-submit">
+                <span>Send Enquiry</span>
+                <Send size={16} aria-hidden="true" />
               </button>
-            </form>
-          </div>
-        ) : (
-          <div className="modal-success-screen">
-            <div className="success-icon-wrapper">
-              <CheckCircle2 size={48} color="#16A34A" />
-            </div>
-            <h3 className="success-title">Inquiry Sent Successfully!</h3>
-            <p className="success-text">
-              Thank you, <strong>{formData.name}</strong>. Our regional engineering desk in <strong>{formData.region}</strong> has received your project inquiry.
-            </p>
-            <div className="ref-pill">Ref ID: IXAR-AFR-{Math.floor(100000 + Math.random() * 900000)}</div>
-            <p className="sub-text">A senior NDT engineer will respond to <strong>{formData.email}</strong> within 2 business hours.</p>
 
-            <button onClick={handleReset} className="btn btn-outline btn-lg" style={{ marginTop: '20px' }}>
-              Close Window
+              <p className="modal-routing" style={{ marginTop: '12px', fontSize: '0.8125rem', color: 'var(--text-dim)' }}>
+                Submissions route directly to Business Development (<a href="mailto:bd@ixar.africa" style={{ color: 'var(--brand)' }}>bd@ixar.africa</a>).
+              </p>
+            </form>
+          </>
+        ) : (
+          <div className="modal-done" role="status" aria-live="polite">
+            <div className="modal-done__tick"><Check size={32} aria-hidden="true" /></div>
+            <h3 className="modal-title">Thank you, your enquiry has been sent.</h3>
+            <p>A member of the IXAR East Africa team will respond via <strong>bd@ixar.africa</strong> shortly.</p>
+            <button onClick={handleClose} className="btn btn-outline btn-lg modal-done__btn">
+              Close
             </button>
           </div>
         )}
@@ -143,130 +205,82 @@ export default function ContactModal({ isOpen, onClose, defaultScope }) {
       <style>{`
         .modal-backdrop {
           position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(15, 23, 42, 0.7);
-          backdrop-filter: blur(8px);
+          inset: 0;
+          background: rgba(0, 22, 63, 0.72);
           z-index: 2000;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
-          padding: 20px;
-        }
-        .modal-content-card {
-          width: 100%;
-          max-width: 620px;
-          background: #FFFFFF;
-          border: 1px solid #E2E8F0;
-          position: relative;
-          max-height: 90vh;
+          padding: 24px 16px;
           overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        .modal-card {
+          width: 100%;
+          max-width: 640px;
+          background: #FFFFFF;
+          border-radius: var(--radius-lg);
+          border-top: 4px solid var(--brand);
+          padding: 36px 34px;
+          position: relative;
           box-shadow: var(--shadow-lg);
+          margin: auto;
         }
         .modal-close-btn {
           position: absolute;
-          top: 20px;
-          right: 20px;
-          background: transparent;
-          border: none;
-          color: var(--text-muted);
-          cursor: pointer;
-        }
-        .modal-close-btn:hover { color: var(--navy); }
-
-        .modal-header {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          margin-bottom: 24px;
-        }
-        .modal-icon-badge {
-          width: 44px;
-          height: 44px;
-          background: var(--primary-light);
-          border-radius: 10px;
+          top: 18px;
+          right: 18px;
+          width: 38px;
+          height: 38px;
           display: flex;
           align-items: center;
           justify-content: center;
-        }
-        .modal-title {
-          font-size: 1.35rem;
-          color: var(--navy);
-        }
-        .modal-subtitle {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-        }
-
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 14px;
-        }
-        .form-field {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-          margin-bottom: 14px;
-        }
-        .form-field label {
-          font-size: 0.82rem;
-          color: var(--navy);
-          font-weight: 600;
-        }
-        .form-field input, .form-field textarea, .modal-select {
-          padding: 11px 14px;
-          background: #F8FAFC;
-          border: 1px solid #E2E8F0;
-          border-radius: var(--radius-sm);
-          color: var(--navy);
-          font-size: 0.9rem;
-          outline: none;
-          font-weight: 500;
-        }
-        .form-field input:focus, .form-field textarea:focus, .modal-select:focus {
-          border-color: var(--primary);
-          background: #FFFFFF;
-        }
-
-        .modal-success-screen {
-          text-align: center;
-          padding: 24px 16px;
-        }
-        .success-icon-wrapper {
-          margin-bottom: 14px;
-        }
-        .success-title {
-          font-size: 1.5rem;
-          color: var(--navy);
-          margin-bottom: 8px;
-        }
-        .success-text {
-          color: var(--text-muted);
-          font-size: 0.95rem;
-          margin-bottom: 14px;
-        }
-        .ref-pill {
-          display: inline-block;
-          background: #F0FDF4;
-          color: #16A34A;
-          border: 1px solid #BBF7D0;
-          font-family: var(--font-mono);
-          font-weight: 700;
-          padding: 4px 14px;
-          border-radius: 100px;
-          margin-bottom: 14px;
-          font-size: 0.85rem;
-        }
-        .sub-text {
-          font-size: 0.84rem;
+          background: transparent;
+          border: 1px solid var(--line);
           color: var(--text-dim);
+          cursor: pointer;
+          transition: background 0.2s ease, color 0.2s ease;
         }
+        .modal-close-btn:hover { background: var(--bg-tint); color: var(--navy); }
+
+        .modal-header { margin-bottom: 28px; padding-right: 44px; }
+        .modal-title { font-size: 1.6rem; color: var(--navy); }
+        .modal-header .rule { margin-top: 16px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .form-field { display: flex; flex-direction: column; }
+        .form-field--full { grid-column: 1 / -1; }
+        .opt {
+          color: var(--text-dim);
+          font-weight: 600;
+          letter-spacing: 0;
+          text-transform: none;
+          font-size: 0.78rem;
+          margin-left: 6px;
+        }
+        .modal-form textarea.field-input { resize: vertical; min-height: 110px; }
+        .modal-submit { width: 100%; margin-top: 24px; }
+        .modal-routing { margin-top: 18px; font-size: 0.8125rem; line-height: 1.6; }
+
+        .modal-done { text-align: center; padding: 30px 6px 6px; }
+        .modal-done__tick {
+          width: 66px;
+          height: 66px;
+          border-radius: 50%;
+          background: var(--primary-light);
+          color: var(--brand);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 20px;
+        }
+        .modal-done p { color: var(--text-body); margin-top: 10px; }
+        .modal-done__btn { margin-top: 24px; }
 
         @media (max-width: 600px) {
-          .form-grid { grid-template-columns: 1fr; }
+          .modal-card { padding: 28px 20px; }
+          .form-grid { grid-template-columns: 1fr; gap: 14px; }
+          .modal-title { font-size: 1.3rem; }
         }
       `}</style>
     </div>

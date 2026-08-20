@@ -1,305 +1,200 @@
-import React, { useState } from 'react';
-import { Globe, MapPin, Phone, Mail, Shield, CheckCircle2, ChevronRight, Server } from 'lucide-react';
+import React from 'react';
+import { MapPin, ShieldCheck, Plane, ChevronRight } from 'lucide-react';
+
+/* The regional footprint, stated accurately.
+
+   The previous version listed staffed offices with street addresses, phone
+   numbers and email addresses in South Africa, Nigeria, Ghana, Kenya and
+   Mozambique. None of that is supported. Section 3 of the content plan is
+   explicit: Mozambique "carries the same status as any other African country.
+   Adding it would be a claim the page cannot support." The same reasoning
+   applies to the rest.
+
+   Three honest tiers: registered offices, countries served, mobilisation on
+   request. */
+
+const TIERS = [
+  {
+    key: 'registered',
+    icon: MapPin,
+    label: 'Registered offices',
+    blurb: 'A registered legal entity, with equipment and personnel based in country.',
+    entries: [
+      {
+        country: 'Uganda',
+        city: 'Kampala',
+        detail:
+          'Plot No. 72, Kanjokya Street, Kamwokya, P.O. Box 28673 Nakawa, Kampala.',
+        note: 'From site signage, to be confirmed.',
+        licence: 'Uganda Atomic Energy Council',
+      },
+      {
+        country: 'Tanzania',
+        city: 'Office location to be confirmed',
+        detail: 'Registered entity operating in country; address pending confirmation.',
+        note: 'Address to be confirmed.',
+        licence: 'Tanzania Atomic Energy Commission',
+      },
+    ],
+  },
+  {
+    key: 'served',
+    icon: ShieldCheck,
+    label: 'Countries served',
+    blurb: 'Work delivered in country, mobilised from the regional offices.',
+    entries: [
+      {
+        country: 'Kenya',
+        city: 'Served from the region',
+        detail:
+          'Inspection work delivered on client sites, crewed and equipped from Uganda and Tanzania.',
+        note: 'Radiation authorisation status in Kenya to be confirmed.',
+        licence: null,
+      },
+    ],
+  },
+  {
+    key: 'mobilisation',
+    icon: Plane,
+    label: 'Mobilisation on request',
+    blurb: 'The remainder of the continent.',
+    entries: [
+      {
+        country: 'Rest of Africa',
+        city: 'By arrangement',
+        detail:
+          'Crews and equipment can be mobilised outside the region on a project basis. Cross-border movement of sealed sources is subject to the licences held in each jurisdiction.',
+        note: null,
+        licence: null,
+      },
+    ],
+  },
+];
 
 export default function RegionalFootprint({ onOpenContact }) {
-  const [activeRegion, setActiveRegion] = useState('sa');
-
-  const regions = {
-    sa: {
-      country: "South Africa",
-      flag: "🇿🇦",
-      hubs: "Johannesburg | Cape Town | Secunda",
-      emailNode: "ZA-JNB-TECH-01 (Primary Regional Desk)",
-      sectors: ["Mining & Minerals", "Power Generation (Eskom)", "Railway Infrastructure", "Refineries"],
-      services: ["USFD Railway Testing", "AUT Girth Weld", "API 653 Tank Floor Scanning", "Tube Testing"],
-      address: "IXAR Africa Engineering Park, Sandton, Johannesburg, South Africa",
-      phone: "+27 11 098 7654",
-      email: "southafrica@ixar-africa.com"
-    },
-    ng: {
-      country: "Nigeria",
-      flag: "🇳🇬",
-      hubs: "Lagos | Port Harcourt | Warri",
-      emailNode: "NG-LOS-TECH-02 (West Africa Desk)",
-      sectors: ["Offshore / Onshore Oil & Gas", "Deepwater Pipelines", "Petrochemical Plants"],
-      services: ["AUT Girth Weld Pipeline", "PECT CUI Corrosion Screening", "Phased Array Ultrasonic"],
-      address: "Victoria Island Energy Center, Lagos, Nigeria",
-      phone: "+234 1 890 4321",
-      email: "nigeria@ixar-africa.com"
-    },
-    gh: {
-      country: "Ghana",
-      flag: "🇬🇭",
-      hubs: "Takoradi | Accra",
-      emailNode: "GH-ACC-TECH-03",
-      sectors: ["Gold Mining Facilities", "Offshore Oil Fields (Jubilee)", "Maritime Shipyards"],
-      services: ["Tube Inspection (MFL)", "Structural Steel NDT", "Radiation Safety BARC Course"],
-      address: "Harbor Commercial Area, Takoradi, Ghana",
-      phone: "+233 30 298 7654",
-      email: "ghana@ixar-africa.com"
-    },
-    ke: {
-      country: "Kenya & East Africa",
-      flag: "🇰🇪",
-      hubs: "Nairobi | Mombasa",
-      emailNode: "KE-NBO-TECH-04 (East Africa Hub)",
-      sectors: ["Geothermal Power", "Standard Gauge Railway (SGR)", "Port Facilities"],
-      services: ["USFD Rail & Weld Inspection", "Boiler Tube Testing", "Asset Integrity Management"],
-      address: "Kilimani Business District, Nairobi, Kenya",
-      phone: "+254 20 789 0123",
-      email: "kenya@ixar-africa.com"
-    },
-    mz: {
-      country: "Mozambique",
-      flag: "🇲🇿",
-      hubs: "Pemba | Maputo",
-      emailNode: "MZ-MPM-TECH-05",
-      sectors: ["LNG Deepwater Megaprojects", "Coal Logistics Rail", "Harbor Terminals"],
-      services: ["AUT Long-Distance Gas Pipelines", "Computed Radiography", "SHEQ Audits"],
-      address: "Av. Julius Nyerere, Maputo, Mozambique",
-      phone: "+258 21 456 789",
-      email: "mozambique@ixar-africa.com"
-    }
-  };
-
   return (
-    <section id="footprint" className="section footprint-section">
+    <section className="section footprint-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">
-            <Globe size={14} /> PAN-AFRICAN FOOTPRINT
-          </div>
-          <h2 className="section-title">
-            Strategic Operations Across <span className="text-orange">African Industrial Hubs</span>
-          </h2>
+          <div className="section-tag">Footprint</div>
+          <h2 className="section-title">Where We Operate</h2>
           <p className="section-subtitle">
-            Local response teams, mobile NDT laboratories, and rapid deployment crews positioned to serve key industrial sectors across the continent.
+            Stated by tier, so a prospect can tell the difference between a country where IXAR
+            holds a registration and one it can mobilise to.
           </p>
-
-          {/* Region Buttons */}
-          <div className="region-selector-bar">
-            {Object.keys(regions).map((key) => (
-              <button
-                key={key}
-                className={`region-btn ${activeRegion === key ? 'active' : ''}`}
-                onClick={() => setActiveRegion(key)}
-              >
-                <span className="flag-icon">{regions[key].flag}</span>
-                <span>{regions[key].country}</span>
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Selected Region Detailed Card */}
-        <div className="clean-card region-detail-card">
-          <div className="region-card-grid">
-            <div className="region-info-left">
-              <div className="region-title-group">
-                <span className="region-flag-large">{regions[activeRegion].flag}</span>
-                <div>
-                  <h3 className="region-name">{regions[activeRegion].country} Regional Hub</h3>
-                  <div className="region-hubs"><MapPin size={14} /> {regions[activeRegion].hubs}</div>
+        <div className="footprint-tiers">
+          {TIERS.map((tier) => {
+            const Icon = tier.icon;
+            return (
+              <div key={tier.key} className={`footprint-tier tier-${tier.key}`}>
+                <div className="tier-head">
+                  <span className="tier-icon"><Icon size={20} aria-hidden="true" /></span>
+                  <div>
+                    <h3 className="tier-label">{tier.label}</h3>
+                    <p className="tier-blurb">{tier.blurb}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="info-block">
-                <div className="block-label"><Server size={14} color="var(--primary)" /> Operations Desk</div>
-                <div className="block-val">{regions[activeRegion].emailNode}</div>
-              </div>
-
-              <div className="info-block">
-                <div className="block-label"><Shield size={14} color="var(--navy)" /> Primary Sectors Served</div>
-                <div className="tags-flex">
-                  {regions[activeRegion].sectors.map((sec, i) => (
-                    <span key={i} className="sector-tag">{sec}</span>
+                <div className="tier-entries">
+                  {tier.entries.map((e) => (
+                    <article key={e.country} className="clean-card entry-card">
+                      <h4 className="entry-country">{e.country}</h4>
+                      <p className="entry-city">{e.city}</p>
+                      <p className="entry-detail">{e.detail}</p>
+                      {e.licence && (
+                        <p className="entry-licence">
+                          <ShieldCheck size={14} aria-hidden="true" />
+                          Licensed by the {e.licence}
+                        </p>
+                      )}
+                      {e.note && <p className="entry-note"><span className="chip">{e.note}</span></p>}
+                    </article>
                   ))}
                 </div>
               </div>
-            </div>
+            );
+          })}
+        </div>
 
-            <div className="region-info-right">
-              <div className="info-block">
-                <div className="block-label"><CheckCircle2 size={14} color="#16A34A" /> Deployed Field Capabilities</div>
-                <div className="capabilities-list">
-                  {regions[activeRegion].services.map((serv, i) => (
-                    <div key={i} className="cap-item">
-                      <CheckCircle2 size={15} color="var(--primary)" />
-                      <span>{serv}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="contact-sub-card">
-                <div className="contact-item"><MapPin size={14} /> {regions[activeRegion].address}</div>
-                <div className="contact-item"><Phone size={14} /> {regions[activeRegion].phone}</div>
-                <div className="contact-item"><Mail size={14} /> {regions[activeRegion].email}</div>
-                
-                <button 
-                  onClick={() => onOpenContact(`Regional Hub: ${regions[activeRegion].country}`)} 
-                  className="btn btn-primary btn-sm"
-                  style={{ marginTop: '14px', width: '100%' }}
-                >
-                  <span>Connect with Regional Engineering Office</span>
-                  <ChevronRight size={14} />
-                </button>
-              </div>
-            </div>
+        <div className="footprint-cta">
+          <div>
+            <h3>Working somewhere else in Africa?</h3>
+            <p>Tell us the scope and location and we will confirm what can be mobilised.</p>
           </div>
+          <button onClick={() => onOpenContact()} className="btn btn-primary">
+            <span>Request a Quote</span>
+            <ChevronRight size={15} aria-hidden="true" />
+          </button>
         </div>
       </div>
 
       <style>{`
-        .footprint-section {
-          background: #F8FAFC;
-          border-top: 1px solid #E2E8F0;
-          border-bottom: 1px solid #E2E8F0;
-        }
-        .region-selector-bar {
+        .footprint-tiers { display: flex; flex-direction: column; gap: 44px; }
+        .footprint-tier { border-top: 3px solid var(--line); padding-top: 26px; }
+        .footprint-tier.tier-registered { border-top-color: var(--brand); }
+        .footprint-tier.tier-served { border-top-color: rgba(222, 6, 3, 0.35); }
+
+        .tier-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+        .tier-icon {
+          width: 46px;
+          height: 46px;
+          flex: none;
           display: flex;
+          align-items: center;
           justify-content: center;
-          gap: 10px;
-          margin-top: 28px;
-          flex-wrap: wrap;
+          background: var(--primary-light);
+          color: var(--brand);
         }
-        .region-btn {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 10px 20px;
-          background: #FFFFFF;
-          border: 1px solid #E2E8F0;
-          border-radius: 100px;
-          color: var(--text-muted);
-          font-family: var(--font-heading);
-          font-size: 0.92rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .region-btn:hover {
-          color: var(--navy);
-          border-color: #CBD5E1;
-        }
-        .region-btn.active {
-          background: var(--navy);
-          color: #FFFFFF;
-          border-color: var(--navy);
-        }
-        .flag-icon {
-          font-size: 1.1rem;
-        }
+        .tier-label { font-size: 1.25rem; color: var(--navy); }
+        .tier-blurb { color: var(--text-dim); font-size: 0.9375rem; margin-top: 4px; }
 
-        .region-detail-card {
-          margin-top: 36px;
-          background: #FFFFFF;
-        }
-        .region-card-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 36px;
-        }
-        .region-title-group {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          margin-bottom: 24px;
-          padding-bottom: 18px;
-          border-bottom: 1px solid #F1F5F9;
-        }
-        .region-flag-large {
-          font-size: 2.8rem;
-          line-height: 1;
-        }
-        .region-name {
-          font-size: 1.5rem;
-          color: var(--navy);
-        }
-        .region-hubs {
-          color: var(--primary);
-          font-size: 0.88rem;
-          font-family: var(--font-mono);
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          margin-top: 2px;
-          font-weight: 700;
-        }
+        .tier-entries { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .tier-mobilisation .tier-entries { grid-template-columns: 1fr; }
 
-        .info-block {
-          margin-bottom: 20px;
-        }
-        .block-label {
-          font-size: 0.8rem;
-          color: var(--text-muted);
+        .entry-country { font-size: 1.15rem; color: var(--navy); margin-bottom: 2px; }
+        .entry-city {
+          font-size: 0.75rem;
+          font-weight: 800;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
-          margin-bottom: 8px;
+          color: var(--brand);
+          margin-bottom: 14px;
+        }
+        .entry-detail { font-size: 0.9375rem; line-height: 1.65; }
+        .entry-licence {
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 8px;
+          margin-top: 14px;
+          padding-top: 14px;
+          border-top: 1px solid var(--line);
+          font-size: 0.875rem;
           font-weight: 700;
-        }
-        .block-val {
           color: var(--navy);
-          font-family: var(--font-mono);
-          font-weight: 700;
-          font-size: 0.95rem;
         }
+        .entry-licence svg { color: var(--brand); flex: none; }
+        .entry-note { margin-top: 12px; font-size: 0.85rem; line-height: 1.6; }
 
-        .tags-flex {
+        .footprint-cta {
+          margin-top: 56px;
+          padding: 34px;
+          background: var(--navy);
+          border-radius: var(--radius-lg);
           display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 26px;
           flex-wrap: wrap;
-          gap: 8px;
         }
-        .sector-tag {
-          background: #F1F5F9;
-          border: 1px solid #E2E8F0;
-          padding: 5px 12px;
-          border-radius: var(--radius-sm);
-          font-size: 0.82rem;
-          color: var(--text-main);
-          font-weight: 500;
-        }
+        .footprint-cta h3 { color: #fff; font-size: 1.3rem; }
+        .footprint-cta p { color: rgba(255, 255, 255, 0.76); margin-top: 6px; }
 
-        .capabilities-list {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .cap-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 0.88rem;
-          color: var(--text-main);
-          background: #F8FAFC;
-          padding: 8px 12px;
-          border-radius: var(--radius-sm);
-          border: 1px solid #E2E8F0;
-          font-weight: 500;
-        }
-
-        .contact-sub-card {
-          background: #F8FAFC;
-          border: 1px solid #E2E8F0;
-          border-radius: var(--radius-md);
-          padding: 18px;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .contact-item {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        @media (max-width: 900px) {
-          .region-card-grid { grid-template-columns: 1fr; }
+        @media (max-width: 767px) {
+          .tier-entries { grid-template-columns: 1fr; }
+          .footprint-cta { padding: 26px 22px; }
+          .footprint-cta .btn { width: 100%; }
         }
       `}</style>
     </section>

@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
+// The site build, served from https://ixar.africa/
+// The single-file review copy uses vite.config.standalone.js instead.
 export default defineConfig({
   plugins: [react()],
   server: {

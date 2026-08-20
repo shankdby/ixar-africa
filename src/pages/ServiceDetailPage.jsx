@@ -19,8 +19,8 @@ export default function ServiceDetailPage({ onOpenContact }) {
         'Immediate pass/fail determination based on ECA (Engineering Critical Assessment) acceptance criteria'
       ],
       standards: ['ASME Section V Article 4', 'API 1104 Appendix A', 'ISO 13588 / DNV-ST-F101'],
-      placeholderMain: 'AUT Motorized Scanner Band Mounted on 36" Pipe Weld',
-      placeholderDetail: 'AUT Sectorial Scan Data & Defect Depth Mapping Screen'
+      imgMain: '/images/east-africa/ea-svc-ultrasonic.webp',
+      imgDetail: '/images/east-africa/ea-svc-pipeline.webp'
     },
     paut: {
       title: 'Phased Array Ultrasonic Testing (PAUT)',
@@ -34,8 +34,8 @@ export default function ServiceDetailPage({ onOpenContact }) {
         'Fully digital raw A-scan data saved for life-cycle asset auditing'
       ],
       standards: ['ASME Code Case 2235 / Section V', 'API 620 / 650 / 653', 'BS EN ISO 18563'],
-      placeholderMain: 'PAUT Multi-Element Phased Array Probe on Pressure Vessel Weld',
-      placeholderDetail: 'Real-time PAUT Sectorial Scan & A-Scan Signal Waveform'
+      imgMain: '/images/east-africa/ea-svc-ultrasonic.webp',
+      imgDetail: '/images/east-africa/ea-svc-pipeline.webp'
     },
     pect: {
       title: 'Pulse Eddy Current Testing (PECT)',
@@ -49,8 +49,8 @@ export default function ServiceDetailPage({ onOpenContact }) {
         'Rapid footprint screening of storage tanks, spheres, and piping'
       ],
       standards: ['ISO 20669', 'API RP 583 (CUI Management)', 'ASTM E3047'],
-      placeholderMain: 'PECT Probe Applied on Insulated Refinery Pipe Elbow',
-      placeholderDetail: 'PECT Wall Thickness Color Contour Map & CUI Hotspots'
+      imgMain: '/images/east-africa/ea-svc-pipeline.webp',
+      imgDetail: '/images/east-africa/ea-svc-digital-radiography.webp'
     },
     tofd: {
       title: 'Time of Flight Diffraction (TOFD)',
@@ -64,8 +64,8 @@ export default function ServiceDetailPage({ onOpenContact }) {
         'Combines seamlessly with PAUT for comprehensive ASME compliant inspections'
       ],
       standards: ['ASME Section V Article 4', 'BS EN ISO 10863', 'ASTM E2373'],
-      placeholderMain: 'TOFD Pitch-Catch Transmitter and Receiver Probe Pair',
-      placeholderDetail: 'TOFD D-Scan Grey-Scale Weld Longitudinal Image'
+      imgMain: '/images/east-africa/ea-svc-radiography.webp',
+      imgDetail: '/images/east-africa/ea-svc-ultrasonic.webp'
     },
     'mfl-tube': {
       title: 'Tube Inspection (MFL / RFT / ECT)',
@@ -79,8 +79,8 @@ export default function ServiceDetailPage({ onOpenContact }) {
         'Instant tube sheet color grid report indicating plugged or damaged tubes'
       ],
       standards: ['ASME Section V Article 8 / 17', 'ASTM E571 / E703', 'EPRI Guidelines'],
-      placeholderMain: 'Motorized Tube Probe Pusher at Heat Exchanger Tube Sheet',
-      placeholderDetail: 'Tubular MFL Signal Lissajous & Depth Sizing Display'
+      imgMain: '/images/east-africa/ea-ind-oil-gas.webp',
+      imgDetail: '/images/east-africa/ea-backed-barc.webp'
     },
     radiography: {
       title: 'Digital & Computed Radiography (CR/DR)',
@@ -94,45 +94,41 @@ export default function ServiceDetailPage({ onOpenContact }) {
         'Permanent DICONDE compliant digital archive'
       ],
       standards: ['ASME Section V Article 2', 'ISO 17636-2', 'BARC / AERB Radiation Norms'],
-      placeholderMain: 'Computed Radiography Imaging Plate Scanner & Flat Panel Unit',
-      placeholderDetail: 'High-Definition Digital Radiograph showing Weld Defect Contrast'
+      imgMain: '/images/east-africa/ea-svc-digital-radiography.webp',
+      imgDetail: '/images/east-africa/ea-svc-radiography.webp'
     }
   };
 
   const service = detailsMap[slug] || detailsMap['aut'];
 
   return (
-    <div className="page-wrapper" style={{ paddingTop: '150px' }}>
+    <div className="page-wrapper service-detail-page">
       <div className="container">
-        {/* Back Link */}
         <Link to="/services" className="back-link">
-          <ArrowLeft size={16} />
-          <span>Back to All NDT Services</span>
+          <ArrowLeft size={16} /> Back to All Services
         </Link>
 
         <div className="detail-header">
-          <span className="badge badge-orange">{service.category}</span>
+          <span className="badge badge-navy mb-2">{service.category}</span>
           <h1 className="detail-title">{service.title}</h1>
           <p className="detail-subtitle">{service.subtitle}</p>
         </div>
 
-        {/* Main Image Placeholder Frame */}
-        <div className="detail-hero-placeholder">
-          <ImagePlaceholder 
-            label={service.placeholderMain}
-            recommendedSize="1200 x 600 px (Technical Field Photo)"
-            height="380px"
-            aspect="16/9"
+        {/* Hero Media Card */}
+        <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '12px', marginBottom: '32px' }}>
+          <img 
+            src={service.imgMain} 
+            alt={service.title} 
+            style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block' }} 
           />
         </div>
 
-        {/* Technical Overview & Advantages Grid */}
-        <div className="grid-2 detail-content-grid">
+        <div className="detail-grid">
           <div className="clean-card detail-card">
-            <h3 className="card-heading"><Cpu size={18} color="var(--primary)" /> Technical Operating Principle</h3>
-            <p className="body-text">{service.overview}</p>
+            <h3 className="card-heading"><Cpu size={18} color="var(--primary)" /> Technical Overview</h3>
+            <p className="overview-text">{service.overview}</p>
 
-            <h4 className="sub-heading">Code Compliance & Standards:</h4>
+            <h4 className="sub-heading">Code Compliance &amp; Standards:</h4>
             <div className="standards-list">
               {service.standards.map((std, i) => (
                 <span key={i} className="std-pill"><FileCheck size={14} /> {std}</span>
@@ -141,7 +137,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
           </div>
 
           <div className="clean-card detail-card">
-            <h3 className="card-heading"><Shield size={18} color="var(--navy)" /> Key Advantages & Capabilities</h3>
+            <h3 className="card-heading"><Shield size={18} color="var(--navy)" /> Key Advantages &amp; Capabilities</h3>
             <div className="advantages-list">
               {service.advantages.map((adv, i) => (
                 <div key={i} className="adv-item">
@@ -151,12 +147,11 @@ export default function ServiceDetailPage({ onOpenContact }) {
               ))}
             </div>
 
-            <div className="sub-placeholder-box">
-              <ImagePlaceholder 
-                label={service.placeholderDetail}
-                recommendedSize="800 x 400 px (Scan Display Screenshot)"
-                height="180px"
-                aspect="16/9"
+            <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '8px', overflow: 'hidden' }}>
+              <img 
+                src={service.imgDetail} 
+                alt={`${service.title} equipment data`} 
+                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 
               />
             </div>
           </div>
@@ -166,7 +161,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
         <div className="clean-card detail-cta-box">
           <div>
             <h3 className="cta-heading">Require {service.title} for Your Project?</h3>
-            <p className="cta-sub">Our Pan-African engineering crews can mobilize with certified equipment within 24 hours.</p>
+            <p className="cta-sub">Crews and certified equipment mobilise from the Kampala and Tanzania offices.</p>
           </div>
           <button onClick={() => onOpenContact(service.title)} className="btn btn-primary btn-lg">
             <span>Request Technical Scope & Proposal</span>
@@ -219,7 +214,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
           display: flex;
           align-items: center;
           gap: 8px;
-          border-bottom: 1px solid #F1F5F9;
+          border-bottom: 1px solid var(--bg-tint);
           padding-bottom: 12px;
         }
         .body-text {
@@ -239,8 +234,8 @@ export default function ServiceDetailPage({ onOpenContact }) {
           gap: 8px;
         }
         .std-pill {
-          background: #F1F5F9;
-          border: 1px solid #E2E8F0;
+          background: var(--bg-tint);
+          border: 1px solid var(--line);
           padding: 6px 12px;
           border-radius: var(--radius-sm);
           font-size: 0.84rem;
@@ -270,7 +265,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
 
         .detail-cta-box {
           background: var(--navy-badge-bg);
-          border-color: #CBD5E1;
+          border-color: var(--muted);
           display: flex;
           align-items: center;
           justify-content: space-between;

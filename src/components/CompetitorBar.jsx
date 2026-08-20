@@ -46,7 +46,7 @@ export default function CompetitorBar() {
       <style>{`
         .competitor-bar-section {
           background: #FFFFFF;
-          border-bottom: 1px solid #E2E8F0;
+          border-bottom: 1px solid var(--line);
           padding: 36px 0;
         }
         .bar-grid {
@@ -82,8 +82,8 @@ export default function CompetitorBar() {
           gap: 14px;
         }
         .cert-card {
-          background: #F8FAFC;
-          border: 1px solid #E2E8F0;
+          background: var(--bg-secondary);
+          border: 1px solid var(--line);
           border-radius: var(--radius-md);
           padding: 12px 14px;
           display: flex;

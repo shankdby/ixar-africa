@@ -1,205 +1,240 @@
 import React from 'react';
-import { Shield, Mail, Phone, MapPin, Globe, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mail, Phone, MapPin, ChevronRight } from 'lucide-react';
+
+/* Footer.
+   Office details are the Kampala ones from IXAR's own site board (Tilenga
+   Project, August 2026). The Mumbai head office is the parent company's, and
+   is labelled as such — the content plan is explicit that regional presence
+   and Indian presence must not be blurred together. */
 
 export default function Footer({ onOpenContact }) {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="footer-section">
       <div className="container">
         <div className="footer-grid">
-          {/* Brand Info */}
           <div className="footer-col brand-col">
             <div className="footer-brand">
-              <Shield className="brand-shield" size={28} />
+              <img 
+                src="/images/ixar-logo.png" 
+                alt="IXAR East Africa" 
+                className="footer-logo-img" 
+                style={{ height: '40px', width: 'auto', objectFit: 'contain' }} 
+              />
               <div>
-                <div className="brand-name">IXAR <span className="brand-orange">AFRICA</span></div>
-                <div className="brand-sub">NDT & Asset Integrity Engineering</div>
+                <div className="brand-name">IXAR</div>
+                <div className="brand-sub">East Africa</div>
               </div>
             </div>
+
             <p className="footer-bio">
-              Pan-African leader in Non-Destructive Testing (AUT, PAUT, TOFD, PECT, MFL, Railway USFD) backed by 55+ years of nuclear-grade testing precision and BARC certification.
+              Non-destructive testing and industrial inspection across Uganda, Tanzania and Kenya,
+              delivered by Industrial X-Ray and Allied Radiographers (EA) Ltd.
             </p>
 
             <div className="footer-accred-row">
-              <span className="badge badge-orange">BARC Certified</span>
-              <span className="badge badge-navy">API 653/510/570</span>
-              <span className="badge badge-emerald">ISO 9001:2015</span>
+              <span className="badge badge-navy">ISO 9001 since 2003</span>
+              <span className="badge badge-navy">ASNT SNT-TC-1A</span>
+              <span className="badge badge-navy">IPLOCA member</span>
             </div>
           </div>
 
-          {/* Industrial NDT Links */}
           <div className="footer-col">
-            <h4 className="footer-col-title"><Shield size={16} color="var(--primary)" /> Industrial NDT Services</h4>
+            <h4 className="footer-col-title">Services</h4>
             <ul className="footer-links">
-              <li><a href="#services">Pulse Eddy Current Testing (PECT)</a></li>
-              <li><a href="#services">Tube Inspection (MFL / RFT)</a></li>
-              <li><a href="#services">Automated Ultrasonic (AUT)</a></li>
-              <li><a href="#services">Phased Array Ultrasonic (PAUT)</a></li>
-              <li><a href="#services">Railway USFD Flaw Detection</a></li>
-              <li><a href="#services">BARC Radiation Safety Training</a></li>
+              <li><Link to="/services/radiography">Radiography (RT / CR / DR)</Link></li>
+              <li><Link to="/services/aut">Automated Ultrasonics (AUT)</Link></li>
+              <li><Link to="/services/paut">Phased Array (PAUT)</Link></li>
+              <li><Link to="/services/tofd">Time of Flight Diffraction</Link></li>
+              <li><Link to="/services/pect">Eddy Current (ECT / PECT)</Link></li>
+              <li><Link to="/services/mfl-tube">Tank and Tube Inspection</Link></li>
+              <li><Link to="/services">All services</Link></li>
             </ul>
           </div>
 
-          {/* Quality & Safety Links */}
           <div className="footer-col">
-            <h4 className="footer-col-title"><Globe size={16} color="var(--navy)" /> Standards & Compliance</h4>
+            <h4 className="footer-col-title">Industries</h4>
             <ul className="footer-links">
-              <li><a href="#safety-quality">BARC Radiation Safety Protocol</a></li>
-              <li><a href="#safety-quality">API 510 / 570 / 653 Tank Audits</a></li>
-              <li><a href="#safety-quality">ASNT Level III Procedure Qualification</a></li>
-              <li><a href="#safety-quality">SHEQ & ISO 45001 Safety Management</a></li>
-              <li><a href="#certifications">BARC Certificate Verifier Portal</a></li>
-              <li><a href="#calculator">NDT Project Cost Estimator</a></li>
+              <li><Link to="/applications/oil-gas">Oil and Gas</Link></li>
+              <li><Link to="/applications/power-plants">Power and Geothermal</Link></li>
+              <li><Link to="/applications/mining">Mining</Link></li>
+              <li><Link to="/applications/railways">Marine and Ports</Link></li>
+              <li><Link to="/training">NDT Training</Link></li>
+              <li><Link to="/case-studies">Projects</Link></li>
+              <li><Link to="/network">Our Network</Link></li>
             </ul>
           </div>
 
-          {/* Regional Hubs & Contact */}
           <div className="footer-col">
-            <h4 className="footer-col-title"><MapPin size={16} color="#16A34A" /> Pan-African Hubs</h4>
+            <h4 className="footer-col-title">Regional office</h4>
             <div className="footer-contacts">
               <div className="f-contact-row">
-                <MapPin size={14} color="var(--primary)" />
-                <span>Johannesburg | Lagos | Takoradi | Nairobi | Maputo</span>
+                <MapPin size={15} aria-hidden="true" />
+                <span>
+                  Plot No. 72, Kanjokya Street, Kamwokya,<br />
+                  P.O. Box 28673 Nakawa, Kampala, Uganda
+                </span>
               </div>
               <div className="f-contact-row">
-                <Mail size={14} color="var(--navy)" />
-                <a href="mailto:info@ixar-africa.com">info@ixar-africa.com</a>
+                <Phone size={15} aria-hidden="true" />
+                <a href="tel:+256414251251">+256 414 251251</a>
               </div>
               <div className="f-contact-row">
-                <Phone size={14} color="#16A34A" />
-                <a href="tel:+27110987654">+27 11 098 7654</a>
+                <Mail size={15} aria-hidden="true" />
+                <a href="mailto:bd@ixar.africa">bd@ixar.africa</a>
               </div>
             </div>
 
-            <button onClick={() => onOpenContact()} className="btn btn-primary btn-sm" style={{ marginTop: '16px', width: '100%' }}>
-              <span>Request Inspection RFP</span>
-              <ChevronRight size={14} />
+            <p className="footer-tbc">
+              <span className="chip">Tanzania office address to be confirmed.</span>
+            </p>
+
+            <button
+              onClick={() => onOpenContact()}
+              className="btn btn-primary btn-sm footer-cta"
+            >
+              <span>Request a Quote</span>
+              <ChevronRight size={14} aria-hidden="true" />
             </button>
           </div>
         </div>
 
+        <div className="footer-parent">
+          <span className="footer-parent-label">Parent company</span>
+          <p>
+            Industrial X-Ray &amp; Allied Radiographers (I) Pvt. Ltd., 102 Faizan Apartment,
+            S. V. Road, Jogeshwari (West), Mumbai 400 102, India &middot; info@ixar.in
+          </p>
+          <p className="footer-offices">
+            India &middot; Uganda &middot; Tanzania &middot; Nigeria &middot; Netherlands &middot;
+            UAE &middot; Oman &middot; Saudi Arabia
+          </p>
+        </div>
+
         <div className="footer-bottom">
-          <div>© {new Date().getFullYear()} IXAR Africa (Pty) Ltd. All rights reserved. Pan-African Engineering Operations.</div>
+          <div>&copy; {year} Industrial X-Ray and Allied Radiographers (EA) Ltd. All rights reserved.</div>
           <div className="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <span>•</span>
-            <a href="#">Terms of Service</a>
-            <span>•</span>
-            <a href="#certifications">BARC Cert Portal</a>
+            <Link to="/contact">Contact</Link>
+            <span aria-hidden="true">&middot;</span>
+            <a href="#privacy">Privacy Policy</a>
           </div>
         </div>
       </div>
 
       <style>{`
         .footer-section {
-          background: #0F172A;
-          padding-top: 70px;
-          padding-bottom: 36px;
-          color: #94A3B8;
+          background: var(--navy);
+          color: rgba(255, 255, 255, 0.72);
+          padding: 70px 0 32px;
+          font-size: 0.9375rem;
         }
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.3fr 1fr 1fr 1.1fr;
-          gap: 36px;
-          margin-bottom: 50px;
+          grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+          gap: 40px;
+          padding-bottom: 44px;
         }
-        .footer-brand {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 14px;
-        }
-        .brand-shield {
-          color: var(--primary);
-        }
+
+        .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .footer-mark { width: 40px; height: 40px; flex: none; }
+        .footer-mark svg { width: 100%; height: 100%; display: block; }
         .brand-name {
           font-family: var(--font-heading);
-          font-size: 1.3rem;
+          font-size: 1.4rem;
           font-weight: 900;
+          letter-spacing: 0.06em;
           color: #FFFFFF;
+          line-height: 1;
         }
-        .brand-orange { color: var(--primary); }
         .brand-sub {
-          font-size: 0.72rem;
-          color: #94A3B8;
+          font-size: 0.6875rem;
+          color: rgba(255, 255, 255, 0.62);
           text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-weight: 700;
+          margin-top: 4px;
         }
-        .footer-bio {
-          font-size: 0.88rem;
-          line-height: 1.6;
-          margin-bottom: 18px;
+        .footer-bio { line-height: 1.7; margin-bottom: 18px; font-size: 0.9rem; }
+        .footer-bio .chip {
+          background: #5A4415;
+          border-color: #B08B39;
+          color: #FFDFA0;
         }
-        .footer-accred-row {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
+        .footer-accred-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .footer-accred-row .badge-navy {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(255, 255, 255, 0.2);
+          color: rgba(255, 255, 255, 0.86);
         }
 
         .footer-col-title {
-          font-size: 1.05rem;
+          font-size: 0.8125rem;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
           color: #FFFFFF;
-          margin-bottom: 18px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
+          margin-bottom: 20px;
         }
-        .footer-links {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
         .footer-links a {
-          color: #94A3B8;
-          text-decoration: none;
-          font-size: 0.88rem;
+          color: rgba(255, 255, 255, 0.72);
+          font-size: 0.9rem;
           transition: color 0.2s ease;
         }
-        .footer-links a:hover {
-          color: #FFFFFF;
-        }
+        .footer-links a:hover { color: #FFFFFF; }
 
-        .footer-contacts {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          font-size: 0.88rem;
-        }
-        .f-contact-row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .f-contact-row a {
-          color: #94A3B8;
-          text-decoration: none;
-        }
+        .footer-contacts { display: flex; flex-direction: column; gap: 14px; }
+        .f-contact-row { display: flex; align-items: flex-start; gap: 10px; line-height: 1.6; font-size: 0.9rem; }
+        .f-contact-row svg { flex: none; margin-top: 3px; color: #FF7A78; }
+        .f-contact-row a { color: rgba(255, 255, 255, 0.72); }
         .f-contact-row a:hover { color: #FFFFFF; }
+        .footer-tbc { margin-top: 14px; font-size: 0.85rem; }
+        .footer-tbc .chip { background: #5A4415; border-color: #B08B39; color: #FFDFA0; }
+        .footer-cta { margin-top: 18px; }
+
+        .footer-parent {
+          border-top: 1px solid rgba(255, 255, 255, 0.14);
+          padding: 26px 0;
+          font-size: 0.85rem;
+          line-height: 1.7;
+          color: rgba(255, 255, 255, 0.58);
+        }
+        .footer-parent-label {
+          display: block;
+          font-size: 0.6875rem;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #FF7A78;
+          margin-bottom: 8px;
+        }
+        .footer-offices { margin-top: 6px; font-weight: 600; color: rgba(255, 255, 255, 0.7); }
 
         .footer-bottom {
-          border-top: 1px solid #1E293B;
+          border-top: 1px solid rgba(255, 255, 255, 0.14);
           padding-top: 22px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 0.82rem;
-          flex-wrap: wrap;
           gap: 14px;
+          flex-wrap: wrap;
+          font-size: 0.8125rem;
+          color: rgba(255, 255, 255, 0.58);
         }
-        .footer-bottom-links {
-          display: flex;
-          gap: 12px;
-        }
-        .footer-bottom-links a {
-          color: #94A3B8;
-          text-decoration: none;
-        }
+        .footer-bottom-links { display: flex; gap: 10px; align-items: center; }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.58); }
+        .footer-bottom-links a:hover { color: #FFFFFF; }
 
         @media (max-width: 1024px) {
-          .footer-grid { grid-template-columns: 1fr 1fr; }
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 34px; }
         }
         @media (max-width: 600px) {
-          .footer-grid { grid-template-columns: 1fr; }
-          .footer-bottom { flex-direction: column; text-align: center; }
+          .footer-section { padding-top: 52px; }
+          .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+          .footer-bottom { flex-direction: column; align-items: flex-start; }
+          .footer-cta { width: 100%; }
         }
       `}</style>
     </footer>

@@ -18,8 +18,8 @@ export default function SectorDetailPage({ onOpenContact }) {
         'Pulse Eddy Current Testing (PECT) for Corrosion Under Insulation (CUI) on process lines',
         'API 570 Process Piping Thickness surveys & Risk-Based Inspection (RBI) programs'
       ],
-      placeholderMain: 'Offshore Gas Pipeline & Refinery Tank Inspection Field Setup',
-      placeholderDetail: 'API Tank Floor MFL Scanner & AUT Crawler Screenshot'
+      imgMain: '/images/east-africa/ea-ind-oil-gas.webp',
+      imgDetail: '/images/east-africa/ea-svc-digital-radiography.webp'
     },
     railways: {
       title: 'Railways (USFD Track & Rolling Stock)',
@@ -32,8 +32,8 @@ export default function SectorDetailPage({ onOpenContact }) {
         'Locomotive solid & hollow axle fatigue crack ultrasonic testing',
         'Rolling stock wheelset rim & bogie structural magnetic particle inspection'
       ],
-      placeholderMain: 'Ultrasonic Railway Track USFD Trolley Scanning Rail Lines',
-      placeholderDetail: 'Railway Axle Ultrasonic Probe Test Display & Flaw Waveform'
+      imgMain: '/images/east-africa/ea-svc-ultrasonic.webp',
+      imgDetail: '/images/east-africa/ea-svc-pipeline.webp'
     },
     'power-plants': {
       title: 'Power Generation (Boilers & Turbines)',
@@ -46,8 +46,8 @@ export default function SectorDetailPage({ onOpenContact }) {
         'Turbine rotor disk & blade root ultrasonic flaw sizing',
         'Geothermal steam separator & pressure vessel API 510 evaluations'
       ],
-      placeholderMain: 'Power Plant Boiler Header & Heat Exchanger Tube Sheet NDT',
-      placeholderDetail: 'Tube Sheet Color Grid Inspection Report & MFL Signal Map'
+      imgMain: '/images/east-africa/ea-hero-tilenga-cpf.webp',
+      imgDetail: '/images/east-africa/ea-svc-radiography.webp'
     },
     mining: {
       title: 'Mining & Heavy Infrastructure',
@@ -60,8 +60,8 @@ export default function SectorDetailPage({ onOpenContact }) {
         'Mine shaft gantry & conveyor structural steel integrity audits',
         'Thick plate weld Radiographic & Ultrasonic testing according to AWS D1.1'
       ],
-      placeholderMain: 'Heavy Mining Dragline & Excavator Boom Weld NDT Setup',
-      placeholderDetail: 'Structural Steel Weld Ultrasonic Flaw Detection Screen'
+      imgMain: '/images/east-africa/ea-svc-pipeline.webp',
+      imgDetail: '/images/east-africa/ea-svc-ultrasonic.webp'
     }
   };
 
@@ -69,27 +69,25 @@ export default function SectorDetailPage({ onOpenContact }) {
   const IconComp = sector.icon;
 
   return (
-    <div className="page-wrapper" style={{ paddingTop: '150px' }}>
+    <div className="page-wrapper">
       <div className="container">
-        {/* Back Link */}
         <Link to="/applications" className="back-link">
           <ArrowLeft size={16} />
           <span>Back to All Industry Applications</span>
         </Link>
 
         <div className="detail-header">
-          <span className="badge badge-orange"><IconComp size={13} /> Industrial Sector Sub-Page</span>
+          <span className="badge badge-navy"><IconComp size={13} /> Industrial Sector Sub-Page</span>
           <h1 className="detail-title">{sector.title}</h1>
           <p className="detail-subtitle">{sector.subtitle}</p>
         </div>
 
-        {/* Main Image Placeholder Frame */}
-        <div className="detail-hero-placeholder">
-          <ImagePlaceholder 
-            label={sector.placeholderMain}
-            recommendedSize="1200 x 600 px (Sector Operations Field Photography)"
-            height="380px"
-            aspect="16/9"
+        {/* Hero Media Card */}
+        <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '12px', marginBottom: '32px' }}>
+          <img 
+            src={sector.imgMain} 
+            alt={sector.title} 
+            style={{ width: '100%', height: '400px', objectFit: 'cover', display: 'block' }} 
           />
         </div>
 
@@ -111,12 +109,11 @@ export default function SectorDetailPage({ onOpenContact }) {
               ))}
             </div>
 
-            <div className="sub-placeholder-box">
-              <ImagePlaceholder 
-                label={sector.placeholderDetail}
-                recommendedSize="800 x 400 px (Field Inspection Screenshot)"
-                height="180px"
-                aspect="16/9"
+            <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '8px', overflow: 'hidden' }}>
+              <img 
+                src={sector.imgDetail} 
+                alt={`${sector.title} inspection equipment`} 
+                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 
               />
             </div>
           </div>
@@ -179,7 +176,7 @@ export default function SectorDetailPage({ onOpenContact }) {
           display: flex;
           align-items: center;
           gap: 8px;
-          border-bottom: 1px solid #F1F5F9;
+          border-bottom: 1px solid var(--bg-tint);
           padding-bottom: 12px;
         }
         .body-text {
@@ -207,7 +204,7 @@ export default function SectorDetailPage({ onOpenContact }) {
 
         .detail-cta-box {
           background: var(--navy-badge-bg);
-          border-color: #CBD5E1;
+          border-color: var(--muted);
           display: flex;
           align-items: center;
           justify-content: space-between;

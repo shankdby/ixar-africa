@@ -1,283 +1,312 @@
-import React, { useState } from 'react';
-import { Calculator, Cpu, ChevronRight } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ClipboardList, Plus, Check, ChevronRight, Info } from 'lucide-react';
+
+/* Scope builder.
+
+   This was a cost calculator that multiplied invented day-rates by invented
+   mobilisation fees and printed a currency figure. NDT is priced on scope,
+   access, shutdown window, source logistics and standard — not on a slider —
+   so any number it produced would have been a guess presented as a quote, and
+   the first real proposal would have contradicted it.
+
+   It now assembles the scope instead: the client picks methods, asset type
+   and location, and the summary goes to the enquiry form so IXAR can price it
+   properly. Same lead-generation job, nothing fabricated. */
+
+const METHODS = [
+  { id: 'rt', label: 'Conventional Radiography (RT)' },
+  { id: 'crdr', label: 'Digital / Computed Radiography' },
+  { id: 'ut', label: 'Ultrasonic Testing (UT)' },
+  { id: 'paut', label: 'Advanced Ultrasonics (PAUT / TOFD / AUT)' },
+  { id: 'mtpt', label: 'Magnetic Particle / Liquid Penetrant' },
+  { id: 'ect', label: 'Eddy Current / Pulsed Eddy Current' },
+  { id: 'mfl', label: 'Tank floor or tube inspection (MFL)' },
+  { id: 'pigging', label: 'Pigging / intelligent pigging' },
+  { id: 'uw', label: 'Underwater inspection' },
+  { id: 'lab', label: 'Destructive testing and laboratory' },
+];
+
+const ASSETS = [
+  'Cross-country pipeline',
+  'Process piping and vessels',
+  'Storage tank',
+  'Boiler or heat exchanger',
+  'Structural steelwork',
+  'Jetty or submerged structure',
+  'Other',
+];
+
+const TIMINGS = [
+  'Planned shutdown or turnaround',
+  'New construction',
+  'In-service inspection',
+  'Emergency or unplanned',
+];
 
 export default function CostCalculator({ onOpenContact }) {
-  const [sector, setSector] = useState('oilgas');
-  const [technique, setTechnique] = useState('aut');
-  const [volume, setVolume] = useState('medium');
+  const [methods, setMethods] = useState([]);
+  const [asset, setAsset] = useState('');
+  const [country, setCountry] = useState('');
+  const [timing, setTiming] = useState('');
+  const [notes, setNotes] = useState('');
 
-  const sectorMultipliers = {
-    oilgas: { name: 'Oil & Gas Offshore / Onshore Pipeline', base: 4500 },
-    refinery: { name: 'Refinery & Petrochem Storage', base: 3800 },
-    power: { name: 'Power Plant Boiler / Turbine', base: 3200 },
-    railway: { name: 'Railway USFD Track & Axle', base: 2800 },
-    mining: { name: 'Mining Heavy Equipment & Structural', base: 2500 }
-  };
+  const toggle = (id) =>
+    setMethods((m) => (m.includes(id) ? m.filter((x) => x !== id) : [...m, id]));
 
-  const techMultipliers = {
-    aut: { name: 'Automated Ultrasonic (AUT)', mult: 1.5 },
-    paut: { name: 'Phased Array (PAUT)', mult: 1.4 },
-    pect: { name: 'Pulse Eddy Current (PECT)', mult: 1.3 },
-    mfl: { name: 'Tube Inspection (MFL)', mult: 1.25 },
-    usfd: { name: 'USFD Railway Flaw Detection', mult: 1.2 },
-    cr: { name: 'Computed Radiography (CR/DR)', mult: 1.1 }
-  };
+  const summary = useMemo(() => {
+    const chosen = METHODS.filter((m) => methods.includes(m.id)).map((m) => m.label);
+    const lines = [];
+    if (chosen.length) lines.push(`Methods: ${chosen.join(', ')}`);
+    if (asset) lines.push(`Asset: ${asset}`);
+    if (country) lines.push(`Location: ${country}`);
+    if (timing) lines.push(`Timing: ${timing}`);
+    if (notes.trim()) lines.push(`Notes: ${notes.trim()}`);
+    return lines.join('\n');
+  }, [methods, asset, country, timing, notes]);
 
-  const volumeMultipliers = {
-    small: { label: 'Small / Targeted Inspection (1-3 Days)', mult: 1.0 },
-    medium: { label: 'Medium Project (1-2 Weeks)', mult: 2.2 },
-    large: { label: 'Large Turnaround / Site-wide Shutdown', mult: 4.5 }
-  };
-
-  const estimatedNDTLow = Math.round(sectorMultipliers[sector].base * techMultipliers[technique].mult * volumeMultipliers[volume].mult);
-  const estimatedNDTHigh = Math.round(estimatedNDTLow * 1.3);
+  const ready = methods.length > 0 && asset && country;
 
   return (
-    <section id="calculator" className="section calculator-section">
+    <section className="section scope-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">
-            <Calculator size={14} /> INSTANT NDT PROJECT ESTIMATOR
-          </div>
-          <h2 className="section-title">
-            Estimate Your <span className="text-orange">NDT Project Budget</span>
-          </h2>
+          <div className="section-tag">Scope builder</div>
+          <h2 className="section-title">Tell Us What Needs Inspecting</h2>
           <p className="section-subtitle">
-            Configure your sector, inspection methodology, and project scale for an instant indicative budget estimate for field mobilization.
+            Build the scope here and send it through. A written proposal comes back from the
+            regional office with a price against your specification.
           </p>
         </div>
 
-        {/* Calculator Main Box */}
-        <div className="clean-card calc-main-card">
-          <div className="calc-grid">
-            <div className="calc-controls">
-              <h3 className="calc-box-title"><Cpu size={18} color="var(--primary)" /> NDT Scope Parameters</h3>
-              
-              {/* Sector */}
-              <div className="control-group">
-                <div className="control-label">
-                  <span>Industrial Sector:</span>
-                </div>
-                <select
-                  value={sector}
-                  onChange={(e) => setSector(e.target.value)}
-                  className="calc-select"
-                >
-                  {Object.keys(sectorMultipliers).map((k) => (
-                    <option key={k} value={k}>{sectorMultipliers[k].name}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Technique */}
-              <div className="control-group">
-                <div className="control-label">
-                  <span>Primary NDT Inspection Technique:</span>
-                </div>
-                <select
-                  value={technique}
-                  onChange={(e) => setTechnique(e.target.value)}
-                  className="calc-select"
-                >
-                  {Object.keys(techMultipliers).map((k) => (
-                    <option key={k} value={k}>{techMultipliers[k].name}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Volume */}
-              <div className="control-group">
-                <div className="control-label">
-                  <span>Project Scale & Duration:</span>
-                </div>
-                <div className="choice-grid column">
-                  {Object.keys(volumeMultipliers).map((k) => (
+        <div className="scope-layout">
+          <div className="scope-form">
+            <fieldset className="scope-block">
+              <legend className="scope-legend">1. Which methods do you need?</legend>
+              <div className="method-grid">
+                {METHODS.map((m) => {
+                  const on = methods.includes(m.id);
+                  return (
                     <button
-                      key={k}
-                      className={`choice-btn ${volume === k ? 'active' : ''}`}
-                      onClick={() => setVolume(k)}
+                      type="button"
+                      key={m.id}
+                      className={`method-chip${on ? ' is-on' : ''}`}
+                      onClick={() => toggle(m.id)}
+                      aria-pressed={on}
                     >
-                      {volumeMultipliers[k].label}
+                      <span className="method-chip__box">
+                        {on ? <Check size={13} aria-hidden="true" /> : <Plus size={13} aria-hidden="true" />}
+                      </span>
+                      {m.label}
                     </button>
-                  ))}
+                  );
+                })}
+              </div>
+              <p className="scope-hint">
+                Not sure? Leave it blank and describe the problem in the notes instead.
+              </p>
+            </fieldset>
+
+            <fieldset className="scope-block">
+              <legend className="scope-legend">2. What is the asset?</legend>
+              <div className="scope-row">
+                <div className="scope-field">
+                  <label className="field-label" htmlFor="sc-asset">Asset type</label>
+                  <select id="sc-asset" className="field-input" value={asset} onChange={(e) => setAsset(e.target.value)}>
+                    <option value="">Please select</option>
+                    {ASSETS.map((a) => <option key={a}>{a}</option>)}
+                  </select>
+                </div>
+                <div className="scope-field">
+                  <label className="field-label" htmlFor="sc-country">Location</label>
+                  <select id="sc-country" className="field-input" value={country} onChange={(e) => setCountry(e.target.value)}>
+                    <option value="">Please select</option>
+                    <option>Uganda</option>
+                    <option>Tanzania</option>
+                    <option>Kenya</option>
+                    <option>Elsewhere in Africa</option>
+                  </select>
                 </div>
               </div>
-            </div>
+            </fieldset>
 
-            {/* Estimate Output Panel */}
-            <div className="calc-summary-panel">
-              <div className="summary-badge">ESTIMATED BUDGET RANGE</div>
-              <div className="price-display">
-                <div className="price-amount">
-                  ${estimatedNDTLow.toLocaleString()} - ${estimatedNDTHigh.toLocaleString()}
-                </div>
+            <fieldset className="scope-block">
+              <legend className="scope-legend">3. When is the work?</legend>
+              <div className="timing-row">
+                {TIMINGS.map((t) => (
+                  <button
+                    type="button"
+                    key={t}
+                    className={`timing-chip${timing === t ? ' is-on' : ''}`}
+                    onClick={() => setTiming(t)}
+                    aria-pressed={timing === t}
+                  >
+                    {t}
+                  </button>
+                ))}
               </div>
 
-              <div className="billing-note">
-                Indicative mobilization & inspection cost range for African regional hub deployment.
+              <div className="scope-field scope-field--notes">
+                <label className="field-label" htmlFor="sc-notes">
+                  Anything else we should know
+                </label>
+                <textarea
+                  id="sc-notes"
+                  className="field-input"
+                  rows="3"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Wall thickness, number of welds, access constraints, applicable code or client specification."
+                />
               </div>
-
-              <div className="summary-line-items">
-                <div className="line-item">
-                  <span>Target Industry:</span>
-                  <strong>{sectorMultipliers[sector].name}</strong>
-                </div>
-                <div className="line-item">
-                  <span>Selected Method:</span>
-                  <strong>{techMultipliers[technique].name}</strong>
-                </div>
-                <div className="line-item">
-                  <span>Certified Crew:</span>
-                  <strong>ASNT & BARC Level II / III</strong>
-                </div>
-              </div>
-
-              <button
-                onClick={() => onOpenContact(`NDT Estimate: ${sectorMultipliers[sector].name} (${techMultipliers[technique].name}) - Est: $${estimatedNDTLow.toLocaleString()}-$${estimatedNDTHigh.toLocaleString()}`)}
-                className="btn btn-primary btn-lg"
-                style={{ width: '100%', marginTop: '20px' }}
-              >
-                <span>Request Formal Proposal</span>
-                <ChevronRight size={16} />
-              </button>
-            </div>
+            </fieldset>
           </div>
+
+          <aside className="scope-summary">
+            <div className="scope-summary__head">
+              <ClipboardList size={20} aria-hidden="true" />
+              <h3>Your scope</h3>
+            </div>
+
+            {summary ? (
+              <pre className="scope-summary__body">{summary}</pre>
+            ) : (
+              <p className="scope-summary__empty">
+                Choose a method and an asset and the scope will build up here.
+              </p>
+            )}
+
+            <button
+              className="btn btn-primary scope-send"
+              disabled={!ready}
+              onClick={() => onOpenContact(summary)}
+            >
+              <span>Send this scope</span>
+              <ChevronRight size={15} aria-hidden="true" />
+            </button>
+
+            <p className="scope-disclaimer">
+              <Info size={14} aria-hidden="true" />
+              <span>
+                No price is shown here on purpose. NDT is priced on access, shutdown window,
+                source logistics and the standard being worked to — a figure generated from a
+                form would be a guess, and the proposal would contradict it.
+              </span>
+            </p>
+          </aside>
         </div>
       </div>
 
       <style>{`
-        .calculator-section {
-          background: #FFFFFF;
-        }
-        .calc-main-card {
-          margin-top: 10px;
-          padding: 36px;
-        }
-        .calc-grid {
-          display: grid;
-          grid-template-columns: 1.2fr 0.8fr;
-          gap: 36px;
-        }
-        .calc-box-title {
-          font-size: 1.25rem;
-          color: var(--navy);
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 20px;
-          padding-bottom: 14px;
-          border-bottom: 1px solid #E2E8F0;
+        .scope-layout { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 40px; align-items: start; }
+
+        .scope-block { border: 0; padding: 0; margin: 0 0 36px; }
+        .scope-legend {
+          font-size: 0.8125rem;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--brand);
+          margin-bottom: 16px;
+          padding: 0;
         }
 
-        .control-group {
-          margin-bottom: 20px;
-        }
-        .control-label {
+        .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .method-chip {
           display: flex;
-          justify-content: space-between;
           align-items: center;
-          font-size: 0.9rem;
-          color: var(--navy);
-          font-weight: 600;
-          margin-bottom: 8px;
-        }
-
-        .choice-grid.column {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .choice-btn {
-          padding: 12px 16px;
-          background: #F8FAFC;
-          border: 1px solid #E2E8F0;
-          border-radius: var(--radius-sm);
-          color: var(--text-muted);
-          font-family: var(--font-heading);
-          font-weight: 600;
-          font-size: 0.88rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
+          gap: 11px;
           text-align: left;
+          padding: 13px 15px;
+          background: #fff;
+          border: 1px solid var(--line);
+          border-radius: var(--radius-md);
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: var(--navy);
+          cursor: pointer;
+          transition: border-color 0.2s ease, background 0.2s ease;
         }
-        .choice-btn:hover {
-          border-color: #CBD5E1;
+        .method-chip:hover { border-color: var(--muted); }
+        .method-chip.is-on { border-color: var(--brand); background: var(--primary-light); }
+        .method-chip__box {
+          width: 22px;
+          height: 22px;
+          flex: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--muted);
+          background: #fff;
+          color: var(--brand);
         }
-        .choice-btn.active {
+        .method-chip.is-on .method-chip__box { border-color: var(--brand); }
+        .scope-hint { margin-top: 12px; font-size: 0.8125rem; color: var(--text-dim); }
+
+        .scope-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .scope-field--notes { margin-top: 20px; }
+        .scope-field textarea.field-input { resize: vertical; }
+
+        .timing-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .timing-chip {
+          padding: 11px 18px;
+          background: #fff;
+          border: 1px solid var(--line);
+          border-radius: var(--radius-md);
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: var(--navy);
+          cursor: pointer;
+          transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .timing-chip:hover { border-color: var(--muted); }
+        .timing-chip.is-on { border-color: var(--brand); background: var(--primary-light); }
+
+        .scope-summary {
+          position: sticky;
+          top: calc(var(--nav-h, 124px) + 24px);
           background: var(--navy);
-          color: #FFFFFF;
-          border-color: var(--navy);
-        }
-
-        .calc-select {
-          width: 100%;
-          padding: 11px 14px;
-          background: #F8FAFC;
-          border: 1px solid #E2E8F0;
-          border-radius: var(--radius-sm);
-          color: var(--navy);
-          font-size: 0.92rem;
-          outline: none;
-          font-weight: 500;
-        }
-
-        /* Summary Panel */
-        .calc-summary-panel {
-          background: #F8FAFC;
+          color: rgba(255, 255, 255, 0.82);
           border-radius: var(--radius-lg);
-          padding: 28px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          border: 1px solid #E2E8F0;
+          padding: 28px 26px;
         }
-        .summary-badge {
-          font-family: var(--font-mono);
-          font-size: 0.75rem;
-          color: var(--text-muted);
-          letter-spacing: 0.05em;
-          margin-bottom: 12px;
-          font-weight: 700;
-        }
-        .price-display {
-          display: flex;
-          align-items: baseline;
-          margin-bottom: 8px;
-        }
-        .price-amount {
-          font-family: var(--font-mono);
-          font-size: 2.1rem;
-          font-weight: 900;
-          color: var(--navy);
-        }
-
-        .billing-note {
-          font-size: 0.82rem;
-          color: var(--text-muted);
+        .scope-summary__head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+        .scope-summary__head h3 { color: #fff; font-size: 1.1rem; }
+        .scope-summary__head svg { color: #FF7A78; }
+        .scope-summary__body {
+          font-family: inherit;
+          font-size: 0.875rem;
+          line-height: 1.7;
+          white-space: pre-wrap;
+          word-break: break-word;
+          background: rgba(255, 255, 255, 0.06);
+          border-left: 3px solid #FF7A78;
+          padding: 16px;
           margin-bottom: 20px;
-          line-height: 1.4;
         }
-
-        .summary-line-items {
+        .scope-summary__empty {
+          font-size: 0.875rem;
+          line-height: 1.65;
+          color: rgba(255, 255, 255, 0.6);
+          margin-bottom: 20px;
+        }
+        .scope-send { width: 100%; }
+        .scope-disclaimer {
           display: flex;
-          flex-direction: column;
-          gap: 10px;
-          border-top: 1px solid #E2E8F0;
-          padding-top: 16px;
+          gap: 9px;
+          margin-top: 18px;
+          font-size: 0.78rem;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.62);
         }
-        .line-item {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.88rem;
-          color: var(--text-muted);
-        }
-        .line-item strong {
-          color: var(--navy);
-        }
+        .scope-disclaimer svg { flex: none; margin-top: 2px; }
 
-        @media (max-width: 900px) {
-          .calc-grid { grid-template-columns: 1fr; }
-          .calc-main-card { padding: 24px; }
+        @media (max-width: 1024px) {
+          .scope-layout { grid-template-columns: 1fr; }
+          .scope-summary { position: static; }
+        }
+        @media (max-width: 767px) {
+          .method-grid { grid-template-columns: 1fr; }
+          .scope-row { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>

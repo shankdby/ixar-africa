@@ -5,12 +5,12 @@ import CertVerifier from '../components/CertVerifier';
 
 export default function TrainingPage({ onOpenContact }) {
   return (
-    <div className="page-wrapper" style={{ paddingTop: '150px' }}>
+    <div className="page-wrapper">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag"><Award size={14} /> BARC & NDT ACCREDITATION</div>
+          <div className="section-tag"><Award size={14} /> Training and certification</div>
           <h2 className="section-title">
-            Radiation Safety <span className="text-orange">Training & Certification</span>
+            NDT Training and Certification
           </h2>
           <p className="section-subtitle">
             Industry-recognized training courses in collaboration with Radiological Physics & Advisory Division, Bhabha Atomic Research Centre (BARC), Mumbai.
@@ -26,40 +26,38 @@ export default function TrainingPage({ onOpenContact }) {
               Mandatory qualification course for NDT radiographers operating industrial gamma radiography cameras and X-ray generators in compliance with AERB radiation safety rules.
             </p>
 
-            <div className="course-placeholder">
-              <ImagePlaceholder 
-                label="BARC Training Center Classroom & Gamma Radiography Practical Lab"
-                recommendedSize="800 x 450 px"
-                height="220px"
-                aspect="16/9"
+            <div className="course-media" style={{ borderRadius: '8px', overflow: 'hidden', marginTop: '16px', marginBottom: '16px' }}>
+              <img 
+                src="/images/barc_training_center.jpg" 
+                alt="BARC-accredited training centre and gamma radiography practical lab" 
+                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 
               />
             </div>
 
             <div className="course-features">
               <div className="c-feat"><CheckCircle2 size={15} color="var(--primary)" /> RPAD / BARC Advisory Division Curriculum</div>
-              <div className="c-feat"><CheckCircle2 size={15} color="var(--primary)" /> Practical Exposure & Shielding Calculations</div>
+              <div className="c-feat"><CheckCircle2 size={15} color="var(--primary)" /> Practical Exposure &amp; Shielding Calculations</div>
               <div className="c-feat"><CheckCircle2 size={15} color="var(--primary)" /> Radiation Protection Officer (RPO) Path</div>
             </div>
 
             <button onClick={() => onOpenContact('BARC Training Course Registration')} className="btn btn-primary btn-lg" style={{ marginTop: '20px', width: '100%' }}>
-              <span>Register for 2026 Batch</span>
+              <span>Ask about the next course</span>
               <ChevronRight size={16} />
             </button>
           </div>
 
           <div className="clean-card course-card">
-            <div className="course-badge"><UserCheck size={14} /> Level II & III Prep</div>
+            <div className="course-badge"><UserCheck size={14} /> Level II &amp; III Prep</div>
             <h3 className="course-title">ASNT Level II / III Examination Preparation Courses</h3>
             <p className="course-desc">
               Advanced technical preparatory training for UT, PAUT, TOFD, MFL, and PT/MT methods following SNT-TC-1A and ISO 9712 guidelines.
             </p>
 
-            <div className="course-placeholder">
-              <ImagePlaceholder 
-                label="Ultrasonic & Phased Array Calibration Practical Testing Room"
-                recommendedSize="800 x 450 px"
-                height="220px"
-                aspect="16/9"
+            <div className="course-media" style={{ borderRadius: '8px', overflow: 'hidden', marginTop: '16px', marginBottom: '16px' }}>
+              <img 
+                src="/images/radiography_detail_hero.jpg" 
+                alt="Ultrasonic and phased array calibration room" 
+                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 
               />
             </div>
 
@@ -70,13 +68,15 @@ export default function TrainingPage({ onOpenContact }) {
             </div>
 
             <button onClick={() => onOpenContact('ASNT Level II/III Training Enrollment')} className="btn btn-navy btn-lg" style={{ marginTop: '20px', width: '100%' }}>
-              <span>Enroll in ASNT Course</span>
+              <span>Ask about ASNT preparation</span>
               <ChevronRight size={16} />
             </button>
           </div>
         </div>
 
-        {/* Certificate Verifier Section */}
+
+
+        {/* Certificate verification */}
         <CertVerifier />
       </div>
 
@@ -117,6 +117,11 @@ export default function TrainingPage({ onOpenContact }) {
           display: flex;
           flex-direction: column;
           gap: 8px;
+        }
+        .training-caveat {
+          margin: 0 0 40px;
+          font-size: 0.875rem;
+          line-height: 1.7;
         }
         .c-feat {
           display: flex;

@@ -1,47 +1,86 @@
+/* ==========================================================================
+   IXAR — global design system
+   Tokens taken from ixar.in (Phlox Pro / Elementor kit 46), so the whole site
+   reads as one brand with the East Africa page.
+
+   The custom property NAMES are kept from the previous orange theme on
+   purpose: every page and component already references --primary, --navy,
+   --text-muted and so on, so repointing the values here restyles them without
+   touching a hundred call sites. Where a name no longer describes its value
+   (--primary is red, not orange) an alias is provided rather than a rename.
+   ========================================================================== */
+
 :root {
+  /* --- brand ------------------------------------------------------------ */
+  --brand: #E31E24;
+  --brand-dark: #B00502;
+  --primary: #E31E24;          /* alias: legacy name, brand red */
+  --primary-dark: #B00502;
+  --primary-light: #FDECEC;
+  --primary-border: #F8D2D1;
+
+  --navy: #001E57;
+  --navy-light: #0A2C6B;
+  --navy-dark: #00163F;
+  --navy-badge-bg: #EEF2F8;
+
+  /* --- neutrals --------------------------------------------------------- */
+  --ink: #000000;
   --bg-light: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-tertiary: #F1F5F9;
-  --bg-dark-navy: #0F172A;
-  
+  --bg-secondary: #F9F9F9;
+  --bg-tertiary: #EDF2F1;
+  --bg-tint: #EDF2F1;
+  --bg-dark-navy: #001E57;
+
   --card-bg: #FFFFFF;
-  --card-border: #E2E8F0;
-  --card-hover-border: #CBD5E1;
-  
-  --primary: #EA580C; /* Safety Industrial Orange */
-  --primary-dark: #C2410C;
-  --primary-light: #FFF7ED;
-  --primary-border: #FFEDD5;
-  
-  --navy: #0F172A;
-  --navy-light: #1E293B;
-  --navy-badge-bg: #F0F3F9;
-  
-  --accent-blue: #0284C7;
-  --accent-emerald: #16A34A;
-  --accent-amber: #D97706;
-  
-  --text-main: #0F172A;
-  --text-muted: #475569;
-  --text-dim: #64748B;
+  --card-border: #EAEAEA;
+  --card-hover-border: #C6D2CF;
+  --line: #EAEAEA;
+  --muted: #C6D2CF;
+
+  --text-main: #000000;
+  --text-body: #444444;
+  --text-muted: #444444;
+  --text-dim: #6B6B6B;
   --text-white: #FFFFFF;
-  
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  
-  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
-  
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.12);
-  --shadow-hover: 0 20px 40px -8px rgba(234, 88, 12, 0.18);
+
+  /* --- accents ---------------------------------------------------------- */
+  --accent-blue: #0A2C6B;
+  --accent-emerald: #1B7F4C;
+  --accent-amber: #E9BC63;
+  --amber-bg: #FFF3D6;
+  --amber-line: #E9BC63;
+  --amber-ink: #7A5200;
+
+  /* --- shape ------------------------------------------------------------
+     ixar.in is a square-cornered design. Buttons have no radius at all;
+     cards and inputs take only a slight softening. */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 10px;
+  --radius-btn: 0px;
+
+  /* --- type ------------------------------------------------------------- */
+  --font-heading: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Mulish', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* --- depth ------------------------------------------------------------ */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 20px rgba(0, 30, 87, 0.08);
+  --shadow-lg: 0 14px 34px rgba(0, 30, 87, 0.13);
+  --shadow-hover: 0 14px 34px rgba(0, 30, 87, 0.13);
+
+  /* --- layout ----------------------------------------------------------- */
+  --wrap: 1240px;
+  --gutter: 24px;
+  --section-y: 96px;
 }
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -50,126 +89,200 @@
 html {
   scroll-behavior: smooth;
   color-scheme: light;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background-color: var(--bg-light);
-  color: var(--text-main);
+  color: var(--text-body);
   font-family: var(--font-body);
-  overflow-x: hidden;
+  font-size: 16px;
   line-height: 1.6;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+img {
+  display: block;
+  height: auto;
+}
+
+/* Keyboard focus must stay visible for accessibility, but the default ring is
+   invisible against navy sections, so it is drawn in brand red everywhere. */
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--brand);
+  color: #fff;
 }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 9px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
-}
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand); }
 
-/* Typography */
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--navy);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
 }
 
-.text-orange {
-  color: var(--primary);
-}
+h1 { font-size: clamp(2rem, 1.35rem + 2.7vw, 3.5rem); font-weight: 800; }
+h2 { font-size: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem); }
+h3 { font-size: clamp(1.15rem, 1.05rem + 0.45vw, 1.35rem); }
 
-.text-navy {
-  color: var(--navy);
-}
+p { overflow-wrap: break-word; }
 
-/* Buttons */
+a { color: inherit; text-decoration: none; }
+
+.text-orange,
+.text-brand { color: var(--brand); }
+
+.text-navy { color: var(--navy); }
+
+/* --------------------------------------------------------------------------
+   Buttons — square, heavy, two-pixel border. Straight from ixar.in.
+   -------------------------------------------------------------------------- */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 13px 26px;
+  padding: 15px 28px;
   font-family: var(--font-heading);
-  font-size: 0.98rem;
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  border: 2px solid transparent;
+  border-radius: var(--radius-btn);
   cursor: pointer;
-  transition: all 0.25s ease-in-out;
   text-decoration: none;
+  text-align: center;
+  transition: background 0.22s ease, color 0.22s ease,
+              border-color 0.22s ease, transform 0.22s ease;
 }
 
 .btn-primary {
-  background: var(--primary);
+  background: var(--brand);
   color: var(--text-white);
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
+  border-color: var(--brand);
 }
 .btn-primary:hover {
-  background: var(--primary-dark);
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.35);
 }
 
 .btn-navy {
   background: var(--navy);
   color: var(--text-white);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+  border-color: var(--navy);
 }
 .btn-navy:hover {
-  background: var(--navy-light);
+  background: var(--navy-dark);
+  border-color: var(--navy-dark);
   transform: translateY(-2px);
 }
 
 .btn-outline {
-  background: #FFFFFF;
+  background: transparent;
   color: var(--navy);
-  border: 1.5px solid #CBD5E1;
+  border-color: var(--navy);
 }
 .btn-outline:hover {
-  background: var(--bg-secondary);
-  border-color: var(--navy);
-  color: var(--navy);
+  background: var(--navy);
+  color: var(--text-white);
   transform: translateY(-2px);
 }
 
-.btn-sm {
-  padding: 8px 16px;
-  font-size: 0.88rem;
-  border-radius: var(--radius-sm);
+.btn-ghost {
+  background: transparent;
+  color: var(--text-white);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+.btn-ghost:hover {
+  background: var(--text-white);
+  color: var(--navy);
+  border-color: var(--text-white);
+  transform: translateY(-2px);
 }
 
-.btn-lg {
-  padding: 16px 32px;
-  font-size: 1.05rem;
-  border-radius: var(--radius-md);
+/* Legacy alias from the previous theme. */
+.btn-cyan { background: var(--navy); color: #fff; border-color: var(--navy); }
+.btn-cyan:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
+
+.btn-sm { padding: 10px 18px; font-size: 0.8125rem; }
+.btn-lg { padding: 17px 34px; font-size: 0.95rem; }
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
 }
 
-/* Container & Sections */
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
 .container {
-  max-width: 1240px;
+  width: 100%;
+  max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
 }
 
 .section {
-  padding: 90px 0;
+  padding: var(--section-y) 0;
   position: relative;
 }
 
+.section-tint { background: var(--bg-tint); }
+.section-navy { background: var(--navy); color: rgba(255, 255, 255, 0.82); }
+.section-navy h1,
+.section-navy h2,
+.section-navy h3,
+.section-navy h4 { color: #fff; }
+
+.page-wrapper {
+  min-height: 60vh;
+  /* --nav-h is published by Navbar at runtime; the fallback covers the first
+     paint and any render without the navbar mounted. */
+  padding-top: calc(var(--nav-h, 124px) + 48px);
+  padding-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .page-wrapper { padding-top: calc(var(--nav-h, 116px) + 28px); }
+}
+
+/* --------------------------------------------------------------------------
+   Section headings — eyebrow, title, red rule.
+   -------------------------------------------------------------------------- */
+
 .section-header {
   text-align: center;
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto 50px auto;
 }
 
@@ -177,110 +290,276 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 16px;
-  background: var(--primary-light);
-  border: 1px solid var(--primary-border);
-  border-radius: 100px;
-  color: var(--primary-dark);
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 700;
+  color: var(--brand);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 16px;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+  background: none;
+  border: 0;
+  padding: 0;
 }
+
+.section-navy .section-tag { color: #FF7A78; }
 
 .section-title {
-  font-size: 2.6rem;
+  font-size: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+  color: var(--ink);
   margin-bottom: 18px;
-  color: var(--navy);
 }
 
+/* The red rule under a centred heading. */
+.section-header .section-title::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 4px;
+  background: var(--brand);
+  margin: 20px auto 0;
+}
+
+.section-navy .section-header .section-title::after { background: #FF7A78; }
+
 .section-subtitle {
-  color: var(--text-muted);
-  font-size: 1.1rem;
+  color: var(--text-body);
+  font-size: 1.0625rem;
   line-height: 1.7;
 }
 
-/* Clean Cards */
+.rule {
+  display: block;
+  width: 64px;
+  height: 4px;
+  background: var(--brand);
+  margin: 20px 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Cards
+   -------------------------------------------------------------------------- */
+
 .clean-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 28px;
   box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease;
   position: relative;
 }
 
 .clean-card:hover {
   border-color: var(--card-hover-border);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
 }
 
-.clean-card.highlight-orange:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-hover);
+.clean-card.highlight-orange:hover,
+.clean-card.highlight-brand:hover {
+  border-color: var(--brand);
 }
 
-/* Badges */
+/* Card with the brand rule along its top edge. */
+.topline-card { border-top: 4px solid var(--brand); border-radius: var(--radius-md); }
+
+/* --------------------------------------------------------------------------
+   Badges
+   -------------------------------------------------------------------------- */
+
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
-  border-radius: 100px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  font-family: var(--font-mono);
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.badge-orange {
+.badge-orange,
+.badge-brand {
   background: var(--primary-light);
-  color: var(--primary-dark);
+  color: var(--brand-dark);
   border: 1px solid var(--primary-border);
 }
 
 .badge-navy {
   background: var(--navy-badge-bg);
   color: var(--navy);
-  border: 1px solid #CBD5E1;
+  border: 1px solid #D3DBE7;
 }
 
 .badge-emerald {
-  background: #F0FDF4;
-  color: #15803D;
-  border: 1px solid #BBF7D0;
+  background: #EFF7F2;
+  color: var(--accent-emerald);
+  border: 1px solid #CBE5D8;
 }
 
-/* Grid layout helpers */
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+/* Anything IXAR has still to confirm. */
+.chip {
+  display: inline;
+  padding: 1px 9px;
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-line);
+  border-radius: 3px;
+  color: var(--amber-ink);
+  font-size: 0.86em;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+/* --------------------------------------------------------------------------
+   Grid helpers
+   -------------------------------------------------------------------------- */
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+/* A grid item's default min-width is auto, not 0 — so one long unbreakable
+   string (a service title, an email address) makes its track refuse to shrink
+   and pushes the whole grid past the viewport. This is the single most common
+   cause of horizontal scroll on narrow screens. */
+.grid-2 > *,
+.grid-3 > *,
+.grid-4 > * { min-width: 0; }
+
+/* --------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------- */
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
 }
 
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+.field-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--navy);
+  margin-bottom: 8px;
 }
+
+.field-input,
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #D9DEE1;
+  border-radius: var(--radius-md);
+  background: #fff;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-input:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(0, 30, 87, 0.1);
+}
+
+/* iOS zooms the page in when a focused input's text is under 16px. */
+@media (max-width: 767px) {
+  .field-input,
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utilities
+   -------------------------------------------------------------------------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 2000;
+  background: var(--brand);
+  color: #fff;
+  padding: 12px 20px;
+  font-weight: 700;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 16px; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
 
 @media (max-width: 1024px) {
+  :root { --section-y: 76px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
-  .section-title { font-size: 2.15rem; }
 }
 
-@media (max-width: 768px) {
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .section { padding: 60px 0; }
-  .section-title { font-size: 1.8rem; }
+/* Two dense cards side by side stop working well above the phone breakpoint. */
+@media (max-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767px) {
+  :root { --section-y: 60px; --gutter: 20px; }
+  .grid-2,
+  .grid-3,
+  .grid-4 { grid-template-columns: 1fr; }
+  .section-header { margin-bottom: 34px; }
+  .btn { padding: 14px 22px; }
+  .clean-card { padding: 22px; }
+}
+
+/* Long unbroken strings (emails, URLs) must not force a horizontal scrollbar
+   on narrow phones. */
+@media (max-width: 420px) {
+  body { word-break: break-word; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .btn:hover,
+  .clean-card:hover { transform: none; }
+}
+
+@media print {
+  .navbar-header,
+  .footer-section,
+  .ea-wa-float,
+  .ea-review-bar { display: none !important; }
 }

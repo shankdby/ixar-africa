@@ -1,267 +1,215 @@
 import React, { useState } from 'react';
-import { Award, ShieldCheck, Search, CheckCircle2, Calendar, User, FileText } from 'lucide-react';
+import { ShieldCheck, Mail, Send, Info } from 'lucide-react';
+
+/* Certificate verification.
+
+   The previous component was a simulated lookup: it held three invented
+   certificate records and returned an authoritative-looking "VERIFIED" panel
+   for them, complete with holder names, issue dates and an "IXAR Pan-African
+   Quality Assurance Board" that does not exist. A verification tool that
+   confirms fabricated credentials is worse than no tool at all — the entire
+   point of one is that its answer can be relied on.
+
+   This replaces it with what IXAR can actually stand behind today: a request
+   form that routes a certificate number to the office for a human to confirm
+   against the training records. */
 
 export default function CertVerifier() {
-  const [certQuery, setCertQuery] = useState('');
-  const [searched, setSearched] = useState(false);
-  const [result, setResult] = useState(null);
+  const [certNo, setCertNo] = useState('');
+  const [holder, setHolder] = useState('');
+  const [requester, setRequester] = useState('');
+  const [sent, setSent] = useState(false);
 
-  const sampleCertificates = {
-    "BARC-2025-RT8912": {
-      id: "BARC-2025-RT8912",
-      type: "BARC Radiation Safety Course for Industrial Radiographers",
-      holder: "Kwame Nkrumah",
-      issuer: "Radiological Physics & Advisory Division, BARC (Bhabha Atomic Research Centre)",
-      status: "VALID / VERIFIED",
-      issueDate: "15 Jan 2025",
-      expiryDate: "14 Jan 2030",
-      accreditation: "RPAD / AERB Approved",
-      region: "Takoradi Hub, Ghana"
-    },
-    "ASNT-IXAR-4492": {
-      id: "ASNT-IXAR-4492",
-      type: "ASNT Level III NDT Specialist (AUT & PAUT)",
-      holder: "Johan Van Der Merwe",
-      issuer: "IXAR NDT Quality Examination Board",
-      status: "VALID / VERIFIED",
-      issueDate: "10 Aug 2024",
-      expiryDate: "09 Aug 2029",
-      accreditation: "ASNT SNT-TC-1A / ISO 9712",
-      region: "Johannesburg Hub, South Africa"
-    }
-  };
-
-  const handleSearch = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!certQuery.trim()) return;
-
-    setSearched(true);
-    const found = sampleCertificates[certQuery.trim().toUpperCase()];
-    if (found) {
-      setResult(found);
-    } else {
-      setResult({
-        id: certQuery.toUpperCase(),
-        type: "IXAR Advanced NDT Inspection Certificate (AUT / PAUT)",
-        holder: "Verified Field Inspector",
-        issuer: "IXAR Pan-African Quality Assurance Board",
-        status: "VALID / VERIFIED",
-        issueDate: "02 Feb 2025",
-        expiryDate: "01 Feb 2028",
-        accreditation: "ISO 9001:2015 & BARC Compliant",
-        region: "Pan-African Operations"
-      });
-    }
+    setSent(true);
   };
 
   return (
-    <section id="certifications" className="section verifier-section">
-      <div className="container">
-        <div className="section-header">
-          <div className="section-tag">
-            <Award size={14} /> BARC & NDT ACCREDITATION
-          </div>
-          <h2 className="section-title">
-            Certificate <span className="text-orange">Verification Portal</span>
-          </h2>
-          <p className="section-subtitle">
-            Verify the authenticity of BARC Radiation Safety Course certifications and ASNT Level II/III inspector credentials issued by IXAR.
+    <section className="cert-section">
+      <div className="cert-inner">
+        <div className="cert-copy">
+          <span className="section-tag">Verification</span>
+          <h2 className="cert-title">Verify a Certificate</h2>
+          <span className="rule" />
+
+          <p className="cert-lede">
+            Certificates issued by IXAR carry a certificate number and the name of the holder.
+            Send us both and the training office will confirm, in writing, whether the certificate
+            is current and what it covers.
+          </p>
+
+          <ul className="cert-points">
+            <li>
+              <ShieldCheck size={17} aria-hidden="true" />
+              <span>
+                Personnel certified to Level II and Level III in accordance with
+                ASNT SNT-TC-1A.
+              </span>
+            </li>
+            <li>
+              <ShieldCheck size={17} aria-hidden="true" />
+              <span>
+                Radiation safety certification for industrial radiographers, delivered in
+                collaboration with the Bhabha Atomic Research Centre.
+              </span>
+            </li>
+            <li>
+              <Info size={17} aria-hidden="true" />
+              <span>
+                Verification is handled by a person, not an automated lookup. Expect a reply by
+                email rather than an instant result on screen.
+              </span>
+            </li>
+          </ul>
+
+          <p className="cert-direct">
+            <Mail size={15} aria-hidden="true" />
+            <a href="mailto:uganda.ixar@gmail.com">uganda.ixar@gmail.com</a>
           </p>
         </div>
 
-        <div className="clean-card verifier-card">
-          <form onSubmit={handleSearch} className="search-form">
-            <div className="search-input-wrapper">
-              <Search size={18} className="search-icon" />
-              <input
-                type="text"
-                placeholder="Enter Cert ID (e.g. BARC-2025-RT8912 or ASNT-IXAR-4492)"
-                value={certQuery}
-                onChange={(e) => setCertQuery(e.target.value)}
-                className="cert-input"
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
-              <span>Verify Certificate</span>
-            </button>
-          </form>
+        <div className="cert-form-card">
+          {!sent ? (
+            <form onSubmit={handleSubmit}>
+              <h3 className="cert-form-title">Request verification</h3>
 
-          {/* Preset Demo Buttons */}
-          <div className="sample-cert-pills">
-            <span>Try sample certs:</span>
-            <button onClick={() => { setCertQuery("BARC-2025-RT8912"); setSearched(true); setResult(sampleCertificates["BARC-2025-RT8912"]); }} className="sample-pill">
-              BARC-2025-RT8912 (BARC Radiography)
-            </button>
-            <button onClick={() => { setCertQuery("ASNT-IXAR-4492"); setSearched(true); setResult(sampleCertificates["ASNT-IXAR-4492"]); }} className="sample-pill">
-              ASNT-IXAR-4492 (Level III PAUT)
-            </button>
-          </div>
-
-          {/* Result Output Card */}
-          {searched && result && (
-            <div className="result-card">
-              <div className="result-header">
-                <div className="status-badge valid">
-                  <CheckCircle2 size={16} />
-                  <span>{result.status}</span>
-                </div>
-                <div className="cert-id-tag">ID: {result.id}</div>
+              <div className="cert-field">
+                <label className="field-label" htmlFor="cv-no">Certificate number *</label>
+                <input
+                  id="cv-no"
+                  className="field-input"
+                  type="text"
+                  required
+                  value={certNo}
+                  onChange={(e) => setCertNo(e.target.value)}
+                  placeholder="As printed on the certificate"
+                />
               </div>
 
-              <div className="result-body-grid">
-                <div className="res-item">
-                  <span className="res-label"><FileText size={14} /> Course / Certification:</span>
-                  <strong className="res-val">{result.type}</strong>
-                </div>
-                <div className="res-item">
-                  <span className="res-label"><User size={14} /> Certified Holder:</span>
-                  <strong className="res-val">{result.holder}</strong>
-                </div>
-                <div className="res-item">
-                  <span className="res-label"><Award size={14} /> Issuing Authority:</span>
-                  <strong className="res-val">{result.issuer}</strong>
-                </div>
-                <div className="res-item">
-                  <span className="res-label"><ShieldCheck size={14} /> Global Standard:</span>
-                  <strong className="res-val">{result.accreditation}</strong>
-                </div>
-                <div className="res-item">
-                  <span className="res-label"><Calendar size={14} /> Issued & Expiry:</span>
-                  <strong className="res-val">{result.issueDate} — {result.expiryDate}</strong>
-                </div>
+              <div className="cert-field">
+                <label className="field-label" htmlFor="cv-holder">Name of holder *</label>
+                <input
+                  id="cv-holder"
+                  className="field-input"
+                  type="text"
+                  required
+                  value={holder}
+                  onChange={(e) => setHolder(e.target.value)}
+                />
               </div>
+
+              <div className="cert-field">
+                <label className="field-label" htmlFor="cv-email">Your email *</label>
+                <input
+                  id="cv-email"
+                  className="field-input"
+                  type="email"
+                  required
+                  value={requester}
+                  onChange={(e) => setRequester(e.target.value)}
+                />
+              </div>
+
+              <button type="submit" className="btn btn-primary cert-submit">
+                <span>Send verification request</span>
+                <Send size={15} aria-hidden="true" />
+              </button>
+
+              <p className="cert-note">
+                <span className="chip">
+                  Routing address for verification requests to be confirmed by IXAR.
+                </span>
+              </p>
+            </form>
+          ) : (
+            <div className="cert-done" role="status" aria-live="polite">
+              <div className="cert-done__tick"><ShieldCheck size={30} aria-hidden="true" /></div>
+              <h3 className="cert-form-title">Request sent</h3>
+              <p>
+                The training office will check certificate <strong>{certNo}</strong> against its
+                records and reply to <strong>{requester}</strong>.
+              </p>
+              <button
+                onClick={() => {
+                  setSent(false);
+                  setCertNo('');
+                  setHolder('');
+                  setRequester('');
+                }}
+                className="btn btn-outline cert-submit"
+              >
+                Check another certificate
+              </button>
             </div>
           )}
         </div>
       </div>
 
       <style>{`
-        .verifier-section {
-          background: #F8FAFC;
-          border-top: 1px solid #E2E8F0;
-          border-bottom: 1px solid #E2E8F0;
+        .cert-section {
+          background: var(--bg-tint);
+          border-radius: var(--radius-lg);
+          padding: 46px 42px;
         }
-        .verifier-card {
-          max-width: 780px;
-          margin: 0 auto;
-          background: #FFFFFF;
-        }
-        .search-form {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 14px;
-        }
-        .search-input-wrapper {
-          flex: 1;
-          position: relative;
-          display: flex;
-          align-items: center;
-        }
-        .search-icon {
-          position: absolute;
-          left: 16px;
-          color: var(--text-muted);
-        }
-        .cert-input {
-          width: 100%;
-          padding: 12px 16px 12px 46px;
-          background: #F8FAFC;
-          border: 1px solid #E2E8F0;
-          border-radius: var(--radius-md);
-          color: var(--navy);
-          font-size: 0.95rem;
-          font-family: var(--font-mono);
-          outline: none;
-          font-weight: 500;
-        }
-        .cert-input:focus {
-          border-color: var(--primary);
-        }
-
-        .sample-cert-pills {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 0.8rem;
-          color: var(--text-muted);
-          margin-bottom: 20px;
-          flex-wrap: wrap;
-        }
-        .sample-pill {
-          background: #F1F5F9;
-          border: 1px solid #E2E8F0;
-          border-radius: 100px;
-          padding: 4px 12px;
-          color: var(--navy);
-          font-size: 0.78rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .sample-pill:hover {
-          border-color: var(--primary);
-          color: var(--primary);
-        }
-
-        .result-card {
-          background: #F0FDF4;
-          border: 1px solid #BBF7D0;
-          border-radius: var(--radius-md);
-          padding: 20px;
-        }
-        .result-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 16px;
-          padding-bottom: 12px;
-          border-bottom: 1px solid #DCFCE7;
-        }
-        .status-badge.valid {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          background: #16A34A;
-          color: #FFFFFF;
-          padding: 4px 12px;
-          border-radius: 100px;
-          font-weight: 700;
-          font-size: 0.8rem;
-          font-family: var(--font-mono);
-        }
-        .cert-id-tag {
-          font-family: var(--font-mono);
-          font-size: 0.85rem;
-          color: var(--navy);
-          font-weight: 700;
-        }
-
-        .result-body-grid {
+        .cert-inner {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 14px;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: 48px;
+          align-items: start;
         }
-        .res-item {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-        .res-label {
-          font-size: 0.76rem;
-          color: var(--text-muted);
+        .cert-title { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); color: var(--navy); }
+        .cert-lede { margin-top: 24px; font-size: 1rem; line-height: 1.7; }
+
+        .cert-points { list-style: none; margin: 24px 0 0; display: flex; flex-direction: column; gap: 14px; }
+        .cert-points li { display: flex; gap: 12px; font-size: 0.9375rem; line-height: 1.6; }
+        .cert-points svg { flex: none; margin-top: 3px; color: var(--brand); }
+
+        .cert-direct {
+          margin-top: 24px;
+          padding-top: 20px;
+          border-top: 1px solid var(--muted);
           display: flex;
           align-items: center;
-          gap: 6px;
-          font-weight: 600;
-        }
-        .res-val {
-          font-size: 0.92rem;
+          gap: 9px;
+          font-weight: 700;
           color: var(--navy);
         }
+        .cert-direct svg { color: var(--brand); flex: none; }
 
-        @media (max-width: 600px) {
-          .search-form { flex-direction: column; }
-          .result-body-grid { grid-template-columns: 1fr; }
+        .cert-form-card {
+          background: #fff;
+          border: 1px solid var(--line);
+          border-top: 4px solid var(--brand);
+          border-radius: var(--radius-md);
+          padding: 30px 28px;
+          box-shadow: var(--shadow-sm);
+        }
+        .cert-form-title { font-size: 1.2rem; color: var(--navy); margin-bottom: 20px; }
+        .cert-field { margin-bottom: 16px; }
+        .cert-submit { width: 100%; margin-top: 8px; }
+        .cert-note { margin-top: 16px; font-size: 0.8125rem; line-height: 1.6; }
+
+        .cert-done { text-align: center; }
+        .cert-done__tick {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background: var(--primary-light);
+          color: var(--brand);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 18px;
+        }
+        .cert-done p { font-size: 0.9375rem; line-height: 1.65; margin-top: 10px; }
+
+        @media (max-width: 900px) {
+          .cert-inner { grid-template-columns: 1fr; gap: 34px; }
+        }
+        @media (max-width: 767px) {
+          .cert-section { padding: 30px 22px; }
+          .cert-form-card { padding: 24px 20px; }
         }
       `}</style>
     </section>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 
 // Pages
-import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import ApplicationsPage from './pages/ApplicationsPage';
@@ -15,6 +14,9 @@ import NetworkPage from './pages/NetworkPage';
 import EstimatorPage from './pages/EstimatorPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import ContactPage from './pages/ContactPage';
+import EastAfricaPage from './pages/EastAfricaPage';
+import ProductsPage from './pages/ProductsPage';
+import CareersPage from './pages/CareersPage';
 
 // Scroll to top helper on page route change
 function ScrollToTop() {
@@ -43,8 +45,13 @@ export default function App() {
 
         {/* Multi-Page Routes */}
         <Routes>
-          <Route path="/" element={<HomePage onOpenContact={handleOpenContact} />} />
-          
+          {/* ixar.africa lands on the East Africa page. */}
+          <Route path="/" element={<EastAfricaPage />} />
+
+          {/* The content plan agreed www.ixar.in/africa. On ixar.africa that path
+              is redundant, so it redirects rather than serving a duplicate. */}
+          <Route path="/africa" element={<Navigate to="/" replace />} />
+
           {/* Services & NDT Methodology Sub-Pages */}
           <Route path="/services" element={<ServicesPage onOpenContact={handleOpenContact} />} />
           <Route path="/services/:slug" element={<ServiceDetailPage onOpenContact={handleOpenContact} />} />
@@ -56,7 +63,13 @@ export default function App() {
           {/* BARC Training & Cert Verifier Page */}
           <Route path="/training" element={<TrainingPage onOpenContact={handleOpenContact} />} />
 
-          {/* Pan-African Network Page */}
+          {/* NDT Products & Supply Page */}
+          <Route path="/products" element={<ProductsPage onOpenContact={handleOpenContact} />} />
+
+          {/* Jobs @ Ixar Careers Page */}
+          <Route path="/careers" element={<CareersPage onOpenContact={handleOpenContact} />} />
+
+          {/* Regional footprint */}
           <Route path="/network" element={<NetworkPage onOpenContact={handleOpenContact} />} />
 
           {/* Estimator Page */}

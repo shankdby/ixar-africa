@@ -1,152 +1,226 @@
 import React from 'react';
-import { Layers, MapPin, Calendar, Award, ChevronRight } from 'lucide-react';
+import { MapPin, Calendar, ChevronRight, FileText } from 'lucide-react';
+
+/* Projects.
+
+   The previous version listed four case studies with named clients, defect
+   counts and completion figures for work in Ghana, Mozambique, South Africa
+   and Nigeria. None of it was evidenced.
+
+   What follows is only the work there is photographic evidence of: the
+   Tilenga Project in Uganda (CSB, well pad and CPF scopes) and the Praj
+   scope in Tanzania. Client names and dates are marked for confirmation
+   rather than invented, and the content plan's approach is kept — the full
+   record lives in a downloadable project list IXAR maintains, not in prose
+   on the page. */
+
+const PROJECTS = [
+  {
+    id: 'tilenga-cpf',
+    scope: 'Central Processing Facility',
+    project: 'Tilenga Project',
+    country: 'Uganda',
+    period: 'August 2026',
+    summary:
+      'Inspection of process pipework and large-bore insulated lines at the central processing facility, worked across day and night shifts.',
+    methods: ['Radiography (RT)', 'Ultrasonic Testing (UT)', 'Visual Inspection'],
+    image: '/images/east-africa/ea-ind-oil-gas.webp',
+    alt: 'IXAR night shift crew beside a large insulated process line at the Tilenga central processing facility, Uganda',
+  },
+  {
+    id: 'tilenga-wellpad',
+    scope: 'Well pad works',
+    project: 'Tilenga Project',
+    country: 'Uganda',
+    period: 'August 2026',
+    summary:
+      'Spool and girth weld inspection at well pad locations, with crews working from a site compound established for the scope.',
+    methods: ['Radiography (RT)', 'Ultrasonic Testing (UT)'],
+    image: '/images/east-africa/ea-svc-ultrasonic.webp',
+    alt: 'IXAR technicians inspecting a pipe spool mounted on a stand at a Tilenga well pad, Uganda',
+  },
+  {
+    id: 'tilenga-csb',
+    scope: 'Construction support base',
+    project: 'Tilenga Project',
+    country: 'Uganda',
+    period: 'August 2026',
+    summary:
+      'Radiography and ultrasonic inspection of pipe spools and fittings at the construction support base, ahead of installation.',
+    methods: ['Radiography (RT)', 'Pipeline Inspection'],
+    image: '/images/east-africa/ea-svc-pipeline.webp',
+    alt: 'Pipe spools and radiography equipment laid out at the IXAR construction support base compound, Tilenga Project, Uganda',
+  },
+  {
+    id: 'praj',
+    scope: 'Process plant',
+    project: 'Praj scope',
+    country: 'Tanzania',
+    period: 'Dates to be confirmed',
+    summary:
+      'Radiographic inspection of process pipework and valve assemblies on operating plant, using gamma sources with guide tube deployment.',
+    methods: ['Conventional Radiography (RT)'],
+    image: '/images/east-africa/ea-svc-radiography.webp',
+    alt: 'IXAR technician working on process pipework with a radiography source guide tube, Tanzania',
+  },
+];
 
 export default function CaseStudies({ onOpenContact }) {
-  const cases = [
-    {
-      title: "AUT Pipeline Girth Weld Inspection",
-      client: "Ace Pipeline Contracts & West Africa Offshore",
-      location: "Takoradi / Chaara Offshore Corridor",
-      date: "Feb 2023 - Jan 2024",
-      highlight: "100% Zero Defect Tolerance Traceability",
-      desc: "Deployed Automated Ultrasonic Testing (AUT) scanners on 36-inch high-pressure gas pipelines under stringent marine offshore environment with zero turnaround delays.",
-      tag: "Oil & Gas"
-    },
-    {
-      title: "USFD Testing of Rail Tracks & Axles",
-      client: "East Coast & Southern African Railways",
-      location: "Mozambique & South Africa Rail Networks",
-      date: "April 2023 - July 2025",
-      highlight: "Over 4,500 km Rail Inspected",
-      desc: "High-sensitivity ultrasonic flaw detection deployed on critical rail tracks, thermit welds, and rolling stock wheelsets to ensure rail safety compliance.",
-      tag: "Railways"
-    },
-    {
-      title: "Thermal Power Plant Boiler Tube Testing",
-      client: "600 MW Thermal Power Facility",
-      location: "Secunda Hub, South Africa",
-      date: "Nov 2024 - Feb 2025",
-      highlight: "Magnetic Flux Leakage (MFL)",
-      desc: "Emergency shutdown inspection of 12,000+ boiler tubes using MFL and Remote Field Testing (RFT) to locate wall loss and prevent boiler tube leaks.",
-      tag: "Power Generation"
-    },
-    {
-      title: "API 653 Aboveground Storage Tank Audit",
-      client: "Major West African Refinery Complex",
-      location: "Lagos / Takoradi Refinery Terminals",
-      date: "Aug 2024 - Dec 2024",
-      highlight: "Full Tank Floor MFL Mapping",
-      desc: "Comprehensive out-of-service inspection using motorized MFL floor scanners, shell ultrasonic thickness mapping, and API 653 fitness-for-service reporting.",
-      tag: "Refinery Integrity"
-    }
-  ];
-
   return (
-    <section id="case-studies" className="section cases-section">
+    <section className="section projects-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">
-            <Layers size={14} /> PROVEN TRACK RECORD
-          </div>
-          <h2 className="section-title">
-            Featured <span className="text-orange">Pan-African Case Studies</span>
-          </h2>
+          <div className="section-tag">Track record</div>
+          <h2 className="section-title">Projects in the Region</h2>
           <p className="section-subtitle">
-            Demonstrating our technical excellence, speed of deployment, and asset integrity compliance across major continental industrial projects.
+            Work delivered from the East Africa offices. Client names, dates and scope detail are
+            confirmed with IXAR before publication.
           </p>
         </div>
 
-        <div className="grid-2">
-          {cases.map((item, idx) => (
-            <div key={idx} className="clean-card highlight-orange case-card">
-              <div className="case-card-header">
-                <span className="badge badge-orange">{item.tag}</span>
-                <span className="case-highlight"><Award size={13} /> {item.highlight}</span>
-              </div>
+        <div className="projects-grid">
+          {PROJECTS.map((p) => (
+            <article key={p.id} className="project-card">
+              <figure className="project-media">
+                <img src={p.image} alt={p.alt} loading="lazy" />
+              </figure>
 
-              <h3 className="case-title">{item.title}</h3>
-              
-              <div className="case-meta">
-                <span><MapPin size={13} color="var(--primary)" /> {item.location}</span>
-                <span><Calendar size={13} color="var(--text-muted)" /> {item.date}</span>
-              </div>
+              <div className="project-body">
+                <span className="project-scope">{p.scope}</span>
+                <h3 className="project-title">{p.project}</h3>
 
-              <p className="case-desc">{item.desc}</p>
+                <div className="project-meta">
+                  <span><MapPin size={14} aria-hidden="true" /> {p.country}</span>
+                  <span><Calendar size={14} aria-hidden="true" /> {p.period}</span>
+                </div>
 
-              <div className="case-footer">
-                <div className="client-name"><strong>Client:</strong> {item.client}</div>
-                <button onClick={() => onOpenContact(`Case Study Inquiry: ${item.title}`)} className="btn btn-outline btn-sm">
-                  <span>View Technical Details</span>
-                  <ChevronRight size={14} />
-                </button>
+                <p className="project-summary">{p.summary}</p>
+
+                <ul className="project-methods">
+                  {p.methods.map((m) => (
+                    <li key={m}><span className="badge badge-navy">{m}</span></li>
+                  ))}
+                </ul>
               </div>
-            </div>
+            </article>
           ))}
+        </div>
+
+        <div className="projects-note">
+          <span className="chip">
+            Client names and publication permission to be confirmed for every project before this
+            section goes live.
+          </span>
+        </div>
+
+        <div className="projects-cta">
+          <div className="projects-cta__icon"><FileText size={24} aria-hidden="true" /></div>
+          <div className="projects-cta__copy">
+            <h3>Completed projects, East Africa</h3>
+            <p>
+              The full record — client, scope, location and dates — is maintained as a downloadable
+              project list, refreshed as work completes.
+            </p>
+          </div>
+          <button onClick={() => onOpenContact()} className="btn btn-primary">
+            <span>Request the project list</span>
+            <ChevronRight size={15} aria-hidden="true" />
+          </button>
         </div>
       </div>
 
       <style>{`
-        .cases-section {
-          background: #FFFFFF;
-        }
-        .case-card {
+        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+
+        .project-card {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          background: #fff;
+          border: 1px solid var(--line);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          box-shadow: var(--shadow-sm);
+          transition: transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease;
         }
-        .case-card-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 14px;
-        }
-        .case-highlight {
-          font-size: 0.78rem;
-          color: #15803D;
-          font-weight: 700;
-          font-family: var(--font-mono);
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-        .case-title {
-          font-size: 1.3rem;
-          color: var(--navy);
-          margin-bottom: 8px;
-        }
-        .case-meta {
-          display: flex;
-          gap: 16px;
-          font-size: 0.82rem;
-          color: var(--text-muted);
-          margin-bottom: 12px;
-          font-weight: 500;
-        }
-        .case-meta span {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
-        .case-desc {
-          color: var(--text-muted);
-          font-size: 0.9rem;
-          line-height: 1.6;
-          margin-bottom: 18px;
-        }
-        .case-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          border-top: 1px solid #F1F5F9;
-          padding-top: 14px;
-        }
-        .client-name {
-          font-size: 0.82rem;
-          color: var(--text-muted);
+        .project-card:hover {
+          transform: translateY(-6px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--muted);
         }
 
-        @media (max-width: 768px) {
-          .case-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .project-media { margin: 0; background: var(--navy); }
+        .project-media img {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          object-fit: cover;
+        }
+
+        .project-body { padding: 26px 24px 24px; display: flex; flex-direction: column; flex: 1; }
+        .project-scope {
+          font-size: 0.7rem;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--brand);
+          margin-bottom: 8px;
+        }
+        .project-title { font-size: 1.3rem; color: var(--navy); margin-bottom: 12px; }
+        .project-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px 20px;
+          padding-bottom: 14px;
+          margin-bottom: 14px;
+          border-bottom: 1px solid var(--line);
+          font-size: 0.8125rem;
+          font-weight: 700;
+          color: var(--text-dim);
+        }
+        .project-meta span { display: inline-flex; align-items: center; gap: 6px; }
+        .project-meta svg { color: var(--brand); flex: none; }
+        .project-summary { font-size: 0.9375rem; line-height: 1.65; margin-bottom: 18px; }
+        .project-methods {
+          list-style: none;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: auto;
+        }
+
+        .projects-note { margin-top: 30px; font-size: 0.875rem; line-height: 1.7; }
+
+        .projects-cta {
+          margin-top: 48px;
+          padding: 32px;
+          background: var(--bg-tint);
+          border-left: 4px solid var(--brand);
+          border-radius: var(--radius-md);
+          display: flex;
+          align-items: center;
+          gap: 24px;
+          flex-wrap: wrap;
+        }
+        .projects-cta__icon {
+          width: 56px;
+          height: 56px;
+          flex: none;
+          background: #fff;
+          border: 1px solid var(--line);
+          color: var(--brand);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .projects-cta__copy { flex: 1 1 320px; }
+        .projects-cta h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: 6px; }
+        .projects-cta p { font-size: 0.9375rem; line-height: 1.6; }
+
+        @media (max-width: 900px) {
+          .projects-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 767px) {
+          .projects-cta { padding: 24px 20px; }
+          .projects-cta .btn { width: 100%; }
         }
       `}</style>
     </section>

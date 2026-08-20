@@ -1,136 +1,183 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Layers, Flame, Train, Wrench, ChevronRight, CheckCircle2 } from 'lucide-react';
-import ImagePlaceholder from '../components/ImagePlaceholder';
+import { ChevronRight, Flame, Wrench, Layers, Train, Anchor, Factory, Container, Coffee } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function ApplicationsPage({ onOpenContact }) {
   const sectors = [
     {
       slug: 'oil-gas',
-      title: 'Oil & Gas (Pipelines, Refineries & Storage Tanks)',
+      title: 'Oil and Gas',
       icon: Flame,
-      desc: 'Advanced NDT solutions for upstream deepwater pipelines, downstream refinery turnarounds, process piping, and API 653 storage tank floor scanning.',
-      placeholderLabel: 'Refinery API Storage Tank & Offshore Pipeline Inspection'
-    },
-    {
-      slug: 'railways',
-      title: 'Railways (USFD Track & Rolling Stock)',
-      icon: Train,
-      desc: 'Specialized ultrasonic flaw detection (USFD) for continuous rail tracks, thermit welds, locomotive solid/hollow axles, and wheelset overhauls.',
-      placeholderLabel: 'Ultrasonic Railway Track USFD Trolley & Axle NDT'
+      category: 'Upstream / Midstream / Downstream',
+      desc: 'Pipelines, storage tanks, refineries and process plant across upstream offshore fields, cross-country pipelines, and downstream processing facilities.',
+      img: '/images/east-africa/ea-ind-oil-gas.webp',
+      alt: 'Oil and gas refinery and pipeline inspection'
     },
     {
       slug: 'power-plants',
-      title: 'Power Generation (Boilers & Turbines)',
+      title: 'Power Generation and Geothermal',
       icon: Wrench,
-      desc: 'High-speed MFL tube testing for heat exchangers, boiler headers, steam line welds, and turbine rotor ultrasonic flaw evaluation.',
-      placeholderLabel: 'Power Plant Boiler Tube MFL & Heat Exchanger NDT'
+      category: 'Thermal / Hydro / Geothermal',
+      desc: 'Boilers, turbines, heat exchangers, steam pipework, and separator vessels in thermal, hydro, geothermal and renewable power facilities.',
+      img: '/images/east-africa/ea-hero-tilenga-cpf.webp',
+      alt: 'Geothermal power generation plant inspection'
     },
     {
       slug: 'mining',
       title: 'Mining & Heavy Infrastructure',
       icon: Layers,
-      desc: 'Structural steel weld testing, excavator boom fatigue inspection, conveyor structure NDT, and heavy mining component integrity.',
-      placeholderLabel: 'Heavy Mining Excavator & Structural Steel Weld Inspection'
+      category: 'Heavy Equipment & Structural',
+      desc: 'Structural steelwork, excavators, draglines, crushers, mill trunnions, shaft gantries, and material handling equipment.',
+      img: '/images/east-africa/ea-svc-pipeline.webp',
+      alt: 'Heavy mining structural steelwork NDT'
+    },
+    {
+      slug: 'railways',
+      title: 'Railways & Transportation',
+      icon: Train,
+      category: 'Rail Tracks & Rolling Stock',
+      desc: 'Continuous welded rails (USFD), thermit weld quality verification, locomotive axles, and rolling stock wheelset integrity.',
+      img: '/images/east-africa/ea-svc-ultrasonic.webp',
+      alt: 'Railway track ultrasonic flaw detection'
+    },
+    {
+      slug: 'oil-gas',
+      title: 'Cement',
+      icon: Factory,
+      category: 'Heavy Processing Plant',
+      desc: 'Rotary kilns, ducting, structural supports, cyclone towers, and plant maintained within tight emergency shutdown windows.',
+      img: '/images/east-africa/ea-ind-oil-gas.webp',
+      alt: 'Cement plant rotary kiln inspection'
+    },
+    {
+      slug: 'oil-gas',
+      title: 'Breweries, Beverage & Food Processing',
+      icon: Coffee,
+      category: 'Hygienic Welded Systems',
+      desc: 'Stainless steel tanks, pressure vessels, hygienic process pipework, fermentation cellars, and steam boilers.',
+      img: '/images/east-africa/ea-svc-digital-radiography.webp',
+      alt: 'Beverage processing stainless steel tank inspection'
+    },
+    {
+      slug: 'oil-gas',
+      title: 'Sugar Industry',
+      icon: Container,
+      category: 'Agro-Industrial Processing',
+      desc: 'Boilers, evaporators, mill structures, crystallizers, and pressure equipment inspected during off-crop maintenance turnarounds.',
+      img: '/images/east-africa/ea-svc-radiography.webp',
+      alt: 'Sugar mill boiler and evaporator testing'
+    },
+    {
+      slug: 'oil-gas',
+      title: 'Marine and Ports',
+      icon: Anchor,
+      category: 'Submerged Assets & Jetties',
+      desc: 'Port berth jetties, gantry cranes, vessel hulls, mooring bollards, and submerged infrastructure inspected by commercial NDT divers.',
+      img: '/images/east-africa/ea-svc-underwater.jpg',
+      alt: 'Marine port terminal jetty underwater NDT'
     }
   ];
 
   return (
-    <div className="page-wrapper" style={{ paddingTop: '150px' }}>
+    <div className="page-wrapper applications-page">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">APPLICATIONS & INDUSTRY SECTORS</div>
-          <h2 className="section-title">
-            Sector-Specific <span className="text-orange">NDT Applications</span>
-          </h2>
+          <div className="section-tag">Industry Focus</div>
+          <h1 className="section-title">Industries We Serve</h1>
           <p className="section-subtitle">
-            Dedicated industry sub-pages outlining high-risk asset challenges across Africa, specialized field inspection crews, and code compliance.
+            Sector-specific non-destructive testing and asset integrity management tailored to the key industrial economic sectors of East Africa.
           </p>
         </div>
 
-        <div className="grid-2 sector-full-grid">
-          {sectors.map((item) => {
+        <div className="sector-full-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px', marginBottom: '80px' }}>
+          {sectors.map((item, idx) => {
             const IconComp = item.icon;
             return (
-              <div key={item.slug} className="clean-card sector-overview-card">
-                <div className="card-top-row">
-                  <span className="badge badge-orange"><IconComp size={13} /> Industrial Sector</span>
-                  <Link to={`/applications/${item.slug}`} className="view-subpage-link">
-                    Detailed Sector Sub-page →
-                  </Link>
+              <motion.div
+                key={idx}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="clean-card sector-overview-card"
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EAEAEA',
+                  borderRadius: '10px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justify: 'space-between',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.05)'
+                }}
+              >
+                <div>
+                  <div style={{ position: 'relative', height: '210px', width: '100%', overflow: 'hidden' }}>
+                    <img
+                      src={item.img}
+                      alt={item.alt}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: '14px',
+                        left: '14px',
+                        background: 'rgba(0, 30, 87, 0.9)',
+                        color: '#FFFFFF',
+                        fontSize: '0.75rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        padding: '5px 12px',
+                        borderRadius: '4px',
+                        backdropFilter: 'blur(4px)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                    >
+                      <IconComp size={13} /> {item.category}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: '24px 22px 16px' }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#001E57', marginBottom: '10px', lineHeight: '1.3' }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ fontSize: '0.9rem', color: '#6B6B6B', lineHeight: '1.6', margin: 0 }}>
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
 
-                <h3 className="card-title">{item.title}</h3>
-                <p className="card-desc">{item.desc}</p>
-
-                {/* Image Placeholder Frame */}
-                <div className="card-placeholder-box">
-                  <ImagePlaceholder 
-                    label={item.placeholderLabel}
-                    recommendedSize="800 x 450 px"
-                    height="200px"
-                    aspect="16/9"
-                  />
-                </div>
-
-                <div className="card-action-bar">
-                  <Link to={`/applications/${item.slug}`} className="btn btn-navy btn-sm">
-                    <span>View Sector Sub-Page</span>
+                <div
+                  style={{
+                    padding: '16px 22px 22px',
+                    borderTop: '1px solid #F0F0F0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justify: 'space-between',
+                    gap: '12px',
+                    flexWrap: 'wrap'
+                  }}
+                >
+                  <Link to={`/applications/${item.slug}`} className="btn btn-navy btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Sector Details</span>
                     <ChevronRight size={14} />
                   </Link>
-                  <button onClick={() => onOpenContact(item.title)} className="btn btn-outline btn-sm">
+                  <button
+                    onClick={() => onOpenContact(item.title)}
+                    className="btn btn-outline btn-sm"
+                    style={{ fontSize: '0.8125rem' }}
+                  >
                     Request Scope
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
       </div>
-
-      <style>{`
-        .sector-full-grid {
-          margin-bottom: 90px;
-        }
-        .sector-overview-card {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-        .card-top-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 14px;
-        }
-        .view-subpage-link {
-          font-size: 0.85rem;
-          font-weight: 700;
-          color: var(--primary);
-          text-decoration: none;
-        }
-        .card-title {
-          font-size: 1.35rem;
-          color: var(--navy);
-          margin-bottom: 8px;
-        }
-        .card-desc {
-          color: var(--text-muted);
-          font-size: 0.92rem;
-          line-height: 1.6;
-          margin-bottom: 18px;
-        }
-        .card-placeholder-box {
-          margin-bottom: 20px;
-        }
-        .card-action-bar {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          border-top: 1px solid #F1F5F9;
-          padding-top: 16px;
-        }
-      `}</style>
     </div>
   );
 }

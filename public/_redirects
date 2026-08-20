@@ -1,0 +1,4 @@
+# Single-page app: every path must serve index.html so React Router can
+# handle it client-side. Without this, a hard refresh on /services returns 404.
+# Read by both Netlify and Cloudflare Pages.
+/*    /index.html   200
