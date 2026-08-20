@@ -2,6 +2,7 @@ import React from 'react';
 import { Award, GraduationCap, ShieldCheck, CheckCircle2, ChevronRight, BookOpen, Calendar, UserCheck } from 'lucide-react';
 import ImagePlaceholder from '../components/ImagePlaceholder';
 import CertVerifier from '../components/CertVerifier';
+import Style from '../components/Style';
 
 export default function TrainingPage({ onOpenContact }) {
   return (
@@ -9,9 +10,9 @@ export default function TrainingPage({ onOpenContact }) {
       <div className="container">
         <div className="section-header">
           <div className="section-tag"><Award size={14} /> Training and certification</div>
-          <h2 className="section-title">
+          <h1 className="section-title">
             NDT Training and Certification
-          </h2>
+          </h1>
           <p className="section-subtitle">
             Industry-recognized training courses in collaboration with Radiological Physics & Advisory Division, Bhabha Atomic Research Centre (BARC), Mumbai.
           </p>
@@ -80,7 +81,7 @@ export default function TrainingPage({ onOpenContact }) {
         <CertVerifier />
       </div>
 
-      <style>{`
+      <Style>{`
         .course-card {
           display: flex;
           flex-direction: column;
@@ -131,7 +132,7 @@ export default function TrainingPage({ onOpenContact }) {
           color: var(--text-main);
           font-weight: 500;
         }
-      `}</style>
+      `}</Style>
     </div>
   );
 }

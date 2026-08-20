@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, ShieldCheck, Plane, ChevronRight } from 'lucide-react';
+import Style from './Style';
 
 /* The regional footprint, stated accurately.
 
@@ -77,7 +78,7 @@ export default function RegionalFootprint({ onOpenContact }) {
       <div className="container">
         <div className="section-header">
           <div className="section-tag">Footprint</div>
-          <h2 className="section-title">Where We Operate</h2>
+          <h1 className="section-title">Where We Operate</h1>
           <p className="section-subtitle">
             Stated by tier, so a prospect can tell the difference between a country where IXAR
             holds a registration and one it can mobilise to.
@@ -130,7 +131,7 @@ export default function RegionalFootprint({ onOpenContact }) {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .footprint-tiers { display: flex; flex-direction: column; gap: 44px; }
         .footprint-tier { border-top: 3px solid var(--line); padding-top: 26px; }
         .footprint-tier.tier-registered { border-top-color: var(--brand); }
@@ -196,7 +197,7 @@ export default function RegionalFootprint({ onOpenContact }) {
           .footprint-cta { padding: 26px 22px; }
           .footprint-cta .btn { width: 100%; }
         }
-      `}</style>
+      `}</Style>
     </section>
   );
 }

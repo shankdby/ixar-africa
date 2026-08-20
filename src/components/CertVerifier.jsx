@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Mail, Send, Info } from 'lucide-react';
+import Style from './Style';
 
 /* Certificate verification.
 
@@ -146,7 +147,7 @@ export default function CertVerifier() {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .cert-section {
           background: var(--bg-tint);
           border-radius: var(--radius-lg);
@@ -211,7 +212,7 @@ export default function CertVerifier() {
           .cert-section { padding: 30px 22px; }
           .cert-form-card { padding: 24px 20px; }
         }
-      `}</style>
+      `}</Style>
     </section>
   );
 }

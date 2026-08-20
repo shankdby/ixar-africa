@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Style from '../components/Style';
 
 /* ==========================================================================
    IXAR in East Africa  ·  /africa
@@ -483,14 +484,8 @@ export default function EastAfricaPage() {
     return () => clearInterval(timer);
   }, []);
 
-  /* page title -------------------------------------------------------- */
-  useEffect(() => {
-    const previous = document.title;
-    document.title = 'IXAR in East Africa | IXAR';
-    return () => {
-      document.title = previous;
-    };
-  }, []);
+  /* page title is now owned by components/RouteHead, driven by src/seo.js,
+     so it stays consistent with the statically rendered <head>. */
 
   /* scroll reveal ------------------------------------------------------ */
   useEffect(() => {
@@ -1937,7 +1932,7 @@ export default function EastAfricaPage() {
           Scoped styles. Everything below is namespaced `ea-` AND scoped under
           `.ea-page`, so it cannot collide with index.css, Navbar or Footer.
           ========================================================================== */}
-      <style>{`
+      <Style>{`
 .ea-page{
   --ea-brand:#E31E24;
   --ea-brand-dark:#B00502;
@@ -2468,7 +2463,7 @@ export default function EastAfricaPage() {
   .ea-logo-slide{transition:none}
   .ea-card:hover,.ea-lcard:hover,.ea-dl-card:hover,.ea-wa-float:hover,.ea-btn:hover{transform:none}
 }
-      `}</style>
+      `}</Style>
     </div>
   );
 }

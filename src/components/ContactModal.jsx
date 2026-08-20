@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Check } from 'lucide-react';
+import Style from './Style';
 
 /* Enquiry modal.
 
@@ -202,7 +203,7 @@ export default function ContactModal({ isOpen, onClose, defaultScope }) {
         )}
       </div>
 
-      <style>{`
+      <Style>{`
         .modal-backdrop {
           position: fixed;
           inset: 0;
@@ -282,7 +283,7 @@ export default function ContactModal({ isOpen, onClose, defaultScope }) {
           .form-grid { grid-template-columns: 1fr; gap: 14px; }
           .modal-title { font-size: 1.3rem; }
         }
-      `}</style>
+      `}</Style>
     </div>
   );
 }

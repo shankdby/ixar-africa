@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Mail, Phone, Menu, X, ChevronRight, ChevronDown, MapPin } from 'lucide-react';
+import Style from './Style';
 
 /* The primary navigation. Keep the outer class name `navbar-header`:
    EastAfricaPage measures this element to work out its own top padding. */
@@ -245,7 +246,7 @@ export default function Navbar({ onOpenContact }) {
         </div>
       )}
 
-      <style>{`
+      <Style>{`
         .navbar-header {
           position: fixed;
           top: 0;
@@ -442,7 +443,7 @@ export default function Navbar({ onOpenContact }) {
           .brand-subtitle { font-size: 0.625rem; }
           .brand-mark { width: 36px; height: 36px; }
         }
-      `}</style>
+      `}</Style>
     </header>
   );
 }

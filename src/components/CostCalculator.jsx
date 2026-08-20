@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ClipboardList, Plus, Check, ChevronRight, Info } from 'lucide-react';
+import Style from './Style';
 
 /* Scope builder.
 
@@ -71,7 +72,7 @@ export default function CostCalculator({ onOpenContact }) {
       <div className="container">
         <div className="section-header">
           <div className="section-tag">Scope builder</div>
-          <h2 className="section-title">Tell Us What Needs Inspecting</h2>
+          <h1 className="section-title">Tell Us What Needs Inspecting</h1>
           <p className="section-subtitle">
             Build the scope here and send it through. A written proposal comes back from the
             regional office with a price against your specification.
@@ -196,7 +197,7 @@ export default function CostCalculator({ onOpenContact }) {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .scope-layout { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 40px; align-items: start; }
 
         .scope-block { border: 0; padding: 0; margin: 0 0 36px; }
@@ -308,7 +309,7 @@ export default function CostCalculator({ onOpenContact }) {
           .method-grid { grid-template-columns: 1fr; }
           .scope-row { grid-template-columns: 1fr; }
         }
-      `}</style>
+      `}</Style>
     </section>
   );
 }

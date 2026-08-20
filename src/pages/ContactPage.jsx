@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MapPin, Mail, Phone, MessageCircle, Send, Check } from 'lucide-react';
+import Style from '../components/Style';
 
 /* Contact.
 
@@ -194,7 +195,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .contact-page { padding-bottom: 90px; }
         .contact-layout {
           display: grid;
@@ -305,7 +306,7 @@ export default function ContactPage() {
           .contact-grid { grid-template-columns: 1fr; gap: 16px; }
           .office-card, .parent-card { padding: 24px 20px; }
         }
-      `}</style>
+      `}</Style>
     </div>
   );
 }
