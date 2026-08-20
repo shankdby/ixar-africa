@@ -1,37 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, Menu, X, ChevronRight, ChevronDown, MapPin } from 'lucide-react';
+import { Mail, Phone, Menu, X, ChevronRight, ChevronDown, MapPin, ExternalLink } from 'lucide-react';
 import Style from './Style';
+import { HEADER_ITEMS } from '../globalNav';
 
 /* The primary navigation. Keep the outer class name `navbar-header`:
-   EastAfricaPage measures this element to work out its own top padding. */
+   EastAfricaPage measures this element to work out its own top padding.
 
-const SERVICE_LINKS = [
-  { to: '/services/radiography', label: 'Conventional Radiography (RT)' },
-  { to: '/services/radiography', label: 'Digital & Computed Radiography (CR/DR)' },
-  { to: '/services/aut', label: 'Ultrasonic Testing (UT)' },
-  { to: '/services/aut', label: 'Automated Ultrasonics (AUT)' },
-  { to: '/services/paut', label: 'Phased Array (PAUT)' },
-  { to: '/services/tofd', label: 'Time of Flight Diffraction (TOFD)' },
-  { to: '/services/pect', label: 'Eddy Current & PECT' },
-  { to: '/services/mfl-tube', label: 'Tank & Tube Inspection (MFL)' },
-  { to: '/services/aut', label: 'Pipeline Inspection & Pigging' },
-  { to: '/services/aut', label: 'Underwater & Marine Inspection' },
-];
-
-const COURSE_LINKS = [
-  { to: '/training', label: 'BARC Radiation Safety Course' },
-  { to: '/training', label: 'ASNT Level II / III Preparation' },
-  { to: '/training', label: 'NDT Practitioner Certification' },
-  { to: '/training', label: 'Certificate Verification' },
-];
-
-const PRODUCT_LINKS = [
-  { to: '/products', label: 'Radiography Cameras & Gamma Sources' },
-  { to: '/products', label: 'Ultrasonic Gauges & Flaw Detectors' },
-  { to: '/products', label: 'Calibration Blocks & Standards' },
-  { to: '/products', label: 'NDT Consumables & Accessories' },
-];
+   The menu mirrors ixar.in. Global items link out to ixar.in; the East Africa
+   item opens this domain's own pages. See src/globalNav.js for the mapping. */
 
 export default function Navbar({ onOpenContact }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -96,12 +73,15 @@ export default function Navbar({ onOpenContact }) {
 
   const navClass = ({ isActive }) => (isActive ? 'nav-link active' : 'nav-link');
 
-  const renderDropdown = (id, label, to, links) => {
+  const renderDropdown = (id, label, to, links, highlight = false) => {
     const open = openDropdown === id;
-    const sectionActive = pathname.startsWith(to);
+    /* Every path starts with "/", so the East Africa item — which owns this
+       whole domain — is treated as active on any local route. */
+    const sectionActive = to === '/' ? true : pathname.startsWith(to);
     return (
       <div
-        className="dropdown-wrapper"
+        key={id}
+        className={highlight ? 'dropdown-wrapper dropdown-wrapper--ea' : 'dropdown-wrapper'}
         onMouseEnter={() => setOpenDropdown(id)}
         onMouseLeave={() => setOpenDropdown((cur) => (cur === id ? null : cur))}
       >
@@ -124,8 +104,54 @@ export default function Navbar({ onOpenContact }) {
             ))}
             <div className="dropdown-divider" />
             <Link to={to} className="dropdown-item view-all">
-              View all {label.toLowerCase()} <ChevronRight size={13} />
+              {label} overview <ChevronRight size={13} />
             </Link>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /* A top-level item that points at ixar.in. Rendered as a plain anchor so the
+     browser does a real navigation instead of handing it to the router. */
+  const renderGlobal = (item) => {
+    const id = item.label;
+    const open = openDropdown === id;
+    if (!item.children) {
+      return (
+        <a key={id} href={item.href} className="nav-link nav-link--global">
+          <span>{item.label}</span>
+        </a>
+      );
+    }
+    return (
+      <div
+        key={id}
+        className="dropdown-wrapper"
+        onMouseEnter={() => setOpenDropdown(id)}
+        onMouseLeave={() => setOpenDropdown((cur) => (cur === id ? null : cur))}
+      >
+        <a
+          href={item.href}
+          className="nav-link nav-link--global"
+          aria-expanded={open}
+          aria-haspopup="true"
+          onFocus={() => setOpenDropdown(id)}
+        >
+          <span>{item.label}</span>
+          <ChevronDown size={14} aria-hidden="true" />
+        </a>
+        {open && (
+          <div className="dropdown-menu">
+            {item.children.map((l) => (
+              <a key={l.href} href={l.href} className="dropdown-item">
+                {l.label}
+              </a>
+            ))}
+            <div className="dropdown-divider" />
+            <a href={item.href} className="dropdown-item view-all">
+              On ixar.in <ExternalLink size={12} aria-hidden="true" />
+            </a>
           </div>
         )}
       </div>
@@ -152,31 +178,22 @@ export default function Navbar({ onOpenContact }) {
 
       <div className="container nav-main-container">
         <Link to="/" className="brand-logo" aria-label="IXAR East Africa, home">
-          <img 
-            src="https://ixar.in/wp-content/uploads/2025/05/logo.png" 
-            alt="IXAR" 
-            className="brand-logo-img" 
-            onError={(e) => { e.currentTarget.src = '/images/ixar-logo-main.png'; }}
-            style={{ height: '48px', width: 'auto', objectFit: 'contain', display: 'block' }} 
+          <img
+            src="/images/ixar-logo-main.png"
+            alt="IXAR"
+            className="brand-logo-img"
+            width="150"
+            height="48"
+            style={{ height: '48px', width: 'auto', objectFit: 'contain', display: 'block' }}
           />
         </Link>
 
         <nav className="desktop-nav" aria-label="Main">
-          <a href="#ea-backed" className="nav-link">
-            About Us
-          </a>
-          <NavLink to="/" end className={navClass}>
-            East Africa
-          </NavLink>
-          {renderDropdown('services', 'Services', '/services', SERVICE_LINKS)}
-          {renderDropdown('course', 'NDT Course', '/training', COURSE_LINKS)}
-          {renderDropdown('products', 'NDT Products', '/products', PRODUCT_LINKS)}
-          <NavLink to="/case-studies" className={navClass}>
-            Clients
-          </NavLink>
-          <NavLink to="/careers" className={navClass}>
-            Jobs @ Ixar
-          </NavLink>
+          {HEADER_ITEMS.map((item) =>
+            item.kind === 'ea'
+              ? renderDropdown('east-africa', item.label, item.to, item.children, true)
+              : renderGlobal(item)
+          )}
         </nav>
 
         <div className="nav-actions">
@@ -215,14 +232,25 @@ export default function Navbar({ onOpenContact }) {
       {mobileMenuOpen && (
         <div className="mobile-menu-dropdown" id="mobile-menu">
           <nav className="mobile-nav-links" aria-label="Main, mobile">
-            <a href="#ea-backed">About Us</a>
-            <Link to="/" style={{ color: '#E31E24', fontWeight: 800 }}>East Africa</Link>
-            <Link to="/services">Services</Link>
-            <Link to="/training">NDT Course</Link>
-            <Link to="/products">NDT Products</Link>
-            <Link to="/case-studies">Clients</Link>
-            <Link to="/careers">Jobs @ Ixar</Link>
-            <Link to="/contact">Contact us</Link>
+            {HEADER_ITEMS.map((item) =>
+              item.kind === 'ea' ? (
+                <React.Fragment key={item.label}>
+                  <Link to={item.to} style={{ color: '#E31E24', fontWeight: 800 }}>
+                    {item.label}
+                  </Link>
+                  {item.children.slice(1).map((l) => (
+                    <Link key={l.to} to={l.to} className="mobile-sub-link">
+                      {l.label}
+                    </Link>
+                  ))}
+                </React.Fragment>
+              ) : (
+                <a key={item.label} href={item.href} className="mobile-global-link">
+                  {item.label}
+                  <ExternalLink size={13} aria-hidden="true" />
+                </a>
+              )
+            )}
           </nav>
 
           <button
@@ -340,6 +368,25 @@ export default function Navbar({ onOpenContact }) {
         }
         .nav-link:hover { color: var(--brand); }
         .nav-link.active { color: var(--brand); font-weight: 800; }
+
+        /* Items that leave this domain for ixar.in. Same weight and colour as
+           the local items — one brand, one menu — with only a hairline cue on
+           hover so the jump to the global site is not a surprise. */
+        .nav-link--global:hover { color: var(--brand); }
+        .dropdown-wrapper--ea > .nav-link { color: var(--brand); font-weight: 800; }
+        .mobile-global-link {
+          display: flex !important;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+        }
+        .mobile-global-link svg { opacity: 0.45; flex: none; }
+        .mobile-sub-link {
+          padding-left: 16px !important;
+          font-size: 0.875rem !important;
+          font-weight: 500 !important;
+          opacity: 0.8;
+        }
         .nav-link.active::after {
           content: '';
           position: absolute;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ChevronRight } from 'lucide-react';
 import Style from './Style';
+import { IXAR_IN } from '../globalNav';
 
 /* Footer.
    Office details are the Kampala ones from IXAR's own site board (Tilenga
@@ -18,12 +19,14 @@ export default function Footer({ onOpenContact }) {
         <div className="footer-grid">
           <div className="footer-col brand-col">
             <div className="footer-brand" style={{ marginBottom: '22px' }}>
-              <img 
-                src="https://ixar.in/wp-content/uploads/2025/05/logo.png" 
-                alt="IXAR" 
-                className="footer-logo-img" 
-                onError={(e) => { e.currentTarget.src = '/images/ixar-logo-main.png'; }}
-                style={{ height: '48px', width: 'auto', objectFit: 'contain', display: 'block' }} 
+              <img
+                src="/images/ixar-logo-main.png"
+                alt="IXAR"
+                className="footer-logo-img"
+                width="150"
+                height="48"
+                loading="lazy"
+                style={{ height: '48px', width: 'auto', objectFit: 'contain', display: 'block' }}
               />
             </div>
 
@@ -59,9 +62,28 @@ export default function Footer({ onOpenContact }) {
               <li><Link to="/applications/power-plants">Power and Geothermal</Link></li>
               <li><Link to="/applications/mining">Mining</Link></li>
               <li><Link to="/applications/railways">Marine and Ports</Link></li>
+              <li><Link to="/applications">All industries</Link></li>
               <li><Link to="/training">NDT Training</Link></li>
               <li><Link to="/case-studies">Projects</Link></li>
               <li><Link to="/network">Our Network</Link></li>
+            </ul>
+          </div>
+
+          {/* The header sends Products and Jobs to ixar.in, so the East Africa
+              versions of those pages need their inbound links from here.
+              Without them these pages are orphaned and drop out of the index. */}
+          <div className="footer-col">
+            <h4 className="footer-col-title">East Africa</h4>
+            <ul className="footer-links">
+              <li><Link to="/products">Equipment and Supply</Link></li>
+              <li><Link to="/estimator">Scope and Cost Estimator</Link></li>
+              <li><Link to="/careers">Careers in East Africa</Link></li>
+              <li><Link to="/contact">Regional Office Contact</Link></li>
+              <li>
+                <a href={IXAR_IN + '/'} className="footer-global-link">
+                  IXAR Global (ixar.in)
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -130,8 +152,8 @@ export default function Footer({ onOpenContact }) {
         }
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
-          gap: 40px;
+          grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
+          gap: 36px;
           padding-bottom: 44px;
         }
 
@@ -225,6 +247,10 @@ export default function Footer({ onOpenContact }) {
         .footer-bottom-links a { color: rgba(255, 255, 255, 0.58); }
         .footer-bottom-links a:hover { color: #FFFFFF; }
 
+        /* Five columns need more room than four did. */
+        @media (max-width: 1280px) {
+          .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+        }
         @media (max-width: 1024px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 34px; }
         }

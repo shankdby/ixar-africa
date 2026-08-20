@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Shield, Award, ChevronRight, Cpu, FileCheck } from 'lucide-react';
 import ImagePlaceholder from '../components/ImagePlaceholder';
 import Style from '../components/Style';
+import AppImage from '../components/AppImage';
 
 export default function ServiceDetailPage({ onOpenContact }) {
   const { slug } = useParams();
@@ -117,7 +118,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
 
         {/* Hero Media Card */}
         <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '12px', marginBottom: '32px' }}>
-          <img 
+          <AppImage 
             src={service.imgMain} 
             alt={service.title} 
             style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block' }} 
@@ -149,7 +150,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
             </div>
 
             <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '8px', overflow: 'hidden' }}>
-              <img 
+              <AppImage 
                 src={service.imgDetail} 
                 alt={`${service.title} equipment data`} 
                 style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 

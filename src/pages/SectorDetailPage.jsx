@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Shield, Award, ChevronRight, Layers, Flame, Train, Wrench } from 'lucide-react';
 import ImagePlaceholder from '../components/ImagePlaceholder';
 import Style from '../components/Style';
+import AppImage from '../components/AppImage';
 
 export default function SectorDetailPage({ onOpenContact }) {
   const { slug } = useParams();
@@ -85,7 +86,7 @@ export default function SectorDetailPage({ onOpenContact }) {
 
         {/* Hero Media Card */}
         <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '12px', marginBottom: '32px' }}>
-          <img 
+          <AppImage 
             src={sector.imgMain} 
             alt={sector.title} 
             style={{ width: '100%', height: '400px', objectFit: 'cover', display: 'block' }} 
@@ -111,7 +112,7 @@ export default function SectorDetailPage({ onOpenContact }) {
             </div>
 
             <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '8px', overflow: 'hidden' }}>
-              <img 
+              <AppImage 
                 src={sector.imgDetail} 
                 alt={`${sector.title} inspection equipment`} 
                 style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 

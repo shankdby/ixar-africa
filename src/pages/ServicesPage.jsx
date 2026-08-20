@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AppImage from '../components/AppImage';
 
 export default function ServicesPage({ onOpenContact }) {
   const serviceList = [
@@ -66,7 +67,7 @@ export default function ServicesPage({ onOpenContact }) {
       title: 'Pigging & Intelligent Pigging (ILI)',
       category: 'Pipeline Integrity',
       desc: 'Cleaning pigs to remove deposits and restore flow, and high-tech intelligent pigs to inspect and map pipeline wall condition.',
-      img: '/images/east-africa/ea-svc-pigging.jpg',
+      img: '/images/east-africa/ea-svc-pigging.webp',
       alt: 'Intelligent pigging tool being launched into oil pipeline'
     },
     {
@@ -82,7 +83,7 @@ export default function ServicesPage({ onOpenContact }) {
       title: 'Underwater Inspection',
       category: 'Marine NDT',
       desc: 'Commercial diver inspection of jetties, harbor structures, dams, bridges and other submerged marine assets.',
-      img: '/images/east-africa/ea-svc-underwater.jpg',
+      img: '/images/east-africa/ea-svc-underwater.webp',
       alt: 'Commercial diver performing underwater ultrasonic testing'
     },
     {
@@ -134,7 +135,7 @@ export default function ServicesPage({ onOpenContact }) {
             >
               <div>
                 <div style={{ position: 'relative', height: '210px', width: '100%', overflow: 'hidden' }}>
-                  <img
+                  <AppImage
                     src={item.img}
                     alt={item.alt}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Calendar, ChevronRight, FileText } from 'lucide-react';
 import Style from './Style';
+import AppImage from './AppImage';
 
 /* Projects.
 
@@ -83,7 +84,7 @@ export default function CaseStudies({ onOpenContact }) {
           {PROJECTS.map((p) => (
             <article key={p.id} className="project-card">
               <figure className="project-media">
-                <img src={p.image} alt={p.alt} loading="lazy" />
+                <AppImage src={p.image} alt={p.alt} loading="lazy" />
               </figure>
 
               <div className="project-body">

@@ -3,6 +3,7 @@ import { Award, GraduationCap, ShieldCheck, CheckCircle2, ChevronRight, BookOpen
 import ImagePlaceholder from '../components/ImagePlaceholder';
 import CertVerifier from '../components/CertVerifier';
 import Style from '../components/Style';
+import AppImage from '../components/AppImage';
 
 export default function TrainingPage({ onOpenContact }) {
   return (
@@ -28,11 +29,10 @@ export default function TrainingPage({ onOpenContact }) {
             </p>
 
             <div className="course-media" style={{ borderRadius: '8px', overflow: 'hidden', marginTop: '16px', marginBottom: '16px' }}>
-              <img 
-                src="/images/barc_training_center.jpg" 
+              <AppImage 
+                src="/images/barc_training_center.webp" 
                 alt="BARC-accredited training centre and gamma radiography practical lab" 
-                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 
-              />
+                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} width="1200" height="896" />
             </div>
 
             <div className="course-features">
@@ -55,11 +55,10 @@ export default function TrainingPage({ onOpenContact }) {
             </p>
 
             <div className="course-media" style={{ borderRadius: '8px', overflow: 'hidden', marginTop: '16px', marginBottom: '16px' }}>
-              <img 
-                src="/images/radiography_detail_hero.jpg" 
+              <AppImage 
+                src="/images/radiography_detail_hero.webp" 
                 alt="Ultrasonic and phased array calibration room" 
-                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} 
-              />
+                style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} width="1376" height="768" />
             </div>
 
             <div className="course-features">

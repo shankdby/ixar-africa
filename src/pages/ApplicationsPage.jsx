@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Flame, Wrench, Layers, Train, Anchor, Factory, Container, Coffee } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AppImage from '../components/AppImage';
 
 export default function ApplicationsPage({ onOpenContact }) {
   const sectors = [
@@ -74,7 +75,7 @@ export default function ApplicationsPage({ onOpenContact }) {
       icon: Anchor,
       category: 'Submerged Assets & Jetties',
       desc: 'Port berth jetties, gantry cranes, vessel hulls, mooring bollards, and submerged infrastructure inspected by commercial NDT divers.',
-      img: '/images/east-africa/ea-svc-underwater.jpg',
+      img: '/images/east-africa/ea-svc-underwater.webp',
       alt: 'Marine port terminal jetty underwater NDT'
     }
   ];
@@ -112,7 +113,7 @@ export default function ApplicationsPage({ onOpenContact }) {
               >
                 <div>
                   <div style={{ position: 'relative', height: '210px', width: '100%', overflow: 'hidden' }}>
-                    <img
+                    <AppImage
                       src={item.img}
                       alt={item.alt}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}

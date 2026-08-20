@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Style from '../components/Style';
+import AppImage, { dimsFor } from '../components/AppImage';
 
 /* ==========================================================================
    IXAR in East Africa  ·  /africa
@@ -57,7 +58,7 @@ const SERVICES = [
     title: 'Advanced Ultrasonics',
     text: 'Phased array (PAUT), time of flight diffraction (TOFD) and automated ultrasonic testing (AUT) for weld inspection and accurate defect sizing.',
     href: '/services',
-    img: 'ea-hero-2.jpg',
+    img: 'ea-hero-2.webp',
     alt: 'Certified NDT technician scanning weld with phased array ultrasonic probe',
   },
   {
@@ -87,7 +88,7 @@ const SERVICES = [
     category: 'Pipeline Integrity',
     desc: 'Cleaning pigs to remove deposits and restore flow, and intelligent pigs to inspect and map pipeline wall condition.',
     slug: 'aut',
-    img: '/images/east-africa/ea-svc-pigging.jpg',
+    img: '/images/east-africa/ea-svc-pigging.webp',
   },
   {
     title: 'Tank and Tube Inspection',
@@ -101,7 +102,7 @@ const SERVICES = [
     category: 'Marine NDT',
     desc: 'Inspection of jetties, dams, bridges and other submerged structures.',
     slug: 'aut',
-    img: '/images/east-africa/ea-svc-underwater.jpg',
+    img: '/images/east-africa/ea-svc-underwater.webp',
   },
   {
     title: 'Destructive Testing and Laboratory Services',
@@ -167,7 +168,7 @@ const INDUSTRIES = [
     subtitle: 'Jetties · Cranes · Mooring Structures · Diver NDT',
     desc: 'Jetties, cranes, hulls, mooring structures and submerged assets.',
     slug: 'marine',
-    img: '/images/east-africa/ea-svc-underwater.jpg',
+    img: '/images/east-africa/ea-svc-underwater.webp',
   },
   {
     title: 'Manufacturing & Engineering',
@@ -219,7 +220,7 @@ const FEATURED_SERVICES = [
     category: 'Marine Integrity',
     desc: 'Commercial diver NDT and ROV inspection on jetties, port berth pilings, marine crude terminals, and submerged dam intake structures.',
     standards: 'IMCA / DNV Marine NDT Norms',
-    img: '/images/east-africa/ea-svc-underwater.jpg',
+    img: '/images/east-africa/ea-svc-underwater.webp',
   },
   {
     num: '06',
@@ -615,9 +616,10 @@ export default function EastAfricaPage() {
               className="ea-hero__zoom"
               style={{ position: 'absolute', inset: 0 }}
             >
-              <img
+              <AppImage
                 src={HERO_IMAGES[heroIdx]}
                 alt="IXAR East Africa Industrial Inspection Operations"
+                priority
                 className="ea-hero__img"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
@@ -1190,7 +1192,7 @@ export default function EastAfricaPage() {
                     }}
                   >
                     <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
-                      <img
+                      <AppImage
                         src={FEATURED_SERVICES[activeServiceIdx].img}
                         alt={FEATURED_SERVICES[activeServiceIdx].title}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -1279,6 +1281,7 @@ export default function EastAfricaPage() {
                       src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
                       alt={s.title} 
                       loading="lazy" 
+                      {...dimsFor(s.img.startsWith('/') ? s.img : `${IMG}${s.img}`)} 
                       whileHover={{ scale: 1.08 }}
                       transition={{ duration: 0.35 }}
                     />
@@ -1354,7 +1357,7 @@ export default function EastAfricaPage() {
                     boxShadow: '0 20px 48px rgba(0, 30, 87, 0.2)',
                   }}
                 >
-                  <img
+                  <AppImage
                     src={INDUSTRIES[activeIndustryIdx].img}
                     alt={INDUSTRIES[activeIndustryIdx].title}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -1420,7 +1423,7 @@ export default function EastAfricaPage() {
                 }}
               >
                 <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                  <img
+                  <AppImage
                     src={proj.img}
                     alt={proj.title}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -1673,7 +1676,7 @@ export default function EastAfricaPage() {
             </div>
 
             <figure className="ea-card__media ea-backed__media">
-              <img
+              <AppImage
                 src={`${IMG}ea-backed-barc.webp`}
                 alt="BARC-accredited IXAR training centre, Mumbai"
                 loading="lazy"
@@ -1823,7 +1826,7 @@ export default function EastAfricaPage() {
                 <h3>Kampala, Uganda</h3>
 
                 <figure className="ea-card__media ea-office-card__media">
-                  <img
+                  <AppImage
                     src={`${IMG}ea-office-kampala.webp`}
                     alt="IXAR (EA) Ltd site board and crew, Tilenga Project, Uganda"
                     loading="lazy"
@@ -2360,8 +2363,13 @@ export default function EastAfricaPage() {
 .ea-wa-float svg{width:30px;height:30px;fill:#fff}
 
 /* ---------- scroll reveal -------------------------------------------------- */
-.ea-rev{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-.ea-rev.is-in{opacity:1;transform:none}
+/* Default to visible. Without JavaScript there is no IntersectionObserver to
+   add .is-in, so hiding by default would leave the prerendered HTML blank for
+   any client that does not run scripts. The .js class is set by an inline
+   script in index.html before first paint, so there is no flash of content. */
+.ea-rev{opacity:1;transform:none}
+.js .ea-rev{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.js .ea-rev.is-in{opacity:1;transform:none}
 
 /* ==========================================================================
    Responsive
