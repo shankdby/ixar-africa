@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /favicon.png
+
+Sitemap: https://ixar.africa/sitemap.xml
