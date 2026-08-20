@@ -350,11 +350,11 @@ function DownloadGlyph() {
   );
 }
 
-function SectionHead({ eyebrow, title, center = false, children }) {
+function SectionHead({ eyebrow, title, center = false, light = false, children }) {
   return (
-    <div className={`ea-sec-head${center ? ' ea-sec-head--center' : ''} ea-rev`}>
+    <div className={`ea-sec-head${center ? ' ea-sec-head--center' : ''}${light ? ' ea-sec-head--light' : ''} ea-rev`}>
       <span className="ea-eyebrow">{eyebrow}</span>
-      <h2 className="ea-sec-title">{title}</h2>
+      <h2 className="ea-sec-title" style={light ? { color: '#FFFFFF' } : undefined}>{title}</h2>
       <span className="ea-rule" />
       {children}
     </div>
@@ -1399,6 +1399,7 @@ export default function EastAfricaPage() {
             eyebrow="FIELD EXCELLENCE"
             title="Regional Track Record"
             center
+            light
           />
 
           <div
