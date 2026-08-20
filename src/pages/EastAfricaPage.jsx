@@ -636,29 +636,6 @@ export default function EastAfricaPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="ea-hero__col"
             >
-              <div style={{ marginBottom: '20px' }}>
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: 'rgba(227, 30, 36, 0.18)',
-                    border: '1px solid rgba(227, 30, 36, 0.45)',
-                    color: '#FF7A78',
-                    fontSize: '0.8125rem',
-                    fontWeight: 800,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.12em',
-                    padding: '6px 16px',
-                    borderRadius: '50px',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#E31E24', boxShadow: '0 0 10px #E31E24' }} />
-                  IXAR East Africa Division
-                </span>
-              </div>
-
               <h1 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.08', color: '#FFFFFF', marginBottom: '22px' }}>
                 IXAR in East Africa
               </h1>
