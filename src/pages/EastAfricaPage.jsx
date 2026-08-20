@@ -713,11 +713,8 @@ export default function EastAfricaPage() {
       <section className="ea-section" id="ea-operate">
         <div className="ea-wrap">
           <SectionHead eyebrow="Footprint" title="Where We Operate">
-            <p>
-              <Chip>
-                [Intro: two sentences confirming registered offices and regional coverage, to be
-                supplied by IXAR.]
-              </Chip>
+            <p style={{ fontSize: '1.0625rem', color: '#444444', marginTop: '12px' }}>
+              Operating from registered facilities in Kampala, Uganda and Dar es Salaam, Tanzania, IXAR delivers rapid-response NDT and industrial inspection services across Uganda, Tanzania, Kenya, and mobile deployments continent-wide.
             </p>
           </SectionHead>
 
