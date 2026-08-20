@@ -561,14 +561,14 @@ export default function EastAfricaPage() {
                 </span>
               </div>
 
-              <h1 style={{ fontSize: '3.6rem', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.05', color: '#FFFFFF', marginBottom: '22px' }}>
+              <h1 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.08', color: '#FFFFFF', marginBottom: '22px' }}>
                 IXAR in East Africa
               </h1>
-              <p className="ea-hero__sub" style={{ fontSize: '1.25rem', lineHeight: '1.65', color: 'rgba(255, 255, 255, 0.92)', marginBottom: '16px' }}>
+              <p className="ea-hero__sub" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', lineHeight: '1.65', color: 'rgba(255, 255, 255, 0.92)', marginBottom: '16px' }}>
                 Non-destructive testing and industrial inspection, delivered from registered regional offices
                 in Uganda and Tanzania by Industrial X-Ray and Allied Radiographers (EA) Ltd.
               </p>
-              <p className="ea-hero__support" style={{ color: '#FFB3B1', fontSize: '0.9375rem', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '36px' }}>
+              <p className="ea-hero__support" style={{ color: '#FFB3B1', fontSize: 'clamp(0.8125rem, 1.5vw, 0.9375rem)', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '36px' }}>
                 Licensed for sealed radiation sources &middot; ASNT Level II / III Certified &middot; ISO 9001 Certified
               </p>
               <div className="ea-hero__actions">
@@ -611,9 +611,9 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= SECTION 1 — BRAND INTRODUCTION ================= */}
-      <section className="ea-section" style={{ background: '#FFFFFF', padding: '110px 0', borderBottom: '1px solid #EAEAEA' }}>
+      <section className="ea-section" style={{ background: '#FFFFFF', padding: '80px 0', borderBottom: '1px solid #EAEAEA' }}>
         <div className="ea-wrap">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '40px', alignItems: 'center' }}>
+          <div className="ea-intro-grid">
             <motion.div
               style={{ gridColumn: 'span 12 / span 12' }}
               initial={{ opacity: 0, y: 40 }}
@@ -624,32 +624,32 @@ export default function EastAfricaPage() {
               <span className="ea-eyebrow" style={{ fontSize: '0.9375rem', color: '#E31E24', fontWeight: 800, letterSpacing: '0.16em' }}>
                 WHO WE ARE
               </span>
-              <h2 style={{ fontSize: 'clamp(2.4rem, 4vw, 4rem)', fontWeight: 900, color: '#001E57', lineHeight: '1.08', letterSpacing: '-0.02em', marginTop: '12px', marginBottom: '32px' }}>
+              <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 3.8rem)', fontWeight: 900, color: '#001E57', lineHeight: '1.1', letterSpacing: '-0.02em', marginTop: '12px', marginBottom: '24px' }}>
                 Precision that protects.<br />
                 <span style={{ color: '#E31E24' }}>Technology that performs.</span>
               </h2>
             </motion.div>
 
             <motion.div
-              style={{ gridColumn: 'span 6 / span 12' }}
+              className="ea-intro-col-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p style={{ fontSize: '1.25rem', color: '#001E57', fontWeight: 700, lineHeight: '1.6' }}>
+              <p style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: '#001E57', fontWeight: 700, lineHeight: '1.6' }}>
                 Industrial X-Ray &amp; Allied Radiographers (EA) Ltd delivers high-precision Non-Destructive Testing (NDT), quality assurance, and asset integrity services across Uganda, Tanzania, and Kenya.
               </p>
             </motion.div>
 
             <motion.div
-              style={{ gridColumn: 'span 6 / span 12' }}
+              className="ea-intro-col-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <p style={{ fontSize: '1.0625rem', color: '#444444', lineHeight: '1.75' }}>
+              <p style={{ fontSize: '1rem', color: '#444444', lineHeight: '1.75' }}>
                 As a registered regional division backed by over 55 years of industrial NDT expertise, we support East Africa’s largest energy, mining, power, pipeline, and infrastructure projects with certified personnel, licensed radiation equipment, and international standards compliance (ASME, API, ASTM, BS, ISO 9001).
               </p>
             </motion.div>
@@ -1965,12 +1965,27 @@ export default function EastAfricaPage() {
 /* ==========================================================================
    Responsive
    ========================================================================== */
+/* ---------- responsive grid helpers --------------------------------------- */
+.ea-intro-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+.ea-intro-col-6 {
+  grid-column: span 6 / span 12;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
 @media (max-width:1024px){
   .ea-page{--ea-sec:76px}
   .ea-sec-title{font-size:34px}
-  .ea-hero h1{font-size:44px}
-  .ea-hero__in{padding:104px 0 108px}
-  .ea-hero__sub{font-size:18px}
+  .ea-hero{min-height:auto;padding:110px 0 70px}
+  .ea-hero h1{font-size: clamp(2rem, 5vw, 3.2rem)}
+  .ea-hero__in{padding:60px 0 70px}
+  .ea-hero__sub{font-size:17px}
   .ea-grid--4{grid-template-columns:repeat(2,1fr)}
   .ea-map-layout{grid-template-columns:1fr;gap:38px}
   .ea-backed{grid-template-columns:1fr;gap:38px}
@@ -1983,43 +1998,45 @@ export default function EastAfricaPage() {
   .ea-hero__phlabel{max-width:290px}
 }
 @media (max-width:900px){
+  .ea-intro-grid{grid-template-columns:1fr;gap:24px}
+  .ea-intro-col-6{grid-column:span 12 / span 12 !important}
   .ea-stats__grid{grid-template-columns:repeat(2,1fr)}
   .ea-stat{border-bottom:1px solid var(--ea-muted)}
   .ea-stat:nth-child(2n){border-right:0}
   .ea-stat:nth-child(n+3){border-bottom:0}
 }
 @media (max-width:860px){
-  .ea-dl-card{grid-template-columns:170px 1fr}
+  .ea-dl-card{grid-template-columns:1fr}
 }
 @media (max-width:767px){
-  .ea-page{--ea-sec:60px;--ea-pad:20px}
-  .ea-sec-title{font-size:28px}
-  .ea-sec-head{margin-bottom:34px}
-  .ea-sec-head p{font-size:15.5px}
-  .ea-hero h1{font-size:34px}
-  .ea-hero__in{padding:150px 0 96px}
+  .ea-page{--ea-sec:54px;--ea-pad:18px}
+  .ea-sec-title{font-size:26px}
+  .ea-sec-head{margin-bottom:28px}
+  .ea-sec-head p{font-size:15px}
+  .ea-hero{padding:90px 0 60px}
+  .ea-hero h1{font-size:clamp(1.8rem, 6.5vw, 2.6rem)}
+  .ea-hero__in{padding:40px 0 50px}
   .ea-hero__phlabel{top:18px;left:20px;right:20px;max-width:none;padding:12px 14px}
   .ea-hero__phlabel .ea-ph__desc{font-size:11.5px}
-  .ea-hero__sub{font-size:16.5px}
-  .ea-hero__support{font-size:13px}
-  .ea-hero__actions{gap:10px}
-  .ea-hero__actions .ea-btn{flex:1 1 100%;justify-content:center}
-  .ea-hero__flag .ea-wrap{gap:8px 20px;font-size:11px}
+  .ea-hero__sub{font-size:15px}
+  .ea-hero__support{font-size:12px}
+  .ea-hero__actions{gap:10px;flex-direction:column}
+  .ea-hero__actions .ea-btn{width:100%;justify-content:center}
+  .ea-hero__flag .ea-wrap{gap:8px 16px;font-size:11px}
   .ea-grid,.ea-dl-grid{gap:18px}
   .ea-grid--4,.ea-grid--2{grid-template-columns:1fr}
-  .ea-stats__grid{grid-template-columns:repeat(2,1fr)}
-  .ea-stat{padding:30px 14px;border-right:1px solid var(--ea-muted);border-bottom:1px solid var(--ea-muted)}
-  .ea-stat:nth-child(2n){border-right:0}
-  .ea-stat:nth-child(n+3){border-bottom:0}
-  .ea-stat__fig{font-size:34px}
+  .ea-stats__grid{grid-template-columns:1fr}
+  .ea-stat{padding:24px 14px;border-right:0;border-bottom:1px solid var(--ea-muted)}
+  .ea-stat:last-child{border-bottom:0}
+  .ea-stat__fig{font-size:32px}
   .ea-stat__label{font-size:13px}
   .ea-logo-wall{grid-template-columns:repeat(2,1fr);gap:14px}
   .ea-logo-tile:nth-child(n+3){display:none}
-  .ea-cert-row{padding:20px}
+  .ea-cert-row{padding:18px}
   .ea-cert-row__tiles{grid-template-columns:repeat(2,1fr)}
   .ea-dl-card{grid-template-columns:1fr}
   .ea-dl-card .ea-ph{height:auto;min-height:0;border-right:0;border-bottom:1px solid var(--ea-line);aspect-ratio:16/9}
-  .ea-form-card,.ea-office-card,.ea-wa-card{padding:26px 22px}
+  .ea-form-card,.ea-office-card,.ea-wa-card{padding:22px 18px}
   .ea-form-grid{grid-template-columns:1fr}
   .ea-wa-float{right:16px;bottom:16px;width:52px;height:52px}
   .ea-wa-float svg{width:26px;height:26px}
@@ -2031,7 +2048,7 @@ export default function EastAfricaPage() {
   .ea-review-bar{font-size:12.5px}
 }
 @media (max-width:479px){
-  .ea-backed__copy p{font-size:15.5px}
+  .ea-backed__copy p{font-size:14.5px}
 }
 
 /* ---------- reduced motion -------------------------------------------------- */
