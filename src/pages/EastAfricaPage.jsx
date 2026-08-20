@@ -121,50 +121,59 @@ const SERVICES = [
 const INDUSTRIES = [
   {
     title: 'Oil and Gas',
+    subtitle: 'Pipelines · Refineries · Storage Tanks · Process Facilities',
     desc: 'Pipelines, storage tanks, refineries and process plant across upstream, midstream and downstream operations.',
     slug: 'oil-gas',
     img: '/images/east-africa/ea-ind-oil-gas.webp',
   },
   {
     title: 'Power Generation and Geothermal',
+    subtitle: 'Boilers · Turbines · Steam Pipework · Geothermal Wells',
     desc: 'Boilers, turbines, heat exchangers and steam pipework in thermal, hydro, geothermal and renewable facilities.',
     slug: 'power-plants',
     img: '/images/east-africa/ea-hero-tilenga-cpf.webp',
   },
   {
     title: 'Mining',
+    subtitle: 'Structural Steelwork · Material Handling · Heavy Equipment',
     desc: 'Structural steelwork, processing plant, pressure vessels and material handling equipment.',
     slug: 'mining',
     img: '/images/east-africa/ea-svc-pipeline.webp',
   },
   {
     title: 'Cement',
+    subtitle: 'Rotary Kilns · Ducting Systems · Structural Supports',
     desc: 'Kilns, ducting, structural supports and plant maintained within tight shutdown windows.',
-    slug: 'oil-gas',
+    slug: 'cement',
     img: '/images/east-africa/ea-ind-oil-gas.webp',
   },
   {
-    title: 'Breweries, Beverage and Food Processing',
+    title: 'Breweries, Beverage and Food',
+    subtitle: 'Hygienic Tanks · Sanitary Vessels · Process Lines',
     desc: 'Tanks, vessels, process pipework and hygienic welded systems.',
-    slug: 'oil-gas',
+    slug: 'food-beverage',
     img: '/images/east-africa/ea-svc-digital-radiography.webp',
   },
   {
     title: 'Sugar',
+    subtitle: 'Boilers · Evaporators · Mill Structures · Off-Crop Care',
     desc: 'Boilers, evaporators, mill structures and pressure equipment inspected during off-crop maintenance.',
-    slug: 'oil-gas',
+    slug: 'sugar',
     img: '/images/east-africa/ea-svc-radiography.webp',
   },
   {
     title: 'Marine and Ports',
+    subtitle: 'Jetties · Cranes · Mooring Structures · Diver NDT',
     desc: 'Jetties, cranes, hulls, mooring structures and submerged assets.',
-    slug: 'oil-gas',
+    slug: 'marine',
     img: '/images/east-africa/ea-svc-underwater.jpg',
   },
   {
-    title: 'Manufacturing and General Engineering',
+    title: 'Manufacturing & Engineering',
+    subtitle: 'Fabrication QC · Weld Certification · Pressure Piping',
     desc: 'Fabrication quality control, weld inspection, structural steel and pressure equipment certification.',
-    slug: 'oil-gas',
+    slug: 'manufacturing',
+    img: '/images/east-africa/ea-svc-digital-radiography.webp',
   },
 ];
 
@@ -1364,12 +1373,15 @@ export default function EastAfricaPage() {
                   />
                   <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px', color: '#FFFFFF' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF7A78', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '4px', display: 'inline-block', marginBottom: '12px' }}>
-                      Sector Capabilities
+                      Sector Footprint
                     </span>
-                    <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '12px', lineHeight: 1.15 }}>
+                    <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.1 }}>
                       {INDUSTRIES[activeIndustryIdx].title}
                     </h3>
-                    <p style={{ fontSize: '1.1rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
+                    <p style={{ fontSize: '0.95rem', fontWeight: 800, color: '#E31E24', letterSpacing: '0.04em', marginBottom: '14px' }}>
+                      {INDUSTRIES[activeIndustryIdx].subtitle}
+                    </p>
+                    <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
                       {INDUSTRIES[activeIndustryIdx].desc}
                     </p>
                   </div>
