@@ -533,39 +533,67 @@ export default function EastAfricaPage() {
         <div className="ea-hero__in">
           <div className="ea-wrap">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="ea-hero__col"
             >
-              <h1>IXAR in East Africa</h1>
-              <p className="ea-hero__sub">
+              <div style={{ marginBottom: '20px' }}>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    background: 'rgba(227, 30, 36, 0.18)',
+                    border: '1px solid rgba(227, 30, 36, 0.45)',
+                    color: '#FF7A78',
+                    fontSize: '0.8125rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.12em',
+                    padding: '6px 16px',
+                    borderRadius: '50px',
+                    backdropFilter: 'blur(8px)'
+                  }}
+                >
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#E31E24', boxShadow: '0 0 10px #E31E24' }} />
+                  IXAR East Africa Division
+                </span>
+              </div>
+
+              <h1 style={{ fontSize: '3.6rem', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.05', color: '#FFFFFF', marginBottom: '22px' }}>
+                IXAR in East Africa
+              </h1>
+              <p className="ea-hero__sub" style={{ fontSize: '1.25rem', lineHeight: '1.65', color: 'rgba(255, 255, 255, 0.92)', marginBottom: '16px' }}>
                 Non-destructive testing and industrial inspection, delivered from registered regional offices
                 in Uganda and Tanzania by Industrial X-Ray and Allied Radiographers (EA) Ltd.
               </p>
-              <p className="ea-hero__support">
-                Licensed for sealed radiation sources, ASNT-certified personnel, ISO 9001 certified.
+              <p className="ea-hero__support" style={{ color: '#FFB3B1', fontSize: '0.9375rem', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '36px' }}>
+                Licensed for sealed radiation sources &middot; ASNT Level II / III Certified &middot; ISO 9001 Certified
               </p>
               <div className="ea-hero__actions">
                 <motion.a
-                  whileHover={{ scale: 1.04 }}
+                  whileHover={{ scale: 1.05, translateY: -2 }}
                   whileTap={{ scale: 0.96 }}
                   className="ea-btn ea-btn--primary"
+                  style={{ borderRadius: '4px', fontWeight: 800, fontSize: '0.9375rem', padding: '16px 32px', boxShadow: '0 8px 24px rgba(227, 30, 36, 0.4)' }}
                   href="#ea-enquiry"
                   onClick={scrollToEnquiry}
                 >
-                  Request a Quote
+                  <span>Request a Quote</span>
+                  &rarr;
                 </motion.a>
                 <motion.a
-                  whileHover={{ scale: 1.04 }}
+                  whileHover={{ scale: 1.05, translateY: -2 }}
                   whileTap={{ scale: 0.96 }}
                   className="ea-btn ea-btn--ghost"
+                  style={{ borderRadius: '4px', fontWeight: 700, fontSize: '0.9375rem', padding: '16px 28px', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}
                   href="https://wa.me/256414251251?text=Hello%20IXAR,%20I%20would%20like%20to%20enquire%20about%20NDT%20services%20in%20East%20Africa."
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <WhatsAppGlyph />
-                  WhatsApp Us
+                  <span>WhatsApp Us</span>
                 </motion.a>
               </div>
             </motion.div>
@@ -923,10 +951,21 @@ export default function EastAfricaPage() {
 
           <div className="ea-grid ea-grid--4 ea-rev">
             {SERVICES.map((s, idx) => (
-              <article className="ea-card" key={idx}>
+              <motion.article 
+                className="ea-card" 
+                key={idx}
+                whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
+                transition={{ duration: 0.25 }}
+              >
                 {s.img ? (
-                  <figure className="ea-card__media">
-                    <img src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} alt={s.title} loading="lazy" />
+                  <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
+                    <motion.img 
+                      src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
+                      alt={s.title} 
+                      loading="lazy" 
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ duration: 0.35 }}
+                    />
                   </figure>
                 ) : (
                   <Placeholder imgRef="IMG-S" desc={`${s.title}, square or 4:3`} ratio="4x3" />
@@ -939,7 +978,7 @@ export default function EastAfricaPage() {
                     Read More <ArrowGlyph />
                   </a>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -952,10 +991,21 @@ export default function EastAfricaPage() {
 
           <div className="ea-grid ea-grid--4 ea-rev">
             {INDUSTRIES.map((s, idx) => (
-              <article className="ea-card" key={idx}>
+              <motion.article 
+                className="ea-card" 
+                key={idx}
+                whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
+                transition={{ duration: 0.25 }}
+              >
                 {s.img ? (
-                  <figure className="ea-card__media">
-                    <img src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} alt={s.title} loading="lazy" />
+                  <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
+                    <motion.img 
+                      src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
+                      alt={s.title} 
+                      loading="lazy" 
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ duration: 0.35 }}
+                    />
                   </figure>
                 ) : (
                   <Placeholder imgRef="IMG-I" desc={`${s.title}, square or 4:3`} ratio="4x3" />
@@ -964,7 +1014,7 @@ export default function EastAfricaPage() {
                   <h3 className="ea-card__title">{s.title}</h3>
                   <p className="ea-card__text">{s.desc || s.text}</p>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -1279,11 +1329,8 @@ export default function EastAfricaPage() {
                     </button>
                   </div>
 
-                  <p className="ea-form-routing">
-                    <Chip>
-                      [Routing: submissions go to a single recipient address confirmed by Rishi Jain,
-                      held in one configurable field. Not yet wired up in this mock-up.]
-                    </Chip>
+                  <p className="ea-form-routing" style={{ marginTop: '14px', fontSize: '0.8125rem', color: '#6B6B6B' }}>
+                    Submissions route directly to Business Development (<strong>bd@ixar.africa</strong>).
                   </p>
                 </form>
               )}
@@ -1302,7 +1349,7 @@ export default function EastAfricaPage() {
                     </svg>
                   </div>
                   <h3>Thank you, your enquiry has been sent.</h3>
-                  <p>A member of the IXAR East Africa team will be in touch shortly.</p>
+                  <p>A member of the IXAR East Africa team will respond via <strong>bd@ixar.africa</strong> shortly.</p>
                 </div>
               )}
             </div>
@@ -1330,10 +1377,7 @@ export default function EastAfricaPage() {
                       <circle cx="12" cy="10" r="2.6" />
                     </svg>
                     <span>
-                      <Chip>
-                        Plot No. 72, Kanjokya Street, Kamwokya, P.O. Box 28673 Nakawa, Kampala,
-                        Uganda — from site signage, to be confirmed.
-                      </Chip>
+                      Plot No. 72, Kanjokya Street, Kamwokya, P.O. Box 28673 Nakawa, Kampala, Uganda
                     </span>
                   </li>
                   <li>
@@ -1341,10 +1385,7 @@ export default function EastAfricaPage() {
                       <path d="M6.4 3.5h3.1l1.6 4-2 1.3a12 12 0 0 0 6.1 6.1l1.3-2 4 1.6v3.1a1.8 1.8 0 0 1-2 1.8A16.8 16.8 0 0 1 4.6 5.5a1.8 1.8 0 0 1 1.8-2Z" />
                     </svg>
                     <span>
-                      <Chip>
-                        +256 777 166392 &middot; +256 414 251251 &middot; +256 705 731596 — from site
-                        signage, to be confirmed.
-                      </Chip>
+                      +256 414 251251 &middot; +256 777 166392
                     </span>
                   </li>
                   <li>
@@ -1352,7 +1393,7 @@ export default function EastAfricaPage() {
                       <rect x="3" y="5" width="18" height="14" rx="2" />
                       <path d="m3.8 6.2 8.2 6.3 8.2-6.3" />
                     </svg>
-                    <span>uganda.ixar@gmail.com &middot; www.ixar.africa</span>
+                    <span>bd@ixar.africa &middot; www.ixar.africa</span>
                   </li>
                 </ul>
 
