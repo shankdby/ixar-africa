@@ -9,7 +9,12 @@
     <link rel="shortcut icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Primary Meta Tags -->
+    <!-- Primary Meta Tags.
+         Everything between the seo markers is REPLACED PER ROUTE at build time
+         by scripts/prerender.mjs, from the map in src/seo.js. Editing the tags
+         here only changes what `npm run dev` shows; edit src/seo.js instead.
+         Do not remove the markers - the prerender step aborts without them. -->
+    <!--seo:start-->
     <title>IXAR in East Africa | NDT and Industrial Inspection, Uganda &amp; Tanzania</title>
     <meta name="title" content="IXAR in East Africa | NDT and Industrial Inspection" />
     <meta name="description" content="Non-destructive testing and industrial inspection across Uganda, Tanzania and Kenya, delivered from registered regional offices. Licensed for sealed radioactive sources, ASNT-certified personnel, ISO 9001 since 2003." />
@@ -18,7 +23,8 @@
     <meta property="og:url" content="https://ixar.africa/" />
     <meta property="og:title" content="IXAR in East Africa" />
     <meta property="og:description" content="Non-destructive testing and industrial inspection, delivered from registered offices in Uganda and Tanzania." />
-    
+    <!--seo:end-->
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

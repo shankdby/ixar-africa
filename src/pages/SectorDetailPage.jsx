@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Shield, Award, ChevronRight, Layers, Flame, Train, Wrench } from 'lucide-react';
 import ImagePlaceholder from '../components/ImagePlaceholder';
+import Style from '../components/Style';
 
 export default function SectorDetailPage({ onOpenContact }) {
   const { slug } = useParams();
@@ -132,7 +133,7 @@ export default function SectorDetailPage({ onOpenContact }) {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .back-link {
           display: inline-flex;
           align-items: center;
@@ -222,7 +223,7 @@ export default function SectorDetailPage({ onOpenContact }) {
           font-size: 0.95rem;
           color: var(--text-muted);
         }
-      `}</style>
+      `}</Style>
     </div>
   );
 }

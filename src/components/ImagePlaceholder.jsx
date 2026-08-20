@@ -1,4 +1,5 @@
 import React from 'react';
+import Style from './Style';
 
 /* Labelled image placeholder.
 
@@ -30,7 +31,7 @@ export default function ImagePlaceholder({
       <span className="img-ph__label">{label}</span>
       <span className="img-ph__hint">{recommendedSize}</span>
 
-      <style>{`
+      <Style>{`
         .img-ph {
           position: relative;
           width: 100%;
@@ -88,7 +89,7 @@ export default function ImagePlaceholder({
           letter-spacing: 0.1em;
           color: #A3AAAF;
         }
-      `}</style>
+      `}</Style>
     </div>
   );
 }

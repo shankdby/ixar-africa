@@ -1,4 +1,11 @@
-# Single-page app: every path must serve index.html so React Router can
-# handle it client-side. Without this, a hard refresh on /services returns 404.
-# Read by both Netlify and Cloudflare Pages.
-/*    /index.html   200
+# Every real route is prerendered to its own dist/<route>/index.html by
+# scripts/prerender.mjs, so the old "/* /index.html 200" SPA fallback is no
+# longer needed - and it was harmful, because it answered non-existent URLs
+# with HTTP 200 (a soft 404 that search engines index).
+#
+# Anything that does not match a prerendered file now falls through to
+# dist/404.html with a real 404 status, which both Netlify and Cloudflare
+# Pages serve automatically.
+#
+# The agreed vanity path from the content plan:
+/africa    /    301!

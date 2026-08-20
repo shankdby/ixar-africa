@@ -2,12 +2,11 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback. Duplicated in public/_redirects so the rule survives if this
-# file is ignored by a different host.
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# NOTE: there is deliberately no "/*  ->  /index.html  200" SPA fallback here
+# any more. Every route is prerendered into its own index.html at build time
+# (scripts/prerender.mjs), so the filesystem answers them directly. Unmatched
+# paths fall through to dist/404.html with a real 404 status instead of being
+# answered 200 with an empty shell.
 
 # The content plan's agreed URL, kept alive at the edge as well as in the app.
 [[redirects]]

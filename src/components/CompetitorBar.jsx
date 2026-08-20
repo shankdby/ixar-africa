@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, ShieldCheck, Check, Layers, Cpu, Globe2 } from 'lucide-react';
+import Style from './Style';
 
 export default function CompetitorBar() {
   const certifications = [
@@ -43,7 +44,7 @@ export default function CompetitorBar() {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .competitor-bar-section {
           background: #FFFFFF;
           border-bottom: 1px solid var(--line);
@@ -125,7 +126,7 @@ export default function CompetitorBar() {
         @media (max-width: 600px) {
           .cert-badges-grid { grid-template-columns: 1fr; }
         }
-      `}</style>
+      `}</Style>
     </section>
   );
 }

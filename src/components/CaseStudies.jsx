@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Calendar, ChevronRight, FileText } from 'lucide-react';
+import Style from './Style';
 
 /* Projects.
 
@@ -71,7 +72,7 @@ export default function CaseStudies({ onOpenContact }) {
       <div className="container">
         <div className="section-header">
           <div className="section-tag">Track record</div>
-          <h2 className="section-title">Projects in the Region</h2>
+          <h1 className="section-title">Projects in the Region</h1>
           <p className="section-subtitle">
             Work delivered from the East Africa offices. Client names, dates and scope detail are
             confirmed with IXAR before publication.
@@ -129,7 +130,7 @@ export default function CaseStudies({ onOpenContact }) {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
 
         .project-card {
@@ -222,7 +223,7 @@ export default function CaseStudies({ onOpenContact }) {
           .projects-cta { padding: 24px 20px; }
           .projects-cta .btn { width: 100%; }
         }
-      `}</style>
+      `}</Style>
     </section>
   );
 }

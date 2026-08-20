@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Shield, Award, ChevronRight, Cpu, FileCheck } from 'lucide-react';
 import ImagePlaceholder from '../components/ImagePlaceholder';
+import Style from '../components/Style';
 
 export default function ServiceDetailPage({ onOpenContact }) {
   const { slug } = useParams();
@@ -170,7 +171,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .back-link {
           display: inline-flex;
           align-items: center;
@@ -283,7 +284,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
           font-size: 0.95rem;
           color: var(--text-muted);
         }
-      `}</style>
+      `}</Style>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ChevronRight } from 'lucide-react';
+import Style from './Style';
 
 /* Footer.
    Office details are the Kampala ones from IXAR's own site board (Tilenga
@@ -120,7 +121,7 @@ export default function Footer({ onOpenContact }) {
         </div>
       </div>
 
-      <style>{`
+      <Style>{`
         .footer-section {
           background: var(--navy);
           color: rgba(255, 255, 255, 0.72);
@@ -233,7 +234,7 @@ export default function Footer({ onOpenContact }) {
           .footer-bottom { flex-direction: column; align-items: flex-start; }
           .footer-cta { width: 100%; }
         }
-      `}</style>
+      `}</Style>
     </footer>
   );
 }
