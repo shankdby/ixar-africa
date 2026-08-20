@@ -610,6 +610,53 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
+      {/* ================= SECTION 1 — BRAND INTRODUCTION ================= */}
+      <section className="ea-section" style={{ background: '#FFFFFF', padding: '110px 0', borderBottom: '1px solid #EAEAEA' }}>
+        <div className="ea-wrap">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '40px', alignItems: 'center' }}>
+            <motion.div
+              style={{ gridColumn: 'span 12 / span 12' }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="ea-eyebrow" style={{ fontSize: '0.9375rem', color: '#E31E24', fontWeight: 800, letterSpacing: '0.16em' }}>
+                WHO WE ARE
+              </span>
+              <h2 style={{ fontSize: 'clamp(2.4rem, 4vw, 4rem)', fontWeight: 900, color: '#001E57', lineHeight: '1.08', letterSpacing: '-0.02em', marginTop: '12px', marginBottom: '32px' }}>
+                Precision that protects.<br />
+                <span style={{ color: '#E31E24' }}>Technology that performs.</span>
+              </h2>
+            </motion.div>
+
+            <motion.div
+              style={{ gridColumn: 'span 6 / span 12' }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p style={{ fontSize: '1.25rem', color: '#001E57', fontWeight: 700, lineHeight: '1.6' }}>
+                Industrial X-Ray &amp; Allied Radiographers (EA) Ltd delivers high-precision Non-Destructive Testing (NDT), quality assurance, and asset integrity services across Uganda, Tanzania, and Kenya.
+              </p>
+            </motion.div>
+
+            <motion.div
+              style={{ gridColumn: 'span 6 / span 12' }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <p style={{ fontSize: '1.0625rem', color: '#444444', lineHeight: '1.75' }}>
+                As a registered regional division backed by over 55 years of industrial NDT expertise, we support East Africa’s largest energy, mining, power, pipeline, and infrastructure projects with certified personnel, licensed radiation equipment, and international standards compliance (ASME, API, ASTM, BS, ISO 9001).
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* ================= 2. EAST AFRICA IN NUMBERS ================= */}
       <section className="ea-stats ea-section" id="ea-numbers">
         <div className="ea-wrap">
@@ -1235,10 +1282,25 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 10. CONTACT ================= */}
-      <section className="ea-section" id="ea-enquiry">
+      {/* ================= 10. CONTACT & DRAMATIC CTA ================= */}
+      <section className="ea-section" id="ea-enquiry" style={{ background: '#FFFFFF', padding: '120px 0' }}>
         <div className="ea-wrap">
-          <SectionHead eyebrow="Get in touch" title="Contact" center />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            style={{ textAlign: 'center', marginBottom: '64px' }}
+          >
+            <span className="ea-eyebrow" style={{ fontSize: '0.875rem', letterSpacing: '0.16em', color: '#E31E24', fontWeight: 800 }}>GET IN TOUCH</span>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', fontWeight: 900, color: '#001E57', lineHeight: '1.08', letterSpacing: '-0.02em', marginTop: '10px', marginBottom: '18px' }}>
+              Let's build safer,<br />
+              <span style={{ color: '#E31E24' }}>more reliable operations.</span>
+            </h2>
+            <p style={{ fontSize: '1.15rem', color: '#6B6B6B', maxWidth: '640px', margin: '0 auto' }}>
+              Contact IXAR East Africa's technical team today to request a quotation, schedule inspection crews, or discuss NDT project requirements.
+            </p>
+          </motion.div>
 
           <div className="ea-contact-layout ea-rev">
             <div className="ea-form-card">
