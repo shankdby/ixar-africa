@@ -73,7 +73,7 @@ export default function Navbar({ onOpenContact }) {
 
   const navClass = ({ isActive }) => (isActive ? 'nav-link active' : 'nav-link');
 
-  const renderDropdown = (id, label, to, links, highlight = false) => {
+  const renderDropdown = (id, label, to, links, highlight = false, showViewAll = true) => {
     const open = openDropdown === id;
     /* Every path starts with "/", so the East Africa item — which owns this
        whole domain — is treated as active on any local route. */
@@ -102,10 +102,11 @@ export default function Navbar({ onOpenContact }) {
                 {l.label}
               </Link>
             ))}
-            <div className="dropdown-divider" />
-            <Link to={to} className="dropdown-item view-all">
-              {label} overview <ChevronRight size={13} />
-            </Link>
+            {showViewAll && (
+              <Link to={to} className="dropdown-item view-all">
+                {label} overview <ChevronRight size={13} />
+              </Link>
+            )}
           </div>
         )}
       </div>
@@ -148,7 +149,6 @@ export default function Navbar({ onOpenContact }) {
                 {l.label}
               </a>
             ))}
-            <div className="dropdown-divider" />
             <a href={item.href} className="dropdown-item view-all">
               On ixar.in <ExternalLink size={12} aria-hidden="true" />
             </a>
@@ -191,7 +191,7 @@ export default function Navbar({ onOpenContact }) {
         <nav className="desktop-nav" aria-label="Main">
           {HEADER_ITEMS.map((item) =>
             item.kind === 'ea'
-              ? renderDropdown('east-africa', item.label, item.to, item.children, true)
+              ? renderDropdown('east-africa', item.label, item.to, item.children, true, false)
               : renderGlobal(item)
           )}
         </nav>
@@ -398,33 +398,52 @@ export default function Navbar({ onOpenContact }) {
         }
 
         .dropdown-wrapper { position: relative; }
+        /* Dropdowns follow ixar.in: a solid red panel, white centred labels,
+           square corners, and a darker red hairline between rows. Colours are
+           sampled from ixar.in itself (panel #D81F00, rule #AC1600, hover
+           navy) so the two menus are the same object on both domains. */
         .dropdown-menu {
           position: absolute;
           top: 100%;
           left: 0;
-          width: 290px;
-          background: #FFFFFF;
-          border: 1px solid var(--line);
-          border-top: 3px solid var(--brand);
-          box-shadow: var(--shadow-lg);
-          padding: 8px;
+          min-width: 262px;
+          background: var(--global-red);
+          border: none;
+          border-radius: 0;
+          box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+          padding: 0;
           z-index: 100;
           display: flex;
           flex-direction: column;
+          overflow: hidden;
         }
         .dropdown-item {
           display: flex;
           align-items: center;
-          gap: 6px;
-          padding: 10px 12px;
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: var(--navy);
-          transition: background 0.18s ease, color 0.18s ease;
+          justify-content: center;
+          text-align: center;
+          gap: 7px;
+          padding: 15px 22px;
+          font-size: 0.9375rem;
+          font-weight: 700;
+          line-height: 1.3;
+          color: #FFFFFF;
+          border-bottom: 2px solid var(--global-red-rule);
+          transition: background 0.18s ease;
         }
-        .dropdown-item:hover { background: var(--bg-tint); color: var(--brand); }
-        .dropdown-item.view-all { color: var(--brand); font-weight: 800; }
-        .dropdown-divider { height: 1px; background: var(--line); margin: 6px 0; }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background: var(--global-navy); color: #FFFFFF; }
+        /* The row that leaves for the parent site, held apart in navy the way
+           ixar.in marks the item that opens a further panel. */
+        .dropdown-item.view-all {
+          background: var(--global-navy);
+          color: #FFFFFF;
+          font-weight: 800;
+        }
+        .dropdown-item.view-all:hover { background: var(--global-navy-dark); }
+        .dropdown-item.view-all svg { opacity: 0.85; }
+        /* Row separation now comes from each item's own border. */
+        .dropdown-divider { display: none; }
 
         .nav-actions { display: flex; align-items: center; gap: 12px; flex: none; }
         .mobile-toggle {

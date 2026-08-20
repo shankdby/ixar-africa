@@ -24,6 +24,17 @@
   --navy-dark: #00163F;
   --navy-badge-bg: #EEF2F8;
 
+  /* --- ixar.in ---------------------------------------------------------- *
+   * Sampled from the parent site so shared furniture - today the header
+   * dropdowns - is the same object on both domains rather than a lookalike.
+   * These are deliberately separate from --brand/--navy above: those govern
+   * this site's own pages, these govern anything that has to line up with
+   * ixar.in. Re-sample from ixar.in if it is ever restyled. */
+  --global-red: #D81F00;
+  --global-red-rule: #AC1600;
+  --global-navy: #111B55;
+  --global-navy-dark: #0B1240;
+
   /* --- neutrals --------------------------------------------------------- */
   --ink: #000000;
   --bg-light: #FFFFFF;
