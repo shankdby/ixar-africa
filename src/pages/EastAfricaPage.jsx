@@ -685,7 +685,7 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 2. BRAND INTRODUCTION ================= */}
+      {/* ================= SECTION 1 — BRAND INTRODUCTION ================= */}
       <section className="ea-section" style={{ background: '#FFFFFF', padding: '80px 0', borderBottom: '1px solid #EAEAEA' }}>
         <div className="ea-wrap">
           <div className="ea-intro-grid">
@@ -732,217 +732,12 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 3. SERVICES WE OFFER ================= */}
-      <section className="ea-section" id="ea-services" style={{ background: '#FFFFFF', padding: '110px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead eyebrow="CORE EXPERTISE" title="Services We Offer" center />
-
-          {/* Interactive Capability Switcher */}
-          <div className="ea-capability-switcher" style={{ marginTop: '48px', marginBottom: '72px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '36px', alignItems: 'center' }}>
-              {/* Left Column: Index List */}
-              <div style={{ gridColumn: 'span 5 / span 12', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {FEATURED_SERVICES.map((feat, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveServiceIdx(idx)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '16px',
-                      padding: '18px 20px',
-                      background: activeServiceIdx === idx ? '#001E57' : '#F9F9F9',
-                      color: activeServiceIdx === idx ? '#FFFFFF' : '#001E57',
-                      border: '1px solid',
-                      borderColor: activeServiceIdx === idx ? '#001E57' : '#EAEAEA',
-                      borderRadius: '8px',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease',
-                      boxShadow: activeServiceIdx === idx ? '0 10px 24px rgba(0, 30, 87, 0.18)' : 'none',
-                    }}
-                  >
-                    <span style={{ fontSize: '0.875rem', fontWeight: 900, color: activeServiceIdx === idx ? '#FF7A78' : '#DE0603' }}>
-                      {feat.num}
-                    </span>
-                    <span style={{ fontSize: '1.05rem', fontWeight: 800, flex: 1 }}>
-                      {feat.title}
-                    </span>
-                    <ChevronRightGlyph />
-                  </button>
-                ))}
-              </div>
-
-              {/* Right Column: Featured Image & Technical Details Panel */}
-              <div style={{ gridColumn: 'span 7 / span 12' }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeServiceIdx}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
-                    style={{
-                      background: '#FFFFFF',
-                      border: '1px solid #EAEAEA',
-                      borderRadius: '12px',
-                      overflow: 'hidden',
-                      boxShadow: '0 14px 34px rgba(0, 30, 87, 0.12)',
-                    }}
-                  >
-                    <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
-                      <AppImage
-                        src={FEATURED_SERVICES[activeServiceIdx].img}
-                        alt={FEATURED_SERVICES[activeServiceIdx].title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                      <div
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          background: 'linear-gradient(180deg, rgba(0,30,87,0.1) 0%, rgba(0,30,87,0.75) 100%)',
-                        }}
-                      />
-                      <span
-                        style={{
-                          position: 'absolute',
-                          top: '20px',
-                          left: '20px',
-                          background: '#DE0603',
-                          color: '#FFFFFF',
-                          fontSize: '0.75rem',
-                          fontWeight: 800,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.12em',
-                          padding: '6px 14px',
-                          borderRadius: '4px',
-                        }}
-                      >
-                        {FEATURED_SERVICES[activeServiceIdx].category}
-                      </span>
-                    </div>
-
-                    <div style={{ padding: '32px' }}>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '12px' }}>
-                        {FEATURED_SERVICES[activeServiceIdx].title}
-                      </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.7', marginBottom: '20px' }}>
-                        {FEATURED_SERVICES[activeServiceIdx].desc}
-                      </p>
-
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          paddingTop: '20px',
-                          borderTop: '1px solid #EAEAEA',
-                          flexWrap: 'wrap',
-                          gap: '12px',
-                        }}
-                      >
-                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#0A2C6B', background: '#F0F4FA', padding: '6px 12px', borderRadius: '4px' }}>
-                          ✓ {FEATURED_SERVICES[activeServiceIdx].standards}
-                        </span>
-                        <a
-                          href="/services"
-                          className="ea-btn ea-btn--primary"
-                          style={{ textDecoration: 'none', padding: '10px 20px', fontSize: '0.875rem' }}
-                        >
-                          View Methodologies &rarr;
-                        </a>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-
-          {/* Complete 12-Service Directory Below */}
-          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#001E57', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              Full NDT &amp; Inspection Service Directory
-            </h4>
-          </div>
-
-          <div className="ea-grid ea-grid--4 ea-rev">
-            {SERVICES.map((s, idx) => (
-              <motion.article 
-                className="ea-card" 
-                key={idx}
-                whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
-                transition={{ duration: 0.25 }}
-              >
-                {s.img ? (
-                  <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
-                    <motion.img 
-                      src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
-                      alt={s.title} 
-                      loading="lazy" 
-                      {...dimsFor(s.img.startsWith('/') ? s.img : `${IMG}${s.img}`)} 
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.35 }}
-                    />
-                  </figure>
-                ) : (
-                  <Placeholder imgRef="IMG-S" desc={`${s.title}, square or 4:3`} ratio="4x3" />
-                )}
-                <div className="ea-card__body">
-                  <span className="ea-card__num">{String(idx + 1).padStart(2, '0')}</span>
-                  <h3 className="ea-card__title">{s.title}</h3>
-                  <p className="ea-card__text">{s.desc || s.text}</p>
-                  <a className="ea-card__more" href="/services">
-                    Read More <ArrowGlyph />
-                  </a>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 4. BY THE NUMBERS ================= */}
+      {/* ================= 2. EAST AFRICA IN NUMBERS ================= */}
       <section className="ea-stats ea-section" id="ea-numbers">
         <div className="ea-wrap">
-          <SectionHead
-            eyebrow="The Group Record"
-            title="We are committed to provide safest and efficient working practices in the Industry."
-            center
-          />
+          <SectionHead eyebrow="Regional Record" title="East Africa in Numbers" center />
 
-          {/* The group's four figures, matching ixar.in. East Africa trades on
-              the parent's record, so these are the same numbers on both sites. */}
-          <div className="ea-stats__grid ea-stats__grid--group ea-rev" ref={statStripRef}>
-            <div className="ea-stat">
-              <span className="ea-stat__fig">
-                <Counter to={55} run={countersRun} />
-              </span>
-              <span className="ea-stat__label">Years Experience</span>
-            </div>
-            <div className="ea-stat">
-              <span className="ea-stat__fig">
-                <Counter to={99} suffix="%" run={countersRun} />
-              </span>
-              <span className="ea-stat__label">Customer Satisfaction</span>
-            </div>
-            <div className="ea-stat">
-              <span className="ea-stat__fig">
-                <Counter to={30} run={countersRun} />
-              </span>
-              <span className="ea-stat__label">Industries Served</span>
-            </div>
-            <div className="ea-stat">
-              <span className="ea-stat__fig">
-                <Counter to={12} suffix="K +" run={countersRun} />
-              </span>
-              <span className="ea-stat__label">Projects Tested</span>
-            </div>
-          </div>
-
-          <p className="ea-stats__split">In East Africa</p>
-
-          <div className="ea-stats__grid ea-rev">
+          <div className="ea-stats__grid ea-rev" ref={statStripRef}>
             <div className="ea-stat">
               <svg className="ea-stat__icon" viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="3" y="4.5" width="18" height="16.5" rx="2" />
@@ -989,336 +784,7 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 5. INDUSTRIES WE SERVE ================= */}
-      <section className="ea-section ea-section--tint" id="ea-industries" style={{ padding: '100px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead eyebrow="SECTOR FOOTPRINT" title="Industries We Serve" center />
-
-          {/* Interactive Sector Showcase */}
-          <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px', alignItems: 'center' }}>
-            {/* Left: Sector Selector Tabs */}
-            <div style={{ gridColumn: 'span 4 / span 12', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {INDUSTRIES.map((ind, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveIndustryIdx(idx)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '16px 20px',
-                    background: activeIndustryIdx === idx ? '#DE0603' : '#FFFFFF',
-                    color: activeIndustryIdx === idx ? '#FFFFFF' : '#001E57',
-                    border: '1px solid',
-                    borderColor: activeIndustryIdx === idx ? '#DE0603' : '#EAEAEA',
-                    borderRadius: '8px',
-                    textAlign: 'left',
-                    fontWeight: 800,
-                    fontSize: '0.95rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: activeIndustryIdx === idx ? '0 8px 20px rgba(222, 6, 3, 0.25)' : '0 2px 8px rgba(0,0,0,0.03)',
-                  }}
-                >
-                  <span style={{ flex: 1 }}>{ind.title}</span>
-                  {activeIndustryIdx === idx && <span>&rarr;</span>}
-                </button>
-              ))}
-            </div>
-
-            {/* Right: Full-width Industrial Showcase Panel */}
-            <div style={{ gridColumn: 'span 8 / span 12' }}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndustryIdx}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.35 }}
-                  style={{
-                    position: 'relative',
-                    height: '440px',
-                    borderRadius: '16px',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 48px rgba(0, 30, 87, 0.2)',
-                  }}
-                >
-                  <AppImage
-                    src={INDUSTRIES[activeIndustryIdx].img}
-                    alt={INDUSTRIES[activeIndustryIdx].title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,30,87,0.15) 0%, rgba(0,30,87,0.85) 100%)',
-                    }}
-                  />
-                  <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px', color: '#FFFFFF' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF7A78', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '4px', display: 'inline-block', marginBottom: '12px' }}>
-                      Sector Footprint
-                    </span>
-                    <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.1 }}>
-                      {INDUSTRIES[activeIndustryIdx].title}
-                    </h3>
-                    <p style={{ fontSize: '0.95rem', fontWeight: 800, color: '#E31E24', letterSpacing: '0.04em', marginBottom: '14px' }}>
-                      {INDUSTRIES[activeIndustryIdx].subtitle}
-                    </p>
-                    <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
-                      {INDUSTRIES[activeIndustryIdx].desc}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 6. OUR CLIENTS ================= */}
-      <section className="ea-section" id="ea-trusted">
-        <div className="ea-wrap">
-          <SectionHead eyebrow="Regional Track Record" title="Trusted By Leading Operators" center />
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: '20px',
-              marginTop: '36px',
-            }}
-            className="ea-rev"
-          >
-            {[
-              {
-                name: 'TotalEnergies',
-                url: 'https://totalenergies.com',
-                desc: 'Tilenga Upstream Oil Development Project, Uganda',
-                badge: 'Oil & Gas Major',
-                color: '#E31E24',
-              },
-              {
-                name: 'CNOOC',
-                url: 'https://www.cnooc.com.cn/en/',
-                desc: 'Kingfisher Oilfield Development Project, Uganda',
-                badge: 'Offshore & Upstream',
-                color: '#001E57',
-              },
-              {
-                name: 'EACOP',
-                url: 'https://eacop.com',
-                desc: 'East African Crude Oil Pipeline (Uganda - Tanzania)',
-                badge: 'Cross-Country Pipeline',
-                color: '#15803D',
-              },
-              {
-                name: 'Praj Industries',
-                url: 'https://www.praj.net',
-                desc: 'Bio-Refinery & Process Plant NDT Inspection, Tanzania',
-                badge: 'Process Engineering',
-                color: '#C2410C',
-              },
-              {
-                name: 'UNOC',
-                url: 'https://www.unoc.co.ug',
-                desc: 'Uganda National Oil Company Infrastructure',
-                badge: 'National Oil Company',
-                color: '#0369A1',
-              },
-              {
-                name: 'Kakira Sugar',
-                url: 'https://www.kakirasugar.com',
-                desc: 'Sugar Mill Boilers & Evaporator Testing, Uganda',
-                badge: 'Agro-Industrial',
-                color: '#B45309',
-              },
-              {
-                name: 'Madhvani Group',
-                url: 'https://www.madhvanigroup.com',
-                desc: 'Heavy Engineering & Industrial Plant Inspection',
-                badge: 'Industrial Conglomerate',
-                color: '#4338CA',
-              },
-              {
-                name: 'Tullow Oil',
-                url: 'https://www.tullowoil.com',
-                desc: 'Energy Exploration Infrastructure, East Africa',
-                badge: 'Energy Exploration',
-                color: '#0F766E',
-              },
-            ].map((c) => (
-              <motion.a
-                key={c.name}
-                href={c.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -6, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid #EAEAEA',
-                  borderRadius: '8px',
-                  padding: '22px 20px',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justify: 'space-between',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'border-color 0.2s ease',
-                }}
-              >
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: c.color }} />
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: c.color, background: `${c.color}15`, padding: '4px 10px', borderRadius: '4px' }}>
-                      {c.badge}
-                    </span>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke={c.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#001E57', margin: '6px 0 4px 0' }}>{c.name}</h3>
-                  <p style={{ fontSize: '0.85rem', color: '#6B6B6B', lineHeight: '1.5', margin: 0 }}>{c.desc}</p>
-                </div>
-                <div style={{ marginTop: '16px', fontSize: '0.8125rem', fontWeight: 700, color: c.color, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  Visit Client Website &rarr;
-                </div>
-              </motion.a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 7. TRAINING AND THE 55-YEAR RECORD ================= */}
-      <section className="ea-section ea-section--navy" id="ea-backed">
-        <div className="ea-wrap">
-          <div className="ea-backed ea-rev">
-            <div className="ea-backed__copy">
-              <span className="ea-eyebrow">Parent Company</span>
-              <h2 className="ea-sec-title">Backed by Over 55 Years of NDT Experience</h2>
-              <span className="ea-rule" />
-              <p style={{ marginTop: '26px' }}>
-                IXAR East Africa operates as part of Industrial X-Ray and Allied Radiographers (I)
-                Pvt. Ltd., founded in 1969 and today a leader in non-destructive testing in India and
-                internationally. The group employs over 1,000 technicians, holds ISO 9001
-                certification, operates a fleet of mobile radiography units, and runs a training
-                institute accredited in collaboration with the Bhabha Atomic Research Centre in
-                Mumbai. Regional teams draw on group equipment, technical specialists and written
-                practices whenever a project calls for it.
-              </p>
-
-              <div className="ea-offices">
-                <p className="ea-offices__label">International offices</p>
-                <p className="ea-offices__list">
-                  India &middot; Uganda &middot; Tanzania &middot; Nigeria &middot; Netherlands
-                  &middot; UAE &middot; Oman &middot; Saudi Arabia
-                </p>
-              </div>
-
-              <a className="ea-btn ea-btn--primary" href="/contact">
-                About IXAR
-              </a>
-            </div>
-
-            <figure className="ea-card__media ea-backed__media">
-              <AppImage
-                src={`${IMG}ea-backed-barc.webp`}
-                alt="BARC-accredited IXAR training centre, Mumbai"
-                loading="lazy"
-              />
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 8. TRACK RECORD ================= */}
-      <section className="ea-section" id="ea-track-record" style={{ background: '#001E57', color: '#FFFFFF', padding: '110px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead
-            eyebrow="FIELD EXCELLENCE"
-            title="Regional Track Record"
-            center
-            light
-          />
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '28px',
-              marginTop: '56px',
-            }}
-          >
-            {TRACK_RECORD.map((proj, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                  <AppImage
-                    src={proj.img}
-                    alt={proj.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,30,87,0.85) 100%)',
-                    }}
-                  />
-                  <span
-                    style={{
-                      position: 'absolute',
-                      bottom: '14px',
-                      left: '16px',
-                      background: '#DE0603',
-                      color: '#FFFFFF',
-                      fontSize: '0.75rem',
-                      fontWeight: 800,
-                      padding: '4px 10px',
-                      borderRadius: '4px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                    }}
-                  >
-                    📍 {proj.location}
-                  </span>
-                </div>
-
-                <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#FF7A78', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
-                    {proj.capability}
-                  </span>
-                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '10px' }}>
-                    {proj.title}
-                  </h4>
-                  <p style={{ fontSize: '0.9375rem', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.6', margin: 0 }}>
-                    {proj.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 9. WHERE WE OPERATE (East Africa only) ================= */}
+      {/* ================= 3. WHERE WE OPERATE ================= */}
       <section className="ea-section" id="ea-operate">
         <div className="ea-wrap">
           <SectionHead eyebrow="Footprint" title="Where We Operate">
@@ -1510,7 +976,7 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 10. LICENCES AND COMPLIANCE (East Africa only) ================= */}
+      {/* ================= 4. LICENCES, APPROVALS AND COMPLIANCE ================= */}
       <section className="ea-section ea-section--tint" id="ea-licences" style={{ padding: '100px 0' }}>
         <div className="ea-wrap">
           <SectionHead eyebrow="CLEARED TO WORK" title="Licences, Approvals & Compliance" center />
@@ -1644,7 +1110,464 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 11. LEARN MORE (East Africa only) ================= */}
+      {/* ================= 5. SERVICES WE OFFER — FEATURED CAPABILITY SWITCHER ================= */}
+      <section className="ea-section" id="ea-services" style={{ background: '#FFFFFF', padding: '110px 0' }}>
+        <div className="ea-wrap">
+          <SectionHead eyebrow="CORE EXPERTISE" title="Services We Offer" center />
+
+          {/* Interactive Capability Switcher */}
+          <div className="ea-capability-switcher" style={{ marginTop: '48px', marginBottom: '72px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '36px', alignItems: 'center' }}>
+              {/* Left Column: Index List */}
+              <div style={{ gridColumn: 'span 5 / span 12', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {FEATURED_SERVICES.map((feat, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveServiceIdx(idx)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      padding: '18px 20px',
+                      background: activeServiceIdx === idx ? '#001E57' : '#F9F9F9',
+                      color: activeServiceIdx === idx ? '#FFFFFF' : '#001E57',
+                      border: '1px solid',
+                      borderColor: activeServiceIdx === idx ? '#001E57' : '#EAEAEA',
+                      borderRadius: '8px',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease',
+                      boxShadow: activeServiceIdx === idx ? '0 10px 24px rgba(0, 30, 87, 0.18)' : 'none',
+                    }}
+                  >
+                    <span style={{ fontSize: '0.875rem', fontWeight: 900, color: activeServiceIdx === idx ? '#FF7A78' : '#DE0603' }}>
+                      {feat.num}
+                    </span>
+                    <span style={{ fontSize: '1.05rem', fontWeight: 800, flex: 1 }}>
+                      {feat.title}
+                    </span>
+                    <ChevronRightGlyph />
+                  </button>
+                ))}
+              </div>
+
+              {/* Right Column: Featured Image & Technical Details Panel */}
+              <div style={{ gridColumn: 'span 7 / span 12' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeServiceIdx}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4 }}
+                    style={{
+                      background: '#FFFFFF',
+                      border: '1px solid #EAEAEA',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      boxShadow: '0 14px 34px rgba(0, 30, 87, 0.12)',
+                    }}
+                  >
+                    <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
+                      <AppImage
+                        src={FEATURED_SERVICES[activeServiceIdx].img}
+                        alt={FEATURED_SERVICES[activeServiceIdx].title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                      <div
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          background: 'linear-gradient(180deg, rgba(0,30,87,0.1) 0%, rgba(0,30,87,0.75) 100%)',
+                        }}
+                      />
+                      <span
+                        style={{
+                          position: 'absolute',
+                          top: '20px',
+                          left: '20px',
+                          background: '#DE0603',
+                          color: '#FFFFFF',
+                          fontSize: '0.75rem',
+                          fontWeight: 800,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.12em',
+                          padding: '6px 14px',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        {FEATURED_SERVICES[activeServiceIdx].category}
+                      </span>
+                    </div>
+
+                    <div style={{ padding: '32px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '12px' }}>
+                        {FEATURED_SERVICES[activeServiceIdx].title}
+                      </h3>
+                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.7', marginBottom: '20px' }}>
+                        {FEATURED_SERVICES[activeServiceIdx].desc}
+                      </p>
+
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          paddingTop: '20px',
+                          borderTop: '1px solid #EAEAEA',
+                          flexWrap: 'wrap',
+                          gap: '12px',
+                        }}
+                      >
+                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#0A2C6B', background: '#F0F4FA', padding: '6px 12px', borderRadius: '4px' }}>
+                          ✓ {FEATURED_SERVICES[activeServiceIdx].standards}
+                        </span>
+                        <a
+                          href="/services"
+                          className="ea-btn ea-btn--primary"
+                          style={{ textDecoration: 'none', padding: '10px 20px', fontSize: '0.875rem' }}
+                        >
+                          View Methodologies &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+
+          {/* Complete 12-Service Directory Below */}
+          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#001E57', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Full NDT &amp; Inspection Service Directory
+            </h4>
+          </div>
+
+          <div className="ea-grid ea-grid--4 ea-rev">
+            {SERVICES.map((s, idx) => (
+              <motion.article 
+                className="ea-card" 
+                key={idx}
+                whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
+                transition={{ duration: 0.25 }}
+              >
+                {s.img ? (
+                  <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
+                    <motion.img 
+                      src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
+                      alt={s.title} 
+                      loading="lazy" 
+                      {...dimsFor(s.img.startsWith('/') ? s.img : `${IMG}${s.img}`)} 
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ duration: 0.35 }}
+                    />
+                  </figure>
+                ) : (
+                  <Placeholder imgRef="IMG-S" desc={`${s.title}, square or 4:3`} ratio="4x3" />
+                )}
+                <div className="ea-card__body">
+                  <span className="ea-card__num">{String(idx + 1).padStart(2, '0')}</span>
+                  <h3 className="ea-card__title">{s.title}</h3>
+                  <p className="ea-card__text">{s.desc || s.text}</p>
+                  <a className="ea-card__more" href="/services">
+                    Read More <ArrowGlyph />
+                  </a>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 6. INDUSTRIES WE SERVE — INTERACTIVE SHOWCASE ================= */}
+      <section className="ea-section ea-section--tint" id="ea-industries" style={{ padding: '100px 0' }}>
+        <div className="ea-wrap">
+          <SectionHead eyebrow="SECTOR FOOTPRINT" title="Industries We Serve" center />
+
+          {/* Interactive Sector Showcase */}
+          <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px', alignItems: 'center' }}>
+            {/* Left: Sector Selector Tabs */}
+            <div style={{ gridColumn: 'span 4 / span 12', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {INDUSTRIES.map((ind, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndustryIdx(idx)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '16px 20px',
+                    background: activeIndustryIdx === idx ? '#DE0603' : '#FFFFFF',
+                    color: activeIndustryIdx === idx ? '#FFFFFF' : '#001E57',
+                    border: '1px solid',
+                    borderColor: activeIndustryIdx === idx ? '#DE0603' : '#EAEAEA',
+                    borderRadius: '8px',
+                    textAlign: 'left',
+                    fontWeight: 800,
+                    fontSize: '0.95rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: activeIndustryIdx === idx ? '0 8px 20px rgba(222, 6, 3, 0.25)' : '0 2px 8px rgba(0,0,0,0.03)',
+                  }}
+                >
+                  <span style={{ flex: 1 }}>{ind.title}</span>
+                  {activeIndustryIdx === idx && <span>&rarr;</span>}
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Full-width Industrial Showcase Panel */}
+            <div style={{ gridColumn: 'span 8 / span 12' }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndustryIdx}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.35 }}
+                  style={{
+                    position: 'relative',
+                    height: '440px',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    boxShadow: '0 20px 48px rgba(0, 30, 87, 0.2)',
+                  }}
+                >
+                  <AppImage
+                    src={INDUSTRIES[activeIndustryIdx].img}
+                    alt={INDUSTRIES[activeIndustryIdx].title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(0,30,87,0.15) 0%, rgba(0,30,87,0.85) 100%)',
+                    }}
+                  />
+                  <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px', color: '#FFFFFF' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF7A78', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '4px', display: 'inline-block', marginBottom: '12px' }}>
+                      Sector Footprint
+                    </span>
+                    <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.1 }}>
+                      {INDUSTRIES[activeIndustryIdx].title}
+                    </h3>
+                    <p style={{ fontSize: '0.95rem', fontWeight: 800, color: '#E31E24', letterSpacing: '0.04em', marginBottom: '14px' }}>
+                      {INDUSTRIES[activeIndustryIdx].subtitle}
+                    </p>
+                    <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
+                      {INDUSTRIES[activeIndustryIdx].desc}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= NEW: REGIONAL TRACK RECORD ================= */}
+      <section className="ea-section" id="ea-track-record" style={{ background: '#001E57', color: '#FFFFFF', padding: '110px 0' }}>
+        <div className="ea-wrap">
+          <SectionHead
+            eyebrow="FIELD EXCELLENCE"
+            title="Regional Track Record"
+            center
+            light
+          />
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '28px',
+              marginTop: '56px',
+            }}
+          >
+            {TRACK_RECORD.map((proj, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+                  <AppImage
+                    src={proj.img}
+                    alt={proj.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,30,87,0.85) 100%)',
+                    }}
+                  />
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: '14px',
+                      left: '16px',
+                      background: '#DE0603',
+                      color: '#FFFFFF',
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                      padding: '4px 10px',
+                      borderRadius: '4px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                    }}
+                  >
+                    📍 {proj.location}
+                  </span>
+                </div>
+
+                <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#FF7A78', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
+                    {proj.capability}
+                  </span>
+                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '10px' }}>
+                    {proj.title}
+                  </h4>
+                  <p style={{ fontSize: '0.9375rem', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.6', margin: 0 }}>
+                    {proj.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 7. TRUSTED BY ================= */}
+      <section className="ea-section" id="ea-trusted">
+        <div className="ea-wrap">
+          <SectionHead eyebrow="Regional Track Record" title="Trusted By Leading Operators" center />
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '20px',
+              marginTop: '36px',
+            }}
+            className="ea-rev"
+          >
+            {[
+              {
+                name: 'TotalEnergies',
+                url: 'https://totalenergies.com',
+                desc: 'Tilenga Upstream Oil Development Project, Uganda',
+                badge: 'Oil & Gas Major',
+                color: '#E31E24',
+              },
+              {
+                name: 'CNOOC',
+                url: 'https://www.cnooc.com.cn/en/',
+                desc: 'Kingfisher Oilfield Development Project, Uganda',
+                badge: 'Offshore & Upstream',
+                color: '#001E57',
+              },
+              {
+                name: 'EACOP',
+                url: 'https://eacop.com',
+                desc: 'East African Crude Oil Pipeline (Uganda - Tanzania)',
+                badge: 'Cross-Country Pipeline',
+                color: '#15803D',
+              },
+              {
+                name: 'Praj Industries',
+                url: 'https://www.praj.net',
+                desc: 'Bio-Refinery & Process Plant NDT Inspection, Tanzania',
+                badge: 'Process Engineering',
+                color: '#C2410C',
+              },
+              {
+                name: 'UNOC',
+                url: 'https://www.unoc.co.ug',
+                desc: 'Uganda National Oil Company Infrastructure',
+                badge: 'National Oil Company',
+                color: '#0369A1',
+              },
+              {
+                name: 'Kakira Sugar',
+                url: 'https://www.kakirasugar.com',
+                desc: 'Sugar Mill Boilers & Evaporator Testing, Uganda',
+                badge: 'Agro-Industrial',
+                color: '#B45309',
+              },
+              {
+                name: 'Madhvani Group',
+                url: 'https://www.madhvanigroup.com',
+                desc: 'Heavy Engineering & Industrial Plant Inspection',
+                badge: 'Industrial Conglomerate',
+                color: '#4338CA',
+              },
+              {
+                name: 'Tullow Oil',
+                url: 'https://www.tullowoil.com',
+                desc: 'Energy Exploration Infrastructure, East Africa',
+                badge: 'Energy Exploration',
+                color: '#0F766E',
+              },
+            ].map((c) => (
+              <motion.a
+                key={c.name}
+                href={c.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -6, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EAEAEA',
+                  borderRadius: '8px',
+                  padding: '22px 20px',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justify: 'space-between',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transition: 'border-color 0.2s ease',
+                }}
+              >
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: c.color }} />
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: c.color, background: `${c.color}15`, padding: '4px 10px', borderRadius: '4px' }}>
+                      {c.badge}
+                    </span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke={c.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#001E57', margin: '6px 0 4px 0' }}>{c.name}</h3>
+                  <p style={{ fontSize: '0.85rem', color: '#6B6B6B', lineHeight: '1.5', margin: 0 }}>{c.desc}</p>
+                </div>
+                <div style={{ marginTop: '16px', fontSize: '0.8125rem', fontWeight: 700, color: c.color, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  Visit Client Website &rarr;
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 8. LEARN MORE ================= */}
       <section className="ea-section ea-section--tint" id="ea-learn">
         <div className="ea-wrap">
           <SectionHead eyebrow="Documentation" title="Learn More & Downloads" center />
@@ -1698,7 +1621,49 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 12. CONTACT ================= */}
+      {/* ================= 9. BACKED BY OVER 55 YEARS ================= */}
+      <section className="ea-section ea-section--navy" id="ea-backed">
+        <div className="ea-wrap">
+          <div className="ea-backed ea-rev">
+            <div className="ea-backed__copy">
+              <span className="ea-eyebrow">Parent Company</span>
+              <h2 className="ea-sec-title">Backed by Over 55 Years of NDT Experience</h2>
+              <span className="ea-rule" />
+              <p style={{ marginTop: '26px' }}>
+                IXAR East Africa operates as part of Industrial X-Ray and Allied Radiographers (I)
+                Pvt. Ltd., founded in 1969 and today a leader in non-destructive testing in India and
+                internationally. The group employs over 1,000 technicians, holds ISO 9001
+                certification, operates a fleet of mobile radiography units, and runs a training
+                institute accredited in collaboration with the Bhabha Atomic Research Centre in
+                Mumbai. Regional teams draw on group equipment, technical specialists and written
+                practices whenever a project calls for it.
+              </p>
+
+              <div className="ea-offices">
+                <p className="ea-offices__label">International offices</p>
+                <p className="ea-offices__list">
+                  India &middot; Uganda &middot; Tanzania &middot; Nigeria &middot; Netherlands
+                  &middot; UAE &middot; Oman &middot; Saudi Arabia
+                </p>
+              </div>
+
+              <a className="ea-btn ea-btn--primary" href="/contact">
+                About IXAR
+              </a>
+            </div>
+
+            <figure className="ea-card__media ea-backed__media">
+              <AppImage
+                src={`${IMG}ea-backed-barc.webp`}
+                alt="BARC-accredited IXAR training centre, Mumbai"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 10. CONTACT & DRAMATIC CTA ================= */}
       <section className="ea-section" id="ea-enquiry" style={{ background: '#FFFFFF', padding: '120px 0' }}>
         <div className="ea-wrap">
           <motion.div
@@ -2162,15 +2127,6 @@ export default function EastAfricaPage() {
 }
 .ea-stat__fig .ea-chip{display:inline-block;font-size:19px;font-weight:800;vertical-align:middle}
 .ea-stat__label{font-size:14.5px;font-weight:700;color:var(--ea-body);letter-spacing:.03em}
-/* The group row carries ixar.in's four figures; the regional row sits under a
-   quiet rule so the two are read as parent and division, not one list of
-   eight. */
-.ea-stats__grid--group .ea-stat__fig{font-size:54px;color:var(--ea-brand)}
-.ea-stats__split{
-  margin:0;padding:26px 0 4px;text-align:center;font-size:12.5px;font-weight:800;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--ea-body-soft);
-  border-top:1px solid var(--ea-muted);
-}
 .ea-stats__note{
   margin-top:34px;padding:16px 20px;background:var(--ea-white);border-left:3px solid var(--ea-amber-line);
   font-size:13.5px;line-height:1.6;color:var(--ea-body-soft);
