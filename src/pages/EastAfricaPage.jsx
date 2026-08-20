@@ -594,9 +594,9 @@ export default function EastAfricaPage() {
                 <path d="M3 9.5h18M8 2.5v4M16 2.5v4" />
               </svg>
               <span className="ea-stat__fig">
-                2003
+                <Counter to={2} run={countersRun} />
               </span>
-              <span className="ea-stat__label">Established in East Africa</span>
+              <span className="ea-stat__label">Regional Offices</span>
             </div>
 
             <div className="ea-stat">
@@ -612,13 +612,12 @@ export default function EastAfricaPage() {
 
             <div className="ea-stat">
               <svg className="ea-stat__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 20V7.5l8-4.5 8 4.5V20" />
-                <path d="M4 20h16M9.5 20v-6h5v6" />
+                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" strokeWidth="2" fill="none" />
               </svg>
               <span className="ea-stat__fig">
-                <Counter to={150} suffix="+" run={countersRun} />
+                24/7
               </span>
-              <span className="ea-stat__label">Projects Completed in the Region</span>
+              <span className="ea-stat__label">Site Response</span>
             </div>
 
             <div className="ea-stat">
