@@ -25,10 +25,24 @@
     <meta property="og:description" content="Non-destructive testing and industrial inspection, delivered from registered offices in Uganda and Tanzania." />
     <!--seo:end-->
 
-    <!-- Google Fonts -->
+    <!-- Marks the document as script-capable before first paint. The scroll
+         reveal styles key off this, so a client without JS keeps the
+         prerendered content visible instead of a page of empty sections. -->
+    <script>document.documentElement.classList.add('js');</script>
+
+    <!-- Google Fonts. Loaded non-blocking: the stylesheet is fetched at low
+         priority and applied on load, so a slow fonts.googleapis.com response
+         cannot hold up first paint. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

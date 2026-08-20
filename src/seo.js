@@ -12,7 +12,8 @@
 
 export const SITE_URL = 'https://ixar.africa';
 export const SITE_NAME = 'IXAR';
-export const OG_IMAGE = '/images/east-africa/ea-hero-1.jpg';
+// A JPEG, not the WebP used on-page: several link unfurlers still refuse WebP.
+export const OG_IMAGE = '/images/og-cover.jpg';
 
 const DEFAULT_DESCRIPTION =
   'Non-destructive testing and industrial inspection across Uganda, Tanzania and Kenya, delivered from registered regional offices. Licensed for sealed radioactive sources, ASNT-certified personnel, ISO 9001 since 2003.';

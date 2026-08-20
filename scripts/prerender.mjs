@@ -23,6 +23,9 @@ const { render } = await import(pathToFileURL(SSR_ENTRY).href);
 const { PRERENDER_ROUTES, ROUTE_SEO, resolveSeo, SITE_URL, SITE_NAME, OG_IMAGE } = await import(
   pathToFileURL(path.join(ROOT, 'src', 'seo.js')).href
 );
+const { jsonLdFor } = await import(
+  pathToFileURL(path.join(ROOT, 'src', 'structuredData.js')).href
+);
 
 const SEO_START = '<!--seo:start-->';
 const SEO_END = '<!--seo:end-->';
@@ -39,7 +42,7 @@ for (const route of PRERENDER_ROUTES) {
   const appHtml = render(route);
   const seo = resolveSeo(route);
   const html = template
-    .replace(sliceBetween(template, SEO_START, SEO_END), headTags(seo))
+    .replace(sliceBetween(template, SEO_START, SEO_END), headTags(seo, route))
     .replace(ROOT_DIV, `<div id="root">${appHtml}</div>`);
 
   const outFile =
@@ -55,7 +58,7 @@ for (const route of PRERENDER_ROUTES) {
 // A prerendered 404 for hosts that serve one. Marked noindex by resolveSeo.
 {
   const notFound = template
-    .replace(sliceBetween(template, SEO_START, SEO_END), headTags(resolveSeo('/__404__')))
+    .replace(sliceBetween(template, SEO_START, SEO_END), headTags(resolveSeo('/__404__'), '/__404__'))
     .replace(ROOT_DIV, `<div id="root">${render('/__404__')}</div>`);
   await fs.writeFile(path.join(DIST, '404.html'), notFound, 'utf8');
 }
@@ -91,7 +94,7 @@ function sliceBetween(html, start, end) {
   return html.slice(from, to);
 }
 
-function headTags(seo) {
+function headTags(seo, route) {
   const tags = [
     SEO_START,
     tag('title', seo.title),
@@ -113,6 +116,11 @@ function headTags(seo) {
   ];
 
   if (seo.noindex) tags.push(meta('name', 'robots', 'noindex, follow'));
+
+  // Structured data goes inside the seo markers so RouteHead can swap it out
+  // wholesale on client-side navigation without leaving a stale graph behind.
+  const jsonLd = jsonLdFor(route, seo);
+  if (jsonLd) tags.push(jsonLd);
 
   tags.push(`    ${SEO_END}`);
   return tags.filter(Boolean).join('\n');
