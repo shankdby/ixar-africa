@@ -82,7 +82,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
       ],
       standards: ['ASME Section V Article 8 / 17', 'ASTM E571 / E703', 'EPRI Guidelines'],
       imgMain: '/images/east-africa/ea-ind-oil-gas.webp',
-      imgDetail: '/images/east-africa/ea-backed-barc.webp'
+      imgDetail: '/images/stock/stk-training.webp'
     },
     radiography: {
       title: 'Digital & Computed Radiography (CR/DR)',

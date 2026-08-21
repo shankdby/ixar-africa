@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Style from '../components/Style';
-import AppImage, { dimsFor } from '../components/AppImage';
+import AppImage, { dimsFor, hasImage } from '../components/AppImage';
 
 /* ==========================================================================
    IXAR in East Africa  ·  /africa
@@ -58,7 +58,7 @@ const SERVICES = [
     title: 'Advanced Ultrasonics',
     text: 'Phased array (PAUT), time of flight diffraction (TOFD) and automated ultrasonic testing (AUT) for weld inspection and accurate defect sizing.',
     href: '/services',
-    img: 'ea-hero-2.webp',
+    img: '/images/stock/stk-ultrasonic.webp',
     alt: 'Certified NDT technician scanning weld with phased array ultrasonic probe',
   },
   {
@@ -88,7 +88,7 @@ const SERVICES = [
     category: 'Pipeline Integrity',
     desc: 'Cleaning pigs to remove deposits and restore flow, and intelligent pigs to inspect and map pipeline wall condition.',
     slug: 'aut',
-    img: '/images/east-africa/ea-svc-pigging.webp',
+    img: '/images/stock/stk-pipeline.webp',
   },
   {
     title: 'Tank and Tube Inspection',
@@ -102,7 +102,7 @@ const SERVICES = [
     category: 'Marine NDT',
     desc: 'Inspection of jetties, dams, bridges and other submerged structures.',
     slug: 'aut',
-    img: '/images/east-africa/ea-svc-underwater.webp',
+    img: '/images/stock/stk-diver.webp',
   },
   {
     title: 'Destructive Testing and Laboratory Services',
@@ -116,7 +116,7 @@ const SERVICES = [
     category: 'Radiation Safety & Training',
     desc: 'Industry recognised training, including radiation safety certification for industrial radiographers, delivered in collaboration with the Bhabha Atomic Research Centre.',
     slug: 'aut',
-    img: '/images/east-africa/ea-backed-barc.webp',
+    img: '/images/stock/stk-training.webp',
   },
 ];
 
@@ -168,7 +168,7 @@ const INDUSTRIES = [
     subtitle: 'Jetties · Cranes · Mooring Structures · Diver NDT',
     desc: 'Jetties, cranes, hulls, mooring structures and submerged assets.',
     slug: 'marine',
-    img: '/images/east-africa/ea-svc-underwater.webp',
+    img: '/images/stock/stk-diver.webp',
   },
   {
     title: 'Manufacturing & Engineering',
@@ -220,7 +220,7 @@ const FEATURED_SERVICES = [
     category: 'Marine Integrity',
     desc: 'Commercial diver NDT and ROV inspection on jetties, port berth pilings, marine crude terminals, and submerged dam intake structures.',
     standards: 'IMCA / DNV Marine NDT Norms',
-    img: '/images/east-africa/ea-svc-underwater.webp',
+    img: '/images/stock/stk-diver.webp',
   },
   {
     num: '06',
@@ -228,7 +228,7 @@ const FEATURED_SERVICES = [
     category: 'Training & Qualification',
     desc: 'Industrial radiography radiation protection courses, Level II/III preparation, and practitioner certification accredited in collaboration with Bhabha Atomic Research Centre.',
     standards: 'BARC / AERB Accredited · ASNT SNT-TC-1A',
-    img: '/images/east-africa/ea-backed-barc.webp',
+    img: '/images/stock/stk-training.webp',
   },
 ];
 
@@ -451,6 +451,10 @@ function LogoTile({ offset, total = 12, hold = 5500, stagger = 1000 }) {
   );
 }
 
+/* Genuine IXAR photography only. Two AI-generated frames were removed: one
+   fabricated a "CERTIFIED NDT TECHNICIAN Level II UT-PA" patch and an invented
+   instrument brand, the other composited Kilimanjaro behind a refinery that
+   does not exist. Add stock frames here as they arrive. */
 const HERO_IMAGES = [
   '/images/east-africa/ea-hero-tilenga-cpf.webp',
   '/images/east-africa/ea-svc-pipeline.webp',
@@ -1252,7 +1256,7 @@ export default function EastAfricaPage() {
                 whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
                 transition={{ duration: 0.25 }}
               >
-                {s.img ? (
+                {s.img && hasImage(s.img) ? (
                   <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
                     <motion.img 
                       src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
@@ -1654,7 +1658,7 @@ export default function EastAfricaPage() {
 
             <figure className="ea-card__media ea-backed__media">
               <AppImage
-                src={`${IMG}ea-backed-barc.webp`}
+                src="/images/stock/stk-training.webp"
                 alt="BARC-accredited IXAR training centre, Mumbai"
                 loading="lazy"
               />

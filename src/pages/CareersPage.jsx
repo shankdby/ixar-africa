@@ -76,8 +76,8 @@ export default function CareersPage({ onOpenContact }) {
         eyebrow="Careers"
         title="Build your career with IXAR."
         sub="Technical careers in non-destructive testing across Uganda, Tanzania and the wider region, backed by a training programme running since 1969."
-        image="/images/east-africa/ea-svc-radiography.webp"
-        imageAlt="IXAR technician working on process pipework at a regional site"
+        image="/images/east-africa/ea-ind-oil-gas.webp"
+        imageAlt="IXAR East Africa crew on site at night"
         actions={
           <>
             <button

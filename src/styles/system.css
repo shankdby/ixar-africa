@@ -237,7 +237,7 @@
   background-size:48px 48px;
 }
 .ea-panel__mark{position:relative;font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#FF7A78;margin-bottom:12px}
-.ea-panel__title{position:relative;font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;line-height:1.15;letter-spacing:-.01em;margin:0}
+.ea-panel__title{position:relative;font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;line-height:1.15;letter-spacing:-.01em;margin:0;color:rgba(255,255,255,.92)}
 
 @media (max-width:1024px){
   .ea-phero__in{padding:76px 0 68px}
@@ -292,3 +292,19 @@
           .svc-anchor{scroll-margin-top:calc(var(--nav-h,116px) + 16px)}
           .svc-index a{padding:13px 16px;font-size:12px}
         }
+
+/* ---------- empty image slot ----------------------------------------------
+   Stands in for a photograph that has not been supplied yet. Deliberately the
+   same navy family as .ea-panel so a page part-way through its image library
+   still reads as one design rather than as something broken. */
+.ea-imgslot{
+  width:100%;height:100%;min-height:180px;position:relative;overflow:hidden;
+  background:linear-gradient(150deg,#0A2C6B 0%,var(--ea-navy) 55%,#00163F 100%);
+}
+.ea-imgslot::after{
+  content:'';position:absolute;inset:0;opacity:.42;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:48px 48px;
+}

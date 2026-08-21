@@ -1,28 +1,4 @@
 {
-  "/images/aut_detail_hero.webp": [
-    1376,
-    768
-  ],
-  "/images/barc_training_center.webp": [
-    1200,
-    896
-  ],
-  "/images/east-africa/ea-backed-barc.webp": [
-    1000,
-    750
-  ],
-  "/images/east-africa/ea-hero-1.webp": [
-    1376,
-    768
-  ],
-  "/images/east-africa/ea-hero-2.webp": [
-    1376,
-    768
-  ],
-  "/images/east-africa/ea-hero-3.webp": [
-    1376,
-    768
-  ],
   "/images/east-africa/ea-hero-tilenga-cpf.webp": [
     1080,
     504
@@ -39,10 +15,6 @@
     900,
     675
   ],
-  "/images/east-africa/ea-svc-pigging.webp": [
-    1200,
-    896
-  ],
   "/images/east-africa/ea-svc-pipeline.webp": [
     900,
     675
@@ -55,14 +27,6 @@
     900,
     675
   ],
-  "/images/east-africa/ea-svc-underwater.webp": [
-    1200,
-    896
-  ],
-  "/images/hero_pipeline_ndt.webp": [
-    1376,
-    768
-  ],
   "/images/ixar-logo-main.png": [
     243,
     77
@@ -72,23 +36,7 @@
     79
   ],
   "/images/og-cover.jpg": [
-    1200,
-    670
-  ],
-  "/images/power_plant_inspection.webp": [
-    1200,
-    896
-  ],
-  "/images/radiography_detail_hero.webp": [
-    1376,
-    768
-  ],
-  "/images/railway_track_testing.webp": [
-    1200,
-    896
-  ],
-  "/images/refinery_tank_inspection.webp": [
-    1200,
-    896
+    1000,
+    625
   ]
 }

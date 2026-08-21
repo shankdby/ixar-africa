@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import AppImage from '../components/AppImage';
-import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Panel } from '../components/ui';
+import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Media } from '../components/ui';
 
 /* Services.
  *
@@ -40,8 +39,10 @@ const CATEGORIES = [
       'Magnetic Particle Testing (MT)',
       'Liquid Penetrant Testing (PT)',
     ],
-    image: '/images/east-africa/ea-svc-radiography.webp',
-    alt: 'Radiographer positioning a gamma source on process pipework',
+    image: '/images/stock/stk-radiography.webp',
+    alt: 'Industrial radiography of a welded joint',
+    panelMark: 'Conventional NDT',
+    panelTitle: 'Radiography, ultrasonics & surface methods',
     to: '/services/radiography',
     ctaLabel: 'Radiography technical detail',
   },
@@ -62,8 +63,10 @@ const CATEGORIES = [
       'Eddy Current (ECT)',
       'Pulsed Eddy Current (PECT)',
     ],
-    image: '/images/east-africa/ea-svc-ultrasonic.webp',
-    alt: 'Technician operating a phased array ultrasonic scanner on a weld',
+    image: '/images/stock/stk-ultrasonic.webp',
+    alt: 'Phased array ultrasonic scanner on a pipe weld',
+    panelMark: 'Advanced NDT',
+    panelTitle: 'PAUT, TOFD, AUT & eddy current',
     to: '/services/paut',
     ctaLabel: 'Phased array technical detail',
   },
@@ -84,8 +87,10 @@ const CATEGORIES = [
       'Cleaning pigs',
       'Intelligent pigging (ILI)',
     ],
-    image: '/images/east-africa/ea-svc-pipeline.webp',
+    image: '/images/stock/stk-pipeline.webp',
     alt: 'Cross-country transmission pipeline under construction',
+    panelMark: 'Pipeline',
+    panelTitle: 'Girth welds, crawlers & intelligent pigging',
     to: '/services/aut',
     ctaLabel: 'Automated ultrasonics detail',
   },
@@ -100,8 +105,10 @@ const CATEGORIES = [
       'Scheduled into shutdown windows, where the inspection duration is usually the constraint rather than the inspection itself.',
     ],
     points: ['Magnetic Flux Leakage (MFL)', 'Tube wall loss & pitting', 'Boiler tube inspection'],
-    image: '/images/east-africa/ea-svc-pigging.webp',
-    alt: 'Inspection tooling prepared for tube and pipeline work',
+    image: '/images/stock/stk-tube-exchanger.webp',
+    alt: 'Heat exchanger tube bundle withdrawn for inspection',
+    panelMark: 'Tube & Exchanger',
+    panelTitle: 'Magnetic flux leakage on tube bundles',
     to: '/services/mfl-tube',
     ctaLabel: 'Tank & tube technical detail',
   },
@@ -120,8 +127,10 @@ const CATEGORIES = [
       'Corrosion mapping',
       'Weld inspection',
     ],
-    image: '/images/refinery_tank_inspection.webp',
-    alt: 'Bulk storage tanks at a refinery installation',
+    image: '/images/stock/stk-tank-farm.webp',
+    alt: 'Bulk storage tanks at a fuel terminal',
+    panelMark: 'Tank & Asset',
+    panelTitle: 'Floor scanning & thickness survey',
     to: '/services/mfl-tube',
     ctaLabel: 'Tank & tube technical detail',
   },
@@ -135,8 +144,10 @@ const CATEGORIES = [
       'Commercial diver inspection of jetties, harbour structures, dams, bridges and other submerged assets, including ultrasonic thickness measurement in-water.',
     ],
     points: ['Diver ultrasonic thickness', 'Jetty & harbour structures', 'Dams & bridges'],
-    image: '/images/east-africa/ea-svc-underwater.webp',
-    alt: 'Commercial diver carrying out underwater structural inspection',
+    image: '/images/stock/stk-diver.webp',
+    alt: 'Commercial diver working on a submerged structure',
+    panelMark: 'Underwater',
+    panelTitle: 'Diver inspection below the waterline',
     to: null,
   },
   {
@@ -156,7 +167,8 @@ const CATEGORIES = [
       'Metallurgical evaluation',
       'Failure analysis',
     ],
-    image: null,
+    image: '/images/stock/stk-laboratory.webp',
+    alt: 'Materials testing laboratory',
     panelMark: 'Laboratory',
     panelTitle: 'Destructive testing & failure analysis',
     to: null,
@@ -170,8 +182,8 @@ export default function ServicesPage({ onOpenContact }) {
         eyebrow="Our Services"
         title="Inspection Without Compromise."
         sub="Advanced non-destructive testing and asset integrity solutions for critical industrial infrastructure across Uganda, Tanzania and Kenya."
-        image="/images/east-africa/ea-svc-pipeline.webp"
-        imageAlt="Industrial pipeline inspection in progress"
+        image="/images/stock/stk-hero-services.webp"
+        imageAlt="Industrial pipework at a processing facility"
         actions={
           <>
             <button type="button" className="ea-btn ea-btn--primary" onClick={() => onOpenContact()}>
@@ -223,11 +235,7 @@ export default function ServicesPage({ onOpenContact }) {
               title={c.title}
               points={c.points}
               media={
-                c.image ? (
-                  <AppImage src={c.image} alt={c.alt} />
-                ) : (
-                  <Panel mark={c.panelMark} title={c.panelTitle} />
-                )
+                <Media src={c.image} alt={c.alt} mark={c.panelMark} title={c.panelTitle} />
               }
               cta={
                 c.to ? (
