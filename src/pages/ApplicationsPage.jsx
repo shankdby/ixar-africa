@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import AppImage from '../components/AppImage';
 import Style from '../components/Style';
-import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Panel } from '../components/ui';
+import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Media } from '../components/ui';
 
 /* Industries.
  *
@@ -36,8 +35,10 @@ const SECTORS = [
       'Process pipework',
       'Corrosion monitoring',
     ],
-    image: '/images/east-africa/ea-ind-oil-gas.webp',
+    image: '/images/stock/stk-oil-gas.webp',
     alt: 'Oil and gas processing facility',
+    panelMark: 'Oil & Gas',
+    panelTitle: 'Pipelines, tanks, refineries & process plant',
   },
   {
     slug: 'power-plants',
@@ -49,8 +50,10 @@ const SECTORS = [
       'Boilers, turbines, heat exchangers, steam pipework and separator vessels across thermal, hydro, geothermal and renewable facilities. Inspection is scheduled into the outage window, and the window is the constraint.',
     ],
     points: ['Boiler tubes', 'Turbines', 'Heat exchangers', 'Steam pipework', 'Separator vessels'],
-    image: '/images/power_plant_inspection.webp',
-    alt: 'Power generation plant undergoing maintenance inspection',
+    image: '/images/stock/stk-power.webp',
+    alt: 'Turbine hall at a power generation plant',
+    panelMark: 'Power & Energy',
+    panelTitle: 'Boilers, turbines & heat exchangers',
   },
   {
     slug: 'mining',
@@ -68,8 +71,10 @@ const SECTORS = [
       'Shaft gantries',
       'Material handling',
     ],
-    image: '/images/east-africa/ea-svc-pipeline.webp',
-    alt: 'Heavy structural steelwork at an industrial site',
+    image: '/images/stock/stk-mining.webp',
+    alt: 'Heavy equipment and structural steelwork at a mine site',
+    panelMark: 'Mining',
+    panelTitle: 'Structures, mills & material handling',
   },
   {
     slug: 'railways',
@@ -81,8 +86,10 @@ const SECTORS = [
       'Ultrasonic flaw detection on continuous welded rail, thermit weld verification, locomotive axles and rolling stock wheelset integrity.',
     ],
     points: ['USFD on rail', 'Thermit weld verification', 'Axles', 'Wheelsets'],
-    image: '/images/railway_track_testing.webp',
-    alt: 'Ultrasonic flaw detection on railway track',
+    image: '/images/stock/stk-railway.webp',
+    alt: 'Continuous welded rail track',
+    panelMark: 'Railways',
+    panelTitle: 'Rail, thermit welds & wheelsets',
   },
   {
     slug: null,
@@ -94,8 +101,10 @@ const SECTORS = [
       'Port berth jetties, gantry cranes, vessel hulls, mooring bollards and submerged infrastructure, inspected by commercial diving crews where the asset sits below the waterline.',
     ],
     points: ['Jetties & berths', 'Gantry cranes', 'Vessel hulls', 'Submerged structures'],
-    image: '/images/east-africa/ea-svc-underwater.webp',
-    alt: 'Commercial diver inspecting submerged port infrastructure',
+    image: '/images/stock/stk-marine-port.webp',
+    alt: 'Port jetty and gantry cranes',
+    panelMark: 'Marine & Ports',
+    panelTitle: 'Jetties, cranes, hulls & submerged structures',
   },
   {
     slug: null,
@@ -107,8 +116,10 @@ const SECTORS = [
       'Stainless steel tanks, pressure vessels, hygienic process pipework, fermentation cellars and steam boilers. Weld quality carries a product-safety consequence here as much as a structural one.',
     ],
     points: ['Stainless tanks', 'Hygienic pipework', 'Fermentation cellars', 'Steam boilers'],
-    image: '/images/east-africa/ea-svc-digital-radiography.webp',
-    alt: 'Digital radiography of welded process pipework',
+    image: '/images/stock/stk-process-food.webp',
+    alt: 'Stainless steel process tanks in a food and beverage plant',
+    panelMark: 'Process & Food',
+    panelTitle: 'Stainless tanks & hygienic pipework',
   },
   {
     slug: null,
@@ -120,7 +131,8 @@ const SECTORS = [
       'Rotary kilns, ducting, structural supports and cyclone towers, maintained inside tight emergency shutdown windows.',
     ],
     points: ['Rotary kilns', 'Ducting', 'Structural supports', 'Cyclone towers'],
-    image: null,
+    image: '/images/stock/stk-cement.webp',
+    alt: 'Cement plant kiln and cyclone tower',
     panelMark: 'Cement',
     panelTitle: 'Kilns, cyclone towers & structural supports',
   },
@@ -134,7 +146,8 @@ const SECTORS = [
       'Boilers, evaporators, mill structures, crystallizers and pressure equipment, inspected during off-crop maintenance turnarounds.',
     ],
     points: ['Boilers', 'Evaporators', 'Mill structures', 'Crystallizers'],
-    image: null,
+    image: '/images/stock/stk-sugar.webp',
+    alt: 'Sugar mill processing plant',
     panelMark: 'Sugar',
     panelTitle: 'Boilers, evaporators & mill structures',
   },
@@ -147,7 +160,7 @@ export default function ApplicationsPage({ onOpenContact }) {
         eyebrow="Industries We Serve"
         title="Built for the industries that cannot afford failure."
         sub="Sector-specific non-destructive testing and asset integrity work across the industrial base of Uganda, Tanzania and Kenya."
-        image="/images/east-africa/ea-ind-oil-gas.webp"
+        image="/images/stock/stk-hero-industries.webp"
         imageAlt="Industrial processing facility at dusk"
         actions={
           <>
@@ -191,11 +204,7 @@ export default function ApplicationsPage({ onOpenContact }) {
               title={s.title}
               points={s.points}
               media={
-                s.image ? (
-                  <AppImage src={s.image} alt={s.alt} />
-                ) : (
-                  <Panel mark={s.panelMark} title={s.panelTitle} />
-                )
+                <Media src={s.image} alt={s.alt} mark={s.panelMark} title={s.panelTitle} />
               }
               cta={
                 s.slug ? (

@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, GraduationCap, ShieldCheck, UserCheck, BookOpen } from 'lucide-react';
-import AppImage from '../components/AppImage';
 import CertVerifier from '../components/CertVerifier';
 import Style from '../components/Style';
-import { Page, Section, SectionHead, PageHero, Crumbs } from '../components/ui';
+import { Page, Section, SectionHead, PageHero, Crumbs, Media } from '../components/ui';
 
 /* Training.
  *
  * The BARC collaboration is the PARENT company's, run at its Mumbai institute.
  * That is a genuine and substantial credential, and East Africa candidates do
  * go through it — but it is a group programme, and the page now says so rather
- * than implying an accredited centre exists in Kampala. The photograph is of
- * that Mumbai centre and is captioned as such.
+ * than implying an accredited centre exists in Kampala.
+ *
+ * The previous photographs here were AI-generated and fabricated a BARC banner,
+ * roundel and seals - synthetic imagery of a government institution's branding,
+ * on the page describing the relationship with it. Both are deleted.
  */
 
 const COURSES = [
@@ -56,8 +58,8 @@ export default function TrainingPage({ onOpenContact }) {
         eyebrow="Training & Certification"
         title="Build capability. Raise standards."
         sub="Technical training for inspection personnel and the engineering teams who commission them, drawn from IXAR's group training programme."
-        image="/images/barc_training_center.webp"
-        imageAlt="IXAR group training institute and practical radiography laboratory"
+        image="/images/stock/stk-training.webp"
+        imageAlt="Technical training session with inspection instruments"
         actions={
           <>
             <button
@@ -115,9 +117,11 @@ export default function TrainingPage({ onOpenContact }) {
       <Section tone="tint">
         <div className="tr-backing">
           <figure className="tr-backing__media ea-rev">
-            <AppImage
-              src="/images/east-africa/ea-backed-barc.webp"
-              alt="IXAR group training institute, Mumbai"
+            <Media
+              src="/images/stock/stk-training-lab.webp"
+              alt="Practical NDT training laboratory"
+              mark="Training"
+              title="A programme running since 1969"
             />
           </figure>
           <div className="ea-rev">

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AppImage from '../AppImage';
+import AppImage, { hasImage } from '../AppImage';
 
 /* ==========================================================================
    Shared page primitives
@@ -106,7 +106,7 @@ export function PageHero({
   imageAlt = '',
   actions,
   crumbs,
-  variant = image ? 'photo' : 'plain',
+  variant = hasImage(image) ? 'photo' : 'plain',
 }) {
   return (
     <section className={`ea-phero${variant === 'plain' ? ' ea-phero--plain' : ''}`}>
@@ -177,6 +177,13 @@ export function EditorialRow({ index, num, eyebrow, title, children, points, med
       </div>
     </div>
   );
+}
+
+/* Picks the right media for a slot: the photograph if the file is present,
+   otherwise the navy panel. This is what makes the image library incremental -
+   a slot with no file yet still renders as a designed surface. */
+export function Media({ src, alt, mark, title }) {
+  return hasImage(src) ? <AppImage src={src} alt={alt} /> : <Panel mark={mark} title={title} />;
 }
 
 /* A navy typographic panel used where no honest photograph exists. */
