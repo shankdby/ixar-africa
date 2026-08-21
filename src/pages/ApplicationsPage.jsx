@@ -1,184 +1,251 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Flame, Wrench, Layers, Train, Anchor, Factory, Container, Coffee } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import AppImage from '../components/AppImage';
+import Style from '../components/Style';
+import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Panel } from '../components/ui';
+
+/* Industries.
+ *
+ * Same system as Services: navy hero, editorial rows, one subject per row.
+ *
+ * ROUTING. Only four sectors have a detail page (oil-gas, railways,
+ * power-plants, mining). The other four were previously slugged 'oil-gas' too,
+ * so clicking "Marine and Ports" opened the Oil & Gas refinery page. A sector
+ * without a detail page now offers an enquiry instead of a wrong destination.
+ *
+ * IMAGERY. Cement was illustrated with the oil & gas photograph and Sugar with
+ * a radiography photograph. Neither showed the sector. Both now take a navy
+ * panel, which says nothing false.
+ */
+
+const SECTORS = [
+  {
+    slug: 'oil-gas',
+    id: 'oil-gas',
+    short: 'Oil & Gas',
+    eyebrow: 'Oil and Gas',
+    title: 'Upstream, midstream and downstream.',
+    body: [
+      'Pipelines, storage tanks, refineries and process plant — from cross-country transmission lines through to downstream processing facilities. The largest part of the regional workload, and the sector the East Africa crews are deepest in.',
+    ],
+    points: [
+      'Pipeline girth welds',
+      'Storage tanks',
+      'Pressure vessels',
+      'Process pipework',
+      'Corrosion monitoring',
+    ],
+    image: '/images/east-africa/ea-ind-oil-gas.webp',
+    alt: 'Oil and gas processing facility',
+  },
+  {
+    slug: 'power-plants',
+    id: 'power',
+    short: 'Power & Energy',
+    eyebrow: 'Power Generation and Geothermal',
+    title: 'Plant that cannot stay down.',
+    body: [
+      'Boilers, turbines, heat exchangers, steam pipework and separator vessels across thermal, hydro, geothermal and renewable facilities. Inspection is scheduled into the outage window, and the window is the constraint.',
+    ],
+    points: ['Boiler tubes', 'Turbines', 'Heat exchangers', 'Steam pipework', 'Separator vessels'],
+    image: '/images/power_plant_inspection.webp',
+    alt: 'Power generation plant undergoing maintenance inspection',
+  },
+  {
+    slug: 'mining',
+    id: 'mining',
+    short: 'Mining',
+    eyebrow: 'Mining and Heavy Infrastructure',
+    title: 'Structures under load, for years.',
+    body: [
+      'Structural steelwork, excavators, draglines, crushers, mill trunnions, shaft gantries and material handling equipment. Fatigue cracking in heavy plant is progressive, so the value is in the trend across inspections rather than any single one.',
+    ],
+    points: [
+      'Structural welds',
+      'Mill trunnions',
+      'Crushers & draglines',
+      'Shaft gantries',
+      'Material handling',
+    ],
+    image: '/images/east-africa/ea-svc-pipeline.webp',
+    alt: 'Heavy structural steelwork at an industrial site',
+  },
+  {
+    slug: 'railways',
+    id: 'railways',
+    short: 'Railways',
+    eyebrow: 'Railways and Transportation',
+    title: 'Rail, welds and wheelsets.',
+    body: [
+      'Ultrasonic flaw detection on continuous welded rail, thermit weld verification, locomotive axles and rolling stock wheelset integrity.',
+    ],
+    points: ['USFD on rail', 'Thermit weld verification', 'Axles', 'Wheelsets'],
+    image: '/images/railway_track_testing.webp',
+    alt: 'Ultrasonic flaw detection on railway track',
+  },
+  {
+    slug: null,
+    id: 'marine',
+    short: 'Marine & Ports',
+    eyebrow: 'Marine and Ports',
+    title: 'Berths, jetties and hulls.',
+    body: [
+      'Port berth jetties, gantry cranes, vessel hulls, mooring bollards and submerged infrastructure, inspected by commercial diving crews where the asset sits below the waterline.',
+    ],
+    points: ['Jetties & berths', 'Gantry cranes', 'Vessel hulls', 'Submerged structures'],
+    image: '/images/east-africa/ea-svc-underwater.webp',
+    alt: 'Commercial diver inspecting submerged port infrastructure',
+  },
+  {
+    slug: null,
+    id: 'petrochemical',
+    short: 'Process & Food',
+    eyebrow: 'Breweries, Beverage and Food Processing',
+    title: 'Hygienic systems, same standards.',
+    body: [
+      'Stainless steel tanks, pressure vessels, hygienic process pipework, fermentation cellars and steam boilers. Weld quality carries a product-safety consequence here as much as a structural one.',
+    ],
+    points: ['Stainless tanks', 'Hygienic pipework', 'Fermentation cellars', 'Steam boilers'],
+    image: '/images/east-africa/ea-svc-digital-radiography.webp',
+    alt: 'Digital radiography of welded process pipework',
+  },
+  {
+    slug: null,
+    id: 'cement',
+    short: 'Cement',
+    eyebrow: 'Cement',
+    title: 'Kilns, on a shutdown clock.',
+    body: [
+      'Rotary kilns, ducting, structural supports and cyclone towers, maintained inside tight emergency shutdown windows.',
+    ],
+    points: ['Rotary kilns', 'Ducting', 'Structural supports', 'Cyclone towers'],
+    image: null,
+    panelMark: 'Cement',
+    panelTitle: 'Kilns, cyclone towers & structural supports',
+  },
+  {
+    slug: null,
+    id: 'sugar',
+    short: 'Sugar',
+    eyebrow: 'Sugar Industry',
+    title: 'Off-crop, when the mill stops.',
+    body: [
+      'Boilers, evaporators, mill structures, crystallizers and pressure equipment, inspected during off-crop maintenance turnarounds.',
+    ],
+    points: ['Boilers', 'Evaporators', 'Mill structures', 'Crystallizers'],
+    image: null,
+    panelMark: 'Sugar',
+    panelTitle: 'Boilers, evaporators & mill structures',
+  },
+];
 
 export default function ApplicationsPage({ onOpenContact }) {
-  const sectors = [
-    {
-      slug: 'oil-gas',
-      title: 'Oil and Gas',
-      icon: Flame,
-      category: 'Upstream / Midstream / Downstream',
-      desc: 'Pipelines, storage tanks, refineries and process plant across upstream offshore fields, cross-country pipelines, and downstream processing facilities.',
-      img: '/images/east-africa/ea-ind-oil-gas.webp',
-      alt: 'Oil and gas refinery and pipeline inspection'
-    },
-    {
-      slug: 'power-plants',
-      title: 'Power Generation and Geothermal',
-      icon: Wrench,
-      category: 'Thermal / Hydro / Geothermal',
-      desc: 'Boilers, turbines, heat exchangers, steam pipework, and separator vessels in thermal, hydro, geothermal and renewable power facilities.',
-      img: '/images/east-africa/ea-hero-tilenga-cpf.webp',
-      alt: 'Geothermal power generation plant inspection'
-    },
-    {
-      slug: 'mining',
-      title: 'Mining & Heavy Infrastructure',
-      icon: Layers,
-      category: 'Heavy Equipment & Structural',
-      desc: 'Structural steelwork, excavators, draglines, crushers, mill trunnions, shaft gantries, and material handling equipment.',
-      img: '/images/east-africa/ea-svc-pipeline.webp',
-      alt: 'Heavy mining structural steelwork NDT'
-    },
-    {
-      slug: 'railways',
-      title: 'Railways & Transportation',
-      icon: Train,
-      category: 'Rail Tracks & Rolling Stock',
-      desc: 'Continuous welded rails (USFD), thermit weld quality verification, locomotive axles, and rolling stock wheelset integrity.',
-      img: '/images/east-africa/ea-svc-ultrasonic.webp',
-      alt: 'Railway track ultrasonic flaw detection'
-    },
-    {
-      slug: 'oil-gas',
-      title: 'Cement',
-      icon: Factory,
-      category: 'Heavy Processing Plant',
-      desc: 'Rotary kilns, ducting, structural supports, cyclone towers, and plant maintained within tight emergency shutdown windows.',
-      img: '/images/east-africa/ea-ind-oil-gas.webp',
-      alt: 'Cement plant rotary kiln inspection'
-    },
-    {
-      slug: 'oil-gas',
-      title: 'Breweries, Beverage & Food Processing',
-      icon: Coffee,
-      category: 'Hygienic Welded Systems',
-      desc: 'Stainless steel tanks, pressure vessels, hygienic process pipework, fermentation cellars, and steam boilers.',
-      img: '/images/east-africa/ea-svc-digital-radiography.webp',
-      alt: 'Beverage processing stainless steel tank inspection'
-    },
-    {
-      slug: 'oil-gas',
-      title: 'Sugar Industry',
-      icon: Container,
-      category: 'Agro-Industrial Processing',
-      desc: 'Boilers, evaporators, mill structures, crystallizers, and pressure equipment inspected during off-crop maintenance turnarounds.',
-      img: '/images/east-africa/ea-svc-radiography.webp',
-      alt: 'Sugar mill boiler and evaporator testing'
-    },
-    {
-      slug: 'oil-gas',
-      title: 'Marine and Ports',
-      icon: Anchor,
-      category: 'Submerged Assets & Jetties',
-      desc: 'Port berth jetties, gantry cranes, vessel hulls, mooring bollards, and submerged infrastructure inspected by commercial NDT divers.',
-      img: '/images/east-africa/ea-svc-underwater.webp',
-      alt: 'Marine port terminal jetty underwater NDT'
-    }
-  ];
-
   return (
-    <div className="page-wrapper applications-page">
-      <div className="container">
-        <div className="section-header">
-          <div className="section-tag">Industry Focus</div>
-          <h1 className="section-title">Industries We Serve</h1>
-          <p className="section-subtitle">
-            Sector-specific non-destructive testing and asset integrity management tailored to the key industrial economic sectors of East Africa.
-          </p>
-        </div>
+    <Page className="ind-page">
+      <PageHero
+        eyebrow="Industries We Serve"
+        title="Built for the industries that cannot afford failure."
+        sub="Sector-specific non-destructive testing and asset integrity work across the industrial base of Uganda, Tanzania and Kenya."
+        image="/images/east-africa/ea-ind-oil-gas.webp"
+        imageAlt="Industrial processing facility at dusk"
+        actions={
+          <>
+            <button type="button" className="ea-btn ea-btn--primary" onClick={() => onOpenContact()}>
+              Discuss Your Sector <ChevronRight size={16} aria-hidden="true" />
+            </button>
+            <Link className="ea-btn ea-btn--ghost" to="/services">
+              See All Services
+            </Link>
+          </>
+        }
+        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Industries' }]} />}
+      />
 
-        <div className="sector-full-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px', marginBottom: '80px' }}>
-          {sectors.map((item, idx) => {
-            const IconComp = item.icon;
-            return (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.25 }}
-                className="clean-card sector-overview-card"
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid #EAEAEA',
-                  borderRadius: '10px',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justify: 'space-between',
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.05)'
-                }}
-              >
-                <div>
-                  <div style={{ position: 'relative', height: '210px', width: '100%', overflow: 'hidden' }}>
-                    <AppImage
-                      src={item.img}
-                      alt={item.alt}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                    <span
-                      style={{
-                        position: 'absolute',
-                        top: '14px',
-                        left: '14px',
-                        background: 'rgba(0, 30, 87, 0.9)',
-                        color: '#FFFFFF',
-                        fontSize: '0.75rem',
-                        fontWeight: 800,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        padding: '5px 12px',
-                        borderRadius: '4px',
-                        backdropFilter: 'blur(4px)',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px'
-                      }}
-                    >
-                      <IconComp size={13} /> {item.category}
-                    </span>
-                  </div>
-
-                  <div style={{ padding: '24px 22px 16px' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#001E57', marginBottom: '10px', lineHeight: '1.3' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ fontSize: '0.9rem', color: '#6B6B6B', lineHeight: '1.6', margin: 0 }}>
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    padding: '16px 22px 22px',
-                    borderTop: '1px solid #F0F0F0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justify: 'space-between',
-                    gap: '12px',
-                    flexWrap: 'wrap'
-                  }}
-                >
-                  <Link to={`/applications/${item.slug}`} className="btn btn-navy btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <span>Sector Details</span>
-                    <ChevronRight size={14} />
-                  </Link>
-                  <button
-                    onClick={() => onOpenContact(item.title)}
-                    className="btn btn-outline btn-sm"
-                    style={{ fontSize: '0.8125rem' }}
-                  >
-                    Request Scope
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
+      <div className="svc-index">
+        <div className="ea-wrap">
+          <ul>
+            {SECTORS.map((s) => (
+              <li key={s.id}>
+                <a href={`#${s.id}`}>{s.short}</a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </div>
+
+      <Section>
+        <SectionHead eyebrow="Sector Focus" title="Eight sectors, one standard of evidence.">
+          <p>
+            The method changes with the asset; the reporting does not. Every sector below is worked
+            by the same regional crews to the same codes, so a result from a sugar mill reads the
+            same way as a result from a pipeline spread.
+          </p>
+        </SectionHead>
+
+        {SECTORS.map((s, i) => (
+          <div id={s.id} key={s.id} className="svc-anchor">
+            <EditorialRow
+              index={i}
+              eyebrow={s.eyebrow}
+              title={s.title}
+              points={s.points}
+              media={
+                s.image ? (
+                  <AppImage src={s.image} alt={s.alt} />
+                ) : (
+                  <Panel mark={s.panelMark} title={s.panelTitle} />
+                )
+              }
+              cta={
+                s.slug ? (
+                  <Link to={`/applications/${s.slug}`} className="ea-btn ea-btn--navy">
+                    Sector detail <ChevronRight size={16} aria-hidden="true" />
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    className="ea-btn ea-btn--navy"
+                    onClick={() => onOpenContact(s.eyebrow)}
+                  >
+                    Enquire about this sector <ChevronRight size={16} aria-hidden="true" />
+                  </button>
+                )
+              }
+            >
+              {s.body.map((p) => (
+                <p key={p.slice(0, 24)}>{p}</p>
+              ))}
+            </EditorialRow>
+          </div>
+        ))}
+      </Section>
+
+      <Section tone="navy">
+        <div className="svc-close">
+          <div>
+            <span className="ea-eyebrow">Next step</span>
+            <h2>Your sector, your shutdown window.</h2>
+            <p>
+              Tell us the asset, the access and the code being worked to. The regional office comes
+              back with a scope and a crew plan against your programme.
+            </p>
+          </div>
+          <div className="svc-close__actions">
+            <Link to="/case-studies" className="ea-btn ea-btn--primary">
+              See Regional Projects <ChevronRight size={16} aria-hidden="true" />
+            </Link>
+            <button type="button" className="ea-btn ea-btn--ghost" onClick={() => onOpenContact()}>
+              Talk to the Regional Office
+            </button>
+          </div>
+        </div>
+      </Section>
+
+      <Style>{`
+        .ind-page .svc-index ul{justify-content:space-between}
+        .ind-page .svc-index a{padding:15px 14px 12px}
+      `}</Style>
+    </Page>
   );
 }

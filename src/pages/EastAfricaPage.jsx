@@ -946,7 +946,7 @@ export default function EastAfricaPage() {
                   <span>
                     <span className="ea-legend__t">Registered Offices</span>
                     <span className="ea-legend__d">
-                      Kampala, and the Tanzania location once confirmed.
+                      Kampala, Uganda and a registered entity in Tanzania.
                     </span>
                   </span>
                 </li>

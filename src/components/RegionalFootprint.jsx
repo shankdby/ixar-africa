@@ -1,203 +1,211 @@
 import React from 'react';
-import { MapPin, ShieldCheck, Plane, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, Phone, Mail, ChevronRight, ShieldCheck } from 'lucide-react';
+import AppImage from './AppImage';
 import Style from './Style';
+import { Section, SectionHead } from './ui';
 
-/* The regional footprint, stated accurately.
+/* Regional network.
+ *
+ * Uganda, Tanzania and Kenya are NOT equivalent and are not presented as if
+ * they were. Uganda is a registered office with a named address and a national
+ * radiation authorisation. Tanzania is a registered entity whose office address
+ * is not yet confirmed. Kenya is worked in, mobilised from the regional
+ * offices, with no local authorisation claimed.
+ *
+ * Flattening those three into identical "office" cards would be a location
+ * claim. An EPC procurement reader checks radiation licensing by jurisdiction
+ * before anything else, and precision about which entity holds what reads as
+ * competence rather than as a shortfall.
+ *
+ * Unknown fields are omitted. No "to be confirmed" text reaches the page.
+ */
 
-   The previous version listed staffed offices with street addresses, phone
-   numbers and email addresses in South Africa, Nigeria, Ghana, Kenya and
-   Mozambique. None of that is supported. Section 3 of the content plan is
-   explicit: Mozambique "carries the same status as any other African country.
-   Adding it would be a claim the page cannot support." The same reasoning
-   applies to the rest.
-
-   Three honest tiers: registered offices, countries served, mobilisation on
-   request. */
-
-const TIERS = [
+const LOCATIONS = [
   {
-    key: 'registered',
-    icon: MapPin,
-    label: 'Registered offices',
-    blurb: 'A registered legal entity, with equipment and personnel based in country.',
-    entries: [
-      {
-        country: 'Uganda',
-        city: 'Kampala',
-        detail:
-          'Plot No. 72, Kanjokya Street, Kamwokya, P.O. Box 28673 Nakawa, Kampala.',
-        note: 'From site signage, to be confirmed.',
-        licence: 'Uganda Atomic Energy Council',
-      },
-      {
-        country: 'Tanzania',
-        city: 'Office location to be confirmed',
-        detail: 'Registered entity operating in country; address pending confirmation.',
-        note: 'Address to be confirmed.',
-        licence: 'Tanzania Atomic Energy Commission',
-      },
+    id: 'uganda',
+    country: 'Uganda',
+    city: 'Kampala',
+    status: 'Registered office',
+    tier: 'registered',
+    address: ['Plot No. 72, Kanjokya Street, Kamwokya', 'P.O. Box 28673 Nakawa, Kampala'],
+    phones: [
+      { label: '+256 414 251251', href: 'tel:+256414251251' },
+      { label: '+256 777 166392', href: 'tel:+256777166392' },
     ],
+    email: 'bd@ixar.africa',
+    licence: 'Licensed by the Uganda Atomic Energy Council for sealed radioactive sources',
+    image: '/images/east-africa/ea-office-kampala.webp',
+    alt: 'IXAR East Africa site board and crew, Tilenga Project, Uganda',
+    blurb:
+      'The regional base. Crews, licensed sources and equipment mobilise from here to sites across the region.',
   },
   {
-    key: 'served',
-    icon: ShieldCheck,
-    label: 'Countries served',
-    blurb: 'Work delivered in country, mobilised from the regional offices.',
-    entries: [
-      {
-        country: 'Kenya',
-        city: 'Served from the region',
-        detail:
-          'Inspection work delivered on client sites, crewed and equipped from Uganda and Tanzania.',
-        note: 'Radiation authorisation status in Kenya to be confirmed.',
-        licence: null,
-      },
-    ],
+    id: 'tanzania',
+    country: 'Tanzania',
+    status: 'Registered entity',
+    tier: 'registered',
+    licence: 'Radiation authorisation held for in-country work',
+    blurb:
+      'A registered in-country entity delivering process plant and industrial inspection scopes. Enquiries are handled by the Kampala regional office.',
+    contactVia: 'Kampala regional office',
   },
   {
-    key: 'mobilisation',
-    icon: Plane,
-    label: 'Mobilisation on request',
-    blurb: 'The remainder of the continent.',
-    entries: [
-      {
-        country: 'Rest of Africa',
-        city: 'By arrangement',
-        detail:
-          'Crews and equipment can be mobilised outside the region on a project basis. Cross-border movement of sealed sources is subject to the licences held in each jurisdiction.',
-        note: null,
-        licence: null,
-      },
-    ],
+    id: 'kenya',
+    country: 'Kenya',
+    status: 'Served — mobilised from the region',
+    tier: 'served',
+    blurb:
+      'Work delivered in country by crews mobilised from the regional offices. IXAR does not hold a Kenyan radiation authorisation, so scopes requiring sealed sources are arranged accordingly.',
+    contactVia: 'Kampala regional office',
   },
 ];
 
 export default function RegionalFootprint({ onOpenContact }) {
   return (
-    <section className="section footprint-section">
-      <div className="container">
-        <div className="section-header">
-          <div className="section-tag">Footprint</div>
-          <h1 className="section-title">Where We Operate</h1>
-          <p className="section-subtitle">
-            Stated by tier, so a prospect can tell the difference between a country where IXAR
-            holds a registration and one it can mobilise to.
+    <>
+      <Section>
+        <SectionHead eyebrow="Where We Operate" title="Three markets, two registered offices.">
+          <p>
+            The distinction matters on a bid. Uganda and Tanzania are registered entities; Kenya is
+            served from them. Radiation authorisation is held per jurisdiction and is listed below
+            for each, because that is the first thing a procurement team checks.
           </p>
-        </div>
+        </SectionHead>
 
-        <div className="footprint-tiers">
-          {TIERS.map((tier) => {
-            const Icon = tier.icon;
-            return (
-              <div key={tier.key} className={`footprint-tier tier-${tier.key}`}>
-                <div className="tier-head">
-                  <span className="tier-icon"><Icon size={20} aria-hidden="true" /></span>
-                  <div>
-                    <h3 className="tier-label">{tier.label}</h3>
-                    <p className="tier-blurb">{tier.blurb}</p>
-                  </div>
-                </div>
+        <div className="rn-grid">
+          {LOCATIONS.map((l) => (
+            <article className={`rn-card rn-card--${l.tier} ea-rev`} key={l.id}>
+              {l.image && (
+                <figure className="rn-card__media">
+                  <AppImage src={l.image} alt={l.alt} />
+                </figure>
+              )}
+              <div className="rn-card__body">
+                <span className="rn-card__status">{l.status}</span>
+                <h3>
+                  {l.country}
+                  {l.city && <span className="rn-card__city">{l.city}</span>}
+                </h3>
+                <p className="rn-card__blurb">{l.blurb}</p>
 
-                <div className="tier-entries">
-                  {tier.entries.map((e) => (
-                    <article key={e.country} className="clean-card entry-card">
-                      <h4 className="entry-country">{e.country}</h4>
-                      <p className="entry-city">{e.city}</p>
-                      <p className="entry-detail">{e.detail}</p>
-                      {e.licence && (
-                        <p className="entry-licence">
-                          <ShieldCheck size={14} aria-hidden="true" />
-                          Licensed by the {e.licence}
-                        </p>
-                      )}
-                      {e.note && <p className="entry-note"><span className="chip">{e.note}</span></p>}
-                    </article>
+                {l.address && (
+                  <p className="rn-line">
+                    <MapPin size={15} aria-hidden="true" />
+                    <span>
+                      {l.address.map((a) => (
+                        <React.Fragment key={a}>
+                          {a}
+                          <br />
+                        </React.Fragment>
+                      ))}
+                    </span>
+                  </p>
+                )}
+                {l.phones &&
+                  l.phones.map((p) => (
+                    <p className="rn-line" key={p.href}>
+                      <Phone size={15} aria-hidden="true" />
+                      <a href={p.href}>{p.label}</a>
+                    </p>
                   ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                {l.email && (
+                  <p className="rn-line">
+                    <Mail size={15} aria-hidden="true" />
+                    <a href={`mailto:${l.email}`}>{l.email}</a>
+                  </p>
+                )}
+                {l.contactVia && (
+                  <p className="rn-line rn-line--via">
+                    <Mail size={15} aria-hidden="true" />
+                    <span>Enquiries via the {l.contactVia}</span>
+                  </p>
+                )}
 
-        <div className="footprint-cta">
-          <div>
-            <h3>Working somewhere else in Africa?</h3>
-            <p>Tell us the scope and location and we will confirm what can be mobilised.</p>
-          </div>
-          <button onClick={() => onOpenContact()} className="btn btn-primary">
-            <span>Request a Quote</span>
-            <ChevronRight size={15} aria-hidden="true" />
-          </button>
+                {l.licence && (
+                  <p className="rn-licence">
+                    <ShieldCheck size={15} aria-hidden="true" />
+                    <span>{l.licence}</span>
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  className="ea-btn ea-btn--navy rn-card__cta"
+                  onClick={() => onOpenContact(`${l.country} enquiry`)}
+                >
+                  Contact about {l.country} <ChevronRight size={15} aria-hidden="true" />
+                </button>
+              </div>
+            </article>
+          ))}
         </div>
-      </div>
+      </Section>
+
+      <Section tone="navy">
+        <div className="svc-close">
+          <div>
+            <span className="ea-eyebrow">Mobilisation</span>
+            <h2>Sites beyond the two offices.</h2>
+            <p>
+              Crews, equipment and licensed sources travel to site. If your asset sits outside
+              Uganda or Tanzania, tell us where and what the scope is, and the regional office will
+              confirm what can be mobilised and under whose authorisation.
+            </p>
+          </div>
+          <div className="svc-close__actions">
+            <button type="button" className="ea-btn ea-btn--primary" onClick={() => onOpenContact()}>
+              Discuss a Mobilisation <ChevronRight size={16} aria-hidden="true" />
+            </button>
+            <Link to="/contact" className="ea-btn ea-btn--ghost">
+              Full Contact Details
+            </Link>
+          </div>
+        </div>
+      </Section>
 
       <Style>{`
-        .footprint-tiers { display: flex; flex-direction: column; gap: 44px; }
-        .footprint-tier { border-top: 3px solid var(--line); padding-top: 26px; }
-        .footprint-tier.tier-registered { border-top-color: var(--brand); }
-        .footprint-tier.tier-served { border-top-color: rgba(222, 6, 3, 0.35); }
-
-        .tier-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
-        .tier-icon {
-          width: 46px;
-          height: 46px;
-          flex: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--primary-light);
-          color: var(--brand);
+        .rn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:stretch}
+        .rn-card{
+          display:flex;flex-direction:column;height:100%;background:#FFFFFF;
+          border:1px solid var(--line);border-top:4px solid var(--brand);
+          border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);
+          transition:transform .26s ease,box-shadow .26s ease;
         }
-        .tier-label { font-size: 1.25rem; color: var(--navy); }
-        .tier-blurb { color: var(--text-dim); font-size: 0.9375rem; margin-top: 4px; }
-
-        .tier-entries { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .tier-mobilisation .tier-entries { grid-template-columns: 1fr; }
-
-        .entry-country { font-size: 1.15rem; color: var(--navy); margin-bottom: 2px; }
-        .entry-city {
-          font-size: 0.75rem;
-          font-weight: 800;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: var(--brand);
-          margin-bottom: 14px;
+        .rn-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        /* A served market is not a registered office. The quieter top rule says
+           so before the label is read. */
+        .rn-card--served{border-top-color:var(--muted)}
+        .rn-card__media{margin:0;aspect-ratio:16/10;overflow:hidden}
+        .rn-card__media img{width:100%;height:100%;object-fit:cover}
+        .rn-card__body{display:flex;flex-direction:column;flex:1;padding:28px 26px 26px}
+        .rn-card__status{
+          font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+          color:var(--brand);margin-bottom:12px;
         }
-        .entry-detail { font-size: 0.9375rem; line-height: 1.65; }
-        .entry-licence {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-top: 14px;
-          padding-top: 14px;
-          border-top: 1px solid var(--line);
-          font-size: 0.875rem;
-          font-weight: 700;
-          color: var(--navy);
+        .rn-card--served .rn-card__status{color:var(--text-dim)}
+        .rn-card h3{
+          font-size:24px;font-weight:800;line-height:1.15;color:var(--navy);margin:0 0 14px;
+          display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
         }
-        .entry-licence svg { color: var(--brand); flex: none; }
-        .entry-note { margin-top: 12px; font-size: 0.85rem; line-height: 1.6; }
+        .rn-card__city{font-size:14px;font-weight:700;color:var(--text-dim);letter-spacing:.04em}
+        .rn-card__blurb{font-size:14.5px;line-height:1.65;color:var(--text-body);margin:0 0 20px}
+        .rn-line{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.55;margin:0 0 10px;color:var(--text-body)}
+        .rn-line svg{flex:none;margin-top:3px;color:var(--brand)}
+        .rn-line a:hover{color:var(--brand)}
+        .rn-line--via{color:var(--text-dim)}
+        .rn-licence{
+          display:flex;gap:10px;align-items:flex-start;margin:18px 0 0;padding:14px 16px;
+          background:var(--bg-tint);border-left:3px solid var(--navy);
+          font-size:13px;line-height:1.55;color:var(--navy);font-weight:600;
+        }
+        .rn-licence svg{flex:none;margin-top:2px}
+        .rn-card__cta{margin-top:auto;padding-top:0}
+        .rn-card__body .rn-card__cta{margin-top:24px;justify-content:center}
 
-        .footprint-cta {
-          margin-top: 56px;
-          padding: 34px;
-          background: var(--navy);
-          border-radius: var(--radius-lg);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 26px;
-          flex-wrap: wrap;
-        }
-        .footprint-cta h3 { color: #fff; font-size: 1.3rem; }
-        .footprint-cta p { color: rgba(255, 255, 255, 0.76); margin-top: 6px; }
-
-        @media (max-width: 767px) {
-          .tier-entries { grid-template-columns: 1fr; }
-          .footprint-cta { padding: 26px 22px; }
-          .footprint-cta .btn { width: 100%; }
-        }
+        @media (max-width:1024px){ .rn-grid{grid-template-columns:1fr 1fr} }
+        @media (max-width:767px){ .rn-grid{grid-template-columns:1fr} }
       `}</Style>
-    </section>
+    </>
   );
 }

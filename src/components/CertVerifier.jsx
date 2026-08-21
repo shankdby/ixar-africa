@@ -118,9 +118,8 @@ export default function CertVerifier() {
               </button>
 
               <p className="cert-note">
-                <span className="chip">
-                  Routing address for verification requests to be confirmed by IXAR.
-                </span>
+                Verification requests are answered by the regional office. Certificates issued
+                under the group training programme can be checked against the original record.
               </p>
             </form>
           ) : (
