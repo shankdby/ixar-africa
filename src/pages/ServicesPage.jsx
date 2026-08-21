@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import AppImage from '../components/AppImage';
-import Style from '../components/Style';
 import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Panel } from '../components/ui';
 
 /* Services.
@@ -277,41 +276,7 @@ export default function ServicesPage({ onOpenContact }) {
         </div>
       </Section>
 
-      <Style>{`
-        .svc-index{
-          position:sticky;top:var(--nav-h,124px);z-index:20;
-          background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
-          border-bottom:1px solid var(--line);
-        }
-        .svc-index ul{display:flex;justify-content:space-between;gap:0;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
-        .svc-index ul::-webkit-scrollbar{display:none}
-        .svc-index a{
-          display:flex;align-items:center;gap:8px;white-space:nowrap;
-          padding:15px 15px 12px;border-bottom:3px solid transparent;
-          font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;
-          color:var(--navy);transition:color .2s ease,border-color .2s ease;
-        }
-        .svc-index a:hover{color:var(--brand);border-bottom-color:var(--brand)}
-        .svc-index__num{font-size:11px;color:var(--muted);font-weight:800}
-        .svc-index a:hover .svc-index__num{color:var(--brand)}
-        /* Sticky index would otherwise cover the heading it scrolls to. */
-        .svc-anchor{scroll-margin-top:calc(var(--nav-h,124px) + 64px)}
-
-        .svc-close{display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:center}
-        .svc-close h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin:0 0 18px;color:#FFFFFF}
-        .svc-close p{font-size:16px;line-height:1.72;margin:0;color:rgba(255,255,255,.82)}
-        .svc-close__actions{display:flex;flex-direction:column;gap:14px;align-items:stretch}
-        .svc-close__actions .ea-btn{justify-content:center}
-
-        @media (max-width:900px){
-          .svc-close{grid-template-columns:1fr;gap:30px}
-        }
-        @media (max-width:767px){
-          .svc-index{position:static}
-          .svc-anchor{scroll-margin-top:calc(var(--nav-h,116px) + 16px)}
-          .svc-index a{padding:13px 16px;font-size:12px}
-        }
-      `}</Style>
+      
     </Page>
   );
 }

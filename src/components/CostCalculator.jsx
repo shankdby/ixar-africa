@@ -72,7 +72,7 @@ export default function CostCalculator({ onOpenContact }) {
       <div className="container">
         <div className="section-header">
           <div className="section-tag">Scope builder</div>
-          <h1 className="section-title">Tell Us What Needs Inspecting</h1>
+          <h2 className="section-title">Tell us what needs inspecting</h2>
           <p className="section-subtitle">
             Build the scope here and send it through. A written proposal comes back from the
             regional office with a price against your specification.
