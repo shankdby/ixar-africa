@@ -61,7 +61,7 @@ export default function Footer({ onOpenContact }) {
               <li><Link to="/applications/oil-gas">Oil and Gas</Link></li>
               <li><Link to="/applications/power-plants">Power and Geothermal</Link></li>
               <li><Link to="/applications/mining">Mining</Link></li>
-              <li><Link to="/applications/railways">Marine and Ports</Link></li>
+              <li><Link to="/applications/railways">Railways and Transport</Link></li>
               <li><Link to="/applications">All industries</Link></li>
               <li><Link to="/training">NDT Training</Link></li>
               <li><Link to="/case-studies">Projects</Link></li>
@@ -107,9 +107,10 @@ export default function Footer({ onOpenContact }) {
               </div>
             </div>
 
-            <p className="footer-tbc">
-              <span className="chip">Tanzania office address to be confirmed.</span>
-            </p>
+            {/* The Tanzania address is not yet confirmed. An unconfirmed field is
+                omitted rather than shown with an internal note beside it - a
+                visitor should never read our review scaffolding. The country is
+                still listed above, which is the part that is true. */}
 
             <button
               onClick={() => onOpenContact()}

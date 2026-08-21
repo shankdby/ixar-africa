@@ -1,0 +1,256 @@
+/* ==========================================================================
+   IXAR shared page system
+   ==========================================================================
+
+   Lifted verbatim out of EastAfricaPage.jsx, where the whole visual language
+   used to live inside one 2,400-line component. Nothing here is new: these are
+   the homepage's own rules, unscoped so every page can use them.
+
+   Why it matters: before this, the homepage had a design system and the nine
+   subpages had card grids. Same brand, two levels of finish. Anything added
+   here is available everywhere, so the subpages stop drifting.
+
+   The `ea-` prefix is kept deliberately. Renaming would have touched every
+   line of homepage markup for no gain, and the homepage is the reference
+   design, not a legacy to migrate away from.
+
+   Tokens (--ea-*) live in index.css :root. Page-specific rules stay in their
+   own component's <Style> block.
+   ========================================================================== */
+
+
+/* ---------- page frame ---------------------------------------------------
+   Every page wraps in .ea-page. This used to live inside EastAfricaPage's own
+   <Style> block, which meant subpages rendering .ea-page got none of it - no
+   navbar clearance, so their hero sat underneath the fixed header. */
+.ea-page{
+  /* Tokens now live in index.css :root - see the "shared page system" block
+     there. Only the page's own frame stays here. */
+  padding-top:var(--nav-h,124px);   /* clears the app's fixed navbar */
+  font-family:"Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:400;
+  font-size:16px;
+  line-height:1.5;
+  color:var(--ea-body);
+  background:var(--ea-white);
+  overflow-x:hidden;
+}
+/* Base element rules use :where() so they carry ZERO specificity, exactly as the
+   bare a{} / p{} / h1{} rules did in the original mock-up. Scoping them as
+   .ea-page a instead would out-rank every component rule below (a red
+   .ea-btn--primary would inherit body grey, .ea-card__more would lose its
+   brand colour, .ea-trusted-note would lose its margins, and so on). */
+:where(.ea-page) *,:where(.ea-page) *::before,:where(.ea-page) *::after{box-sizing:border-box}
+:where(.ea-page) img{max-width:100%;display:block}
+:where(.ea-page) a{color:inherit;text-decoration:none}
+:where(.ea-page) h1,:where(.ea-page) h2,:where(.ea-page) h3,
+:where(.ea-page) h4,:where(.ea-page) h5{
+  margin:0;color:var(--ea-ink);font-weight:700;line-height:1.15;
+  font-family:"Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  letter-spacing:normal;
+}
+:where(.ea-page) p{margin:0 0 16px}
+:where(.ea-page) p:last-child{margin-bottom:0}
+:where(.ea-page) ul{margin:0;padding:0;list-style:none}
+:where(.ea-page) button,:where(.ea-page) input,
+:where(.ea-page) select,:where(.ea-page) textarea{font:inherit;color:inherit}
+
+.ea-wrap{width:100%;max-width:var(--ea-wrap);margin:0 auto;padding:0 var(--ea-pad)}
+.ea-section{padding:var(--ea-sec) 0}
+.ea-section--tint{background:var(--ea-tint)}
+.ea-section--navy{background:var(--ea-navy);color:rgba(255,255,255,.82)}
+
+
+/* ---------- section headings ------------------------------------------- */
+.ea-eyebrow{
+  display:block;font-size:14px;font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ea-brand);margin:0 0 14px;
+}
+.ea-section--navy .ea-eyebrow{color:#FF7A78}
+.ea-sec-title{font-size:40px;font-weight:700;letter-spacing:-.01em}
+.ea-sec-head{max-width:760px;margin-bottom:48px}
+.ea-sec-head--center{margin-left:auto;margin-right:auto;text-align:center}
+.ea-sec-head p{margin-top:18px;font-size:17px;line-height:1.65}
+.ea-rule{display:block;width:64px;height:4px;background:var(--ea-brand);margin:20px 0 0}
+.ea-sec-head--center .ea-rule{margin-left:auto;margin-right:auto}
+
+/* ---------- buttons ----------------------------------------------------- */
+.ea-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 28px;font-size:14px;font-weight:700;line-height:1;
+  border:2px solid transparent;border-radius:0;cursor:pointer;
+  transition:background .22s ease,color .22s ease,border-color .22s ease,transform .22s ease;
+}
+.ea-btn--primary{background:var(--ea-brand);color:var(--ea-white);border-color:var(--ea-brand)}
+.ea-btn--primary:hover{background:var(--ea-brand-dark);border-color:var(--ea-brand-dark);transform:translateY(-2px)}
+.ea-btn--ghost{background:transparent;color:var(--ea-white);border-color:rgba(255,255,255,.75)}
+.ea-btn--ghost:hover{background:var(--ea-white);color:var(--ea-navy);border-color:var(--ea-white);transform:translateY(-2px)}
+.ea-btn--navy{background:var(--ea-navy);color:var(--ea-white);border-color:var(--ea-navy)}
+.ea-btn--navy:hover{background:#00163f;border-color:#00163f;transform:translateY(-2px)}
+
+/* ---------- stats strip -------------------------------------------------- */
+.ea-stats{background:var(--ea-tint);border-top:1px solid var(--ea-line);border-bottom:1px solid var(--ea-line)}
+.ea-stats__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.ea-stat{padding:44px 26px;text-align:center;border-right:1px solid var(--ea-muted)}
+.ea-stat:last-child{border-right:0}
+.ea-stat__icon{width:38px;height:38px;margin:0 auto 16px;fill:none;stroke:var(--ea-brand);stroke-width:1.7}
+.ea-stat__fig{
+  display:block;font-size:46px;font-weight:800;line-height:1;color:var(--ea-navy);
+  margin-bottom:12px;letter-spacing:-.02em;
+}
+.ea-stat__fig .ea-chip{display:inline-block;font-size:19px;font-weight:800;vertical-align:middle}
+.ea-stat__label{font-size:14.5px;font-weight:700;color:var(--ea-body);letter-spacing:.03em}
+.ea-stats__note{
+  margin-top:34px;padding:16px 20px;background:var(--ea-white);border-left:3px solid var(--ea-amber-line);
+  font-size:13.5px;line-height:1.6;color:var(--ea-body-soft);
+}
+
+/* ---------- card grids --------------------------------------------------- */
+.ea-grid{display:grid;gap:26px}
+.ea-grid--4{grid-template-columns:repeat(4,1fr)}
+.ea-grid--2{grid-template-columns:repeat(2,1fr)}
+.ea-card{
+  display:flex;flex-direction:column;height:100%;
+  background:var(--ea-white);border:1px solid var(--ea-line);border-radius:var(--ea-radius-lg);
+  overflow:hidden;box-shadow:var(--ea-shadow);
+  transition:transform .26s ease,box-shadow .26s ease,border-color .26s ease;
+}
+.ea-card:hover{transform:translateY(-6px);box-shadow:var(--ea-shadow-lift);border-color:var(--ea-muted)}
+.ea-card__body{display:flex;flex-direction:column;flex:1;padding:26px 24px 24px}
+.ea-card__title{font-size:19px;font-weight:700;line-height:1.3;color:var(--ea-navy);margin:0 0 12px}
+.ea-card__text{font-size:14.5px;line-height:1.62;color:var(--ea-body);margin:0}
+.ea-card__more{
+  margin-top:auto;padding-top:20px;
+  font-size:13px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ea-brand);
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+}
+.ea-card__more svg{width:13px;height:13px;fill:currentColor;transition:transform .22s ease}
+.ea-card:hover .ea-card__more svg{transform:translateX(4px)}
+.ea-card__num{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--ea-muted);margin:0 0 8px;display:block}
+
+/* licence cards */
+.ea-lcard{
+  display:flex;flex-direction:column;height:100%;
+  background:var(--ea-white);border:1px solid var(--ea-line);border-top:4px solid var(--ea-brand);
+  border-radius:var(--ea-radius);padding:32px 28px;box-shadow:var(--ea-shadow);
+  transition:transform .26s ease,box-shadow .26s ease;
+}
+.ea-lcard:hover{transform:translateY(-6px);box-shadow:var(--ea-shadow-lift)}
+.ea-lcard__icon{
+  width:56px;height:56px;border-radius:50%;background:rgba(222,6,3,.08);
+  display:flex;align-items:center;justify-content:center;margin-bottom:22px;flex:none;
+}
+.ea-lcard__icon svg{width:28px;height:28px;fill:none;stroke:var(--ea-brand);stroke-width:1.7}
+.ea-lcard__ref{
+  font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ea-ph-ink);margin-bottom:10px;display:block;
+}
+.ea-lcard h3{font-size:19px;line-height:1.28;color:var(--ea-navy);margin:0 0 14px}
+.ea-lcard p{font-size:14.5px;line-height:1.65;margin:0}
+
+/* ---------- scroll reveal -------------------------------------------------- */
+/* Default to visible. Without JavaScript there is no IntersectionObserver to
+   add .is-in, so hiding by default would leave the prerendered HTML blank for
+   any client that does not run scripts. The .js class is set by an inline
+   script in index.html before first paint, so there is no flash of content. */
+.ea-rev{opacity:1;transform:none}
+.js .ea-rev{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.js .ea-rev.is-in{opacity:1;transform:none}
+
+/* ---------- page hero -----------------------------------------------------
+   Subpages had no hero at all: they opened on a centred heading floating in
+   white space. This is the homepage hero treatment reduced to a page banner —
+   same navy, same scrim, same typographic hierarchy, shorter. */
+.ea-phero{position:relative;overflow:hidden;background:var(--ea-navy);color:#FFFFFF}
+.ea-phero__media{position:absolute;inset:0}
+.ea-phero__media img{width:100%;height:100%;object-fit:cover}
+.ea-phero__scrim{
+  position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(0,30,87,.95) 0%,rgba(0,30,87,.86) 46%,rgba(0,30,87,.62) 100%);
+}
+/* No photograph for this page: a flat navy field with a hairline grid reads as
+   a deliberate choice, where a borrowed photo of the wrong subject does not. */
+.ea-phero--plain{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.05) 0%,rgba(0,0,0,.10) 100%),
+    var(--ea-navy);
+}
+.ea-phero--plain::after{
+  content:'';position:absolute;inset:0;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.ea-phero__in{position:relative;padding:96px 0 88px;max-width:820px}
+.ea-phero .ea-eyebrow{color:#FF7A78}
+.ea-phero h1{
+  font-size:clamp(2.1rem,4.4vw,3.2rem);font-weight:800;line-height:1.08;
+  letter-spacing:-.02em;color:#FFFFFF;margin:0 0 20px;
+}
+.ea-phero__sub{font-size:clamp(1rem,1.6vw,1.18rem);line-height:1.65;color:rgba(255,255,255,.88);margin:0;max-width:660px}
+.ea-phero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.ea-phero__crumbs{
+  position:relative;padding:14px 0;background:rgba(0,0,0,.22);
+  border-top:1px solid rgba(255,255,255,.14);
+  font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.66);
+}
+.ea-phero__crumbs a:hover{color:#FFFFFF}
+.ea-phero__crumbs span{margin:0 10px;opacity:.5}
+
+/* ---------- editorial row -------------------------------------------------
+   The alternative to a grid of small cards: one subject per row, image on one
+   side, copy on the other, alternating. Uses fewer images at a larger size,
+   which suits a library of 13 photographs far better than 40 thumbnails. */
+.ea-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.ea-row + .ea-row{margin-top:96px}
+.ea-row--flip .ea-row__media{order:2}
+.ea-row__media{position:relative;border-radius:var(--ea-radius-lg);overflow:hidden;box-shadow:var(--ea-shadow-lift)}
+.ea-row__media img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.ea-row__num{
+  font-size:13px;font-weight:800;letter-spacing:.16em;color:var(--ea-brand);
+  text-transform:uppercase;display:block;margin-bottom:14px;
+}
+.ea-row h2{font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:800;line-height:1.16;letter-spacing:-.015em;color:var(--ea-navy);margin:0 0 18px}
+.ea-row p{font-size:16px;line-height:1.72;color:var(--ea-body);margin:0 0 16px}
+.ea-row__list{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.ea-row__list li{
+  font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--ea-navy);
+  background:var(--ea-tint);border:1px solid var(--ea-muted);border-radius:var(--ea-radius);padding:7px 13px;
+}
+.ea-row__cta{margin-top:28px}
+
+/* A navy panel standing in for a photograph, for subjects with no usable
+   image. Carries the method name as typography instead of borrowed stock. */
+.ea-panel{
+  display:flex;flex-direction:column;justify-content:flex-end;
+  aspect-ratio:4/3;padding:36px;border-radius:var(--ea-radius-lg);
+  background:linear-gradient(150deg,#0A2C6B 0%,var(--ea-navy) 55%,#00163F 100%);
+  color:#FFFFFF;position:relative;overflow:hidden;
+}
+.ea-panel::after{
+  content:'';position:absolute;inset:0;opacity:.45;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.ea-panel__mark{position:relative;font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#FF7A78;margin-bottom:12px}
+.ea-panel__title{position:relative;font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;line-height:1.15;letter-spacing:-.01em;margin:0}
+
+@media (max-width:1024px){
+  .ea-phero__in{padding:76px 0 68px}
+  .ea-row{gap:38px}
+  .ea-row + .ea-row{margin-top:70px}
+}
+@media (max-width:860px){
+  .ea-row{grid-template-columns:1fr;gap:26px}
+  .ea-row--flip .ea-row__media{order:0}
+  .ea-row + .ea-row{margin-top:56px}
+}
+@media (max-width:767px){
+  .ea-phero__in{padding:54px 0 48px}
+  .ea-phero__actions .ea-btn{width:100%;justify-content:center}
+  .ea-panel{padding:26px}
+}

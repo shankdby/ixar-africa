@@ -1,3 +1,5 @@
+@import './styles/system.css';
+
 /* ==========================================================================
    IXAR — global design system
    Tokens taken from ixar.in (Phlox Pro / Elementor kit 46), so the whole site
@@ -84,6 +86,40 @@
   --shadow-hover: 0 14px 34px rgba(0, 30, 87, 0.13);
 
   /* --- layout ----------------------------------------------------------- */
+
+  /* --- shared page system ------------------------------------------------ *
+   * The homepage's design language, promoted from a .ea-page-scoped block so
+   * every page can use it. Values are unchanged; they now alias the global
+   * tokens above rather than restating the same hex twice, so the two can no
+   * longer drift apart. See src/styles/system.css for the rules. */
+  --ea-brand: var(--brand);
+  --ea-brand-dark: var(--brand-dark);
+  --ea-navy: var(--navy);
+  --ea-ink: var(--ink);
+  --ea-body: var(--text-body);
+  --ea-body-soft: var(--text-dim);
+  --ea-tint: var(--bg-tint);
+  --ea-muted: var(--muted);
+  --ea-line: var(--line);
+  --ea-white: var(--bg-light);
+  --ea-accent: #fea75e;
+
+  --ea-ph-bg: #e9ecee;
+  --ea-ph-bg2: #e1e5e8;
+  --ea-ph-ink: #8B9297;
+
+  --ea-amber-bg: var(--amber-bg);
+  --ea-amber-line: var(--amber-line);
+  --ea-amber-ink: var(--amber-ink);
+
+  --ea-wrap: 1140px;
+  --ea-pad: var(--gutter);
+  --ea-sec: 96px;
+  --ea-radius: var(--radius-md);
+  --ea-radius-lg: var(--radius-lg);
+  --ea-shadow: var(--shadow-sm);
+  --ea-shadow-lift: var(--shadow-lg);
+
   --wrap: 1240px;
   --gutter: 24px;
   --section-y: 96px;

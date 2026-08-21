@@ -138,7 +138,7 @@ export const ROUTE_SEO = {
     changefreq: 'weekly'
   },
   '/network': {
-    title: 'Regional Footprint | Kampala, Dar es Salaam & Nairobi | IXAR',
+    title: 'Regional Footprint | Registered Offices & Countries Served | IXAR',
     description:
       'IXAR’s registered East African offices and mobilisation reach across Uganda, Tanzania and Kenya.',
     priority: '0.7',
