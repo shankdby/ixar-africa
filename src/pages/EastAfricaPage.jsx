@@ -1913,98 +1913,8 @@ export default function EastAfricaPage() {
           `.ea-page`, so it cannot collide with index.css, Navbar or Footer.
           ========================================================================== */}
       <Style>{`
-.ea-page{
-  --ea-brand:#E31E24;
-  --ea-brand-dark:#B00502;
-  --ea-navy:#001E57;
-  --ea-ink:#000000;
-  --ea-body:#444444;
-  --ea-body-soft:#6B6B6B;
-  --ea-tint:#edf2f1;
-  --ea-muted:#C6D2CF;
-  --ea-line:#EAEAEA;
-  --ea-white:#ffffff;
-  --ea-accent:#fea75e;
-
-  --ea-ph-bg:#e9ecee;
-  --ea-ph-bg2:#e1e5e8;
-  --ea-ph-ink:#8B9297;
-
-  --ea-amber-bg:#FFF3D6;
-  --ea-amber-line:#E9BC63;
-  --ea-amber-ink:#7A5200;
-
-  --ea-wrap:1140px;
-  --ea-pad:24px;
-  --ea-sec:96px;
-  --ea-radius:6px;
-  --ea-radius-lg:10px;
-  --ea-shadow:0 2px 10px rgba(0,0,0,.05);
-  --ea-shadow-lift:0 14px 34px rgba(0,30,87,.13);
-
-  /* clears the app's fixed navbar; --nav-h is published by Navbar at runtime */
-  padding-top:var(--nav-h,124px);
-
-  font-family:"Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-weight:400;
-  font-size:16px;
-  line-height:1.5;
-  color:var(--ea-body);
-  background:var(--ea-white);
-  overflow-x:hidden;
-}
-/* Base element rules use :where() so they carry ZERO specificity, exactly as the
-   bare a{} / p{} / h1{} rules did in the original mock-up. Scoping them as
-   .ea-page a instead would out-rank every component rule below (a red
-   .ea-btn--primary would inherit body grey, .ea-card__more would lose its
-   brand colour, .ea-trusted-note would lose its margins, and so on). */
-:where(.ea-page) *,:where(.ea-page) *::before,:where(.ea-page) *::after{box-sizing:border-box}
-:where(.ea-page) img{max-width:100%;display:block}
-:where(.ea-page) a{color:inherit;text-decoration:none}
-:where(.ea-page) h1,:where(.ea-page) h2,:where(.ea-page) h3,
-:where(.ea-page) h4,:where(.ea-page) h5{
-  margin:0;color:var(--ea-ink);font-weight:700;line-height:1.15;
-  font-family:"Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  letter-spacing:normal;
-}
-:where(.ea-page) p{margin:0 0 16px}
-:where(.ea-page) p:last-child{margin-bottom:0}
-:where(.ea-page) ul{margin:0;padding:0;list-style:none}
-:where(.ea-page) button,:where(.ea-page) input,
-:where(.ea-page) select,:where(.ea-page) textarea{font:inherit;color:inherit}
-
-.ea-wrap{width:100%;max-width:var(--ea-wrap);margin:0 auto;padding:0 var(--ea-pad)}
-.ea-section{padding:var(--ea-sec) 0}
-.ea-section--tint{background:var(--ea-tint)}
-.ea-section--navy{background:var(--ea-navy);color:rgba(255,255,255,.82)}
 .ea-section--navy h2,.ea-section--navy h3,.ea-section--navy h4{color:var(--ea-white)}
 
-/* ---------- section headings ------------------------------------------- */
-.ea-eyebrow{
-  display:block;font-size:14px;font-weight:800;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ea-brand);margin:0 0 14px;
-}
-.ea-section--navy .ea-eyebrow{color:#FF7A78}
-.ea-sec-title{font-size:40px;font-weight:700;letter-spacing:-.01em}
-.ea-sec-head{max-width:760px;margin-bottom:48px}
-.ea-sec-head--center{margin-left:auto;margin-right:auto;text-align:center}
-.ea-sec-head p{margin-top:18px;font-size:17px;line-height:1.65}
-.ea-rule{display:block;width:64px;height:4px;background:var(--ea-brand);margin:20px 0 0}
-.ea-sec-head--center .ea-rule{margin-left:auto;margin-right:auto}
-
-/* ---------- buttons ----------------------------------------------------- */
-.ea-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:15px 28px;font-size:14px;font-weight:700;line-height:1;
-  border:2px solid transparent;border-radius:0;cursor:pointer;
-  transition:background .22s ease,color .22s ease,border-color .22s ease,transform .22s ease;
-}
-.ea-btn--primary{background:var(--ea-brand);color:var(--ea-white);border-color:var(--ea-brand)}
-.ea-btn--primary:hover{background:var(--ea-brand-dark);border-color:var(--ea-brand-dark);transform:translateY(-2px)}
-.ea-btn--ghost{background:transparent;color:var(--ea-white);border-color:rgba(255,255,255,.75)}
-.ea-btn--ghost:hover{background:var(--ea-white);color:var(--ea-navy);border-color:var(--ea-white);transform:translateY(-2px)}
-.ea-btn--navy{background:var(--ea-navy);color:var(--ea-white);border-color:var(--ea-navy)}
-.ea-btn--navy:hover{background:#00163f;border-color:#00163f;transform:translateY(-2px)}
 .ea-btn svg{width:16px;height:16px;flex:none;fill:currentColor}
 
 /* ---------- unconfirmed content chip ------------------------------------ */
@@ -2115,22 +2025,6 @@ export default function EastAfricaPage() {
 .ea-hero__flag span{display:flex;align-items:center;gap:9px}
 .ea-hero__flag span::before{content:"";width:7px;height:7px;background:var(--ea-brand);border-radius:50%;flex:none}
 
-/* ---------- stats strip -------------------------------------------------- */
-.ea-stats{background:var(--ea-tint);border-top:1px solid var(--ea-line);border-bottom:1px solid var(--ea-line)}
-.ea-stats__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.ea-stat{padding:44px 26px;text-align:center;border-right:1px solid var(--ea-muted)}
-.ea-stat:last-child{border-right:0}
-.ea-stat__icon{width:38px;height:38px;margin:0 auto 16px;fill:none;stroke:var(--ea-brand);stroke-width:1.7}
-.ea-stat__fig{
-  display:block;font-size:46px;font-weight:800;line-height:1;color:var(--ea-navy);
-  margin-bottom:12px;letter-spacing:-.02em;
-}
-.ea-stat__fig .ea-chip{display:inline-block;font-size:19px;font-weight:800;vertical-align:middle}
-.ea-stat__label{font-size:14.5px;font-weight:700;color:var(--ea-body);letter-spacing:.03em}
-.ea-stats__note{
-  margin-top:34px;padding:16px 20px;background:var(--ea-white);border-left:3px solid var(--ea-amber-line);
-  font-size:13.5px;line-height:1.6;color:var(--ea-body-soft);
-}
 
 /* ---------- where we operate -------------------------------------------- */
 .ea-map-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
@@ -2156,48 +2050,6 @@ export default function EastAfricaPage() {
   padding:16px 18px;background:var(--ea-white);border-left:3px solid var(--ea-muted);
 }
 
-/* ---------- card grids --------------------------------------------------- */
-.ea-grid{display:grid;gap:26px}
-.ea-grid--4{grid-template-columns:repeat(4,1fr)}
-.ea-grid--2{grid-template-columns:repeat(2,1fr)}
-.ea-card{
-  display:flex;flex-direction:column;height:100%;
-  background:var(--ea-white);border:1px solid var(--ea-line);border-radius:var(--ea-radius-lg);
-  overflow:hidden;box-shadow:var(--ea-shadow);
-  transition:transform .26s ease,box-shadow .26s ease,border-color .26s ease;
-}
-.ea-card:hover{transform:translateY(-6px);box-shadow:var(--ea-shadow-lift);border-color:var(--ea-muted)}
-.ea-card__body{display:flex;flex-direction:column;flex:1;padding:26px 24px 24px}
-.ea-card__title{font-size:19px;font-weight:700;line-height:1.3;color:var(--ea-navy);margin:0 0 12px}
-.ea-card__text{font-size:14.5px;line-height:1.62;color:var(--ea-body);margin:0}
-.ea-card__more{
-  margin-top:auto;padding-top:20px;
-  font-size:13px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ea-brand);
-  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
-}
-.ea-card__more svg{width:13px;height:13px;fill:currentColor;transition:transform .22s ease}
-.ea-card:hover .ea-card__more svg{transform:translateX(4px)}
-.ea-card__num{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--ea-muted);margin:0 0 8px;display:block}
-
-/* licence cards */
-.ea-lcard{
-  display:flex;flex-direction:column;height:100%;
-  background:var(--ea-white);border:1px solid var(--ea-line);border-top:4px solid var(--ea-brand);
-  border-radius:var(--ea-radius);padding:32px 28px;box-shadow:var(--ea-shadow);
-  transition:transform .26s ease,box-shadow .26s ease;
-}
-.ea-lcard:hover{transform:translateY(-6px);box-shadow:var(--ea-shadow-lift)}
-.ea-lcard__icon{
-  width:56px;height:56px;border-radius:50%;background:rgba(222,6,3,.08);
-  display:flex;align-items:center;justify-content:center;margin-bottom:22px;flex:none;
-}
-.ea-lcard__icon svg{width:28px;height:28px;fill:none;stroke:var(--ea-brand);stroke-width:1.7}
-.ea-lcard__ref{
-  font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ea-ph-ink);margin-bottom:10px;display:block;
-}
-.ea-lcard h3{font-size:19px;line-height:1.28;color:var(--ea-navy);margin:0 0 14px}
-.ea-lcard p{font-size:14.5px;line-height:1.65;margin:0}
 .ea-cert-row{margin-top:44px;padding:28px;background:var(--ea-white);border:1px solid var(--ea-line);border-radius:var(--ea-radius-lg)}
 .ea-cert-row__label{
   font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
@@ -2339,14 +2191,6 @@ export default function EastAfricaPage() {
 .ea-wa-float:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(37,211,102,.55)}
 .ea-wa-float svg{width:30px;height:30px;fill:#fff}
 
-/* ---------- scroll reveal -------------------------------------------------- */
-/* Default to visible. Without JavaScript there is no IntersectionObserver to
-   add .is-in, so hiding by default would leave the prerendered HTML blank for
-   any client that does not run scripts. The .js class is set by an inline
-   script in index.html before first paint, so there is no flash of content. */
-.ea-rev{opacity:1;transform:none}
-.js .ea-rev{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-.js .ea-rev.is-in{opacity:1;transform:none}
 
 /* ==========================================================================
    Responsive
