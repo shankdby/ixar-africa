@@ -31,7 +31,7 @@ export default function Footer({ onOpenContact }) {
             </div>
 
             <p className="footer-bio">
-              Non-destructive testing and industrial inspection across Uganda, Tanzania and Kenya,
+              Non-destructive testing and industrial inspection across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi,
               delivered by Industrial X-Ray and Allied Radiographers (EA) Ltd.
             </p>
 
@@ -69,15 +69,15 @@ export default function Footer({ onOpenContact }) {
             </ul>
           </div>
 
-          {/* The header sends Products and Jobs to ixar.in, so the East Africa
+          {/* The header sends Products and Jobs to ixar.in, so the Africa
               versions of those pages need their inbound links from here.
               Without them these pages are orphaned and drop out of the index. */}
           <div className="footer-col">
-            <h4 className="footer-col-title">East Africa</h4>
+            <h4 className="footer-col-title">Africa</h4>
             <ul className="footer-links">
               <li><Link to="/products">Equipment and Supply</Link></li>
               <li><Link to="/estimator">Scope and Cost Estimator</Link></li>
-              <li><Link to="/careers">Careers in East Africa</Link></li>
+              <li><Link to="/careers">Careers in Africa</Link></li>
               <li><Link to="/contact">Regional Office Contact</Link></li>
               <li>
                 <a href={IXAR_IN + '/'} className="footer-global-link">

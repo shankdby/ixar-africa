@@ -3,7 +3,7 @@
  * The header on ixar.africa mirrors ixar.in's menu. Everything that is a
  * *global* concern — the group's services, courses, products, clients and
  * careers — links straight out to ixar.in, which is the system of record for
- * that content. Only the East Africa division's own pages stay on this domain.
+ * that content. Only the Africa division's own pages stay on this domain.
  *
  * Keep the labels here identical to ixar.in's menu. A visitor moving between
  * the two domains should not notice the boundary.
@@ -37,18 +37,18 @@ export const GLOBAL_PRODUCT_LINKS = [
   { href: at('equipment-maintenance'), label: 'Equipment Maintenance' },
 ];
 
-/* --- East Africa items: these stay on ixar.africa ------------------------ */
+/* --- Africa items: these stay on ixar.africa ------------------------ */
 
 export const EA_LINKS = [
-  { to: '/', label: 'East Africa Overview' },
-  { to: '/services', label: 'Services in East Africa' },
+  { to: '/', label: 'Africa Overview' },
+  { to: '/services', label: 'Services in Africa' },
   { to: '/applications', label: 'Industries We Serve' },
   { to: '/network', label: 'Regional Offices' },
   { to: '/case-studies', label: 'Regional Track Record' },
   { to: '/training', label: 'Training & Certification' },
   { to: '/products', label: 'Equipment & Supply' },
   { to: '/estimator', label: 'Scope & Cost Estimator' },
-  { to: '/careers', label: 'Careers in East Africa' },
+  { to: '/careers', label: 'Careers in Africa' },
   { to: '/contact', label: 'Contact the Regional Office' },
 ];
 
@@ -56,7 +56,7 @@ export const EA_LINKS = [
  * `external: true` means the item points off this domain. */
 export const HEADER_ITEMS = [
   { kind: 'external', label: 'About Us', href: at('about-us') },
-  { kind: 'ea', label: 'East Africa', to: '/', children: EA_LINKS, highlight: true },
+  { kind: 'ea', label: 'Africa', to: '/', children: EA_LINKS, highlight: true },
   { kind: 'external', label: 'Services', href: at('conventional-testing'), children: GLOBAL_SERVICE_LINKS },
   { kind: 'external', label: 'NDT Course', href: at('ndt-course'), children: GLOBAL_COURSE_LINKS },
   { kind: 'external', label: 'NDT Products', href: at('ndt-products'), children: GLOBAL_PRODUCT_LINKS },

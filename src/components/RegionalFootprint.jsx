@@ -7,11 +7,12 @@ import { Section, SectionHead } from './ui';
 
 /* Regional network.
  *
- * Uganda, Tanzania and Kenya are NOT equivalent and are not presented as if
- * they were. Uganda is a registered office with a named address and a national
- * radiation authorisation. Tanzania is a registered entity whose office address
- * is not yet confirmed. Kenya is worked in, mobilised from the regional
- * offices, with no local authorisation claimed.
+ * The countries are NOT equivalent and are not presented as if they were.
+ * Uganda is a registered office with a named address and a national radiation
+ * authorisation. Tanzania is a registered entity whose office address is not
+ * yet confirmed. Kenya and the five countries added on client instruction in
+ * 2026 are worked in, mobilised from the regional offices, with no local
+ * authorisation claimed.
  *
  * Flattening those three into identical "office" cards would be a location
  * claim. An EPC procurement reader checks radiation licensing by jurisdiction
@@ -36,7 +37,7 @@ const LOCATIONS = [
     email: 'bd@ixar.africa',
     licence: 'Licensed by the Uganda Atomic Energy Council for sealed radioactive sources',
     image: '/images/east-africa/ea-office-kampala.webp',
-    alt: 'IXAR East Africa site board and crew, Tilenga Project, Uganda',
+    alt: 'IXAR Africa site board and crew, Tilenga Project, Uganda',
     blurb:
       'The regional base. Crews, licensed sources and equipment mobilise from here to sites across the region.',
   },
@@ -48,6 +49,15 @@ const LOCATIONS = [
     licence: 'Radiation authorisation held for in-country work',
     blurb:
       'A registered in-country entity delivering process plant and industrial inspection scopes. Enquiries are handled by the Kampala regional office.',
+    contactVia: 'Kampala regional office',
+  },
+  {
+    id: 'wider-africa',
+    country: 'Rwanda, Mozambique, Ethiopia, Sudan and Malawi',
+    status: 'Served — projects completed',
+    tier: 'served',
+    blurb:
+      'Countries where projects have been completed, crewed and equipped from the regional offices. Added on client instruction in 2026; the project record and the radiation authorisation status for each must be confirmed before publication.',
     contactVia: 'Kampala regional office',
   },
   {
@@ -65,11 +75,11 @@ export default function RegionalFootprint({ onOpenContact }) {
   return (
     <>
       <Section>
-        <SectionHead eyebrow="Where We Operate" title="Three markets, two registered offices.">
+        <SectionHead eyebrow="Where We Operate" title="Eight markets, two registered offices.">
           <p>
-            The distinction matters on a bid. Uganda and Tanzania are registered entities; Kenya is
-            served from them. Radiation authorisation is held per jurisdiction and is listed below
-            for each, because that is the first thing a procurement team checks.
+            The distinction matters on a bid. Uganda and Tanzania are registered entities; the rest
+            are served from them. Radiation authorisation is held per jurisdiction and is listed
+            below for each, because that is the first thing a procurement team checks.
           </p>
         </SectionHead>
 

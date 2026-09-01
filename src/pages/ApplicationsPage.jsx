@@ -26,7 +26,7 @@ const SECTORS = [
     eyebrow: 'Oil and Gas',
     title: 'Upstream, midstream and downstream.',
     body: [
-      'Pipelines, storage tanks, refineries and process plant — from cross-country transmission lines through to downstream processing facilities. The largest part of the regional workload, and the sector the East Africa crews are deepest in.',
+      'Pipelines, storage tanks, refineries and process plant — from cross-country transmission lines through to downstream processing facilities. The largest part of the regional workload, and the sector the African crews are deepest in.',
     ],
     points: [
       'Pipeline girth welds',
@@ -172,7 +172,7 @@ export default function ApplicationsPage({ onOpenContact }) {
             </Link>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Industries' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Industries' }]} />}
       />
 
       <div className="svc-index">

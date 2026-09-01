@@ -10,9 +10,9 @@ export default function NetworkPage({ onOpenContact }) {
       <PageHero
         eyebrow="Regional Network"
         title="Local presence. Regional capability."
-        sub="Registered offices in Uganda and Tanzania, with crews and licensed equipment mobilised to sites across East Africa."
+        sub="Registered offices in Uganda and Tanzania, with crews and licensed equipment mobilised to sites across Africa."
         image="/images/east-africa/ea-office-kampala.webp"
-        imageAlt="IXAR East Africa crew and site board, Uganda"
+        imageAlt="IXAR Africa crew and site board, Uganda"
         actions={
           <>
             <button type="button" className="ea-btn ea-btn--primary" onClick={() => onOpenContact()}>
@@ -23,7 +23,7 @@ export default function NetworkPage({ onOpenContact }) {
             </Link>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Regional Offices' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Regional Offices' }]} />}
       />
       <RegionalFootprint onOpenContact={onOpenContact} />
     </Page>

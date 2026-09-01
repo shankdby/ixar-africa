@@ -11,7 +11,7 @@ export default function NotFoundPage() {
         <h1 className="section-title">Page not found</h1>
         <p className="section-subtitle" style={{ maxWidth: '620px', margin: '0 auto 32px' }}>
           The page you were looking for has moved or no longer exists. The links
-          below cover everything IXAR delivers in East Africa.
+          below cover everything IXAR delivers in Africa.
         </p>
         <nav
           style={{

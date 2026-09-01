@@ -195,7 +195,7 @@ export default function ContactModal({ isOpen, onClose, defaultScope }) {
           <div className="modal-done" role="status" aria-live="polite">
             <div className="modal-done__tick"><Check size={32} aria-hidden="true" /></div>
             <h3 className="modal-title">Thank you, your enquiry has been sent.</h3>
-            <p>A member of the IXAR East Africa team will respond via <strong>bd@ixar.africa</strong> shortly.</p>
+            <p>A member of the IXAR Africa team will respond via <strong>bd@ixar.africa</strong> shortly.</p>
             <button onClick={handleClose} className="btn btn-outline btn-lg modal-done__btn">
               Close
             </button>

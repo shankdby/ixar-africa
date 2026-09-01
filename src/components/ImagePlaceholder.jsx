@@ -3,7 +3,7 @@ import Style from './Style';
 
 /* Labelled image placeholder.
 
-   Matches the treatment used on the East Africa page — diagonal grey hatching,
+   Matches the treatment used on the Africa page — diagonal grey hatching,
    a dashed inset, the IMG reference and a description of what belongs there —
    so the whole site reads as one review artefact rather than two. */
 

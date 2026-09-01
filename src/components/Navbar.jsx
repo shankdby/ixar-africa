@@ -7,7 +7,7 @@ import { HEADER_ITEMS } from '../globalNav';
 /* The primary navigation. Keep the outer class name `navbar-header`:
    EastAfricaPage measures this element to work out its own top padding.
 
-   The menu mirrors ixar.in. Global items link out to ixar.in; the East Africa
+   The menu mirrors ixar.in. Global items link out to ixar.in; the Africa
    item opens this domain's own pages. See src/globalNav.js for the mapping. */
 
 export default function Navbar({ onOpenContact }) {
@@ -90,7 +90,7 @@ export default function Navbar({ onOpenContact }) {
 
   const renderDropdown = (id, label, to, links, highlight = false, showViewAll = true) => {
     const open = openDropdown === id;
-    /* Every path starts with "/", so the East Africa item — which owns this
+    /* Every path starts with "/", so the Africa item — which owns this
        whole domain — is treated as active on any local route. */
     const sectionActive = to === '/' ? true : pathname.startsWith(to);
     return (
@@ -178,7 +178,7 @@ export default function Navbar({ onOpenContact }) {
       <div className="top-info-bar">
         <div className="container top-info-container">
           <span className="top-badge">
-            <MapPin size={13} aria-hidden="true" /> Uganda &middot; Tanzania &middot; Kenya
+            <MapPin size={13} aria-hidden="true" /> Offices: Uganda &middot; Tanzania
           </span>
           <div className="top-right">
             <a href="mailto:bd@ixar.africa" className="top-link">
@@ -192,7 +192,7 @@ export default function Navbar({ onOpenContact }) {
       </div>
 
       <div className="container nav-main-container">
-        <Link to="/" className="brand-logo" aria-label="IXAR East Africa, home">
+        <Link to="/" className="brand-logo" aria-label="IXAR Africa, home">
           <img
             src="/images/ixar-logo-main.png"
             alt="IXAR"

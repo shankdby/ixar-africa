@@ -7,7 +7,7 @@ import { Section, SectionHead } from './ui';
 
 /* Regional track record.
  *
- * WHAT IS HERE. Four scopes, all evidenced by IXAR East Africa's own site
+ * WHAT IS HERE. Four scopes, all evidenced by IXAR Africa's own site
  * photography. An earlier version of this file listed named clients, contract
  * values and defect-rate figures that nothing supported; those were removed and
  * are not coming back without documentation.
@@ -91,9 +91,9 @@ export default function CaseStudies({ onOpenContact }) {
   return (
     <>
       <Section>
-        <SectionHead eyebrow="Regional Track Record" title="Work delivered in East Africa.">
+        <SectionHead eyebrow="Regional Track Record" title="Work delivered in Africa.">
           <p>
-            Scopes carried out by IXAR East Africa crews, each one backed by the division&apos;s own
+            Scopes carried out by IXAR Africa crews, each one backed by the division&apos;s own
             site photography. Operators are described by project rather than named: on
             subcontracted EPC work, publication permission belongs to the client.
           </p>

@@ -12,7 +12,7 @@ export default function EstimatorPage({ onOpenContact }) {
         title="Define the scope. Get a real proposal."
         sub="Build your inspection scope here and send it through. A written proposal comes back from the regional office priced against your specification."
         variant="plain"
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Scope Estimator' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Scope Estimator' }]} />}
         actions={
           <Link className="ea-btn ea-btn--ghost" to="/services">
             Browse Services First

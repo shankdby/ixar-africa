@@ -15,7 +15,7 @@ import './index.css';
  * Differences from the real site entry (main.jsx):
  *   · HashRouter, not BrowserRouter — a file:// page has no server to resolve
  *     clean paths against, so BrowserRouter would break on any navigation.
- *   · Renders only the East Africa page. The other routes are not reachable
+ *   · Renders only the Africa page. The other routes are not reachable
  *     here; this file exists to be emailed to IXAR and double-clicked.
  *
  * Built by `npm run build:standalone`, which inlines the CSS, the JS and every

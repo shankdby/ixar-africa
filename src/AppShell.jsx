@@ -56,7 +56,7 @@ export default function AppShell() {
 
         {/* Multi-Page Routes */}
         <Routes>
-          {/* ixar.africa lands on the East Africa page. */}
+          {/* ixar.africa lands on the Africa page. */}
           <Route path="/" element={<EastAfricaPage />} />
 
           {/* The content plan agreed www.ixar.in/africa. On ixar.africa that path

@@ -10,7 +10,7 @@ export default function CaseStudiesPage({ onOpenContact }) {
       <PageHero
         eyebrow="Regional Track Record"
         title="Proven in the field."
-        sub="Inspection scopes delivered by IXAR East Africa crews on operating plant and live construction spreads in Uganda and Tanzania."
+        sub="Inspection scopes delivered by IXAR Africa crews on operating plant and live construction spreads in Uganda and Tanzania."
         image="/images/east-africa/ea-hero-tilenga-cpf.webp"
         imageAlt="Central processing facility under construction, Tilenga Project, Uganda"
         actions={
@@ -23,7 +23,7 @@ export default function CaseStudiesPage({ onOpenContact }) {
             </Link>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Projects' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Projects' }]} />}
       />
       <CaseStudies onOpenContact={onOpenContact} />
     </Page>

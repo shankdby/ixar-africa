@@ -108,7 +108,7 @@ export default function ContactPage() {
         title="Let's talk about your inspection requirements."
         sub="Scope, access, programme and the code being worked to. A written proposal comes back from the regional office against your specification."
         variant="plain"
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Contact' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Contact' }]} />}
       />
 
       <Section>

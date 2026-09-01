@@ -104,7 +104,7 @@ export default function ProductsPage({ onOpenContact }) {
       <PageHero
         eyebrow="Equipment & Supply"
         title="NDT equipment, specified properly."
-        sub="Radiography, ultrasonic and surface-method equipment, calibration standards and consumables, supplied to industrial users across East Africa."
+        sub="Radiography, ultrasonic and surface-method equipment, calibration standards and consumables, supplied to industrial users across Africa."
         variant="plain"
         actions={
           <>
@@ -120,7 +120,7 @@ export default function ProductsPage({ onOpenContact }) {
             </Link>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Equipment & Supply' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Equipment & Supply' }]} />}
       />
 
       <Section>

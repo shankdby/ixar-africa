@@ -5,7 +5,7 @@ import AfricaMap from '../components/AfricaMap';
 import AppImage, { dimsFor, hasImage } from '../components/AppImage';
 
 /* ==========================================================================
-   IXAR in East Africa  ·  /africa
+   IXAR in Africa  ·  /africa
    Ported from "IXAR – East Africa Page Mockup 13082026.html"
    (Rahil Malde / Maldes Ecommerce, content plan draft 01, 13 August 2026)
 
@@ -623,7 +623,7 @@ export default function EastAfricaPage() {
             >
               <AppImage
                 src={HERO_IMAGES[heroIdx]}
-                alt="IXAR East Africa Industrial Inspection Operations"
+                alt="IXAR Africa Industrial Inspection Operations"
                 priority
                 className="ea-hero__img"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -642,7 +642,7 @@ export default function EastAfricaPage() {
               className="ea-hero__col"
             >
               <h1 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.08', color: '#FFFFFF', marginBottom: '22px' }}>
-                IXAR in East Africa
+                IXAR in Africa
               </h1>
               <p className="ea-hero__sub" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', lineHeight: '1.65', color: 'rgba(255, 255, 255, 0.92)', marginBottom: '16px' }}>
                 Non-destructive testing and industrial inspection, delivered from registered regional offices
@@ -685,6 +685,11 @@ export default function EastAfricaPage() {
             <span>Uganda</span>
             <span>Tanzania</span>
             <span>Kenya</span>
+            <span>Rwanda</span>
+            <span>Mozambique</span>
+            <span>Ethiopia</span>
+            <span>Sudan</span>
+            <span>Malawi</span>
             <span>Mobilisation on request</span>
           </div>
         </div>
@@ -718,7 +723,7 @@ export default function EastAfricaPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: '#001E57', fontWeight: 700, lineHeight: '1.6' }}>
-                Industrial X-Ray &amp; Allied Radiographers (EA) Ltd delivers high-precision Non-Destructive Testing (NDT), quality assurance, and asset integrity services across Uganda, Tanzania, and Kenya.
+                Industrial X-Ray &amp; Allied Radiographers (EA) Ltd delivers high-precision Non-Destructive Testing (NDT), quality assurance, and asset integrity services across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.
               </p>
             </motion.div>
 
@@ -730,7 +735,7 @@ export default function EastAfricaPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <p style={{ fontSize: '1rem', color: '#444444', lineHeight: '1.75' }}>
-                As a registered regional division backed by over 55 years of industrial NDT expertise, we support East Africa’s largest energy, mining, power, pipeline, and infrastructure projects with certified personnel, licensed radiation equipment, and international standards compliance (ASME, API, ASTM, BS, ISO 9001).
+                As a registered regional division backed by over 55 years of industrial NDT expertise, we support Africa’s largest energy, mining, power, pipeline, and infrastructure projects with certified personnel, licensed radiation equipment, and international standards compliance (ASME, API, ASTM, BS, ISO 9001).
               </p>
             </motion.div>
           </div>
@@ -740,7 +745,7 @@ export default function EastAfricaPage() {
       {/* ================= 2. EAST AFRICA IN NUMBERS ================= */}
       <section className="ea-stats ea-section" id="ea-numbers">
         <div className="ea-wrap">
-          <SectionHead eyebrow="Regional Record" title="East Africa in Numbers" center />
+          <SectionHead eyebrow="Regional Record" title="Africa in Numbers" center />
 
           <div className="ea-stats__grid ea-rev" ref={statStripRef}>
             <div className="ea-stat">
@@ -839,7 +844,7 @@ export default function EastAfricaPage() {
                   <span className="ea-legend__key ea-legend__key--served" />
                   <span>
                     <span className="ea-legend__t">Countries Served</span>
-                    <span className="ea-legend__d">Uganda, Tanzania and Kenya.</span>
+                    <span className="ea-legend__d">Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.</span>
                   </span>
                 </li>
                 <li>
@@ -852,9 +857,11 @@ export default function EastAfricaPage() {
               </ul>
 
               <p className="ea-map-note">
-                Mozambique is deliberately excluded. IXAR holds no registration and has completed no
-                work there, so at this stage it carries the same status as any other African country.
-                Adding it would be a claim the page cannot support.
+                Rwanda, Mozambique, Ethiopia, Sudan and Malawi were added to the served tier on
+                client instruction in 2026. IXAR holds a registration only in Uganda and Tanzania;
+                the others are countries where projects have been completed, crewed from those two
+                offices. The project record and the radiation authorisation status for each must be
+                confirmed before this page is published.
               </p>
             </div>
           </div>
@@ -1487,9 +1494,9 @@ export default function EastAfricaPage() {
                 <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>East Africa Projects</span>
               </div>
               <div className="ea-dl-card__body">
-                <h3>Completed Projects, East Africa</h3>
+                <h3>Completed Projects, Africa</h3>
                 <p>
-                  A comprehensive record of NDT &amp; inspection projects delivered across Uganda, Tanzania and Kenya.
+                  A comprehensive record of NDT &amp; inspection projects delivered across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.
                 </p>
                 <div className="ea-dl-card__foot">
                   <a className="ea-btn ea-btn--navy" href="/downloads/IXAR-East-Africa-Project-List.pdf" download="IXAR-East-Africa-Project-List.pdf">
@@ -1515,7 +1522,7 @@ export default function EastAfricaPage() {
               <h2 className="ea-sec-title">Backed by Over 55 Years of NDT Experience</h2>
               <span className="ea-rule" />
               <p style={{ marginTop: '26px' }}>
-                IXAR East Africa operates as part of Industrial X-Ray and Allied Radiographers (I)
+                IXAR Africa operates as part of Industrial X-Ray and Allied Radiographers (I)
                 Pvt. Ltd., founded in 1969 and today a leader in non-destructive testing in India and
                 internationally. The group employs over 1,000 technicians, holds ISO 9001
                 certification, operates a fleet of mobile radiography units, and runs a training
@@ -1564,7 +1571,7 @@ export default function EastAfricaPage() {
               <span style={{ color: '#E31E24' }}>more reliable operations.</span>
             </h2>
             <p style={{ fontSize: '1.15rem', color: '#6B6B6B', maxWidth: '640px', margin: '0 auto' }}>
-              Contact IXAR East Africa's technical team today to request a quotation, schedule inspection crews, or discuss NDT project requirements.
+              Contact IXAR Africa's technical team today to request a quotation, schedule inspection crews, or discuss NDT project requirements.
             </p>
           </motion.div>
 
@@ -1677,7 +1684,7 @@ export default function EastAfricaPage() {
                     </svg>
                   </div>
                   <h3>Thank you, your enquiry has been sent.</h3>
-                  <p>A member of the IXAR East Africa team will respond via <strong>bd@ixar.africa</strong> shortly.</p>
+                  <p>A member of the IXAR Africa team will respond via <strong>bd@ixar.africa</strong> shortly.</p>
                 </div>
               )}
             </div>
@@ -1760,7 +1767,7 @@ export default function EastAfricaPage() {
                   Click to launch instant WhatsApp enquiry with pre-filled message:
                 </p>
                 <span className="ea-wa-quote">
-                  &ldquo;Hello IXAR, I would like to enquire about NDT services in East Africa.&rdquo;
+                  &ldquo;Hello IXAR, I would like to enquire about NDT services in Africa.&rdquo;
                 </span>
                 <a
                   className="ea-btn ea-btn--primary"
@@ -1788,7 +1795,7 @@ export default function EastAfricaPage() {
         href="https://wa.me/256414251251?text=Hello%20IXAR,%20I%20would%20like%20to%20enquire%20about%20NDT%20services%20in%20East%20Africa."
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with IXAR East Africa on WhatsApp"
+        aria-label="Chat with IXAR Africa on WhatsApp"
       >
         <WhatsAppGlyph />
       </motion.a>

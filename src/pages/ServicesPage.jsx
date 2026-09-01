@@ -11,7 +11,7 @@ import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Media } fro
  *
  * CONTENT RULE. Every method below already appears in the East Africa content.
  * Nothing has been added to fill a category out. Where ixar.in lists a method
- * IXAR East Africa has not claimed (IRIS, RFT, NFT, wire rope, leak testing,
+ * IXAR Africa has not claimed (IRIS, RFT, NFT, wire rope, leak testing,
  * PMI, hardness testing) it is absent here rather than assumed.
  *
  * IMAGERY. A photograph is used only where it genuinely depicts that
@@ -78,7 +78,7 @@ const CATEGORIES = [
     title: 'Pipeline integrity. From weld to network.',
     body: [
       'Girth weld inspection during construction, and condition assessment once the line is running. X-ray crawler radiography and automated ultrasonics on the spread; cleaning and intelligent pigging for in-service wall condition and mapping.',
-      'The regional pipeline work is the reason the East Africa division exists, and it is the scope the team is deepest in.',
+      'The regional pipeline work is the reason the Africa division exists, and it is the scope the team is deepest in.',
     ],
     points: [
       'Girth weld radiography (X-ray crawler)',
@@ -181,7 +181,7 @@ export default function ServicesPage({ onOpenContact }) {
       <PageHero
         eyebrow="Our Services"
         title="Inspection Without Compromise."
-        sub="Advanced non-destructive testing and asset integrity solutions for critical industrial infrastructure across Uganda, Tanzania and Kenya."
+        sub="Advanced non-destructive testing and asset integrity solutions for critical industrial infrastructure across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi."
         image="/images/stock/stk-hero-services.webp"
         imageAlt="Industrial pipework at a processing facility"
         actions={
@@ -194,7 +194,7 @@ export default function ServicesPage({ onOpenContact }) {
             </Link>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Services' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Services' }]} />}
       />
 
       {/* Discipline index — lets a reader jump to their scope without scrolling
@@ -220,7 +220,7 @@ export default function ServicesPage({ onOpenContact }) {
           title="Seven inspection disciplines, delivered regionally."
         >
           <p>
-            Every method listed here is delivered by IXAR East Africa crews out of the regional
+            Every method listed here is delivered by IXAR Africa crews out of the regional
             offices. Where a scope needs capability the region does not hold, it is drawn from the
             group rather than subcontracted quietly.
           </p>

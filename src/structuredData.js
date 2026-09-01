@@ -18,17 +18,17 @@ const KAMPALA_ID = `${SITE_URL}/#kampala`;
 
 const LOGO = `${SITE_URL}/images/ixar-logo-main.png`;
 
-/* The East Africa division as an organisation, tied to the Indian parent. */
+/* The Africa division as an organisation, tied to the Indian parent. */
 const organization = () => ({
   '@type': 'Organization',
   '@id': ORG_ID,
-  name: 'IXAR East Africa',
+  name: 'IXAR Africa',
   legalName: 'Industrial X-Ray & Allied Radiographers (EA) Ltd',
   alternateName: 'Industrial X-Ray and Allied Radiographers East Africa',
   url: `${SITE_URL}/`,
   logo: { '@type': 'ImageObject', url: LOGO },
   description:
-    'Non-destructive testing, quality assurance and asset integrity services across Uganda, Tanzania and Kenya.',
+    'Non-destructive testing, quality assurance and asset integrity services across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.',
   parentOrganization: {
     '@type': 'Organization',
     name: 'Industrial X-Ray & Allied Radiographers (I) Pvt. Ltd.',
@@ -49,7 +49,7 @@ const organization = () => ({
 const kampalaOffice = () => ({
   '@type': 'ProfessionalService',
   '@id': KAMPALA_ID,
-  name: 'IXAR East Africa - Kampala Office',
+  name: 'IXAR Africa - Kampala Office',
   parentOrganization: { '@id': ORG_ID },
   url: `${SITE_URL}/network`,
   image: `${SITE_URL}/images/east-africa/ea-office-kampala.webp`,
@@ -77,7 +77,7 @@ const website = () => ({
   '@type': 'WebSite',
   '@id': SITE_ID,
   url: `${SITE_URL}/`,
-  name: 'IXAR East Africa',
+  name: 'IXAR Africa',
   publisher: { '@id': ORG_ID },
   inLanguage: 'en',
 });
@@ -86,7 +86,7 @@ const website = () => ({
 function breadcrumbs(route) {
   if (route === '/' || route.startsWith('/__')) return null;
   const parts = route.split('/').filter(Boolean);
-  const items = [{ name: 'East Africa', item: `${SITE_URL}/` }];
+  const items = [{ name: 'Africa', item: `${SITE_URL}/` }];
   let acc = '';
   for (const part of parts) {
     acc += `/${part}`;

@@ -11,7 +11,7 @@ import { Page, Section, SectionHead, PageHero, Crumbs } from '../components/ui';
  * "EACOP Corridor", which asserts a contract on a named project; it now reads
  * as regional deployment, which is true either way.
  *
- * Roles are described as the disciplines IXAR East Africa recruits for. Nothing
+ * Roles are described as the disciplines IXAR Africa recruits for. Nothing
  * here states a vacancy count or a start date.
  */
 
@@ -77,7 +77,7 @@ export default function CareersPage({ onOpenContact }) {
         title="Build your career with IXAR."
         sub="Technical careers in non-destructive testing across Uganda, Tanzania and the wider region, backed by a training programme running since 1969."
         image="/images/east-africa/ea-ind-oil-gas.webp"
-        imageAlt="IXAR East Africa crew on site at night"
+        imageAlt="IXAR Africa crew on site at night"
         actions={
           <>
             <button
@@ -92,7 +92,7 @@ export default function CareersPage({ onOpenContact }) {
             </a>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Careers' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Careers' }]} />}
       />
 
       <Section>
@@ -114,7 +114,7 @@ export default function CareersPage({ onOpenContact }) {
       </Section>
 
       <Section tone="tint" id="roles">
-        <SectionHead eyebrow="Disciplines" title="Where IXAR East Africa recruits.">
+        <SectionHead eyebrow="Disciplines" title="Where IXAR Africa recruits.">
           <p>
             These are the disciplines the division hires into. Applications are held against
             upcoming scopes, so it is worth applying before a vacancy is posted rather than after.

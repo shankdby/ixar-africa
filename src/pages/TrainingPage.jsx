@@ -74,7 +74,7 @@ export default function TrainingPage({ onOpenContact }) {
             </a>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'East Africa', to: '/' }, { label: 'Training' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Training' }]} />}
       />
 
       <Section>
@@ -129,7 +129,7 @@ export default function TrainingPage({ onOpenContact }) {
             <h2 className="ea-sec-title">A programme older than most of the industry here.</h2>
             <span className="ea-rule" aria-hidden="true" />
             <p>
-              IXAR has trained industrial radiographers since 1969. The East Africa division draws
+              IXAR has trained industrial radiographers since 1969. The Africa division draws
               on that programme rather than running a parallel one, which is why a certificate
               issued to a Kampala technician carries the same curriculum as one issued in Mumbai.
             </p>
