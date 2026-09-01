@@ -628,10 +628,27 @@ export default function EastAfricaPage() {
                 className="ea-hero__img"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
+              {/* The same frame again, inverted to read as radiographic film and
+                  revealed only inside a narrow band that sweeps across. Plain
+                  <img> rather than AppImage: it is decorative, aria-hidden, and
+                  must not carry AppImage's placeholder behaviour. */}
+              <img
+                src={HERO_IMAGES[heroIdx]}
+                alt=""
+                aria-hidden="true"
+                className="ea-hero__xray"
+              />
             </motion.div>
           </AnimatePresence>
         </div>
         <div className="ea-hero__scrim" aria-hidden="true" />
+        <div className="ea-hero__scanline" aria-hidden="true" />
+        <div className="ea-hero__brackets" aria-hidden="true">
+          <i /><i /><i /><i />
+        </div>
+        <div className="ea-hero__hud" aria-hidden="true">
+          <b /> NDT Coverage &middot; Africa
+        </div>
 
         <div className="ea-hero__in">
           <div className="ea-wrap">
@@ -642,7 +659,9 @@ export default function EastAfricaPage() {
               className="ea-hero__col"
             >
               <h1 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.08', color: '#FFFFFF', marginBottom: '22px' }}>
-                IXAR in Africa
+                <span className="ea-hero__w" style={{ animationDelay: '0.15s' }}>IXAR</span>{' '}
+                <span className="ea-hero__w" style={{ animationDelay: '0.3s' }}>in</span>{' '}
+                <span className="ea-hero__w ea-hero__w--mark" style={{ animationDelay: '0.45s' }}>Africa</span>
               </h1>
               <p className="ea-hero__sub" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', lineHeight: '1.65', color: 'rgba(255, 255, 255, 0.92)', marginBottom: '16px' }}>
                 Non-destructive testing and industrial inspection, delivered from registered regional offices
@@ -1879,6 +1898,64 @@ export default function EastAfricaPage() {
 .ea-hero__media{position:absolute;inset:0;z-index:0}
 .ea-hero__zoom{position:absolute;inset:-6%;animation:ea-kenburns 20s ease-in-out infinite alternate}
 .ea-hero__img{width:100%;height:100%;object-fit:cover}
+
+/* Radiographic scan. A second copy of the frame is inverted to read as film and
+   masked to a narrow diagonal band, which sweeps across with a red edge running
+   ahead of it. Decorative: aria-hidden, and disabled under reduced motion. */
+.ea-hero__xray{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:invert(1) grayscale(1) contrast(1.3) brightness(1.06);
+  opacity:.9;pointer-events:none;
+  -webkit-mask-image:linear-gradient(102deg,transparent 43%,#000 47.5%,#000 52.5%,transparent 57%);
+  mask-image:linear-gradient(102deg,transparent 43%,#000 47.5%,#000 52.5%,transparent 57%);
+  -webkit-mask-size:260% 100%;mask-size:260% 100%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  animation:ea-scanmask 7s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes ea-scanmask{
+  0%{-webkit-mask-position:126% 0;mask-position:126% 0}
+  70%,100%{-webkit-mask-position:-62% 0;mask-position:-62% 0}
+}
+.ea-hero__scanline{
+  position:absolute;top:0;bottom:0;left:-3%;width:2px;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(222,6,3,.9) 18%,#FF4A48 50%,rgba(222,6,3,.9) 82%,transparent);
+  box-shadow:0 0 26px 6px rgba(222,6,3,.45);
+  animation:ea-scanline 7s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes ea-scanline{0%{left:-3%;opacity:0}6%{opacity:1}64%{left:103%;opacity:1}70%,100%{left:103%;opacity:0}}
+.ea-hero__brackets{position:absolute;inset:34px;z-index:2;pointer-events:none}
+.ea-hero__brackets i{
+  position:absolute;width:34px;height:34px;border:2px solid rgba(222,6,3,.9);opacity:0;
+  animation:ea-bracket .7s cubic-bezier(.16,1,.3,1) forwards;
+}
+.ea-hero__brackets i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0;animation-delay:.35s}
+.ea-hero__brackets i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0;animation-delay:.45s}
+.ea-hero__brackets i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0;animation-delay:.55s}
+.ea-hero__brackets i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0;animation-delay:.65s}
+@keyframes ea-bracket{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:none}}
+.ea-hero__hud{
+  position:absolute;top:52px;right:52px;z-index:3;display:flex;align-items:center;gap:9px;
+  font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.72);background:rgba(10,13,17,.45);
+  border:1px solid rgba(255,255,255,.14);padding:8px 13px;backdrop-filter:blur(5px);
+}
+.ea-hero__hud b{width:7px;height:7px;border-radius:50%;background:var(--ea-brand);animation:ea-blip 1.6s ease-in-out infinite}
+@keyframes ea-blip{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(222,6,3,.7)}50%{opacity:.45;box-shadow:0 0 0 6px rgba(222,6,3,0)}}
+.ea-hero__w{display:inline-block;opacity:0;transform:translateY(26px);animation:ea-wordup .85s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes ea-wordup{to{opacity:1;transform:none}}
+.ea-hero__w--mark{position:relative}
+.ea-hero__w--mark::after{
+  content:"";position:absolute;left:0;right:0;bottom:.06em;height:5px;background:var(--ea-brand);
+  transform:scaleX(0);transform-origin:left;animation:ea-underline .9s cubic-bezier(.16,1,.3,1) .85s forwards;
+}
+@keyframes ea-underline{to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){
+  .ea-hero__xray,.ea-hero__scanline{display:none}
+  .ea-hero__brackets i{opacity:1;animation:none}
+  .ea-hero__w{opacity:1;transform:none;animation:none}
+  .ea-hero__w--mark::after{transform:scaleX(1);animation:none}
+  .ea-hero__hud b{animation:none}
+}
 .ea-hero__scrim{
   position:absolute;inset:0;z-index:1;
   background:linear-gradient(100deg,rgba(0,30,87,.93) 0%,rgba(0,30,87,.80) 42%,rgba(0,30,87,.55) 100%);
@@ -2180,6 +2257,9 @@ export default function EastAfricaPage() {
     transition-duration:.001ms !important;
   }
   .ea-hero__zoom{animation:none;inset:0}
+  .ea-hero__brackets{inset:16px}
+  .ea-hero__brackets i{width:24px;height:24px}
+  .ea-hero__hud{display:none}
   .ea-rev{opacity:1;transform:none}
   .ea-logo-slide{transition:none}
   .ea-card:hover,.ea-lcard:hover,.ea-dl-card:hover,.ea-wa-float:hover,.ea-btn:hover{transform:none}
