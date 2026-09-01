@@ -208,7 +208,7 @@ export default function Footer({ onOpenContact }) {
 
         .footer-contacts { display: flex; flex-direction: column; gap: 14px; }
         .f-contact-row { display: flex; align-items: flex-start; gap: 10px; line-height: 1.6; font-size: 0.9rem; }
-        .f-contact-row svg { flex: none; margin-top: 3px; color: #FF7A78; }
+        .f-contact-row svg { flex: none; margin-top: 3px; color: #FF6B69; }
         .f-contact-row a { color: rgba(255, 255, 255, 0.72); }
         .f-contact-row a:hover { color: #FFFFFF; }
         .footer-tbc { margin-top: 14px; font-size: 0.85rem; }
@@ -228,7 +228,7 @@ export default function Footer({ onOpenContact }) {
           font-weight: 800;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #FF7A78;
+          color: #FF6B69;
           margin-bottom: 8px;
         }
         .footer-offices { margin-top: 6px; font-weight: 600; color: rgba(255, 255, 255, 0.7); }

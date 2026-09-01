@@ -117,7 +117,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
         </div>
 
         {/* Hero Media Card */}
-        <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '12px', marginBottom: '32px' }}>
+        <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '0', marginBottom: '32px' }}>
           <AppImage 
             src={service.imgMain} 
             alt={service.title} 
@@ -149,7 +149,7 @@ export default function ServiceDetailPage({ onOpenContact }) {
               ))}
             </div>
 
-            <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '8px', overflow: 'hidden' }}>
+            <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '0', overflow: 'hidden' }}>
               <AppImage 
                 src={service.imgDetail} 
                 alt={`${service.title} equipment data`} 

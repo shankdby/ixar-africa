@@ -100,7 +100,7 @@ export default function CompetitorBar() {
         .cert-icon {
           width: 34px;
           height: 34px;
-          border-radius: 8px;
+          border-radius:0;
           background: var(--primary-light);
           color: var(--primary);
           display: flex;

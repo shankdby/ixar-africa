@@ -21,7 +21,7 @@ export default function AfricaMap({ mobile = false }) {
     >
       <defs>
         <filter id="afPinShadow" x="-60%" y="-60%" width="220%" height="220%">
-          <feDropShadow dx="0" dy="2" stdDeviation="2.4" floodColor="#001E57" floodOpacity=".35" />
+          <feDropShadow dx="0" dy="2" stdDeviation="2.4" floodColor="#15191F" floodOpacity=".35" />
         </filter>
       </defs>
 
@@ -104,10 +104,10 @@ export default function AfricaMap({ mobile = false }) {
         <circle cx={TANZANIA_OFFICE.x} cy={TANZANIA_OFFICE.y} r="15" fill="#DE0603" opacity=".18" />
         <circle cx={TANZANIA_OFFICE.x} cy={TANZANIA_OFFICE.y} r="6.4" fill="#DE0603" stroke="#fff" strokeWidth="2.2" />
       </g>
-      <text x={KAMPALA.x - 17} y={KAMPALA.y + 4} textAnchor="end" fontFamily="Mulish,sans-serif" fontSize="15" fontWeight="800" fill="#001E57" stroke="#fff" strokeWidth="3.5" paintOrder="stroke">
+      <text x={KAMPALA.x - 17} y={KAMPALA.y + 4} textAnchor="end" fontFamily="Mulish,sans-serif" fontSize="15" fontWeight="800" fill="#15191F" stroke="#fff" strokeWidth="3.5" paintOrder="stroke">
         Kampala
       </text>
-      <text x={TANZANIA_OFFICE.x + 13} y={TANZANIA_OFFICE.y + 1} fontFamily="Mulish,sans-serif" fontSize="15" fontWeight="800" fill="#001E57" stroke="#fff" strokeWidth="3.5" paintOrder="stroke">
+      <text x={TANZANIA_OFFICE.x + 13} y={TANZANIA_OFFICE.y + 1} fontFamily="Mulish,sans-serif" fontSize="15" fontWeight="800" fill="#15191F" stroke="#fff" strokeWidth="3.5" paintOrder="stroke">
         Tanzania office
       </text>
       <text x={TANZANIA_OFFICE.x + 13} y={TANZANIA_OFFICE.y + 18} fontFamily="Mulish,sans-serif" fontSize="12.5" fontWeight="700" fill="#7C8A87" stroke="#fff" strokeWidth="3" paintOrder="stroke">

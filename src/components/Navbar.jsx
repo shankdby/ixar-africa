@@ -260,7 +260,7 @@ export default function Navbar({ onOpenContact }) {
             {HEADER_ITEMS.map((item) =>
               item.kind === 'ea' ? (
                 <React.Fragment key={item.label}>
-                  <Link to={item.to} style={{ color: '#E31E24', fontWeight: 800 }}>
+                  <Link to={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>
                     {item.label}
                   </Link>
                   {item.children.slice(1).map((l) => (
@@ -336,7 +336,7 @@ export default function Navbar({ onOpenContact }) {
           text-transform: uppercase;
           font-size: 0.75rem;
         }
-        .top-badge svg { color: #FF7A78; }
+        .top-badge svg { color: #FF6B69; }
         .top-right { display: flex; align-items: center; gap: 22px; }
         .top-link {
           display: inline-flex;
@@ -510,7 +510,7 @@ export default function Navbar({ onOpenContact }) {
         .header-cta {
           border: 0;
           cursor: pointer;
-          background: #E31E24;
+          background: #DE0603;
           color: #fff;
           font-family: inherit;
           font-weight: 700;
@@ -520,7 +520,7 @@ export default function Navbar({ onOpenContact }) {
           white-space: nowrap;
           transition: background 0.2s ease;
         }
-        .header-cta:hover { background: #C41217; }
+        .header-cta:hover { background: #B90502; }
         .mobile-toggle {
           display: none;
           background: transparent;

@@ -177,7 +177,7 @@ export default function CaseStudies({ onOpenContact }) {
         .pj-filter.is-on{background:var(--navy);border-color:var(--navy);color:#FFFFFF}
         .pj-filter__n{
           font-size:11px;font-weight:800;color:var(--text-dim);
-          background:var(--bg-tint);border-radius:20px;padding:2px 7px;min-width:20px;text-align:center;
+          background:var(--bg-tint);border-radius:0;padding:2px 7px;min-width:20px;text-align:center;
         }
         .pj-filter.is-on .pj-filter__n{background:rgba(255,255,255,.16);color:#FFFFFF}
 

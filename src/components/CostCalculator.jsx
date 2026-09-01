@@ -272,7 +272,7 @@ export default function CostCalculator({ onOpenContact }) {
         }
         .scope-summary__head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
         .scope-summary__head h3 { color: #fff; font-size: 1.1rem; }
-        .scope-summary__head svg { color: #FF7A78; }
+        .scope-summary__head svg { color: #FF6B69; }
         .scope-summary__body {
           font-family: inherit;
           font-size: 0.875rem;
@@ -280,7 +280,7 @@ export default function CostCalculator({ onOpenContact }) {
           white-space: pre-wrap;
           word-break: break-word;
           background: rgba(255, 255, 255, 0.06);
-          border-left: 3px solid #FF7A78;
+          border-left: 3px solid #FF6B69;
           padding: 16px;
           margin-bottom: 20px;
         }

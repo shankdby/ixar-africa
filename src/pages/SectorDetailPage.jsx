@@ -85,7 +85,7 @@ export default function SectorDetailPage({ onOpenContact }) {
         </div>
 
         {/* Hero Media Card */}
-        <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '12px', marginBottom: '32px' }}>
+        <div className="clean-card detail-media-box" style={{ padding: '0', overflow: 'hidden', borderRadius: '0', marginBottom: '32px' }}>
           <AppImage 
             src={sector.imgMain} 
             alt={sector.title} 
@@ -111,7 +111,7 @@ export default function SectorDetailPage({ onOpenContact }) {
               ))}
             </div>
 
-            <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '8px', overflow: 'hidden' }}>
+            <div className="sub-media-box" style={{ marginTop: '24px', borderRadius: '0', overflow: 'hidden' }}>
               <AppImage 
                 src={sector.imgDetail} 
                 alt={`${sector.title} inspection equipment`} 

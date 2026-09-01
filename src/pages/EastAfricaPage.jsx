@@ -675,7 +675,7 @@ export default function EastAfricaPage() {
                   whileHover={{ scale: 1.05, translateY: -2 }}
                   whileTap={{ scale: 0.96 }}
                   className="ea-btn ea-btn--primary"
-                  style={{ borderRadius: '4px', fontWeight: 800, fontSize: '0.9375rem', padding: '16px 32px', boxShadow: '0 8px 24px rgba(227, 30, 36, 0.4)' }}
+                  style={{ borderRadius: '0', fontWeight: 800, fontSize: '0.9375rem', padding: '16px 32px', boxShadow: '0 8px 24px rgba(227, 30, 36, 0.4)' }}
                   href="#ea-enquiry"
                   onClick={scrollToEnquiry}
                 >
@@ -686,7 +686,7 @@ export default function EastAfricaPage() {
                   whileHover={{ scale: 1.05, translateY: -2 }}
                   whileTap={{ scale: 0.96 }}
                   className="ea-btn ea-btn--ghost"
-                  style={{ borderRadius: '4px', fontWeight: 700, fontSize: '0.9375rem', padding: '16px 28px', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}
+                  style={{ borderRadius: '0', fontWeight: 700, fontSize: '0.9375rem', padding: '16px 28px', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}
                   href="https://wa.me/256414251251?text=Hello%20IXAR,%20I%20would%20like%20to%20enquire%20about%20NDT%20services%20in%20East%20Africa."
                   target="_blank"
                   rel="noopener noreferrer"
@@ -715,7 +715,7 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= SECTION 1 — BRAND INTRODUCTION ================= */}
-      <section className="ea-section" style={{ background: '#FFFFFF', padding: '80px 0', borderBottom: '1px solid #EAEAEA' }}>
+      <section className="ea-section" style={{ background: '#FFFFFF', padding: '80px 0', borderBottom: '1px solid #E6E9EC' }}>
         <div className="ea-wrap">
           <div className="ea-intro-grid">
             <motion.div
@@ -725,12 +725,12 @@ export default function EastAfricaPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="ea-eyebrow" style={{ fontSize: '0.9375rem', color: '#E31E24', fontWeight: 800, letterSpacing: '0.16em' }}>
+              <span className="ea-eyebrow" style={{ fontSize: '0.9375rem', color: '#DE0603', fontWeight: 800, letterSpacing: '0.16em' }}>
                 WHO WE ARE
               </span>
-              <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 3.8rem)', fontWeight: 900, color: '#001E57', lineHeight: '1.1', letterSpacing: '-0.02em', marginTop: '12px', marginBottom: '24px' }}>
+              <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 3.8rem)', fontWeight: 900, color: '#15191F', lineHeight: '1.1', letterSpacing: '-0.02em', marginTop: '12px', marginBottom: '24px' }}>
                 Precision that protects.<br />
-                <span style={{ color: '#E31E24' }}>Technology that performs.</span>
+                <span style={{ color: '#DE0603' }}>Technology that performs.</span>
               </h2>
             </motion.div>
 
@@ -741,7 +741,7 @@ export default function EastAfricaPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: '#001E57', fontWeight: 700, lineHeight: '1.6' }}>
+              <p style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: '#15191F', fontWeight: 700, lineHeight: '1.6' }}>
                 Industrial X-Ray &amp; Allied Radiographers (EA) Ltd delivers high-precision Non-Destructive Testing (NDT), quality assurance, and asset integrity services across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.
               </p>
             </motion.div>
@@ -753,7 +753,7 @@ export default function EastAfricaPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <p style={{ fontSize: '1rem', color: '#444444', lineHeight: '1.75' }}>
+              <p style={{ fontSize: '1rem', color: '#4A505A', lineHeight: '1.75' }}>
                 As a registered regional division backed by over 55 years of industrial NDT expertise, we support Africa’s largest energy, mining, power, pipeline, and infrastructure projects with certified personnel, licensed radiation equipment, and international standards compliance (ASME, API, ASTM, BS, ISO 9001).
               </p>
             </motion.div>
@@ -817,7 +817,7 @@ export default function EastAfricaPage() {
       <section className="ea-section" id="ea-operate">
         <div className="ea-wrap">
           <SectionHead eyebrow="Footprint" title="Where We Operate">
-            <p style={{ fontSize: '1.0625rem', color: '#444444', marginTop: '12px' }}>
+            <p style={{ fontSize: '1.0625rem', color: '#4A505A', marginTop: '12px' }}>
               Operating from registered facilities in Kampala, Uganda and Dar es Salaam, Tanzania, IXAR delivers rapid-response NDT and industrial inspection services across Uganda, Tanzania, Kenya, and mobile deployments continent-wide.
             </p>
           </SectionHead>
@@ -838,7 +838,7 @@ export default function EastAfricaPage() {
                   Tanzania and Kenya
                 </li>
                 <li>
-                  <i style={{ background: '#DFE6E4', border: '1px solid #C6D2CF' }} /> Mobilisation on
+                  <i style={{ background: '#DFE6E4', border: '1px solid #B9C0C8' }} /> Mobilisation on
                   request
                 </li>
               </ul>
@@ -909,18 +909,18 @@ export default function EastAfricaPage() {
                     alignItems: 'center',
                     gap: '16px',
                     padding: '20px 24px',
-                    background: activeComplianceIdx === idx ? '#001E57' : '#FFFFFF',
-                    color: activeComplianceIdx === idx ? '#FFFFFF' : '#001E57',
+                    background: activeComplianceIdx === idx ? '#15191F' : '#FFFFFF',
+                    color: activeComplianceIdx === idx ? '#FFFFFF' : '#15191F',
                     border: '1px solid',
-                    borderColor: activeComplianceIdx === idx ? '#001E57' : '#E5E7EB',
-                    borderRadius: '10px',
+                    borderColor: activeComplianceIdx === idx ? '#15191F' : '#E5E7EB',
+                    borderRadius: '0',
                     textAlign: 'left',
                     cursor: 'pointer',
                     transition: 'all 0.25s ease',
                     boxShadow: activeComplianceIdx === idx ? '0 12px 28px rgba(0, 30, 87, 0.18)' : '0 2px 8px rgba(0,0,0,0.03)',
                   }}
                 >
-                  <span style={{ fontSize: '1rem', fontWeight: 900, color: activeComplianceIdx === idx ? '#FF7A78' : '#DE0603' }}>
+                  <span style={{ fontSize: '1rem', fontWeight: 900, color: activeComplianceIdx === idx ? '#FF6B69' : '#DE0603' }}>
                     0{idx + 1}
                   </span>
                   <div style={{ flex: 1 }}>
@@ -944,19 +944,19 @@ export default function EastAfricaPage() {
                   transition={{ duration: 0.3 }}
                   style={{
                     background: '#FFFFFF',
-                    border: '1px solid #EAEAEA',
+                    border: '1px solid #E6E9EC',
                     borderTop: '4px solid #DE0603',
-                    borderRadius: '12px',
+                    borderRadius: '0',
                     padding: '40px',
                     boxShadow: '0 16px 40px rgba(0, 30, 87, 0.1)',
                   }}
                 >
                   {activeComplianceIdx === 0 && (
                     <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
                         Radiation Safety Authorisation
                       </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
                         Licensed to own, store, transport, and operate sealed radioactive sources by the <strong>Uganda Atomic Energy Council (AEC)</strong> and the <strong>Tanzania Atomic Energy Commission (TAEC)</strong>.
                       </p>
                       <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
@@ -966,10 +966,10 @@ export default function EastAfricaPage() {
                   )}
                   {activeComplianceIdx === 1 && (
                     <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
                         Certified ASNT Personnel
                       </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
                         All field technicians are qualified and certified to <strong>ASNT SNT-TC-1A Level II and Level III</strong> standards.
                       </p>
                       <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
@@ -979,10 +979,10 @@ export default function EastAfricaPage() {
                   )}
                   {activeComplianceIdx === 2 && (
                     <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
                         Quality Management &amp; Standards
                       </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
                         ISO 9001 certified with Bureau Veritas registration.
                       </p>
                       <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
@@ -992,10 +992,10 @@ export default function EastAfricaPage() {
                   )}
                   {activeComplianceIdx === 3 && (
                     <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '16px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
                         International Industry Standing
                       </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.75', marginBottom: '24px' }}>
+                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
                         Active organizational member of ASNT, AWS, ASTM, NACE, ISNT, and NANSO.
                       </p>
                       <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
@@ -1040,18 +1040,18 @@ export default function EastAfricaPage() {
                       alignItems: 'center',
                       gap: '16px',
                       padding: '18px 20px',
-                      background: activeServiceIdx === idx ? '#001E57' : '#F9F9F9',
-                      color: activeServiceIdx === idx ? '#FFFFFF' : '#001E57',
+                      background: activeServiceIdx === idx ? '#15191F' : '#F6F7F8',
+                      color: activeServiceIdx === idx ? '#FFFFFF' : '#15191F',
                       border: '1px solid',
-                      borderColor: activeServiceIdx === idx ? '#001E57' : '#EAEAEA',
-                      borderRadius: '8px',
+                      borderColor: activeServiceIdx === idx ? '#15191F' : '#E6E9EC',
+                      borderRadius: '0',
                       textAlign: 'left',
                       cursor: 'pointer',
                       transition: 'all 0.25s ease',
                       boxShadow: activeServiceIdx === idx ? '0 10px 24px rgba(0, 30, 87, 0.18)' : 'none',
                     }}
                   >
-                    <span style={{ fontSize: '0.875rem', fontWeight: 900, color: activeServiceIdx === idx ? '#FF7A78' : '#DE0603' }}>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 900, color: activeServiceIdx === idx ? '#FF6B69' : '#DE0603' }}>
                       {feat.num}
                     </span>
                     <span style={{ fontSize: '1.05rem', fontWeight: 800, flex: 1 }}>
@@ -1073,8 +1073,8 @@ export default function EastAfricaPage() {
                     transition={{ duration: 0.4 }}
                     style={{
                       background: '#FFFFFF',
-                      border: '1px solid #EAEAEA',
-                      borderRadius: '12px',
+                      border: '1px solid #E6E9EC',
+                      borderRadius: '0',
                       overflow: 'hidden',
                       boxShadow: '0 14px 34px rgba(0, 30, 87, 0.12)',
                     }}
@@ -1104,7 +1104,7 @@ export default function EastAfricaPage() {
                           textTransform: 'uppercase',
                           letterSpacing: '0.12em',
                           padding: '6px 14px',
-                          borderRadius: '4px',
+                          borderRadius: '0',
                         }}
                       >
                         {FEATURED_SERVICES[activeServiceIdx].category}
@@ -1112,10 +1112,10 @@ export default function EastAfricaPage() {
                     </div>
 
                     <div style={{ padding: '32px' }}>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#001E57', marginBottom: '12px' }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '12px' }}>
                         {FEATURED_SERVICES[activeServiceIdx].title}
                       </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#444444', lineHeight: '1.7', marginBottom: '20px' }}>
+                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.7', marginBottom: '20px' }}>
                         {FEATURED_SERVICES[activeServiceIdx].desc}
                       </p>
 
@@ -1125,12 +1125,12 @@ export default function EastAfricaPage() {
                           alignItems: 'center',
                           justifyContent: 'space-between',
                           paddingTop: '20px',
-                          borderTop: '1px solid #EAEAEA',
+                          borderTop: '1px solid #E6E9EC',
                           flexWrap: 'wrap',
                           gap: '12px',
                         }}
                       >
-                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#0A2C6B', background: '#F0F4FA', padding: '6px 12px', borderRadius: '4px' }}>
+                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#1E242D', background: '#F0F4FA', padding: '6px 12px', borderRadius: '0' }}>
                           ✓ {FEATURED_SERVICES[activeServiceIdx].standards}
                         </span>
                         <a
@@ -1150,7 +1150,7 @@ export default function EastAfricaPage() {
 
           {/* Complete 12-Service Directory Below */}
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#001E57', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#15191F', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Full NDT &amp; Inspection Service Directory
             </h4>
           </div>
@@ -1210,10 +1210,10 @@ export default function EastAfricaPage() {
                     justifyContent: 'space-between',
                     padding: '16px 20px',
                     background: activeIndustryIdx === idx ? '#DE0603' : '#FFFFFF',
-                    color: activeIndustryIdx === idx ? '#FFFFFF' : '#001E57',
+                    color: activeIndustryIdx === idx ? '#FFFFFF' : '#15191F',
                     border: '1px solid',
-                    borderColor: activeIndustryIdx === idx ? '#DE0603' : '#EAEAEA',
-                    borderRadius: '8px',
+                    borderColor: activeIndustryIdx === idx ? '#DE0603' : '#E6E9EC',
+                    borderRadius: '0',
                     textAlign: 'left',
                     fontWeight: 800,
                     fontSize: '0.95rem',
@@ -1240,7 +1240,7 @@ export default function EastAfricaPage() {
                   style={{
                     position: 'relative',
                     height: '440px',
-                    borderRadius: '16px',
+                    borderRadius: '0',
                     overflow: 'hidden',
                     boxShadow: '0 20px 48px rgba(0, 30, 87, 0.2)',
                   }}
@@ -1258,13 +1258,13 @@ export default function EastAfricaPage() {
                     }}
                   />
                   <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px', color: '#FFFFFF' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF7A78', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '4px', display: 'inline-block', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF6B69', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '0', display: 'inline-block', marginBottom: '12px' }}>
                       Sector Footprint
                     </span>
                     <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.1 }}>
                       {INDUSTRIES[activeIndustryIdx].title}
                     </h3>
-                    <p style={{ fontSize: '0.95rem', fontWeight: 800, color: '#E31E24', letterSpacing: '0.04em', marginBottom: '14px' }}>
+                    <p style={{ fontSize: '0.95rem', fontWeight: 800, color: '#DE0603', letterSpacing: '0.04em', marginBottom: '14px' }}>
                       {INDUSTRIES[activeIndustryIdx].subtitle}
                     </p>
                     <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
@@ -1279,7 +1279,7 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= NEW: REGIONAL TRACK RECORD ================= */}
-      <section className="ea-section" id="ea-track-record" style={{ background: '#001E57', color: '#FFFFFF', padding: '110px 0' }}>
+      <section className="ea-section" id="ea-track-record" style={{ background: '#15191F', color: '#FFFFFF', padding: '110px 0' }}>
         <div className="ea-wrap">
           <SectionHead
             eyebrow="FIELD EXCELLENCE"
@@ -1304,7 +1304,7 @@ export default function EastAfricaPage() {
                 style={{
                   background: 'rgba(255, 255, 255, 0.05)',
                   border: '1px solid rgba(255, 255, 255, 0.12)',
-                  borderRadius: '12px',
+                  borderRadius: '0',
                   overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
@@ -1333,7 +1333,7 @@ export default function EastAfricaPage() {
                       fontSize: '0.75rem',
                       fontWeight: 800,
                       padding: '4px 10px',
-                      borderRadius: '4px',
+                      borderRadius: '0',
                       textTransform: 'uppercase',
                       letterSpacing: '0.08em',
                     }}
@@ -1343,7 +1343,7 @@ export default function EastAfricaPage() {
                 </div>
 
                 <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#FF7A78', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#FF6B69', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
                     {proj.capability}
                   </span>
                   <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '10px' }}>
@@ -1379,14 +1379,14 @@ export default function EastAfricaPage() {
                 url: 'https://totalenergies.com',
                 desc: 'Tilenga Upstream Oil Development Project, Uganda',
                 badge: 'Oil & Gas Major',
-                color: '#E31E24',
+                color: '#DE0603',
               },
               {
                 name: 'CNOOC',
                 url: 'https://www.cnooc.com.cn/en/',
                 desc: 'Kingfisher Oilfield Development Project, Uganda',
                 badge: 'Offshore & Upstream',
-                color: '#001E57',
+                color: '#15191F',
               },
               {
                 name: 'EACOP',
@@ -1440,8 +1440,8 @@ export default function EastAfricaPage() {
                 whileTap={{ scale: 0.98 }}
                 style={{
                   background: '#FFFFFF',
-                  border: '1px solid #EAEAEA',
-                  borderRadius: '8px',
+                  border: '1px solid #E6E9EC',
+                  borderRadius: '0',
                   padding: '22px 20px',
                   textDecoration: 'none',
                   color: 'inherit',
@@ -1457,7 +1457,7 @@ export default function EastAfricaPage() {
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: c.color }} />
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: c.color, background: `${c.color}15`, padding: '4px 10px', borderRadius: '4px' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: c.color, background: `${c.color}15`, padding: '4px 10px', borderRadius: '0' }}>
                       {c.badge}
                     </span>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke={c.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1466,7 +1466,7 @@ export default function EastAfricaPage() {
                       <line x1="10" y1="14" x2="21" y2="3" />
                     </svg>
                   </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#001E57', margin: '6px 0 4px 0' }}>{c.name}</h3>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#15191F', margin: '6px 0 4px 0' }}>{c.name}</h3>
                   <p style={{ fontSize: '0.85rem', color: '#6B6B6B', lineHeight: '1.5', margin: 0 }}>{c.desc}</p>
                 </div>
                 <div style={{ marginTop: '16px', fontSize: '0.8125rem', fontWeight: 700, color: c.color, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
@@ -1486,7 +1486,7 @@ export default function EastAfricaPage() {
           <div className="ea-dl-grid ea-rev">
             <article className="ea-dl-card">
               <div className="ea-dl-card__thumb" style={{ background: '#111827', color: '#fff', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>
-                <DownloadGlyph style={{ width: '40px', height: '40px', marginBottom: '12px', color: '#E31E24' }} />
+                <DownloadGlyph style={{ width: '40px', height: '40px', marginBottom: '12px', color: '#DE0603' }} />
                 <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>IXAR Company Profile</span>
               </div>
               <div className="ea-dl-card__body">
@@ -1509,7 +1509,7 @@ export default function EastAfricaPage() {
 
             <article className="ea-dl-card">
               <div className="ea-dl-card__thumb" style={{ background: '#111827', color: '#fff', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>
-                <DownloadGlyph style={{ width: '40px', height: '40px', marginBottom: '12px', color: '#E31E24' }} />
+                <DownloadGlyph style={{ width: '40px', height: '40px', marginBottom: '12px', color: '#DE0603' }} />
                 <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>East Africa Projects</span>
               </div>
               <div className="ea-dl-card__body">
@@ -1584,10 +1584,10 @@ export default function EastAfricaPage() {
             transition={{ duration: 0.8 }}
             style={{ textAlign: 'center', marginBottom: '64px' }}
           >
-            <span className="ea-eyebrow" style={{ fontSize: '0.875rem', letterSpacing: '0.16em', color: '#E31E24', fontWeight: 800 }}>GET IN TOUCH</span>
-            <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', fontWeight: 900, color: '#001E57', lineHeight: '1.08', letterSpacing: '-0.02em', marginTop: '10px', marginBottom: '18px' }}>
+            <span className="ea-eyebrow" style={{ fontSize: '0.875rem', letterSpacing: '0.16em', color: '#DE0603', fontWeight: 800 }}>GET IN TOUCH</span>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', fontWeight: 900, color: '#15191F', lineHeight: '1.08', letterSpacing: '-0.02em', marginTop: '10px', marginBottom: '18px' }}>
               Let's build safer,<br />
-              <span style={{ color: '#E31E24' }}>more reliable operations.</span>
+              <span style={{ color: '#DE0603' }}>more reliable operations.</span>
             </h2>
             <p style={{ fontSize: '1.15rem', color: '#6B6B6B', maxWidth: '640px', margin: '0 auto' }}>
               Contact IXAR Africa's technical team today to request a quotation, schedule inspection crews, or discuss NDT project requirements.
@@ -1757,7 +1757,7 @@ export default function EastAfricaPage() {
                     src="https://maps.google.com/maps?q=Kampala,%20Uganda&t=&z=13&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="180"
-                    style={{ border: 0, borderRadius: '6px' }}
+                    style={{ border: 0, borderRadius: '0' }}
                     allowFullScreen=""
                     loading="lazy"
                   />
@@ -2080,7 +2080,7 @@ export default function EastAfricaPage() {
   margin:30px 0 34px;padding:22px 24px;border:1px solid rgba(255,255,255,.2);border-radius:var(--ea-radius);
   background:rgba(255,255,255,.05);
 }
-.ea-offices__label{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FF7A78;margin-bottom:12px}
+.ea-offices__label{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FF6B69;margin-bottom:12px}
 .ea-offices__list{font-size:16px;font-weight:600;color:var(--ea-white);line-height:1.9;margin-bottom:12px}
 .ea-offices__note{font-size:13.5px;line-height:1.6;margin:0}
 

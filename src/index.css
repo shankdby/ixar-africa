@@ -14,17 +14,17 @@
 
 :root {
   /* --- brand ------------------------------------------------------------ */
-  --brand: #E31E24;
-  --brand-dark: #B00502;
-  --primary: #E31E24;          /* alias: legacy name, brand red */
-  --primary-dark: #B00502;
+  --brand: #DE0603;
+  --brand-dark: #B90502;
+  --primary: #DE0603;          /* alias: legacy name, brand red */
+  --primary-dark: #B90502;
   --primary-light: #FDECEC;
   --primary-border: #F8D2D1;
 
-  --navy: #001E57;
-  --navy-light: #0A2C6B;
-  --navy-dark: #00163F;
-  --navy-badge-bg: #EEF2F8;
+  --navy: #15191F;
+  --navy-light: #1E242D;
+  --navy-dark: #0B0E12;
+  --navy-badge-bg: #EDEFF1;
 
   /* --- ixar.in ---------------------------------------------------------- *
    * Sampled from the parent site so shared furniture - today the header
@@ -38,27 +38,27 @@
   --global-navy-dark: #0B1240;
 
   /* --- neutrals --------------------------------------------------------- */
-  --ink: #000000;
+  --ink: #10141B;
   --bg-light: #FFFFFF;
-  --bg-secondary: #F9F9F9;
-  --bg-tertiary: #EDF2F1;
-  --bg-tint: #EDF2F1;
-  --bg-dark-navy: #001E57;
+  --bg-secondary: #F6F7F8;
+  --bg-tertiary: #F6F7F8;
+  --bg-tint: #F6F7F8;
+  --bg-dark-navy: #15191F;
 
   --card-bg: #FFFFFF;
-  --card-border: #EAEAEA;
-  --card-hover-border: #C6D2CF;
-  --line: #EAEAEA;
-  --muted: #C6D2CF;
+  --card-border: #E6E9EC;
+  --card-hover-border: #DCE0E4;
+  --line: #E6E9EC;
+  --muted: #B9C0C8;
 
-  --text-main: #000000;
-  --text-body: #444444;
-  --text-muted: #444444;
-  --text-dim: #6B6B6B;
+  --text-main: #10141B;
+  --text-body: #4A505A;
+  --text-muted: #4A505A;
+  --text-dim: #78818D;
   --text-white: #FFFFFF;
 
   /* --- accents ---------------------------------------------------------- */
-  --accent-blue: #0A2C6B;
+  --accent-blue: #1E242D;
   --accent-emerald: #1B7F4C;
   --accent-amber: #E9BC63;
   --amber-bg: #FFF3D6;
@@ -66,12 +66,13 @@
   --amber-ink: #7A5200;
 
   /* --- shape ------------------------------------------------------------
-     ixar.in is a square-cornered design. Buttons have no radius at all;
-     cards and inputs take only a slight softening. */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 10px;
+     ixar.in is a square-cornered design, and so is this one. Nothing is
+     rounded: buttons, cards and inputs all sit at 0. The circle tokens that
+     need one set border-radius: 50% directly. */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
   --radius-btn: 0px;
 
   /* --- type ------------------------------------------------------------- */
@@ -80,10 +81,10 @@
   --font-mono: 'Mulish', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* --- depth ------------------------------------------------------------ */
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 6px 20px rgba(0, 30, 87, 0.08);
-  --shadow-lg: 0 14px 34px rgba(0, 30, 87, 0.13);
-  --shadow-hover: 0 14px 34px rgba(0, 30, 87, 0.13);
+  --shadow-sm: 0 2px 14px rgba(16, 20, 27, 0.06);
+  --shadow-md: 0 6px 20px rgba(16, 20, 27, 0.08);
+  --shadow-lg: 0 12px 30px rgba(16, 20, 27, 0.12);
+  --shadow-hover: 0 12px 30px rgba(16, 20, 27, 0.12);
 
   /* --- layout ----------------------------------------------------------- */
 
