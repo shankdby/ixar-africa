@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Style from '../components/Style';
 import AfricaMap from '../components/AfricaMap';
-import AppImage, { dimsFor, hasImage } from '../components/AppImage';
+import AppImage from '../components/AppImage';
 
 /* ==========================================================================
    IXAR in Africa  ·  /africa
@@ -29,97 +29,6 @@ const IMG = '/images/east-africa/';
    does not, the labelled placeholder stays, per section 5 of the content plan.
    -------------------------------------------------------------------------- */
 
-const SERVICES = [
-  {
-    num: '01',
-    title: 'Conventional Radiography (RT)',
-    text: 'X-ray and gamma radiography using Iridium-192, Selenium-75 and Cobalt-60 sources, supported by mobile radiography units.',
-    href: '/services',
-    img: 'ea-svc-radiography.webp',
-    alt: 'IXAR technician working on process pipework with a radiography source guide tube',
-  },
-  {
-    num: '02',
-    title: 'Digital and Computed Radiography',
-    text: 'Digital image capture for faster interpretation, simpler storage and immediate sharing of results with the client.',
-    href: '/services',
-    img: 'ea-svc-digital-radiography.webp',
-    alt: 'IXAR technicians setting up digital radiography on a pipe spool',
-  },
-  {
-    num: '03',
-    title: 'Ultrasonic Testing (UT)',
-    text: 'Thickness measurement, flaw detection and material characterisation across metals, plastics, composites and ceramics.',
-    href: '/services',
-    img: 'ea-svc-ultrasonic.webp',
-    alt: 'IXAR crew inspecting a pipe spool on a stand',
-  },
-  {
-    num: '04',
-    title: 'Advanced Ultrasonics',
-    text: 'Phased array (PAUT), time of flight diffraction (TOFD) and automated ultrasonic testing (AUT) for weld inspection and accurate defect sizing.',
-    href: '/services',
-    img: '/images/stock/stk-ultrasonic.webp',
-    alt: 'Certified NDT technician scanning weld with phased array ultrasonic probe',
-  },
-  {
-    num: '05',
-    title: 'Magnetic Particle and Liquid Penetrant Testing',
-    text: 'Surface and near surface flaw detection on welds and components, carried out on site or in the workshop.',
-    href: '/services',
-    img: '/images/east-africa/ea-svc-radiography.webp',
-    alt: 'Magnetic particle testing on steel weld joint',
-  },
-  {
-    title: 'Eddy Current and Pulsed Eddy Current',
-    category: 'Electromagnetic NDT',
-    desc: 'Corrosion under insulation screening on carbon steel structures, and surface crack detection.',
-    slug: 'pect',
-    img: '/images/east-africa/ea-svc-pipeline.webp',
-  },
-  {
-    title: 'Pipeline Inspection',
-    category: 'Pipeline NDT',
-    desc: 'X-ray crawler radiography and automated ultrasonic testing of girth welds for cross country pipelines.',
-    slug: 'aut',
-    img: '/images/east-africa/ea-svc-pipeline.webp',
-  },
-  {
-    title: 'Pigging and Intelligent Pigging',
-    category: 'Pipeline Integrity',
-    desc: 'Cleaning pigs to remove deposits and restore flow, and intelligent pigs to inspect and map pipeline wall condition.',
-    slug: 'aut',
-    img: '/images/stock/stk-pipeline.webp',
-  },
-  {
-    title: 'Tank and Tube Inspection',
-    category: 'Tank & Tube NDT',
-    desc: 'Magnetic flux leakage inspection of tank floors and heat exchanger tubes for wall loss, pitting and circumferential cracking.',
-    slug: 'mfl-tube',
-    img: '/images/east-africa/ea-ind-oil-gas.webp',
-  },
-  {
-    title: 'Underwater Inspection',
-    category: 'Marine NDT',
-    desc: 'Inspection of jetties, dams, bridges and other submerged structures.',
-    slug: 'aut',
-    img: '/images/stock/stk-diver.webp',
-  },
-  {
-    title: 'Destructive Testing and Laboratory Services',
-    category: 'Metallurgical Lab',
-    desc: 'Mechanical testing, chemical analysis, coating testing, corrosion testing and failure analysis.',
-    slug: 'aut',
-    img: '/images/east-africa/ea-svc-radiography.webp',
-  },
-  {
-    title: 'NDT Training and Certification',
-    category: 'Radiation Safety & Training',
-    desc: 'Industry recognised training, including radiation safety certification for industrial radiographers, delivered in collaboration with the Bhabha Atomic Research Centre.',
-    slug: 'aut',
-    img: '/images/stock/stk-training.webp',
-  },
-];
 
 const INDUSTRIES = [
   {
@@ -180,58 +89,152 @@ const INDUSTRIES = [
   },
 ];
 
-const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 
-const FEATURED_SERVICES = [
+/* Every method IXAR offers, in one list.
+ *
+ * This used to be two arrays: six "featured" services in the switcher and a
+ * separate twelve-card directory below it, which meant the same method was
+ * described twice in two different levels of detail. One list now feeds the
+ * switcher and the enquiry form's service dropdown.
+ *
+ * The standards line on each entry is drafted from the method's usual codes
+ * and must be signed off by a Level III before publication.
+ *
+ * Images point at slots under /images/east-africa/. AppImage renders a
+ * designed placeholder for any path with no file behind it, so photography can
+ * be dropped in one file at a time. */
+const SERVICES = [
   {
     num: '01',
     title: 'Radiography Testing (RT / CR / DR)',
     category: 'Radiation NDT',
-    desc: 'X-ray and gamma radiography using Iridium-192, Selenium-75 and Cobalt-60 sources. Computed and Digital Radiography (CR/DR) for instant high-resolution digital image capture.',
-    standards: 'ASME Sec V · API 1104 · BARC / AERB Licensed',
+    desc: 'X-ray and gamma radiography using Iridium-192, Selenium-75 and Cobalt-60 sources, with mobile radiography units and close proximity systems. Computed and digital radiography give instant high-resolution capture on site.',
+    standards: 'ASME Sec V · ISO 17636 · UAEC / TAEC Licensed',
     img: '/images/east-africa/ea-svc-radiography.webp',
   },
   {
     num: '02',
-    title: 'Ultrasonic Testing (UT / PAUT / TOFD / AUT)',
-    category: 'Ultrasonic NDT',
-    desc: 'Automated Ultrasonics (AUT) crawlers, Phased Array (PAUT), and Time of Flight Diffraction (TOFD) for cross-country crude oil pipeline girth weld inspection and accurate defect sizing.',
-    standards: 'ISO 9712 · ASNT Level II / III · ECA Criteria',
+    title: 'Digital and Computed Radiography',
+    category: 'Radiation NDT',
+    desc: 'Digital image capture for faster interpretation, simpler archiving and immediate sharing of results with the client. Takes film processing off the critical path on shutdown work.',
+    standards: 'ASTM E2033 · ISO 17636-2',
     img: '/images/east-africa/ea-svc-digital-radiography.webp',
   },
   {
     num: '03',
-    title: 'Pipeline Inspection & Intelligent Pigging',
-    category: 'Pipeline Integrity',
-    desc: 'X-ray crawler radiography on cross-country pipelines, combined with cleaning pigs and MFL intelligent inline inspection pigs to map wall loss, pitting, and geometry.',
-    standards: 'API 1163 · ASME B31.4 / B31.8 · IPLOCA Member',
-    img: '/images/east-africa/ea-svc-pipeline.webp',
+    title: 'Ultrasonic Testing (UT)',
+    category: 'Ultrasonics',
+    desc: 'Thickness measurement, flaw detection and material characterisation across metals, plastics, composites and ceramics. Used for corrosion mapping, weld inspection and in-service monitoring.',
+    standards: 'ASME Sec V · ISO 16810 · ASNT Level II / III',
+    img: '/images/east-africa/ea-svc-ultrasonic.webp',
   },
   {
     num: '04',
-    title: 'Tank & Tube Inspection (MFL)',
-    category: 'Tank & Heat Exchanger NDT',
-    desc: 'Magnetic Flux Leakage (MFL) floor scanners for aboveground crude oil storage tanks, and electromagnetic tube testing for refinery heat exchangers.',
-    standards: 'API 653 · API 570 · ISO 9001 Certified',
-    img: '/images/east-africa/ea-ind-oil-gas.webp',
+    title: 'Advanced Ultrasonics (PAUT / TOFD / AUT)',
+    category: 'Advanced Ultrasonics',
+    desc: 'Phased array, time of flight diffraction and automated ultrasonic testing for weld inspection and accurate defect sizing, with encoded data for repeatable comparison between inspections.',
+    standards: 'ASME Sec V Art 4 · ISO 13588 · ISO 10863',
+    img: '/images/east-africa/ea-hero-2.jpg',
   },
   {
     num: '05',
-    title: 'Underwater & Marine NDT',
-    category: 'Marine Integrity',
-    desc: 'Commercial diver NDT and ROV inspection on jetties, port berth pilings, marine crude terminals, and submerged dam intake structures.',
-    standards: 'IMCA / DNV Marine NDT Norms',
-    img: '/images/stock/stk-diver.webp',
+    title: 'Magnetic Particle and Liquid Penetrant Testing',
+    category: 'Surface NDT',
+    desc: 'Surface and near surface flaw detection on welds, castings and machined components, carried out on site or in the workshop with wet and dry techniques.',
+    standards: 'ASTM E709 · ASTM E165 · ISO 9934',
+    img: '/images/east-africa/ea-svc-mpi-lpt.webp',
   },
   {
     num: '06',
-    title: 'Radiation Safety & BARC NDT Training',
-    category: 'Training & Qualification',
-    desc: 'Industrial radiography radiation protection courses, Level II/III preparation, and practitioner certification accredited in collaboration with Bhabha Atomic Research Centre.',
-    standards: 'BARC / AERB Accredited · ASNT SNT-TC-1A',
-    img: '/images/stock/stk-training.webp',
+    title: 'Eddy Current and Pulsed Eddy Current',
+    category: 'Electromagnetic',
+    desc: 'Corrosion under insulation screening on carbon steel structures without stripping cladding, plus surface crack detection on conductive materials.',
+    standards: 'ASTM E243 · ISO 15549',
+    img: '/images/east-africa/ea-svc-eddy-current.webp',
+  },
+  {
+    num: '07',
+    title: 'Pipeline Inspection',
+    category: 'Pipeline',
+    desc: 'X-ray crawler radiography and automated ultrasonic testing of girth welds for cross-country pipelines, with crews and units mobilised to right-of-way locations.',
+    standards: 'API 1104 · ISO 13847',
+    img: '/images/east-africa/ea-svc-pipeline.webp',
+  },
+  {
+    num: '08',
+    title: 'Pigging and Intelligent Pigging',
+    category: 'Pipeline',
+    desc: 'Cleaning pigs to remove deposits and restore flow, and intelligent pigs to inspect and map pipeline wall condition along the full length of the line.',
+    standards: 'API 1163 · NACE SP0102',
+    img: '/images/east-africa/ea-svc-pigging.jpg',
+  },
+  {
+    num: '09',
+    title: 'Tank and Tube Inspection (MFL)',
+    category: 'Asset Integrity',
+    desc: 'Magnetic flux leakage inspection of storage tank floors and heat exchanger tubes, detecting wall loss, pitting and circumferential cracking ahead of failure.',
+    standards: 'API 653 · API 570 · ASTM E570',
+    img: '/images/east-africa/ea-ind-oil-gas.webp',
+  },
+  {
+    num: '10',
+    title: 'Underwater and Marine NDT',
+    category: 'Marine',
+    desc: 'Inspection of jetties, dams, bridge piers, hulls and other submerged structures by certified underwater inspection personnel.',
+    standards: 'CSWIP 3.1U · IMCA D 018',
+    img: '/images/east-africa/ea-svc-underwater.jpg',
+  },
+  {
+    num: '11',
+    title: 'Destructive Testing and Laboratory Services',
+    category: 'Laboratory',
+    desc: 'Mechanical testing, chemical analysis, coating and corrosion testing, and failure analysis, supporting weld procedure qualification and root cause investigation.',
+    standards: 'ASTM E8 · ASTM A370 · ISO 6892',
+    img: '/images/east-africa/ea-svc-laboratory.webp',
+  },
+  {
+    num: '12',
+    title: 'Radiation Safety and BARC NDT Training',
+    category: 'Training',
+    desc: 'Industry recognised training and certification, including radiation safety certification for industrial radiographers, delivered in collaboration with the Bhabha Atomic Research Centre.',
+    standards: 'ASNT SNT-TC-1A · BARC Accredited',
+    img: '/images/east-africa/ea-backed-barc.webp',
+  },
+  {
+    num: '13',
+    title: 'Robotic and Remote Inspection',
+    category: 'Remote Access',
+    desc: 'Crawler and remote access systems for confined, elevated or high temperature assets that cannot be entered safely, keeping inspection going without a shutdown.',
+    standards: 'ASME Sec V · API 653',
+    img: '/images/east-africa/ea-svc-robotic.webp',
+  },
+  {
+    num: '14',
+    title: 'Heat Treatment and Stress Relieving',
+    category: 'Heat Treatment',
+    desc: 'Pre-heating, post weld heat treatment and stress relieving of welded joints and pressure equipment, with recorded thermal cycles for the client dossier.',
+    standards: 'ASME Sec VIII · AWS D1.1',
+    img: '/images/east-africa/ea-svc-heat-treatment.webp',
+  },
+  {
+    num: '15',
+    title: 'Visual Inspection and Helium Leak Testing',
+    category: 'Leak and Visual',
+    desc: 'Certified visual inspection to code, and helium leak testing for vessels, exchangers and sealed systems where tightness must be proven.',
+    standards: 'ASME Sec V Art 9 and 10 · ISO 20485',
+    img: '/images/east-africa/ea-svc-leak-testing.webp',
+  },
+  {
+    num: '16',
+    title: 'NDT Equipment Supply and Maintenance',
+    category: 'Equipment',
+    desc: 'Supply, calibration and maintenance of NDT equipment, with service support held in the region rather than shipped in for every fault.',
+    standards: 'ISO 9001 · Manufacturer Calibration',
+    img: '/images/east-africa/ea-svc-equipment.webp',
   },
 ];
+
+const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 
 const TRACK_RECORD = [
   {
@@ -1028,10 +1031,22 @@ export default function EastAfricaPage() {
 
           {/* Interactive Capability Switcher */}
           <div className="ea-capability-switcher" style={{ marginTop: '48px', marginBottom: '72px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '36px', alignItems: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '36px', alignItems: 'start' }}>
               {/* Left Column: Index List */}
-              <div style={{ gridColumn: 'span 5 / span 12', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {FEATURED_SERVICES.map((feat, idx) => (
+              <div
+                style={{
+                  gridColumn: 'span 5 / span 12',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  /* Sixteen methods is a tall column. Cap it and let it scroll
+                     rather than pushing the panel far below the fold. */
+                  maxHeight: '660px',
+                  overflowY: 'auto',
+                  paddingRight: '6px',
+                }}
+              >
+                {SERVICES.map((feat, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveServiceIdx(idx)}
@@ -1081,8 +1096,8 @@ export default function EastAfricaPage() {
                   >
                     <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
                       <AppImage
-                        src={FEATURED_SERVICES[activeServiceIdx].img}
-                        alt={FEATURED_SERVICES[activeServiceIdx].title}
+                        src={SERVICES[activeServiceIdx].img}
+                        alt={SERVICES[activeServiceIdx].title}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                       <div
@@ -1107,16 +1122,16 @@ export default function EastAfricaPage() {
                           borderRadius: '0',
                         }}
                       >
-                        {FEATURED_SERVICES[activeServiceIdx].category}
+                        {SERVICES[activeServiceIdx].category}
                       </span>
                     </div>
 
                     <div style={{ padding: '32px' }}>
                       <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '12px' }}>
-                        {FEATURED_SERVICES[activeServiceIdx].title}
+                        {SERVICES[activeServiceIdx].title}
                       </h3>
                       <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.7', marginBottom: '20px' }}>
-                        {FEATURED_SERVICES[activeServiceIdx].desc}
+                        {SERVICES[activeServiceIdx].desc}
                       </p>
 
                       <div
@@ -1131,7 +1146,7 @@ export default function EastAfricaPage() {
                         }}
                       >
                         <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#1E242D', background: '#F0F4FA', padding: '6px 12px', borderRadius: '0' }}>
-                          ✓ {FEATURED_SERVICES[activeServiceIdx].standards}
+                          ✓ {SERVICES[activeServiceIdx].standards}
                         </span>
                         <a
                           href="/services"
@@ -1148,46 +1163,6 @@ export default function EastAfricaPage() {
             </div>
           </div>
 
-          {/* Complete 12-Service Directory Below */}
-          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#15191F', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              Full NDT &amp; Inspection Service Directory
-            </h4>
-          </div>
-
-          <div className="ea-grid ea-grid--4 ea-rev">
-            {SERVICES.map((s, idx) => (
-              <motion.article 
-                className="ea-card" 
-                key={idx}
-                whileHover={{ y: -8, boxShadow: '0 16px 36px rgba(0, 30, 87, 0.14)' }}
-                transition={{ duration: 0.25 }}
-              >
-                {s.img && hasImage(s.img) ? (
-                  <figure className="ea-card__media" style={{ overflow: 'hidden' }}>
-                    <motion.img 
-                      src={s.img.startsWith('/') ? s.img : `${IMG}${s.img}`} 
-                      alt={s.title} 
-                      loading="lazy" 
-                      {...dimsFor(s.img.startsWith('/') ? s.img : `${IMG}${s.img}`)} 
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.35 }}
-                    />
-                  </figure>
-                ) : (
-                  <Placeholder imgRef="IMG-S" desc={`${s.title}, square or 4:3`} ratio="4x3" />
-                )}
-                <div className="ea-card__body">
-                  <span className="ea-card__num">{String(idx + 1).padStart(2, '0')}</span>
-                  <h3 className="ea-card__title">{s.title}</h3>
-                  <p className="ea-card__text">{s.desc || s.text}</p>
-                  <a className="ea-card__more" href="/services">
-                    Read More <ArrowGlyph />
-                  </a>
-                </div>
-              </motion.article>
-            ))}
-          </div>
         </div>
       </section>
 
