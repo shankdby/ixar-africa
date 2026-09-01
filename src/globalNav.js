@@ -52,14 +52,16 @@ export const EA_LINKS = [
   { to: '/contact', label: 'Contact the Regional Office' },
 ];
 
-/* Rendered as the top-level header row, in ixar.in's own order.
- * `external: true` means the item points off this domain. */
+/* Rendered as the top-level header row, in ixar.in's own order, with Africa
+ * last. It sits at the end rather than second because everything before it
+ * links back to ixar.in: the row reads as the parent site's menu, then the
+ * division's own. `external: true` means the item points off this domain. */
 export const HEADER_ITEMS = [
   { kind: 'external', label: 'About Us', href: at('about-us') },
-  { kind: 'ea', label: 'Africa', to: '/', children: EA_LINKS, highlight: true },
   { kind: 'external', label: 'Services', href: at('conventional-testing'), children: GLOBAL_SERVICE_LINKS },
   { kind: 'external', label: 'NDT Course', href: at('ndt-course'), children: GLOBAL_COURSE_LINKS },
   { kind: 'external', label: 'NDT Products', href: at('ndt-products'), children: GLOBAL_PRODUCT_LINKS },
   { kind: 'external', label: 'Clients', href: at('our-clients') },
   { kind: 'external', label: 'Jobs @ Ixar', href: at('jobs-ixar') },
+  { kind: 'ea', label: 'Africa', to: '/', children: EA_LINKS, highlight: true },
 ];
