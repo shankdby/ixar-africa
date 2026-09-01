@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Style from '../components/Style';
 import AfricaMap from '../components/AfricaMap';
 import AppImage from '../components/AppImage';
+import ExperienceTable from '../components/ExperienceTable';
 
 /* ==========================================================================
    IXAR in Africa  ·  /africa
@@ -1334,7 +1335,26 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 7. TRUSTED BY ================= */}
+      {/* ================= 7. PROJECTS COMPLETED IN AFRICA ================= */}
+      <section className="ea-section" id="ea-projects" style={{ background: '#FFFFFF', padding: '100px 0' }}>
+        <div className="ea-wrap">
+          <SectionHead
+            eyebrow="TRACK RECORD"
+            title="Projects Completed in Africa"
+            center
+          >
+            <p style={{ fontSize: '1.0625rem', color: 'var(--text-body)', marginTop: '12px', textAlign: 'center' }}>
+              Search by client, location or scope. Sort any column.
+            </p>
+          </SectionHead>
+
+          <div style={{ marginTop: '44px' }}>
+            <ExperienceTable />
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 8. TRUSTED BY ================= */}
       <section className="ea-section" id="ea-trusted">
         <div className="ea-wrap">
           <SectionHead eyebrow="Regional Track Record" title="Trusted By Leading Operators" center />
@@ -1453,7 +1473,7 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 8. LEARN MORE ================= */}
+      {/* ================= 9. LEARN MORE ================= */}
       <section className="ea-section ea-section--tint" id="ea-learn">
         <div className="ea-wrap">
           <SectionHead eyebrow="Documentation" title="Learn More & Downloads" center />
@@ -1507,7 +1527,7 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 9. BACKED BY OVER 55 YEARS ================= */}
+      {/* ================= 10. BACKED BY OVER 55 YEARS ================= */}
       <section className="ea-section ea-section--navy" id="ea-backed">
         <div className="ea-wrap">
           <div className="ea-backed ea-rev">
@@ -1549,7 +1569,7 @@ export default function EastAfricaPage() {
         </div>
       </section>
 
-      {/* ================= 10. CONTACT & DRAMATIC CTA ================= */}
+      {/* ================= 11. CONTACT & DRAMATIC CTA ================= */}
       <section className="ea-section" id="ea-enquiry" style={{ background: '#FFFFFF', padding: '120px 0' }}>
         <div className="ea-wrap">
           <motion.div
