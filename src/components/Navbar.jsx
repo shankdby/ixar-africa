@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, Menu, X, ChevronRight, ChevronDown, MapPin, ExternalLink } from 'lucide-react';
+import { Mail, Phone, Menu, X, ChevronRight, ChevronDown, MapPin, ExternalLink, Search } from 'lucide-react';
 import Style from './Style';
 import { HEADER_ITEMS } from '../globalNav';
 
@@ -14,6 +14,8 @@ export default function Navbar({ onOpenContact }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchInputRef = useRef(null);
   const { pathname } = useLocation();
   const headerRef = useRef(null);
 
@@ -70,6 +72,19 @@ export default function Navbar({ onOpenContact }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) searchInputRef.current.focus();
+  }, [searchOpen]);
+
+  /* Search queries the main ixar.in index. This app has no search backend of
+     its own, and a box that silently does nothing is worse than no box. */
+  const runSearch = () => {
+    const q = searchInputRef.current ? searchInputRef.current.value.trim() : '';
+    if (!q) return;
+    window.open('https://ixar.in/?s=' + encodeURIComponent(q), '_blank', 'noopener');
+    setSearchOpen(false);
+  };
 
   const navClass = ({ isActive }) => (isActive ? 'nav-link active' : 'nav-link');
 
@@ -197,23 +212,33 @@ export default function Navbar({ onOpenContact }) {
         </nav>
 
         <div className="nav-actions">
-          <button
-            onClick={() => onOpenContact()}
-            style={{
-              background: '#E31E24',
-              color: '#FFFFFF',
-              fontWeight: 700,
-              fontSize: '0.875rem',
-              padding: '9px 22px',
-              borderRadius: '4px',
-              border: 'none',
-              cursor: 'pointer',
-              letterSpacing: '0.02em',
-              transition: 'background 0.2s ease',
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.background = '#C41217')}
-            onMouseOut={(e) => (e.currentTarget.style.background = '#E31E24')}
+          <form
+            className={`nav-search ${searchOpen ? 'open' : ''}`}
+            role="search"
+            onSubmit={(e) => { e.preventDefault(); runSearch(); }}
           >
+            <input
+              ref={searchInputRef}
+              type="search"
+              name="s"
+              placeholder="Search ixar.in"
+              aria-label="Search"
+              tabIndex={searchOpen ? 0 : -1}
+              onBlur={() => setSearchOpen(false)}
+            />
+            <button
+              type="button"
+              className="nav-search__toggle"
+              aria-label={searchOpen ? 'Submit search' : 'Search'}
+              aria-expanded={searchOpen}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => (searchOpen ? runSearch() : setSearchOpen(true))}
+            >
+              <Search size={18} aria-hidden="true" />
+            </button>
+          </form>
+
+          <button type="button" className="header-cta" onClick={() => onOpenContact()}>
             Contact us
           </button>
 
@@ -445,7 +470,57 @@ export default function Navbar({ onOpenContact }) {
         /* Row separation now comes from each item's own border. */
         .dropdown-divider { display: none; }
 
-        .nav-actions { display: flex; align-items: center; gap: 12px; flex: none; }
+        /* The search control and the Contact button run the full height of the
+           header and sit flush to its right edge, matching ixar.in. They were
+           previously small pills floating in the middle of an 84px bar. */
+        .nav-actions {
+          display: flex;
+          align-self: stretch;
+          align-items: stretch;
+          gap: 0;
+          flex: none;
+          margin-right: calc(var(--gutter) * -1);
+        }
+        .nav-search { display: flex; align-items: stretch; }
+        .nav-search input {
+          width: 0;
+          padding: 0;
+          border: 0;
+          opacity: 0;
+          font-family: inherit;
+          font-size: 0.9375rem;
+          color: var(--navy);
+          background: var(--bg-tint, #F4F6F7);
+          transition: width 0.28s ease, padding 0.28s ease, opacity 0.2s ease;
+        }
+        .nav-search.open input { width: 220px; padding: 0 16px; opacity: 1; }
+        .nav-search input:focus { outline: 2px solid #001E57; outline-offset: -2px; }
+        .nav-search__toggle {
+          width: 62px;
+          border: 0;
+          cursor: pointer;
+          background: #001E57;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s ease;
+        }
+        .nav-search__toggle:hover { background: #00164a; }
+        .header-cta {
+          border: 0;
+          cursor: pointer;
+          background: #E31E24;
+          color: #fff;
+          font-family: inherit;
+          font-weight: 700;
+          font-size: 0.9375rem;
+          letter-spacing: 0.02em;
+          padding: 0 32px;
+          white-space: nowrap;
+          transition: background 0.2s ease;
+        }
+        .header-cta:hover { background: #C41217; }
         .mobile-toggle {
           display: none;
           background: transparent;
@@ -493,7 +568,8 @@ export default function Navbar({ onOpenContact }) {
           .nav-link { font-size: 0.875rem; }
         }
         @media (max-width: 1080px) {
-          .desktop-nav, .header-cta { display: none; }
+          .desktop-nav, .header-cta, .nav-search { display: none; }
+          .nav-actions { margin-right: 0; align-items: center; }
           .mobile-toggle { display: flex; }
           .nav-main-container { height: 72px; }
         }
