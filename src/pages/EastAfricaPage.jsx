@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Style from '../components/Style';
+import AfricaMap from '../components/AfricaMap';
 import AppImage, { dimsFor, hasImage } from '../components/AppImage';
 
 /* ==========================================================================
@@ -799,127 +800,7 @@ export default function EastAfricaPage() {
 
           <div className="ea-map-layout ea-rev">
             <figure className="ea-map-figure" style={{ margin: 0 }}>
-              <svg
-                viewBox={mobileMap ? '30 20 520 620' : '0 0 720 660'}
-                role="img"
-                aria-label="Map of Africa with Uganda, Tanzania and Kenya highlighted, and office pins on Kampala and the Tanzania office"
-              >
-                <defs>
-                  <filter id="eaPinShadow" x="-60%" y="-60%" width="220%" height="220%">
-                    <feDropShadow
-                      dx="0"
-                      dy="2"
-                      stdDeviation="2.4"
-                      floodColor="#001E57"
-                      floodOpacity=".35"
-                    />
-                  </filter>
-                </defs>
-
-                {/* continent, light neutral fill */}
-                <path
-                  d="M135,50 L196,42 L244,39 L293,93 L311,79 L377,87 L405,115 L415,153 L426,193 L439,217 L468,237 L496,241 L524,232 L508,286 L486,318 L462,341 L443,370 L441,393 L449,443 L411,498 L395,547 L384,579 L348,612 L310,619 L299,612 L278,553 L273,523 L264,409 L259,387 L238,335 L236,306 L212,304 L198,287 L174,294 L148,296 L102,287 L86,270 L57,220 L67,192 L67,153 L87,113 L108,92 L124,67 Z"
-                  fill="#DFE6E4"
-                  stroke="#C6D2CF"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                />
-                {/* Madagascar, for orientation */}
-                <path
-                  d="M482,432 L497,449 L494,486 L479,505 L470,494 L472,458 Z"
-                  fill="#DFE6E4"
-                  stroke="#C6D2CF"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                />
-
-                {/* countries served */}
-                <g stroke="#ffffff" strokeWidth="2.2" strokeLinejoin="round">
-                  <path d="M375,304 L412,306 L405,346 L375,350 Z" fill="#DE0603" fillOpacity=".38" />
-                  <path
-                    d="M416,300 L452,304 L455,346 L452,354 L442,376 L429,362 L405,346 L405,332 Z"
-                    fill="#DE0603"
-                    fillOpacity=".38"
-                  />
-                  <path
-                    d="M375,352 L405,348 L429,364 L442,378 L449,410 L440,433 L390,433 L375,400 Z"
-                    fill="#DE0603"
-                    fillOpacity=".38"
-                  />
-                </g>
-
-                {/* leader lines */}
-                <g stroke="#98A2A6" strokeWidth="1.4" className="ea-map-label">
-                  <line x1="346" y1="288" x2="382" y2="306" />
-                  <line x1="372" y1="342" x2="391" y2="336" />
-                  <line x1="546" y1="352" x2="454" y2="336" />
-                  <line x1="367" y1="420" x2="379" y2="408" />
-                  <line x1="542" y1="432" x2="424" y2="398" />
-                </g>
-
-                <text
-                  x="240"
-                  y="180"
-                  className="ea-map-label"
-                  fontFamily="Mulish,sans-serif"
-                  fontSize="17"
-                  fontWeight="700"
-                  fill="#7C8A87"
-                  textAnchor="middle"
-                >
-                  Mobilisation on request
-                </text>
-
-                {/* office pins */}
-                <g filter="url(#eaPinShadow)" stroke="#fff" strokeWidth="1.4">
-                  <path
-                    d="M391,320 c-4.4,0 -8,3.5 -8,7.9 0,5.9 8,13.6 8,13.6 s8,-7.7 8,-13.6 c0,-4.4 -3.6,-7.9 -8,-7.9 Z"
-                    fill="#DE0603"
-                  />
-                  <circle cx="391" cy="328" r="2.8" fill="#fff" stroke="none" />
-                  <path
-                    d="M414,384 c-4.4,0 -8,3.5 -8,7.9 0,5.9 8,13.6 8,13.6 s8,-7.7 8,-13.6 c0,-4.4 -3.6,-7.9 -8,-7.9 Z"
-                    fill="#DE0603"
-                  />
-                  <circle cx="414" cy="392" r="2.8" fill="#fff" stroke="none" />
-                </g>
-
-                {/* labels */}
-                <g className="ea-map-label" fontFamily="Mulish,sans-serif">
-                  <g>
-                    <rect x="254" y="271" rx="4" width="92" height="30" fill="#fff" stroke="#C6D2CF" strokeWidth="1.4" />
-                    <text x="300" y="291" fontSize="16" fontWeight="800" fill="#001E57" textAnchor="middle">
-                      Uganda
-                    </text>
-                  </g>
-                  <g>
-                    <rect x="268" y="329" rx="4" width="104" height="28" fill="#fff" stroke="#DE0603" strokeWidth="1.4" />
-                    <circle cx="284" cy="343" r="4" fill="#DE0603" />
-                    <text x="326" y="348" fontSize="14" fontWeight="700" fill="#001E57" textAnchor="middle">
-                      Kampala
-                    </text>
-                  </g>
-                  <g>
-                    <rect x="546" y="337" rx="4" width="84" height="30" fill="#fff" stroke="#C6D2CF" strokeWidth="1.4" />
-                    <text x="588" y="357" fontSize="16" fontWeight="800" fill="#001E57" textAnchor="middle">
-                      Kenya
-                    </text>
-                  </g>
-                  <g>
-                    <rect x="263" y="405" rx="4" width="104" height="30" fill="#fff" stroke="#C6D2CF" strokeWidth="1.4" />
-                    <text x="315" y="425" fontSize="16" fontWeight="800" fill="#001E57" textAnchor="middle">
-                      Tanzania
-                    </text>
-                  </g>
-                  <g>
-                    <rect x="542" y="417" rx="4" width="152" height="30" fill="#fff" stroke="#DE0603" strokeWidth="1.4" />
-                    <circle cx="557" cy="432" r="4" fill="#DE0603" />
-                    <text x="623" y="437" fontSize="13" fontWeight="700" fill="#001E57" textAnchor="middle">
-                      Dar es Salaam
-                    </text>
-                  </g>
-                </g>
-              </svg>
+              <AfricaMap mobile={mobileMap} />
 
               <ul className="ea-map-mobile-key">
                 <li>
