@@ -1,0 +1,112 @@
+{
+  "projects": [
+    {
+      "no": 1,
+      "project": "Sinopec Conventional NDT",
+      "client": "Sinopec",
+      "period": "2025–2027",
+      "status": "Ongoing",
+      "location": "Tilenga Project, Buliisa, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 2,
+      "project": "CPECC: NDT for tank (RT, MPI and DP)",
+      "client": "CPECC",
+      "period": "2024–2026",
+      "status": "Ongoing",
+      "location": "Tilenga Oil Field, Hoima, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 3,
+      "project": "CCJV: Phased Array Ultrasonic Testing",
+      "client": "CCJV",
+      "period": "2024–2025",
+      "status": "Completed",
+      "location": "Kingfisher Oil Field, Hoima, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 4,
+      "project": "Afrishell-Jeveeka Tanzania: Radiography Testing",
+      "client": "Afrishell-Jeveeka",
+      "period": "2024",
+      "status": "Completed",
+      "location": "Dar es Salaam, Tanzania",
+      "country": "Tanzania"
+    },
+    {
+      "no": 5,
+      "project": "PRAJ Projects Tanzania Limited",
+      "client": "PRAJ Projects",
+      "period": "2026",
+      "status": "Ongoing",
+      "location": "Illovo Distillers (Tanzania) Limited, Tanzania",
+      "country": "Tanzania"
+    },
+    {
+      "no": 6,
+      "project": "Sinopec: 8\" and 10\" crawler and external X-ray at Tilenga site",
+      "client": "Sinopec",
+      "period": "2024–2025",
+      "status": "Completed",
+      "location": "Tilenga Oil Field, Hoima, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 7,
+      "project": "CCJV: Phased Array Ultrasonic Testing (extension)",
+      "client": "CCJV",
+      "period": "2026",
+      "status": "Ongoing",
+      "location": "Kingfisher Oil Field, Hoima, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 8,
+      "project": "Sinopec: 8\" and 10\" crawler and external X-ray at Tilenga site",
+      "client": "Sinopec",
+      "period": "2025",
+      "status": "Extension",
+      "location": "Tilenga Oil Field, Hoima, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 9,
+      "project": "Afrishell-Jeveeka Tanzania: Radiography Testing",
+      "client": "Afrishell-Jeveeka",
+      "period": "2024",
+      "status": "Completed",
+      "location": "Dar es Salaam, Tanzania",
+      "country": "Tanzania"
+    },
+    {
+      "no": 10,
+      "project": "Larsen & Toubro Limited: NDT works to fabrication",
+      "client": "Larsen & Toubro",
+      "period": "2020",
+      "status": "Completed",
+      "location": "India",
+      "country": "India"
+    },
+    {
+      "no": 11,
+      "project": "CCJV: Calibration and validation blocks for PAUT",
+      "client": "CCJV",
+      "period": "2024",
+      "status": "Completed",
+      "location": "Kingfisher Oil Field, Hoima, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 12,
+      "project": "Ntake Bakery-Jeveeka Uganda: Radiography Testing",
+      "client": "Ntake Bakery-Jeveeka",
+      "period": "2024",
+      "status": "Completed",
+      "location": "Uganda",
+      "country": "Uganda"
+    }
+  ]
+}

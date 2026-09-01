@@ -4,6 +4,8 @@ import Style from '../components/Style';
 import AfricaMap from '../components/AfricaMap';
 import AppImage from '../components/AppImage';
 import ExperienceTable from '../components/ExperienceTable';
+import servicesContent from '../content/services.json';
+import industriesContent from '../content/industries.json';
 
 /* ==========================================================================
    IXAR in Africa  ·  /africa
@@ -31,209 +33,15 @@ const IMG = '/images/east-africa/';
    -------------------------------------------------------------------------- */
 
 
-const INDUSTRIES = [
-  {
-    title: 'Oil and Gas',
-    subtitle: 'Pipelines · Refineries · Storage Tanks · Process Facilities',
-    desc: 'Pipelines, storage tanks, refineries and process plant across upstream, midstream and downstream operations.',
-    slug: 'oil-gas',
-    img: '/images/east-africa/ea-ind-oil-gas.webp',
-  },
-  {
-    title: 'Power Generation and Geothermal',
-    subtitle: 'Boilers · Turbines · Steam Pipework · Geothermal Wells',
-    desc: 'Boilers, turbines, heat exchangers and steam pipework in thermal, hydro, geothermal and renewable facilities.',
-    slug: 'power-plants',
-    img: '/images/east-africa/ea-hero-tilenga-cpf.webp',
-  },
-  {
-    title: 'Mining',
-    subtitle: 'Structural Steelwork · Material Handling · Heavy Equipment',
-    desc: 'Structural steelwork, processing plant, pressure vessels and material handling equipment.',
-    slug: 'mining',
-    img: '/images/east-africa/ea-svc-pipeline.webp',
-  },
-  {
-    title: 'Cement',
-    subtitle: 'Rotary Kilns · Ducting Systems · Structural Supports',
-    desc: 'Kilns, ducting, structural supports and plant maintained within tight shutdown windows.',
-    slug: 'cement',
-    img: '/images/east-africa/ea-ind-oil-gas.webp',
-  },
-  {
-    title: 'Breweries, Beverage and Food',
-    subtitle: 'Hygienic Tanks · Sanitary Vessels · Process Lines',
-    desc: 'Tanks, vessels, process pipework and hygienic welded systems.',
-    slug: 'food-beverage',
-    img: '/images/east-africa/ea-svc-digital-radiography.webp',
-  },
-  {
-    title: 'Sugar',
-    subtitle: 'Boilers · Evaporators · Mill Structures · Off-Crop Care',
-    desc: 'Boilers, evaporators, mill structures and pressure equipment inspected during off-crop maintenance.',
-    slug: 'sugar',
-    img: '/images/east-africa/ea-svc-radiography.webp',
-  },
-  {
-    title: 'Marine and Ports',
-    subtitle: 'Jetties · Cranes · Mooring Structures · Diver NDT',
-    desc: 'Jetties, cranes, hulls, mooring structures and submerged assets.',
-    slug: 'marine',
-    img: '/images/stock/stk-diver.webp',
-  },
-  {
-    title: 'Manufacturing & Engineering',
-    subtitle: 'Fabrication QC · Weld Certification · Pressure Piping',
-    desc: 'Fabrication quality control, weld inspection, structural steel and pressure equipment certification.',
-    slug: 'manufacturing',
-    img: '/images/east-africa/ea-svc-digital-radiography.webp',
-  },
-];
+const INDUSTRIES = industriesContent.industries;
 
 
-/* Every method IXAR offers, in one list.
- *
- * This used to be two arrays: six "featured" services in the switcher and a
- * separate twelve-card directory below it, which meant the same method was
- * described twice in two different levels of detail. One list now feeds the
- * switcher and the enquiry form's service dropdown.
- *
- * The standards line on each entry is drafted from the method's usual codes
- * and must be signed off by a Level III before publication.
- *
- * Images point at slots under /images/east-africa/. AppImage renders a
- * designed placeholder for any path with no file behind it, so photography can
- * be dropped in one file at a time. */
-const SERVICES = [
-  {
-    num: '01',
-    title: 'Radiography Testing (RT / CR / DR)',
-    category: 'Radiation NDT',
-    desc: 'X-ray and gamma radiography using Iridium-192, Selenium-75 and Cobalt-60 sources, with mobile radiography units and close proximity systems. Computed and digital radiography give instant high-resolution capture on site.',
-    standards: 'ASME Sec V · ISO 17636 · UAEC / TAEC Licensed',
-    img: '/images/east-africa/ea-svc-radiography.webp',
-  },
-  {
-    num: '02',
-    title: 'Digital and Computed Radiography',
-    category: 'Radiation NDT',
-    desc: 'Digital image capture for faster interpretation, simpler archiving and immediate sharing of results with the client. Takes film processing off the critical path on shutdown work.',
-    standards: 'ASTM E2033 · ISO 17636-2',
-    img: '/images/east-africa/ea-svc-digital-radiography.webp',
-  },
-  {
-    num: '03',
-    title: 'Ultrasonic Testing (UT)',
-    category: 'Ultrasonics',
-    desc: 'Thickness measurement, flaw detection and material characterisation across metals, plastics, composites and ceramics. Used for corrosion mapping, weld inspection and in-service monitoring.',
-    standards: 'ASME Sec V · ISO 16810 · ASNT Level II / III',
-    img: '/images/east-africa/ea-svc-ultrasonic.webp',
-  },
-  {
-    num: '04',
-    title: 'Advanced Ultrasonics (PAUT / TOFD / AUT)',
-    category: 'Advanced Ultrasonics',
-    desc: 'Phased array, time of flight diffraction and automated ultrasonic testing for weld inspection and accurate defect sizing, with encoded data for repeatable comparison between inspections.',
-    standards: 'ASME Sec V Art 4 · ISO 13588 · ISO 10863',
-    img: '/images/east-africa/ea-hero-2.jpg',
-  },
-  {
-    num: '05',
-    title: 'Magnetic Particle and Liquid Penetrant Testing',
-    category: 'Surface NDT',
-    desc: 'Surface and near surface flaw detection on welds, castings and machined components, carried out on site or in the workshop with wet and dry techniques.',
-    standards: 'ASTM E709 · ASTM E165 · ISO 9934',
-    img: '/images/east-africa/ea-svc-mpi-lpt.webp',
-  },
-  {
-    num: '06',
-    title: 'Eddy Current and Pulsed Eddy Current',
-    category: 'Electromagnetic',
-    desc: 'Corrosion under insulation screening on carbon steel structures without stripping cladding, plus surface crack detection on conductive materials.',
-    standards: 'ASTM E243 · ISO 15549',
-    img: '/images/east-africa/ea-svc-eddy-current.webp',
-  },
-  {
-    num: '07',
-    title: 'Pipeline Inspection',
-    category: 'Pipeline',
-    desc: 'X-ray crawler radiography and automated ultrasonic testing of girth welds for cross-country pipelines, with crews and units mobilised to right-of-way locations.',
-    standards: 'API 1104 · ISO 13847',
-    img: '/images/east-africa/ea-svc-pipeline.webp',
-  },
-  {
-    num: '08',
-    title: 'Pigging and Intelligent Pigging',
-    category: 'Pipeline',
-    desc: 'Cleaning pigs to remove deposits and restore flow, and intelligent pigs to inspect and map pipeline wall condition along the full length of the line.',
-    standards: 'API 1163 · NACE SP0102',
-    img: '/images/east-africa/ea-svc-pigging.jpg',
-  },
-  {
-    num: '09',
-    title: 'Tank and Tube Inspection (MFL)',
-    category: 'Asset Integrity',
-    desc: 'Magnetic flux leakage inspection of storage tank floors and heat exchanger tubes, detecting wall loss, pitting and circumferential cracking ahead of failure.',
-    standards: 'API 653 · API 570 · ASTM E570',
-    img: '/images/east-africa/ea-ind-oil-gas.webp',
-  },
-  {
-    num: '10',
-    title: 'Underwater and Marine NDT',
-    category: 'Marine',
-    desc: 'Inspection of jetties, dams, bridge piers, hulls and other submerged structures by certified underwater inspection personnel.',
-    standards: 'CSWIP 3.1U · IMCA D 018',
-    img: '/images/east-africa/ea-svc-underwater.jpg',
-  },
-  {
-    num: '11',
-    title: 'Destructive Testing and Laboratory Services',
-    category: 'Laboratory',
-    desc: 'Mechanical testing, chemical analysis, coating and corrosion testing, and failure analysis, supporting weld procedure qualification and root cause investigation.',
-    standards: 'ASTM E8 · ASTM A370 · ISO 6892',
-    img: '/images/east-africa/ea-svc-laboratory.webp',
-  },
-  {
-    num: '12',
-    title: 'Radiation Safety and BARC NDT Training',
-    category: 'Training',
-    desc: 'Industry recognised training and certification, including radiation safety certification for industrial radiographers, delivered in collaboration with the Bhabha Atomic Research Centre.',
-    standards: 'ASNT SNT-TC-1A · BARC Accredited',
-    img: '/images/east-africa/ea-backed-barc.webp',
-  },
-  {
-    num: '13',
-    title: 'Robotic and Remote Inspection',
-    category: 'Remote Access',
-    desc: 'Crawler and remote access systems for confined, elevated or high temperature assets that cannot be entered safely, keeping inspection going without a shutdown.',
-    standards: 'ASME Sec V · API 653',
-    img: '/images/east-africa/ea-svc-robotic.webp',
-  },
-  {
-    num: '14',
-    title: 'Heat Treatment and Stress Relieving',
-    category: 'Heat Treatment',
-    desc: 'Pre-heating, post weld heat treatment and stress relieving of welded joints and pressure equipment, with recorded thermal cycles for the client dossier.',
-    standards: 'ASME Sec VIII · AWS D1.1',
-    img: '/images/east-africa/ea-svc-heat-treatment.webp',
-  },
-  {
-    num: '15',
-    title: 'Visual Inspection and Helium Leak Testing',
-    category: 'Leak and Visual',
-    desc: 'Certified visual inspection to code, and helium leak testing for vessels, exchangers and sealed systems where tightness must be proven.',
-    standards: 'ASME Sec V Art 9 and 10 · ISO 20485',
-    img: '/images/east-africa/ea-svc-leak-testing.webp',
-  },
-  {
-    num: '16',
-    title: 'NDT Equipment Supply and Maintenance',
-    category: 'Equipment',
-    desc: 'Supply, calibration and maintenance of NDT equipment, with service support held in the region rather than shipped in for every fault.',
-    standards: 'ISO 9001 · Manufacturer Calibration',
-    img: '/images/east-africa/ea-svc-equipment.webp',
-  },
-];
+/* Services, industries and the experience record are edited in the CMS at
+   /admin and stored as JSON under src/content. They are imported, not fetched,
+   so the prerendered HTML carries the real content and a search engine sees it
+   without running any JavaScript. Publishing a change in the CMS commits the
+   JSON, which triggers a rebuild. */
+const SERVICES = servicesContent.services;
 
 const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 

@@ -1,0 +1,120 @@
+# IXAR Africa — content configuration for Decap CMS.
+#
+# Editors sign in at /admin. Saving writes the JSON files under src/content
+# straight back to this repository as a commit, which triggers a rebuild and a
+# redeploy. There is no server to run and no database to back up: the content
+# and its history are the git history.
+#
+# ACCESS. git-gateway means access is controlled by Netlify Identity, which is
+# invite-only: an address can only sign in if it has been invited from the
+# Netlify dashboard. Nobody needs a GitHub account, and revoking someone is one
+# click. See docs/cms.md for the one-time setup.
+#
+# If this site is ever moved off Netlify, swap the backend block for:
+#   backend:
+#     name: github
+#     repo: shankdby/ixar-africa
+#     branch: main
+# which authenticates against GitHub instead, and limits access to repository
+# collaborators.
+
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    update: 'content: update {{collection}} ({{author-login}})'
+    delete: 'content: remove from {{collection}} ({{author-login}})'
+    uploadMedia: 'content: upload {{path}} ({{author-login}})'
+    deleteMedia: 'content: delete {{path}} ({{author-login}})'
+
+# Edits land as a pull request rather than straight on main, so a second person
+# can look before it goes live. Set to 'simple' to publish immediately instead.
+publish_mode: editorial_workflow
+
+media_folder: public/images/east-africa
+public_folder: /images/east-africa
+
+locale: en
+
+collections:
+  - name: projects
+    label: Projects
+    label_singular: project
+    description: >-
+      The experience record shown on the homepage. Work order value is
+      deliberately not published; do not add it.
+    files:
+      - name: projects
+        label: Project list
+        file: src/content/projects.json
+        fields:
+          - name: projects
+            label: Projects
+            label_singular: project
+            widget: list
+            summary: '{{fields.no}} — {{fields.project}} ({{fields.period}})'
+            fields:
+              - { name: no, label: 'Row number', widget: number, value_type: int, min: 1 }
+              - { name: project, label: 'Project name', widget: string }
+              - { name: client, label: Client, widget: string, hint: 'Used for search and filtering.' }
+              - { name: period, label: Period, widget: string, hint: 'e.g. 2024 or 2024–2026' }
+              - name: status
+                label: Status
+                widget: select
+                options: [Ongoing, Completed, Extension]
+              - { name: location, label: Location, widget: string }
+              - name: country
+                label: Country
+                widget: select
+                options: [Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan, Malawi, India]
+                hint: 'Drives the country filter above the table.'
+
+  - name: services
+    label: Services
+    label_singular: service
+    description: 'The methods in the Services We Offer switcher, in order.'
+    files:
+      - name: services
+        label: Service list
+        file: src/content/services.json
+        fields:
+          - name: services
+            label: Services
+            label_singular: service
+            widget: list
+            summary: '{{fields.num}} — {{fields.title}}'
+            fields:
+              - { name: num, label: Number, widget: string, hint: 'Two digits, e.g. 07.' }
+              - { name: title, label: Title, widget: string }
+              - { name: category, label: 'Category badge', widget: string, hint: 'Shown on the panel image, e.g. Radiation NDT.' }
+              - { name: desc, label: Description, widget: text }
+              - name: standards
+                label: Standards
+                widget: string
+                hint: 'Must be confirmed by a Level III before publishing. Separate with a middle dot.'
+              - name: img
+                label: Photograph
+                widget: image
+                required: false
+                hint: 'Leave empty and the panel shows a designed placeholder until a photograph is added.'
+
+  - name: industries
+    label: Industries
+    label_singular: industry
+    description: 'The sectors in the Industries We Serve showcase.'
+    files:
+      - name: industries
+        label: Industry list
+        file: src/content/industries.json
+        fields:
+          - name: industries
+            label: Industries
+            label_singular: industry
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: subtitle, label: Subtitle, widget: string, hint: 'Assets covered, separated with middle dots.' }
+              - { name: desc, label: Description, widget: text }
+              - { name: slug, label: Slug, widget: string, hint: 'Used in the /applications/… URL. Changing it breaks existing links.' }
+              - { name: img, label: Photograph, widget: image, required: false }
