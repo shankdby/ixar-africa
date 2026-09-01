@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  CalendarDays, Globe2, ClipboardList, Activity,
+  Radiation, BadgeCheck, ShieldCheck, Award, FileText,
+} from 'lucide-react';
 import Style from '../components/Style';
 import AfricaMap from '../components/AfricaMap';
 import AppImage from '../components/AppImage';
@@ -268,6 +272,80 @@ function LogoTile({ offset, total = 12, hold = 5500, stagger = 1000 }) {
    fabricated a "CERTIFIED NDT TECHNICIAN Level II UT-PA" patch and an invented
    instrument brand, the other composited Kilimanjaro behind a refinery that
    does not exist. Add stock frames here as they arrive. */
+/* ---- page data -------------------------------------------------------- *
+ * Countries, headline figures, compliance cards, client strip and the two
+ * downloads. Services, industries and projects come from src/content via the
+ * CMS; these are page furniture and change rarely. */
+
+const COUNTRIES = [
+  'Uganda', 'Tanzania', 'Kenya', 'Rwanda', 'Mozambique', 'Ethiopia', 'Sudan', 'Malawi',
+];
+
+const STATS = [
+  { icon: CalendarDays,  value: '2019',  label: 'Established in Africa' },
+  { icon: Globe2,        value: '8+',    label: 'Countries with Projects Completed' },
+  { icon: ClipboardList, value: '12+',   label: 'Projects Completed in Africa' },
+  { icon: Activity,      value: '20+',   label: 'NDT Methods Offered' },
+];
+
+const LICENCES = [
+  {
+    icon: Radiation,
+    title: 'Radiation Safety Authorisation',
+    body: 'Licensed to own, store, transport and operate sealed radioactive sources by the Uganda Atomic Energy Council and the Tanzania Atomic Energy Commission. Sources in use include Iridium-192, Selenium-75 and Cobalt-60, alongside X-ray crawlers and close proximity radiography systems.',
+    credsLabel: 'Authorised by',
+    creds: ['UAEC Uganda', 'TAEC Tanzania', 'BARC'],
+    strong: 2,
+  },
+  {
+    icon: BadgeCheck,
+    title: 'Certified Personnel',
+    body: 'Technicians qualified and certified to Level II and Level III in accordance with ASNT SNT-TC-1A. Level III personnel carry 7 to 25 years of field experience, Level II personnel 5 to 10 years. Qualified Radiation Protection Officers are assigned to all source handling work.',
+    credsLabel: 'Certified to',
+    creds: ['ASNT SNT-TC-1A', 'Level II', 'Level III', 'RPO'],
+    strong: 1,
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Quality Management',
+    body: 'ISO 9001 certified since 2003, with written practices and procedures aligned to ASTM, ASME, API, BS, DIN and NACE, or to a client specified standard where one is imposed.',
+    credsLabel: 'Certified to',
+    creds: ['ISO 9001', 'Bureau Veritas', 'ASME', 'API', 'ASTM'],
+    strong: 1,
+  },
+  {
+    icon: Award,
+    title: 'Industry Standing',
+    body: 'Member of the American Society for Non-Destructive Testing, the American Welding Society, ASTM, NACE, ISNT and NANSO. Regular member of the International Pipeline and Offshore Contractors Association.',
+    credsLabel: 'Member of',
+    creds: ['IPLOCA', 'ASNT', 'AWS', 'NACE', 'ISNT', 'NANSO'],
+    strong: 1,
+  },
+];
+
+/* The strip runs on client names until logo files and written publication
+   permission are in hand. See src/content/projects.json. */
+const CLIENT_NAMES = [
+  'Sinopec', 'CPECC', 'CCJV', 'PRAJ Projects', 'Larsen & Toubro',
+  'Afrishell-Jeveeka', 'Ntake Bakery', 'Illovo Distillers',
+];
+
+const DOWNLOADS = [
+  {
+    title: 'Company Profile',
+    body: 'A full introduction to IXAR: history, service portfolio, certifications, equipment and international presence.',
+    cta: 'Download Company Profile (PDF)',
+    href: '/downloads/IXAR-Company-Profile.pdf',
+  },
+  {
+    title: 'Completed Projects, Africa',
+    body: 'A record of projects delivered across the continent, with client, scope, location and dates.',
+    cta: 'Download Project List (PDF)',
+    href: '/downloads/IXAR-East-Africa-Project-List.pdf',
+    dark: true,
+  },
+];
+
 const HERO_IMAGES = [
   '/images/east-africa/ea-hero-tilenga-cpf.webp',
   '/images/east-africa/ea-svc-pipeline.webp',
@@ -292,6 +370,7 @@ export default function EastAfricaPage() {
   const [sent, setSent] = useState(false);
   const [heroIdx, setHeroIdx] = useState(0);
   const [activeServiceIdx, setActiveServiceIdx] = useState(0);
+  const activeService = SERVICES[activeServiceIdx] || SERVICES[0];
   const [activeIndustryIdx, setActiveIndustryIdx] = useState(0);
   const [activeComplianceIdx, setActiveComplianceIdx] = useState(0);
 
@@ -421,962 +500,303 @@ export default function EastAfricaPage() {
       )}
 
       {/* ================= 1. HERO ================= */}
-      <section className="ea-hero">
-        <div className="ea-hero__media" aria-hidden="true">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={heroIdx}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.2, ease: 'easeInOut' }}
-              className="ea-hero__zoom"
-              style={{ position: 'absolute', inset: 0 }}
+      <div className="hero" id="hero">
+        <div className="stage">
+          {HERO_IMAGES.map((src, i) => (
+            <div
+              key={src}
+              className={`slide ${i === heroIdx ? 'on' : ''}`}
+              style={{ backgroundImage: `url(${src})` }}
+              aria-hidden="true"
             >
-              <AppImage
-                src={HERO_IMAGES[heroIdx]}
-                alt="IXAR Africa Industrial Inspection Operations"
-                priority
-                className="ea-hero__img"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-              {/* The same frame again, inverted to read as radiographic film and
-                  revealed only inside a narrow band that sweeps across. Plain
-                  <img> rather than AppImage: it is decorative, aria-hidden, and
-                  must not carry AppImage's placeholder behaviour. */}
-              <img
-                src={HERO_IMAGES[heroIdx]}
-                alt=""
-                aria-hidden="true"
-                className="ea-hero__xray"
-              />
-            </motion.div>
-          </AnimatePresence>
+              <img src={src} alt="" aria-hidden="true" className="xray" />
+            </div>
+          ))}
         </div>
-        <div className="ea-hero__scrim" aria-hidden="true" />
-        <div className="ea-hero__scanline" aria-hidden="true" />
-        <div className="ea-hero__brackets" aria-hidden="true">
-          <i /><i /><i /><i />
-        </div>
-        <div className="ea-hero__hud" aria-hidden="true">
-          <b /> NDT Coverage &middot; Africa
-        </div>
+        <div className="scrim" aria-hidden="true" />
+        <div className="grid" aria-hidden="true" />
+        <div className="scanline" aria-hidden="true" />
+        <div className="brackets" aria-hidden="true"><i /><i /><i /><i /></div>
+        <div className="hud" aria-hidden="true"><b /> NDT Coverage &middot; Africa</div>
 
-        <div className="ea-hero__in">
-          <div className="ea-wrap">
-            <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="ea-hero__col"
-            >
-              <h1 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: '1.08', color: '#FFFFFF', marginBottom: '22px' }}>
-                <span className="ea-hero__w" style={{ animationDelay: '0.15s' }}>IXAR</span>{' '}
-                <span className="ea-hero__w" style={{ animationDelay: '0.3s' }}>in</span>{' '}
-                <span className="ea-hero__w ea-hero__w--mark" style={{ animationDelay: '0.45s' }}>Africa</span>
+        <div className="inner">
+          <div className="wrap">
+            <div className="box">
+              <span className="flag">Non-Destructive Testing Across Africa</span>
+              <h1>
+                <span className="w" style={{ animationDelay: '0.15s' }}>IXAR</span>{' '}
+                <span className="w" style={{ animationDelay: '0.3s' }}>in</span>{' '}
+                <span className="w em" style={{ animationDelay: '0.45s' }}>Africa</span>
               </h1>
-              <p className="ea-hero__sub" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', lineHeight: '1.65', color: 'rgba(255, 255, 255, 0.92)', marginBottom: '16px' }}>
-                Non-destructive testing and industrial inspection, delivered from registered regional offices
+              <p className="sub fade">
+                Non-destructive testing and industrial inspection, delivered from registered offices
                 in Uganda and Tanzania by Industrial X-Ray and Allied Radiographers (EA) Ltd.
               </p>
-              <p className="ea-hero__support" style={{ color: '#FFB3B1', fontSize: 'clamp(0.8125rem, 1.5vw, 0.9375rem)', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '36px' }}>
-                Licensed for sealed radiation sources &middot; ASNT Level II / III Certified &middot; ISO 9001 Certified
+              <p className="supp fade">
+                Licensed for sealed radiation sources &middot; ASNT Level II / III certified &middot; ISO 9001 certified
               </p>
-              <div className="ea-hero__actions">
-                <motion.a
-                  whileHover={{ scale: 1.05, translateY: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="ea-btn ea-btn--primary"
-                  style={{ borderRadius: '0', fontWeight: 800, fontSize: '0.9375rem', padding: '16px 32px', boxShadow: '0 8px 24px rgba(227, 30, 36, 0.4)' }}
-                  href="#ea-enquiry"
-                  onClick={scrollToEnquiry}
-                >
-                  <span>Request a Quote</span>
-                  &rarr;
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.05, translateY: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="ea-btn ea-btn--ghost"
-                  style={{ borderRadius: '0', fontWeight: 700, fontSize: '0.9375rem', padding: '16px 28px', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}
-                  href="https://wa.me/256414251251?text=Hello%20IXAR,%20I%20would%20like%20to%20enquire%20about%20NDT%20services%20in%20East%20Africa."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <WhatsAppGlyph />
-                  <span>WhatsApp Us</span>
-                </motion.a>
+              <div className="acts fade">
+                <a className="btn" href="#ea-enquiry" onClick={scrollToEnquiry}>Request a Quote</a>
+                <a className="btn btn-ghost" href="/estimator">Build Your Scope</a>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
-        <div className="ea-hero__flag">
-          <div className="ea-wrap">
-            <span>Uganda</span>
-            <span>Tanzania</span>
-            <span>Kenya</span>
-            <span>Rwanda</span>
-            <span>Mozambique</span>
-            <span>Ethiopia</span>
-            <span>Sudan</span>
-            <span>Malawi</span>
-            <span>Mobilisation on request</span>
+        <div className="wrap" style={{ position: 'relative' }}>
+          <div className="dots">
+            {HERO_IMAGES.map((src, i) => (
+              <button
+                key={src}
+                className={i === heroIdx ? 'on' : ''}
+                aria-label={`Slide ${i + 1}`}
+                onClick={() => setHeroIdx(i)}
+              />
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* ================= SECTION 1 — BRAND INTRODUCTION ================= */}
-      <section className="ea-section" style={{ background: '#FFFFFF', padding: '80px 0', borderBottom: '1px solid #E6E9EC' }}>
-        <div className="ea-wrap">
-          <div className="ea-intro-grid">
-            <motion.div
-              style={{ gridColumn: 'span 12 / span 12' }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="ea-eyebrow" style={{ fontSize: '0.9375rem', color: '#DE0603', fontWeight: 800, letterSpacing: '0.16em' }}>
-                WHO WE ARE
-              </span>
-              <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 3.8rem)', fontWeight: 900, color: '#15191F', lineHeight: '1.1', letterSpacing: '-0.02em', marginTop: '12px', marginBottom: '24px' }}>
-                Precision that protects.<br />
-                <span style={{ color: '#DE0603' }}>Technology that performs.</span>
-              </h2>
-            </motion.div>
-
-            <motion.div
-              className="ea-intro-col-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <p style={{ fontSize: 'clamp(1.05rem, 2vw, 1.25rem)', color: '#15191F', fontWeight: 700, lineHeight: '1.6' }}>
-                Industrial X-Ray &amp; Allied Radiographers (EA) Ltd delivers high-precision Non-Destructive Testing (NDT), quality assurance, and asset integrity services across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="ea-intro-col-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <p style={{ fontSize: '1rem', color: '#4A505A', lineHeight: '1.75' }}>
-                As a registered regional division backed by over 55 years of industrial NDT expertise, we support Africa’s largest energy, mining, power, pipeline, and infrastructure projects with certified personnel, licensed radiation equipment, and international standards compliance (ASME, API, ASTM, BS, ISO 9001).
-              </p>
-            </motion.div>
+        <div className="ticker">
+          <div className="in">
+            <span className="lbl">Projects Completed In</span>
+            <div className="track">
+              {[...COUNTRIES, ...COUNTRIES].map((c, i) => (
+                <span key={i}><i>&#9679;</i>{c}</span>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
+        <div className="rule" aria-hidden="true" />
+      </div>
 
-      {/* ================= 2. EAST AFRICA IN NUMBERS ================= */}
-      <section className="ea-stats ea-section" id="ea-numbers">
-        <div className="ea-wrap">
-          <SectionHead eyebrow="Regional Record" title="Africa in Numbers" center />
-
-          <div className="ea-stats__grid ea-rev" ref={statStripRef}>
-            <div className="ea-stat">
-              <svg className="ea-stat__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="3" y="4.5" width="18" height="16.5" rx="2" />
-                <path d="M3 9.5h18M8 2.5v4M16 2.5v4" />
-              </svg>
-              <span className="ea-stat__fig">
-                <Counter to={2} run={countersRun} />
-              </span>
-              <span className="ea-stat__label">Regional Offices</span>
-            </div>
-
-            <div className="ea-stat">
-              <svg className="ea-stat__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z" />
-              </svg>
-              <span className="ea-stat__fig">
-                <Counter to={3} run={countersRun} />
-              </span>
-              <span className="ea-stat__label">Countries Served</span>
-            </div>
-
-            <div className="ea-stat">
-              <svg className="ea-stat__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" strokeWidth="2" fill="none" />
-              </svg>
-              <span className="ea-stat__fig">
-                24/7
-              </span>
-              <span className="ea-stat__label">Site Response</span>
-            </div>
-
-            <div className="ea-stat">
-              <svg className="ea-stat__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 3.2 4 6.6v5.2c0 4.6 3.2 8.4 8 9.4 4.8-1 8-4.8 8-9.4V6.6Z" />
-                <path d="M9 12.2l2.2 2.3L15.4 10" />
-              </svg>
-              <span className="ea-stat__fig">
-                <Counter to={20} suffix="+" run={countersRun} />
-              </span>
-              <span className="ea-stat__label">NDT Methods Offered</span>
-            </div>
+      {/* ================= 2. AFRICA IN NUMBERS ================= */}
+      <section id="numbers">
+        <div className="wrap center">
+          <span className="eyebrow">Our Record</span>
+          <h2 className="sec">Africa <span className="accent">in Numbers</span></h2>
+          <p className="sec-intro">
+            Continental figures only. The group&rsquo;s India record is set out further down this page.
+          </p>
+          <div className="stats">
+            {STATS.map((s) => (
+              <div className="stat" key={s.label}>
+                <div className="badge"><s.icon size={32} aria-hidden="true" /></div>
+                <div className="num">{s.value}</div>
+                <div className="lbl">{s.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ================= 3. WHERE WE OPERATE ================= */}
-      <section className="ea-section" id="ea-operate">
-        <div className="ea-wrap">
-          <SectionHead eyebrow="Footprint" title="Where We Operate">
-            <p style={{ fontSize: '1.0625rem', color: '#4A505A', marginTop: '12px' }}>
-              Operating from registered facilities in Kampala, Uganda and Dar es Salaam, Tanzania, IXAR delivers rapid-response NDT and industrial inspection services across Uganda, Tanzania, Kenya, and mobile deployments continent-wide.
-            </p>
-          </SectionHead>
-
-          <div className="ea-map-layout ea-rev">
-            <figure className="ea-map-figure" style={{ margin: 0 }}>
-              <AfricaMap mobile={mobileMap} />
-
-              <ul className="ea-map-mobile-key">
-                <li>
-                  <i style={{ background: '#DE0603' }} /> Kampala office, Uganda
-                </li>
-                <li>
-                  <i style={{ background: '#DE0603' }} /> Dar es Salaam office, Tanzania
-                </li>
-                <li>
-                  <i style={{ background: 'rgba(222,6,3,.3)', border: '1px solid #DE0603' }} /> Uganda,
-                  Tanzania and Kenya
-                </li>
-                <li>
-                  <i style={{ background: '#DFE6E4', border: '1px solid #B9C0C8' }} /> Mobilisation on
-                  request
-                </li>
-              </ul>
-            </figure>
-
+      <section id="operate" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="mapgrid">
+            <div className="mapwrap desktop-map"><AfricaMap mobile={mobileMap} /></div>
             <div>
-              <ul className="ea-legend">
-                <li>
-                  <span className="ea-legend__key ea-legend__key--office">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 2C8.6 2 5.9 4.7 5.9 8.1 5.9 12.7 12 22 12 22s6.1-9.3 6.1-13.9C18.1 4.7 15.4 2 12 2Zm0 8.7a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
-                    </svg>
-                  </span>
-                  <span>
-                    <span className="ea-legend__t">Registered Offices</span>
-                    <span className="ea-legend__d">
-                      Kampala, Uganda and a registered entity in Tanzania.
-                    </span>
-                  </span>
-                </li>
-                <li>
-                  <span className="ea-legend__key ea-legend__key--served" />
-                  <span>
-                    <span className="ea-legend__t">Countries Served</span>
-                    <span className="ea-legend__d">Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.</span>
-                  </span>
-                </li>
-                <li>
-                  <span className="ea-legend__key ea-legend__key--mob" />
-                  <span>
-                    <span className="ea-legend__t">Mobilisation on Request</span>
-                    <span className="ea-legend__d">The remainder of the continent.</span>
-                  </span>
-                </li>
-              </ul>
-
-              <p className="ea-map-note">
-                Rwanda, Mozambique, Ethiopia, Sudan and Malawi were added to the served tier on
-                client instruction in 2026. IXAR holds a registration only in Uganda and Tanzania;
-                the others are countries where projects have been completed, crewed from those two
-                offices. The project record and the radiation authorisation status for each must be
-                confirmed before this page is published.
+              <span className="eyebrow">Continental Footprint</span>
+              <h2 className="sec">Where We Operate</h2>
+              <p className="sec-intro">
+                IXAR holds registered offices in Uganda and Tanzania and has completed projects
+                across the continent. Crews, equipment and sealed sources mobilise to site from
+                within Africa, not from overseas.
               </p>
+              <div className="cgrid">
+                {COUNTRIES.map((c) => <span key={c}><i />{c}</span>)}
+                <span className="more"><i />And more across Africa &mdash; mobilisation on request</span>
+              </div>
+              <ul className="legend">
+                <li><em className="k-hl" />Projects Completed in Africa</li>
+                <li><em className="k-pin" />Offices</li>
+                <li><em className="k-n" />Mobilisation on Request</li>
+              </ul>
+              <a className="btn" style={{ marginTop: '26px' }} href="/network">Our Offices &amp; Coverage</a>
             </div>
           </div>
         </div>
       </section>
 
       {/* ================= 4. LICENCES, APPROVALS AND COMPLIANCE ================= */}
-      <section className="ea-section ea-section--tint" id="ea-licences" style={{ padding: '100px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead eyebrow="CLEARED TO WORK" title="Licences, Approvals & Compliance" center />
+      <section id="licences" style={{ background: 'var(--wash)' }}>
+        <div className="wrap center">
+          <span className="eyebrow">Cleared to Work</span>
+          <h2 className="sec">Licences, Approvals <span className="accent">and Compliance</span></h2>
+          <p className="sec-intro">
+            Holding, storing and moving sealed radioactive sources is the highest barrier to entry
+            in this market. IXAR is authorised, certified and audited to do it on the continent.
+          </p>
+          <div className="grid4">
+            {LICENCES.map((l) => (
+              <div className="lic" key={l.title}>
+                <div className="ic"><l.icon size={30} aria-hidden="true" /></div>
+                <h3>{l.title}</h3>
+                <p>{l.body}</p>
+                <div className="creds">
+                  <b>{l.credsLabel}</b>
+                  {l.creds.map((c, i) => (
+                    <span key={c} className={i < l.strong ? 'on' : ''}>{c}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          {/* Editorial Vertical Compliance List */}
-          <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px', alignItems: 'center' }}>
-            <div style={{ gridColumn: 'span 5 / span 12', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {[
-                { title: 'Radiation Safety Authorisation', sub: 'Licensed by Uganda AEC & Tanzania TAEC' },
-                { title: 'Certified Personnel', sub: 'ASNT Level II & Level III Inspectors' },
-                { title: 'Quality Management', sub: 'ISO 9001:2015 & Bureau Veritas Certified' },
-                { title: 'Industry Standing', sub: 'ASNT, AWS, ASTM, NACE, IPLOCA Member' },
-              ].map((c, idx) => (
+      {/* ================= 5. SERVICES WE OFFER ================= */}
+      <section id="services">
+        <div className="wrap center">
+          <span className="eyebrow">Capability</span>
+          <h2 className="sec">Services <span className="accent">We Offer</span></h2>
+          <p className="sec-intro">
+            Over twenty NDT methods, delivered on site or in the workshop, with group specialists
+            and equipment mobilised whenever a project calls for it.
+          </p>
+        </div>
+        <div className="wrap">
+          <div className="svc">
+            <div className="svclist" role="tablist" aria-label="Services">
+              {SERVICES.map((s, i) => (
                 <button
-                  key={idx}
-                  onClick={() => setActiveComplianceIdx(idx)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '16px',
-                    padding: '20px 24px',
-                    background: activeComplianceIdx === idx ? '#15191F' : '#FFFFFF',
-                    color: activeComplianceIdx === idx ? '#FFFFFF' : '#15191F',
-                    border: '1px solid',
-                    borderColor: activeComplianceIdx === idx ? '#15191F' : '#E5E7EB',
-                    borderRadius: '0',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'all 0.25s ease',
-                    boxShadow: activeComplianceIdx === idx ? '0 12px 28px rgba(0, 30, 87, 0.18)' : '0 2px 8px rgba(0,0,0,0.03)',
-                  }}
+                  key={s.title}
+                  className="svctab"
+                  role="tab"
+                  aria-selected={activeServiceIdx === i}
+                  onClick={() => setActiveServiceIdx(i)}
                 >
-                  <span style={{ fontSize: '1rem', fontWeight: 900, color: activeComplianceIdx === idx ? '#FF6B69' : '#DE0603' }}>
-                    0{idx + 1}
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 800 }}>{c.title}</div>
-                    <div style={{ fontSize: '0.8125rem', opacity: activeComplianceIdx === idx ? 0.85 : 0.6, marginTop: '2px' }}>
-                      {c.sub}
-                    </div>
-                  </div>
-                  <ChevronRightGlyph />
+                  <span className="n">{s.num}</span>
+                  <span className="t">{s.title}</span>
+                  <span className="c" />
                 </button>
               ))}
             </div>
 
-            <div style={{ gridColumn: 'span 7 / span 12' }}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeComplianceIdx}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    background: '#FFFFFF',
-                    border: '1px solid #E6E9EC',
-                    borderTop: '4px solid #DE0603',
-                    borderRadius: '0',
-                    padding: '40px',
-                    boxShadow: '0 16px 40px rgba(0, 30, 87, 0.1)',
-                  }}
-                >
-                  {activeComplianceIdx === 0 && (
-                    <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
-                        Radiation Safety Authorisation
-                      </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
-                        Licensed to own, store, transport, and operate sealed radioactive sources by the <strong>Uganda Atomic Energy Council (AEC)</strong> and the <strong>Tanzania Atomic Energy Commission (TAEC)</strong>.
-                      </p>
-                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
-                        Active radiation sources in deployment include Iridium-192, Selenium-75, and Cobalt-60, alongside directionally shielded X-ray crawlers and close proximity radiography systems.
-                      </p>
-                    </>
-                  )}
-                  {activeComplianceIdx === 1 && (
-                    <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
-                        Certified ASNT Personnel
-                      </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
-                        All field technicians are qualified and certified to <strong>ASNT SNT-TC-1A Level II and Level III</strong> standards.
-                      </p>
-                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
-                        Level III site managers hold between 7 and 25 years of international field experience, and certified Radiation Protection Officers (RPOs) oversee every radiography assignment.
-                      </p>
-                    </>
-                  )}
-                  {activeComplianceIdx === 2 && (
-                    <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
-                        Quality Management &amp; Standards
-                      </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
-                        ISO 9001 certified with Bureau Veritas registration.
-                      </p>
-                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
-                        Written practices, procedures, and inspection protocols strictly adhere to ASTM, ASME, API, BS, DIN, and NACE codes, or client-specified engineering standards.
-                      </p>
-                    </>
-                  )}
-                  {activeComplianceIdx === 3 && (
-                    <>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '16px' }}>
-                        International Industry Standing
-                      </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.75', marginBottom: '24px' }}>
-                        Active organizational member of ASNT, AWS, ASTM, NACE, ISNT, and NANSO.
-                      </p>
-                      <p style={{ fontSize: '0.95rem', color: '#666666', lineHeight: '1.65' }}>
-                        Regular member of the International Pipeline and Offshore Contractors Association (IPLOCA), supporting major international pipeline contractors across Africa.
-                      </p>
-                    </>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className="ea-cert-row ea-rev" style={{ marginTop: '56px' }}>
-            <p className="ea-cert-row__label">Accreditations &amp; Certifications</p>
-            <div className="ea-cert-row__tiles">
-              <div className="ea-cert-tile">ISO 9001:2015</div>
-              <div className="ea-cert-tile">ASNT SNT-TC-1A</div>
-              <div className="ea-cert-tile">IPLOCA</div>
-              <div className="ea-cert-tile">BARC / AERB</div>
-              <div className="ea-cert-tile">Bureau Veritas</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 5. SERVICES WE OFFER — FEATURED CAPABILITY SWITCHER ================= */}
-      <section className="ea-section" id="ea-services" style={{ background: '#FFFFFF', padding: '110px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead eyebrow="CORE EXPERTISE" title="Services We Offer" center />
-
-          {/* Interactive Capability Switcher */}
-          <div className="ea-capability-switcher" style={{ marginTop: '48px', marginBottom: '72px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '36px', alignItems: 'start' }}>
-              {/* Left Column: Index List */}
-              <div
-                style={{
-                  gridColumn: 'span 5 / span 12',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                  /* Sixteen methods is a tall column. Cap it and let it scroll
-                     rather than pushing the panel far below the fold. */
-                  maxHeight: '660px',
-                  overflowY: 'auto',
-                  paddingRight: '6px',
-                }}
-              >
-                {SERVICES.map((feat, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveServiceIdx(idx)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '16px',
-                      padding: '18px 20px',
-                      background: activeServiceIdx === idx ? '#15191F' : '#F6F7F8',
-                      color: activeServiceIdx === idx ? '#FFFFFF' : '#15191F',
-                      border: '1px solid',
-                      borderColor: activeServiceIdx === idx ? '#15191F' : '#E6E9EC',
-                      borderRadius: '0',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease',
-                      boxShadow: activeServiceIdx === idx ? '0 10px 24px rgba(0, 30, 87, 0.18)' : 'none',
-                    }}
-                  >
-                    <span style={{ fontSize: '0.875rem', fontWeight: 900, color: activeServiceIdx === idx ? '#FF6B69' : '#DE0603' }}>
-                      {feat.num}
-                    </span>
-                    <span style={{ fontSize: '1.05rem', fontWeight: 800, flex: 1 }}>
-                      {feat.title}
-                    </span>
-                    <ChevronRightGlyph />
-                  </button>
-                ))}
+            <div className="svcpanel" role="tabpanel">
+              <div className="media">
+                <span className="badge">{activeService.category}</span>
+                <AppImage src={activeService.img} alt={activeService.title} />
               </div>
-
-              {/* Right Column: Featured Image & Technical Details Panel */}
-              <div style={{ gridColumn: 'span 7 / span 12' }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeServiceIdx}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
-                    style={{
-                      background: '#FFFFFF',
-                      border: '1px solid #E6E9EC',
-                      borderRadius: '0',
-                      overflow: 'hidden',
-                      boxShadow: '0 14px 34px rgba(0, 30, 87, 0.12)',
-                    }}
-                  >
-                    <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
-                      <AppImage
-                        src={SERVICES[activeServiceIdx].img}
-                        alt={SERVICES[activeServiceIdx].title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                      <div
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          background: 'linear-gradient(180deg, rgba(0,30,87,0.1) 0%, rgba(0,30,87,0.75) 100%)',
-                        }}
-                      />
-                      <span
-                        style={{
-                          position: 'absolute',
-                          top: '20px',
-                          left: '20px',
-                          background: '#DE0603',
-                          color: '#FFFFFF',
-                          fontSize: '0.75rem',
-                          fontWeight: 800,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.12em',
-                          padding: '6px 14px',
-                          borderRadius: '0',
-                        }}
-                      >
-                        {SERVICES[activeServiceIdx].category}
-                      </span>
-                    </div>
-
-                    <div style={{ padding: '32px' }}>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#15191F', marginBottom: '12px' }}>
-                        {SERVICES[activeServiceIdx].title}
-                      </h3>
-                      <p style={{ fontSize: '1.05rem', color: '#4A505A', lineHeight: '1.7', marginBottom: '20px' }}>
-                        {SERVICES[activeServiceIdx].desc}
-                      </p>
-
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          paddingTop: '20px',
-                          borderTop: '1px solid #E6E9EC',
-                          flexWrap: 'wrap',
-                          gap: '12px',
-                        }}
-                      >
-                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#1E242D', background: '#F0F4FA', padding: '6px 12px', borderRadius: '0' }}>
-                          ✓ {SERVICES[activeServiceIdx].standards}
-                        </span>
-                        <a
-                          href="/services"
-                          className="ea-btn ea-btn--primary"
-                          style={{ textDecoration: 'none', padding: '10px 20px', fontSize: '0.875rem' }}
-                        >
-                          View Methodologies &rarr;
-                        </a>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+              <div className="body">
+                <h3>{activeService.title}</h3>
+                <p>{activeService.desc}</p>
+                <div className="svcfoot">
+                  <span className="std"><b>&#10003;</b>{activeService.standards}</span>
+                  <a className="btn" href="/services">View Methodologies &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* ================= 6. INDUSTRIES WE SERVE — INTERACTIVE SHOWCASE ================= */}
-      <section className="ea-section ea-section--tint" id="ea-industries" style={{ padding: '100px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead eyebrow="SECTOR FOOTPRINT" title="Industries We Serve" center />
-
-          {/* Interactive Sector Showcase */}
-          <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '32px', alignItems: 'center' }}>
-            {/* Left: Sector Selector Tabs */}
-            <div style={{ gridColumn: 'span 4 / span 12', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {INDUSTRIES.map((ind, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveIndustryIdx(idx)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '16px 20px',
-                    background: activeIndustryIdx === idx ? '#DE0603' : '#FFFFFF',
-                    color: activeIndustryIdx === idx ? '#FFFFFF' : '#15191F',
-                    border: '1px solid',
-                    borderColor: activeIndustryIdx === idx ? '#DE0603' : '#E6E9EC',
-                    borderRadius: '0',
-                    textAlign: 'left',
-                    fontWeight: 800,
-                    fontSize: '0.95rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: activeIndustryIdx === idx ? '0 8px 20px rgba(222, 6, 3, 0.25)' : '0 2px 8px rgba(0,0,0,0.03)',
-                  }}
-                >
-                  <span style={{ flex: 1 }}>{ind.title}</span>
-                  {activeIndustryIdx === idx && <span>&rarr;</span>}
-                </button>
-              ))}
-            </div>
-
-            {/* Right: Full-width Industrial Showcase Panel */}
-            <div style={{ gridColumn: 'span 8 / span 12' }}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndustryIdx}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.35 }}
-                  style={{
-                    position: 'relative',
-                    height: '440px',
-                    borderRadius: '0',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 48px rgba(0, 30, 87, 0.2)',
-                  }}
-                >
-                  <AppImage
-                    src={INDUSTRIES[activeIndustryIdx].img}
-                    alt={INDUSTRIES[activeIndustryIdx].title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,30,87,0.15) 0%, rgba(0,30,87,0.85) 100%)',
-                    }}
-                  />
-                  <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px', color: '#FFFFFF' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#FF6B69', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', padding: '6px 14px', borderRadius: '0', display: 'inline-block', marginBottom: '12px' }}>
-                      Sector Footprint
-                    </span>
-                    <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.1 }}>
-                      {INDUSTRIES[activeIndustryIdx].title}
-                    </h3>
-                    <p style={{ fontSize: '0.95rem', fontWeight: 800, color: '#DE0603', letterSpacing: '0.04em', marginBottom: '14px' }}>
-                      {INDUSTRIES[activeIndustryIdx].subtitle}
-                    </p>
-                    <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.9)', maxWidth: '640px', lineHeight: 1.6, margin: 0 }}>
-                      {INDUSTRIES[activeIndustryIdx].desc}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+      {/* ================= 6. INDUSTRIES WE SERVE ================= */}
+      <section id="industries" style={{ background: 'var(--wash)' }}>
+        <div className="wrap center">
+          <span className="eyebrow">Sectors</span>
+          <h2 className="sec">Industries <span className="accent">We Serve</span></h2>
+          <p className="sec-intro">
+            Inspection programmes built around each sector&rsquo;s assets, standards and shutdown windows.
+          </p>
         </div>
-      </section>
-
-      {/* ================= NEW: REGIONAL TRACK RECORD ================= */}
-      <section className="ea-section" id="ea-track-record" style={{ background: '#15191F', color: '#FFFFFF', padding: '110px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead
-            eyebrow="FIELD EXCELLENCE"
-            title="Regional Track Record"
-            center
-            light
-          />
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '28px',
-              marginTop: '56px',
-            }}
-          >
-            {TRACK_RECORD.map((proj, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  borderRadius: '0',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                  <AppImage
-                    src={proj.img}
-                    alt={proj.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,30,87,0.85) 100%)',
-                    }}
-                  />
-                  <span
-                    style={{
-                      position: 'absolute',
-                      bottom: '14px',
-                      left: '16px',
-                      background: '#DE0603',
-                      color: '#FFFFFF',
-                      fontSize: '0.75rem',
-                      fontWeight: 800,
-                      padding: '4px 10px',
-                      borderRadius: '0',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                    }}
-                  >
-                    📍 {proj.location}
-                  </span>
+        <div className="wrap">
+          <div className="grid4">
+            {INDUSTRIES.map((ind) => (
+              <a className="ind" key={ind.title} href={`/applications/${ind.slug}`}>
+                <div className="stub" />
+                <div className="bg" style={ind.img ? { backgroundImage: `url(${ind.img})` } : undefined} />
+                <div className="veil" />
+                <div className="in">
+                  <h3>{ind.title}</h3>
+                  <p>{ind.desc}</p>
                 </div>
-
-                <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#FF6B69', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
-                    {proj.capability}
-                  </span>
-                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '10px' }}>
-                    {proj.title}
-                  </h4>
-                  <p style={{ fontSize: '0.9375rem', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.6', margin: 0 }}>
-                    {proj.desc}
-                  </p>
-                </div>
-              </motion.div>
+              </a>
             ))}
           </div>
         </div>
       </section>
 
       {/* ================= 7. PROJECTS COMPLETED IN AFRICA ================= */}
-      <section className="ea-section" id="ea-projects" style={{ background: '#FFFFFF', padding: '100px 0' }}>
-        <div className="ea-wrap">
-          <SectionHead
-            eyebrow="TRACK RECORD"
-            title="Projects Completed in Africa"
-            center
-          >
-            <p style={{ fontSize: '1.0625rem', color: 'var(--text-body)', marginTop: '12px', textAlign: 'center' }}>
-              Search by client, location or scope. Sort any column.
-            </p>
-          </SectionHead>
-
-          <div style={{ marginTop: '44px' }}>
-            <ExperienceTable />
+      <section id="projects">
+        <div className="wrap">
+          <div className="center">
+            <span className="eyebrow">Track Record</span>
+            <h2 className="sec">Projects <span className="accent">Completed in Africa</span></h2>
+            <p className="sec-intro">Search by client, location or scope. Sort any column.</p>
           </div>
+          <div style={{ marginTop: '40px' }}><ExperienceTable /></div>
         </div>
       </section>
 
       {/* ================= 8. TRUSTED BY ================= */}
-      <section className="ea-section" id="ea-trusted">
-        <div className="ea-wrap">
-          <SectionHead eyebrow="Regional Track Record" title="Trusted By Leading Operators" center />
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: '20px',
-              marginTop: '36px',
-            }}
-            className="ea-rev"
-          >
-            {[
-              {
-                name: 'TotalEnergies',
-                url: 'https://totalenergies.com',
-                desc: 'Tilenga Upstream Oil Development Project, Uganda',
-                badge: 'Oil & Gas Major',
-                color: '#DE0603',
-              },
-              {
-                name: 'CNOOC',
-                url: 'https://www.cnooc.com.cn/en/',
-                desc: 'Kingfisher Oilfield Development Project, Uganda',
-                badge: 'Offshore & Upstream',
-                color: '#15191F',
-              },
-              {
-                name: 'EACOP',
-                url: 'https://eacop.com',
-                desc: 'East African Crude Oil Pipeline (Uganda - Tanzania)',
-                badge: 'Cross-Country Pipeline',
-                color: '#15803D',
-              },
-              {
-                name: 'Praj Industries',
-                url: 'https://www.praj.net',
-                desc: 'Bio-Refinery & Process Plant NDT Inspection, Tanzania',
-                badge: 'Process Engineering',
-                color: '#C2410C',
-              },
-              {
-                name: 'UNOC',
-                url: 'https://www.unoc.co.ug',
-                desc: 'Uganda National Oil Company Infrastructure',
-                badge: 'National Oil Company',
-                color: '#0369A1',
-              },
-              {
-                name: 'Kakira Sugar',
-                url: 'https://www.kakirasugar.com',
-                desc: 'Sugar Mill Boilers & Evaporator Testing, Uganda',
-                badge: 'Agro-Industrial',
-                color: '#B45309',
-              },
-              {
-                name: 'Madhvani Group',
-                url: 'https://www.madhvanigroup.com',
-                desc: 'Heavy Engineering & Industrial Plant Inspection',
-                badge: 'Industrial Conglomerate',
-                color: '#4338CA',
-              },
-              {
-                name: 'Tullow Oil',
-                url: 'https://www.tullowoil.com',
-                desc: 'Energy Exploration Infrastructure, East Africa',
-                badge: 'Energy Exploration',
-                color: '#0F766E',
-              },
-            ].map((c) => (
-              <motion.a
-                key={c.name}
-                href={c.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -6, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid #E6E9EC',
-                  borderRadius: '0',
-                  padding: '22px 20px',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justify: 'space-between',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'border-color 0.2s ease',
-                }}
-              >
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: c.color }} />
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: c.color, background: `${c.color}15`, padding: '4px 10px', borderRadius: '0' }}>
-                      {c.badge}
-                    </span>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke={c.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#15191F', margin: '6px 0 4px 0' }}>{c.name}</h3>
-                  <p style={{ fontSize: '0.85rem', color: '#6B6B6B', lineHeight: '1.5', margin: 0 }}>{c.desc}</p>
-                </div>
-                <div style={{ marginTop: '16px', fontSize: '0.8125rem', fontWeight: 700, color: c.color, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  Visit Client Website &rarr;
-                </div>
-              </motion.a>
+      <section id="trusted" style={{ background: 'var(--wash)' }}>
+        <div className="wrap center">
+          <span className="eyebrow">Social Proof</span>
+          <h2 className="sec">Trusted <span className="accent">By</span></h2>
+          <p className="sec-intro">Operators, EPC contractors and plant owners across the continent.</p>
+        </div>
+        <div className="marquee" style={{ background: 'var(--wash)' }}>
+          <div className="track">
+            {[...CLIENT_NAMES, ...CLIENT_NAMES].map((n, i) => (
+              <div className="ltile" key={i}>{n}</div>
             ))}
           </div>
         </div>
       </section>
 
       {/* ================= 9. LEARN MORE ================= */}
-      <section className="ea-section ea-section--tint" id="ea-learn">
-        <div className="ea-wrap">
-          <SectionHead eyebrow="Documentation" title="Learn More & Downloads" center />
-
-          <div className="ea-dl-grid ea-rev">
-            <article className="ea-dl-card">
-              <div className="ea-dl-card__thumb" style={{ background: '#111827', color: '#fff', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>
-                <DownloadGlyph style={{ width: '40px', height: '40px', marginBottom: '12px', color: '#DE0603' }} />
-                <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>IXAR Company Profile</span>
-              </div>
-              <div className="ea-dl-card__body">
-                <h3>Company Profile</h3>
-                <p>
-                  A full introduction to IXAR: history, service portfolio, certifications, equipment
-                  and international presence across 8 countries.
-                </p>
-                <div className="ea-dl-card__foot">
-                  <a className="ea-btn ea-btn--navy" href="/downloads/IXAR-Company-Profile.pdf" download="IXAR-Company-Profile.pdf">
-                    <DownloadGlyph />
-                    Download Company Profile (PDF)
-                  </a>
-                  <span className="ea-dl-card__updated">
-                    Last updated August 2026
-                  </span>
+      <section id="learnmore" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="center">
+            <span className="eyebrow">Documents</span>
+            <h2 className="sec">Learn <span className="accent">More</span></h2>
+            <p className="sec-intro">Full depth for prospects who need it, without lengthening the page.</p>
+          </div>
+          <div className="grid2">
+            {DOWNLOADS.map((d) => (
+              <div className="dl" key={d.title}>
+                <div className="doc"><FileText size={30} aria-hidden="true" /><b>PDF</b></div>
+                <div>
+                  <h3>{d.title}</h3>
+                  <p>{d.body}</p>
+                  <a className={`btn ${d.dark ? 'btn-dark' : ''}`} href={d.href} download>{d.cta}</a>
                 </div>
               </div>
-            </article>
-
-            <article className="ea-dl-card">
-              <div className="ea-dl-card__thumb" style={{ background: '#111827', color: '#fff', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>
-                <DownloadGlyph style={{ width: '40px', height: '40px', marginBottom: '12px', color: '#DE0603' }} />
-                <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>East Africa Projects</span>
-              </div>
-              <div className="ea-dl-card__body">
-                <h3>Completed Projects, Africa</h3>
-                <p>
-                  A comprehensive record of NDT &amp; inspection projects delivered across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.
-                </p>
-                <div className="ea-dl-card__foot">
-                  <a className="ea-btn ea-btn--navy" href="/downloads/IXAR-East-Africa-Project-List.pdf" download="IXAR-East-Africa-Project-List.pdf">
-                    <DownloadGlyph />
-                    Download Project List (PDF)
-                  </a>
-                  <span className="ea-dl-card__updated">
-                    Last updated August 2026
-                  </span>
-                </div>
-              </div>
-            </article>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ================= 10. BACKED BY OVER 55 YEARS ================= */}
-      <section className="ea-section ea-section--navy" id="ea-backed">
-        <div className="ea-wrap">
-          <div className="ea-backed ea-rev">
-            <div className="ea-backed__copy">
-              <span className="ea-eyebrow">Parent Company</span>
-              <h2 className="ea-sec-title">Backed by Over 55 Years of NDT Experience</h2>
-              <span className="ea-rule" />
-              <p style={{ marginTop: '26px' }}>
-                IXAR Africa operates as part of Industrial X-Ray and Allied Radiographers (I)
-                Pvt. Ltd., founded in 1969 and today a leader in non-destructive testing in India and
+      <section className="legacy" id="legacy">
+        <div className="wrap">
+          <div className="g">
+            <div>
+              <span className="eyebrow">The Group Behind the Continent</span>
+              <h2 className="sec">Backed by Over 55 Years of NDT Experience</h2>
+              <p>
+                IXAR Africa operates as part of Industrial X-Ray and Allied Radiographers (I) Pvt.
+                Ltd., founded in 1969 and today a leader in non-destructive testing in India and
                 internationally. The group employs over 1,000 technicians, holds ISO 9001
                 certification, operates a fleet of mobile radiography units, and runs a training
                 institute accredited in collaboration with the Bhabha Atomic Research Centre in
-                Mumbai. Regional teams draw on group equipment, technical specialists and written
+                Mumbai. African teams draw on group equipment, technical specialists and written
                 practices whenever a project calls for it.
               </p>
-
-              <div className="ea-offices">
-                <p className="ea-offices__label">International offices</p>
-                <p className="ea-offices__list">
-                  India &middot; Uganda &middot; Tanzania &middot; Nigeria &middot; Netherlands
-                  &middot; UAE &middot; Oman &middot; Saudi Arabia
-                </p>
+              <div className="offices">
+                {['India', 'Uganda', 'Tanzania', 'Nigeria', 'Netherlands', 'UAE', 'Oman', 'Saudi Arabia'].map((o) => (
+                  <span key={o}>{o}</span>
+                ))}
               </div>
-
-              <a className="ea-btn ea-btn--primary" href="/contact">
-                About IXAR
-              </a>
+              <a className="btn" href="https://ixar.in/about-us/">About IXAR</a>
             </div>
-
-            <figure className="ea-card__media ea-backed__media">
-              <AppImage
-                src="/images/stock/stk-training.webp"
-                alt="BARC-accredited IXAR training centre, Mumbai"
-                loading="lazy"
-              />
-            </figure>
+            <div className="shot">
+              <AppImage src={`${IMG}ea-backed-barc.webp`} alt="IXAR group training and inspection capability" />
+              <span className="cap">IXAR site team, Tilenga project</span>
+            </div>
           </div>
         </div>
       </section>
-
       {/* ================= 11. CONTACT & DRAMATIC CTA ================= */}
       <section className="ea-section" id="ea-enquiry" style={{ background: '#FFFFFF', padding: '120px 0' }}>
         <div className="ea-wrap">
@@ -2066,6 +1486,390 @@ export default function EastAfricaPage() {
   .ea-rev{opacity:1;transform:none}
   .ea-logo-slide{transition:none}
   .ea-card:hover,.ea-lcard:hover,.ea-dl-card:hover,.ea-wa-float:hover,.ea-btn:hover{transform:none}
+}
+
+/* ======================================================================
+   The agreed design system, ported from the standalone build. Appended
+   last so it wins over the older page rules above it.
+   ====================================================================== */
+.ea-page{--red:#DE0603; --red-dk:#B90502; --red-soft:#FDECEC;
+  --navy:#001E57;
+  --char:#15191F; --char-2:#1E242D;
+  --ink:#4A505A; --head:#10141B; --muted:#78818D;
+  --line:#E6E9EC; --wash:#F6F7F8; --footer:#F1F2F2;
+  --gut:50px; --max:1470px;
+  --shadow:0 2px 14px rgba(16,20,27,.06);
+  --shadow-h:0 12px 30px rgba(16,20,27,.12);}
+.ea-page *{box-sizing:border-box}
+.ea-page{scroll-behavior:smooth}
+.ea-page{margin:0;font-family:Mulish,-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.5;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+.ea-page img{max-width:100%;display:block}
+.ea-page a{color:inherit;text-decoration:none}
+.ea-page .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.ea-page section{padding:74px 0}
+.ea-page h1, .ea-page h2, .ea-page h3, .ea-page h4{color:var(--head);margin:0;font-weight:700;letter-spacing:-.015em}
+.ea-page h2.sec{font-size:40px;line-height:1.16;margin-bottom:14px}
+.ea-page h2.sec .accent{color:var(--red);font-style:italic}
+.ea-page .sec-intro{max-width:840px;font-size:16.5px;color:var(--ink)}
+.ea-page .center{text-align:center}
+.ea-page .center .sec-intro{margin-left:auto;margin-right:auto}
+.ea-page .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.ea-page .eyebrow:before{content:"";width:24px;height:2px;background:var(--red)}
+.ea-page .center .eyebrow:after{content:"";width:24px;height:2px;background:var(--red)}
+.ea-page .btn{display:inline-block;background:var(--red);color:#fff;font-size:14px;font-weight:700;padding:16px 30px;border:0;cursor:pointer;transition:background .2s,transform .2s;font-family:inherit}
+.ea-page .btn:hover{background:var(--red-dk);transform:translateY(-2px)}
+.ea-page .btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.8);padding:14px 28px}
+.ea-page .btn-ghost:hover{background:#fff;color:var(--char)}
+.ea-page .btn-dark{background:var(--char)}
+.ea-page .btn-dark:hover{background:#000}
+.ea-page .note{font-size:13.5px;color:var(--muted);margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.ea-page .hero{position:relative;height:660px;overflow:hidden;margin:0 var(--gut);background:var(--char)}
+.ea-page .hero .stage{position:absolute;inset:0}
+.ea-page .hero .slide{position:absolute;inset:-4% -4% -4% -4%;opacity:0;background-size:cover;background-position:center;
+  transition:opacity 1.8s cubic-bezier(.4,0,.2,1),transform 1.8s cubic-bezier(.4,0,.2,1);transform:scale(1.12) translate3d(0,0,0)}
+.ea-page .hero .slide.on{opacity:1;animation:heroDrift 11s cubic-bezier(.25,.1,.25,1) forwards}
+@keyframes heroDrift{
+
+  0%{transform:scale(1.14) translate3d(2.2%,1%,0)}
+  100%{transform:scale(1.02) translate3d(-1.6%,-.8%,0)}
+
+}
+.ea-page .hero .scrim{position:absolute;inset:0;background:
+  linear-gradient(96deg,rgba(10,13,17,.94) 0%,rgba(10,13,17,.82) 34%,rgba(10,13,17,.35) 66%,rgba(10,13,17,.18) 100%)}
+.ea-page .hero .grid{position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:
+  linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:64px 64px}
+.ea-page .hero .slide .xray{position:absolute;inset:0;background-image:inherit;background-size:cover;background-position:center;
+  filter:invert(1) grayscale(1) contrast(1.3) brightness(1.06);opacity:.9;pointer-events:none;
+  -webkit-mask-image:linear-gradient(102deg,transparent 43%,#000 47.5%,#000 52.5%,transparent 57%);
+  mask-image:linear-gradient(102deg,transparent 43%,#000 47.5%,#000 52.5%,transparent 57%);
+  -webkit-mask-size:260% 100%;mask-size:260% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  animation:scanmask 7s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes scanmask{
+0%{-webkit-mask-position:126% 0;mask-position:126% 0}
+  70%,100%{-webkit-mask-position:-62% 0;mask-position:-62% 0}
+}
+.ea-page .hero .scanline{position:absolute;top:0;bottom:0;width:2px;left:-3%;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(222,6,3,.9) 18%,#FF4A48 50%,rgba(222,6,3,.9) 82%,transparent);
+  box-shadow:0 0 26px 6px rgba(222,6,3,.45);animation:scanline 7s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes scanline{
+0%{left:-3%;opacity:0}6%{opacity:1}64%{left:103%;opacity:1}70%,100%{left:103%;opacity:0}
+}
+.ea-page .hero .brackets{position:absolute;inset:34px;z-index:2;pointer-events:none}
+.ea-page .hero .brackets i{position:absolute;width:34px;height:34px;border:2px solid rgba(222,6,3,.9);opacity:0;animation:brk .7s cubic-bezier(.16,1,.3,1) forwards}
+.ea-page .hero .brackets i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0;animation-delay:.35s}
+.ea-page .hero .brackets i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0;animation-delay:.45s}
+.ea-page .hero .brackets i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0;animation-delay:.55s}
+.ea-page .hero .brackets i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0;animation-delay:.65s}
+@keyframes brk{
+from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}
+}
+.ea-page .hero .hud{position:absolute;top:52px;right:52px;z-index:4;display:flex;align-items:center;gap:9px;
+  font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.72);
+  background:rgba(10,13,17,.45);border:1px solid rgba(255,255,255,.14);padding:8px 13px;backdrop-filter:blur(5px)}
+.ea-page .hero .hud b{width:7px;height:7px;border-radius:50%;background:#DE0603;animation:blip 1.6s ease-in-out infinite}
+@keyframes blip{
+0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(222,6,3,.7)}50%{opacity:.45;box-shadow:0 0 0 6px rgba(222,6,3,0)}
+}
+.ea-page .hero .rule{position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--red);z-index:5;animation:rule 9s linear infinite}
+@keyframes rule{
+0%{width:0}100%{width:100%}
+}
+.ea-page .hero .inner{position:relative;z-index:3;height:100%;display:flex;align-items:center}
+.ea-page .hero .box{max-width:700px;color:#fff}
+.ea-page .hero .flag{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:var(--red);padding:8px 15px;margin-bottom:24px}
+.ea-page .hero h1{font-size:60px;line-height:1.04;color:#fff;margin-bottom:20px;font-weight:800;letter-spacing:-.03em}
+.ea-page .hero h1 .w{display:inline-block;opacity:0;transform:translateY(26px);animation:wordUp .85s cubic-bezier(.16,1,.3,1) forwards}
+.ea-page .hero h1 .em{color:var(--red-soft);position:relative}
+.ea-page .hero h1 .em:after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:5px;background:var(--red);
+  transform:scaleX(0);transform-origin:left;animation:underline .9s cubic-bezier(.16,1,.3,1) .85s forwards}
+@keyframes wordUp{
+to{opacity:1;transform:translateY(0)}
+}
+@keyframes underline{
+to{transform:scaleX(1)}
+}
+.ea-page .hero .fade{opacity:0;transform:translateY(16px);animation:wordUp .8s cubic-bezier(.16,1,.3,1) forwards}
+.ea-page .hero .sub{font-size:19px;line-height:1.55;color:rgba(255,255,255,.94);margin-bottom:12px;animation-delay:.9s}
+.ea-page .hero .supp{font-size:15px;color:rgba(255,255,255,.76);margin-bottom:32px;animation-delay:1.05s}
+.ea-page .hero .acts{display:flex;gap:14px;flex-wrap:wrap;animation-delay:1.2s}
+.ea-page .hero .ticker{position:absolute;left:0;right:0;bottom:0;z-index:4;background:rgba(10,13,17,.55);backdrop-filter:blur(6px);border-top:1px solid rgba(255,255,255,.12)}
+.ea-page .hero .ticker .in{display:flex;align-items:center;gap:0;overflow:hidden;position:relative}
+.ea-page .hero .ticker .lbl{position:relative;z-index:3;flex:none;background:var(--red);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:14px 18px}
+.ea-page .hero .ticker .track{display:flex;gap:38px;white-space:nowrap;animation:march 26s linear infinite;padding-left:26px}
+.ea-page .hero .ticker .track span{color:rgba(255,255,255,.86);font-size:13.5px;font-weight:600;letter-spacing:.04em}
+.ea-page .hero .ticker .track span i{color:var(--red);font-style:normal;margin-right:8px}
+@keyframes march{
+from{transform:translateX(0)}to{transform:translateX(-50%)}
+}
+.ea-page .hero .dots{position:absolute;z-index:6;display:flex;gap:9px;bottom:76px}
+.ea-page .hero .dots button{width:28px;height:4px;border:0;background:rgba(255,255,255,.35);cursor:pointer;padding:0;transition:.3s}
+.ea-page .hero .dots button.on{background:var(--red);width:44px}
+.ea-page .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px}
+.ea-page .stat{text-align:center;padding:30px 18px;border:1px solid var(--line);background:#fff;transition:.25s}
+.ea-page .stat:hover{border-color:var(--red);transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.ea-page .stat .badge{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;background:var(--red-soft)}
+.ea-page .stat .badge svg{width:34px;height:34px;fill:var(--red)}
+.ea-page .stat:nth-child(even) .badge{background:#EDEFF1}
+.ea-page .stat:nth-child(even) .badge svg{fill:var(--char)}
+.ea-page .stat .num{font-size:34px;font-weight:800;color:var(--head);line-height:1.1;letter-spacing:-.02em}
+.ea-page .stat .lbl{font-size:14.5px;color:var(--muted);margin-top:5px}
+.ea-page .mapgrid{display:grid;grid-template-columns:.92fr 1.08fr;gap:56px;align-items:center}
+.ea-page .mapwrap{position:relative;background:linear-gradient(160deg,#FAFBFB,#EFF1F2);padding:10px;border:1px solid var(--line)}
+.ea-page .mapwrap svg{width:100%;height:auto;display:block}
+.ea-page .ct{fill:#D9DDE1;stroke:#F6F7F8;stroke-width:.9;transition:fill .2s}
+.ea-page .ct:hover{fill:#C3C9CF}
+.ea-page .ct-hl{fill:var(--red);stroke:#fff;stroke-width:.9;transition:fill .2s}
+.ea-page .ct-hl:hover{fill:var(--red-dk)}
+.ea-page .pin-o{fill:#fff;opacity:.35}
+.ea-page .pin-c{fill:var(--char);stroke:#fff;stroke-width:2.6}
+.ea-page .mlabel{font:700 14px Mulish;fill:var(--char)}
+.ea-page .mnote{font:600 12px Mulish;fill:#9AA3AD}
+.ea-page .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:26px 0 0}
+.ea-page .cgrid a, .ea-page .cgrid span{display:flex;align-items:center;gap:11px;border:1px solid var(--line);padding:12px 15px;font-size:14.5px;font-weight:700;color:var(--head);background:#fff;transition:.2s}
+.ea-page .cgrid a:hover{border-color:var(--red);transform:translateX(3px)}
+.ea-page .cgrid i{width:12px;height:12px;background:var(--red);flex:none}
+.ea-page .cgrid .more{color:var(--muted);font-weight:600;grid-column:1/-1;border-style:dashed}
+.ea-page .cgrid .more i{background:#D9DDE1}
+.ea-page .legend{list-style:none;margin:24px 0 0;padding:0;display:flex;gap:26px;flex-wrap:wrap}
+.ea-page .legend li{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--head)}
+.ea-page .legend em{width:14px;height:14px;display:inline-block;flex:none;font-style:normal}
+.ea-page .legend .k-hl{background:var(--red)}
+.ea-page .legend .k-pin{background:var(--char);border-radius:50%}
+.ea-page .legend .k-n{background:#D9DDE1}
+.ea-page .lic{text-align:left;background:#fff;border:1px solid var(--line);border-top:4px solid var(--red);padding:32px 28px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.25s}
+.ea-page .lic:hover{transform:translateY(-5px);box-shadow:var(--shadow-h)}
+.ea-page .lic .ic{width:64px;height:64px;border-radius:50%;background:var(--red-soft);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.ea-page .lic .ic svg{width:32px;height:32px;fill:var(--red)}
+.ea-page .lic h3{font-size:19px;margin-bottom:11px}
+.ea-page .lic p{font-size:14.5px;line-height:1.65;margin:0 0 20px}
+.ea-page .creds{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px}
+.ea-page .creds b{display:block;width:100%;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.ea-page .creds span{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:var(--char);background:var(--wash);border:1px solid var(--line);padding:7px 11px}
+.ea-page .creds span.on{background:var(--red);border-color:var(--red);color:#fff}
+.ea-page .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:40px}
+.ea-page .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:40px}
+.ea-page .card{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s,border-color .25s}
+.ea-page .card:hover{transform:translateY(-5px);box-shadow:var(--shadow-h);border-color:#DCE0E4}
+.ea-page .card .body{padding:26px;text-align:left;flex:1;display:flex;flex-direction:column}
+.ea-page .card h3{font-size:19px;line-height:1.3;margin-bottom:9px}
+.ea-page .card p{margin:0;font-size:14.5px;line-height:1.62;color:var(--ink)}
+.ea-page .card .more{display:inline-block;margin-top:auto;padding-top:18px;align-self:flex-start;font-size:12.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--red)}
+.ea-page .card .more:after{content:" \\2192";transition:.2s;display:inline-block}
+.ea-page .card:hover .more:after{transform:translateX(4px)}
+.ea-page .thumb{aspect-ratio:4/3;overflow:hidden;background:var(--wash)}
+.ea-page .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.ea-page .card:hover .thumb img{transform:scale(1.06)}
+.ea-page .card.iconled{border-top:4px solid var(--red)}
+.ea-page .card.iconled .body{padding-top:30px}
+.ea-page .card.iconled .ic{width:62px;height:62px;border-radius:50%;background:var(--red-soft);display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:.3s}
+.ea-page .card.iconled:hover .ic{background:var(--red)}
+.ea-page .card.iconled .ic svg{width:31px;height:31px;fill:var(--red);transition:.3s}
+.ea-page .card.iconled:hover .ic svg{fill:#fff}
+.ea-page .svc{display:grid;grid-template-columns:400px 1fr;gap:40px;margin-top:44px;align-items:start}
+.ea-page .svclist{display:flex;flex-direction:column;gap:8px;max-height:660px;overflow-y:auto;padding-right:6px;scrollbar-width:thin}
+.ea-page .svclist::-webkit-scrollbar{width:5px}
+.ea-page .svclist::-webkit-scrollbar-thumb{background:#D3D8DD}
+.ea-page .svctab{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font-family:inherit;cursor:pointer;
+  background:var(--wash);border:1px solid var(--line);border-left:3px solid transparent;padding:16px 18px;transition:.22s;color:var(--head)}
+.ea-page .svctab:hover{background:#fff;border-left-color:var(--red);transform:translateX(3px)}
+.ea-page .svctab .n{font-size:13px;font-weight:800;color:var(--red);flex:none;letter-spacing:.02em}
+.ea-page .svctab .t{font-size:15px;font-weight:700;line-height:1.32;flex:1}
+.ea-page .svctab .c{flex:none;width:8px;height:8px;border-right:2px solid #B9C0C8;border-top:2px solid #B9C0C8;transform:rotate(45deg);transition:.2s}
+.ea-page .svctab[aria-selected="true"]{background:var(--char);border-color:var(--char);border-left-color:var(--red);color:#fff}
+.ea-page .svctab[aria-selected="true"] .n{color:#FF6B69}
+.ea-page .svctab[aria-selected="true"] .c{border-color:#fff;transform:rotate(45deg) translate(2px,-2px)}
+.ea-page .svcpanel{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.ea-page .svcpanel .media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--char)}
+.ea-page .svcpanel .media img{width:100%;height:100%;object-fit:cover}
+.ea-page .svcpanel .badge{position:absolute;top:20px;left:20px;z-index:3;background:var(--red);color:#fff;
+  font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px}
+.ea-page .svcpanel .body{padding:32px 34px 34px}
+.ea-page .svcpanel h3{font-size:28px;line-height:1.2;margin-bottom:12px}
+.ea-page .svcpanel p{font-size:16px;line-height:1.7;margin:0 0 24px;max-width:70ch}
+.ea-page .svcfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line)}
+.ea-page .svcfoot .std{flex:1;min-width:280px;background:var(--wash);border:1px solid var(--line);padding:13px 17px;
+  font-size:13.5px;font-weight:700;color:var(--char)}
+.ea-page .svcfoot .std b{color:var(--red);margin-right:7px}
+.ea-page .svcfade{animation:svcIn .45s cubic-bezier(.16,1,.3,1)}
+@keyframes svcIn{
+from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
+}
+.ea-page .techph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:radial-gradient(120% 100% at 25% 0%,#2B3340 0%,#151A21 68%);color:#fff;overflow:hidden}
+.ea-page .techph:before{content:"";position:absolute;inset:0;opacity:.5;background-image:
+  linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:38px 38px}
+.ea-page .techph:after{content:"";position:absolute;left:0;right:0;height:2px;top:0;
+  background:linear-gradient(90deg,transparent,rgba(222,6,3,.85),transparent);animation:tscan 5.5s ease-in-out infinite}
+@keyframes tscan{
+0%{top:6%}50%{top:94%}100%{top:6%}
+}
+.ea-page .techph svg{width:56px;height:56px;fill:rgba(255,255,255,.9);position:relative;z-index:2}
+.ea-page .techph .ref{position:relative;z-index:2;font-size:11px;font-weight:800;letter-spacing:.18em;color:rgba(255,255,255,.6)}
+.ea-page .techph .cap{position:relative;z-index:2;font-size:12.5px;color:rgba(255,255,255,.55);max-width:74%;text-align:center}
+.ea-page .ind{position:relative;overflow:hidden;background:var(--char);color:#fff;min-height:250px;display:flex;flex-direction:column;justify-content:flex-end;transition:.3s}
+.ea-page .ind:hover{transform:translateY(-5px);box-shadow:var(--shadow-h)}
+.ea-page .ind .bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.55;transition:transform .6s ease,opacity .3s}
+.ea-page .ind:hover .bg{transform:scale(1.06);opacity:.68}
+.ea-page .ind .stub{position:absolute;inset:0;background:
+  radial-gradient(120% 90% at 20% 0%,#2B3340 0%,#15191F 70%)}
+.ea-page .ind .stub:before{content:"";position:absolute;inset:0;opacity:.45;background-image:
+  linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:34px 34px}
+.ea-page .ind .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,13,17,.94) 12%,rgba(10,13,17,.45) 55%,rgba(10,13,17,.2) 100%)}
+.ea-page .ind .in{position:relative;z-index:2;padding:24px}
+.ea-page .ind .ic{width:44px;height:44px;background:var(--red);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.ea-page .ind .ic svg{width:23px;height:23px;fill:#fff}
+.ea-page .ind h3{font-size:18px;color:#fff;margin-bottom:7px}
+.ea-page .ind p{font-size:13.5px;line-height:1.55;margin:0;color:rgba(255,255,255,.78)}
+.ea-page .ind .imgref{position:absolute;top:12px;right:12px;z-index:3;font-size:10px;font-weight:800;letter-spacing:.12em;color:rgba(255,255,255,.6);background:rgba(0,0,0,.4);padding:5px 8px}
+.ea-page .tbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:34px 0 18px}
+.ea-page .tbar input, .ea-page .tbar select{font-family:inherit;font-size:14.5px;border:1px solid #D8DDE2;padding:12px 14px;background:#fff;color:var(--ink)}
+.ea-page .tbar input{flex:1;min-width:220px}
+.ea-page .tbar .count{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.ea-page .tablewrap{overflow-x:auto;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+.ea-page table.proj{width:100%;border-collapse:collapse;min-width:860px}
+.ea-page table.proj th{background:var(--char);color:#fff;text-align:left;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:16px 18px;white-space:nowrap;cursor:pointer;user-select:none}
+.ea-page table.proj th:hover{background:var(--char-2)}
+.ea-page table.proj th .ar{opacity:.4;margin-left:6px;font-size:10px}
+.ea-page table.proj th.sorted .ar{opacity:1;color:#FF9E9D}
+.ea-page table.proj td{padding:16px 18px;font-size:14.5px;border-top:1px solid var(--line);vertical-align:top}
+.ea-page table.proj tbody tr:hover{background:#FCFCFD}
+.ea-page table.proj td.pname{font-weight:700;color:var(--head)}
+.ea-page table.proj td .flagtag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.05em;color:var(--red);background:var(--red-soft);padding:5px 10px;white-space:nowrap}
+.ea-page table.proj .empty{text-align:center;padding:40px;color:var(--muted)}
+.ea-page .marquee{position:relative;overflow:hidden;margin-top:40px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px 0}
+.ea-page .marquee:before, .ea-page .marquee:after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.ea-page .marquee:before{left:0;background:linear-gradient(90deg,#fff,rgba(255,255,255,0))}
+.ea-page .marquee:after{right:0;background:linear-gradient(270deg,#fff,rgba(255,255,255,0))}
+.ea-page .marquee .track{display:flex;gap:0;width:max-content;animation:march 34s linear infinite}
+.ea-page .marquee:hover .track{animation-play-state:paused}
+.ea-page .ltile{width:250px;height:128px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);
+  font-size:14px;font-weight:800;color:var(--muted);text-align:center;padding:16px;filter:grayscale(1);opacity:.62;transition:.3s}
+.ea-page .ltile:hover{filter:grayscale(0);opacity:1;color:var(--red)}
+.ea-page .dl{text-align:left;display:flex;gap:24px;align-items:flex-start;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:32px;transition:.25s}
+.ea-page .dl:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.ea-page .dl .doc{width:94px;height:120px;flex:none;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.ea-page .dl:nth-child(even) .doc{background:var(--char)}
+.ea-page .dl .doc svg{width:30px;height:30px;fill:#fff}
+.ea-page .dl .doc b{font-size:10px;letter-spacing:.12em}
+.ea-page .dl h3{font-size:20px;margin-bottom:8px}
+.ea-page .dl p{font-size:14.5px;line-height:1.6;margin:0 0 18px}
+.ea-page .dl .upd{display:block;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.ea-page .legacy{background:var(--char);color:#fff;position:relative;overflow:hidden}
+.ea-page .legacy:before{content:"";position:absolute;top:-140px;right:-140px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(222,6,3,.16),transparent 62%)}
+.ea-page .legacy h2, .ea-page .legacy h3{color:#fff}
+.ea-page .legacy .eyebrow{color:#FF6B69}
+.ea-page .legacy .eyebrow:before{background:#FF6B69}
+.ea-page .legacy .g{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;position:relative;z-index:2}
+.ea-page .legacy p{color:rgba(255,255,255,.84);font-size:16px;line-height:1.78}
+.ea-page .offices{display:flex;flex-wrap:wrap;gap:10px 0;margin:26px 0 30px;font-size:14px;font-weight:700;color:#fff}
+.ea-page .offices span{padding-right:14px;margin-right:14px;border-right:1px solid rgba(255,255,255,.28)}
+.ea-page .offices span:last-child{border-right:0}
+.ea-page .legacy .shot{position:relative}
+.ea-page .legacy .shot img{width:100%;height:400px;object-fit:cover}
+.ea-page .legacy .shot .cap{position:absolute;left:0;bottom:0;background:var(--red);color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:11px 17px}
+.ea-page .contact{background:var(--wash)}
+.ea-page .cwrap{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;margin-top:40px}
+.ea-page form.enq{text-align:left;background:#fff;border:1px solid var(--line);padding:36px;box-shadow:var(--shadow)}
+.ea-page .frow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ea-page .field{margin-bottom:18px;display:flex;flex-direction:column}
+.ea-page .field label{font-size:13px;font-weight:700;color:var(--head);margin-bottom:7px}
+.ea-page .field label i{color:var(--red);font-style:normal}
+.ea-page .field input, .ea-page .field select, .ea-page .field textarea{font-family:inherit;font-size:15px;color:var(--ink);border:1px solid #D8DDE2;padding:13px 14px;background:#fff;width:100%}
+.ea-page .field textarea{min-height:120px;resize:vertical}
+.ea-page .field input:focus, .ea-page .field select:focus, .ea-page .field textarea:focus{outline:2px solid var(--red);outline-offset:-2px}
+.ea-page .other{display:grid;gap:14px;margin-bottom:22px}
+.ea-page .opt{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);padding:20px;box-shadow:var(--shadow);transition:.25s}
+.ea-page .opt:hover{border-color:var(--red);transform:translateX(4px)}
+.ea-page .opt .oi{width:50px;height:50px;flex:none;border-radius:50%;background:var(--red-soft);display:flex;align-items:center;justify-content:center}
+.ea-page .opt .oi svg{width:23px;height:23px;fill:var(--red)}
+.ea-page .opt.wa .oi{background:#E4F9EC}
+.ea-page .opt.wa .oi svg{fill:#1EBE5B}
+.ea-page .opt b{display:block;font-size:15.5px;color:var(--head)}
+.ea-page .opt span{font-size:13.5px;color:var(--muted)}
+.ea-page .office{text-align:left;background:#fff;border:1px solid var(--line);padding:26px;box-shadow:var(--shadow);margin-bottom:16px}
+.ea-page .office h3{font-size:18px;margin-bottom:6px}
+.ea-page .office .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--char);padding:5px 10px;margin-bottom:13px}
+.ea-page .office ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ea-page .office li{display:flex;gap:12px;font-size:14.5px;align-items:flex-start}
+.ea-page .office li svg{width:17px;height:17px;fill:var(--red);flex:none;margin-top:3px}
+.ea-page footer h4{font-size:20px;margin-bottom:16px}
+.ea-page footer .flogo{height:38px;width:auto;margin-bottom:24px}
+.ea-page footer p, .ea-page footer li{font-size:14.5px;color:var(--ink);line-height:1.65}
+@keyframes pulse{
+0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}
+}
+.ea-page .reveal.pre{opacity:0;transform:translateY(26px)}
+.ea-page .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+@media(max-width:1200px){
+.ea-page{--gut:32px}
+.ea-page .svc{grid-template-columns:1fr;gap:26px}
+.ea-page .svclist{max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding-bottom:8px}
+.ea-page .svctab{min-width:250px;border-left-width:1px;border-top:3px solid transparent}
+.ea-page .svcpanel h3{font-size:23px}
+.ea-page .hero .hud{display:none}
+.ea-page h2.sec{font-size:33px}
+.ea-page .hero{height:600px}
+.ea-page .hero h1{font-size:44px}
+.ea-page .grid4{grid-template-columns:repeat(2,1fr)}
+.ea-page .mapgrid, .ea-page .cwrap, .ea-page .legacy .g{grid-template-columns:1fr;gap:34px}
+}
+@media(max-width:760px){
+.ea-page{--gut:18px}
+.ea-page section{padding:52px 0}
+.ea-page h2.sec{font-size:27px}
+.ea-page .hero{height:600px;margin:0}
+.ea-page .hero h1{font-size:34px}
+.ea-page .hero .sub{font-size:16.5px}
+.ea-page .hero .ticker .lbl{display:none}
+.ea-page .stats{grid-template-columns:repeat(2,1fr);gap:14px}
+.ea-page .stat{padding:22px 10px}
+.ea-page .stat .num{font-size:27px}
+.ea-page .grid4, .ea-page .grid2, .ea-page .cgrid{grid-template-columns:1fr}
+.ea-page .frow{grid-template-columns:1fr}
+.ea-page .dl{flex-direction:column}
+.ea-page .mapwrap.desktop-map{display:none}
+.ea-page .ltile{width:190px;height:110px}
+.ea-page .hero .brackets{inset:16px}
+.ea-page .svcpanel .body{padding:24px}
+.ea-page .svcpanel h3{font-size:21px}
+.ea-page .svcpanel p{font-size:15px}
+}
+.ea-page .mobile-map{display:none}
+@media(max-width:760px){
+.ea-page .mobile-map{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+.ea-page *{animation:none!important;transition:none!important}
+.ea-page .reveal.pre{opacity:0}
+.ea-page .hero .slide.on{opacity:1;transform:scale(1)}
+.ea-page .hero h1 .w, .ea-page .hero .fade{opacity:1;transform:none}
+.ea-page .hero h1 .em:after{transform:scaleX(1)}
+.ea-page .hero .slide .xray, .ea-page .hero .scanline, .ea-page .techph:after{display:none}
+.ea-page .hero .brackets i{opacity:1}
+}
+.ea-page .chips{display:flex;flex-wrap:wrap;gap:9px}
+.ea-page .chips label{position:relative;cursor:pointer}
+.ea-page .chips input{position:absolute;opacity:0;pointer-events:none}
+.ea-page .chips span{display:block;border:1px solid var(--line);background:var(--wash);padding:11px 15px;
+  font-size:14px;font-weight:700;color:var(--head);transition:.18s}
+.ea-page .chips label:hover span{border-color:var(--red)}
+.ea-page .chips input:checked+span{background:var(--char);border-color:var(--char);color:#fff}
+.ea-page .chips input:focus-visible+span{outline:2px solid var(--red);outline-offset:2px}
+.ea-page .ctaband{background:var(--red);color:#fff;text-align:center}
+.ea-page .ctaband h2{color:#fff;font-size:34px;margin-bottom:12px}
+.ea-page .ctaband p{color:rgba(255,255,255,.9);font-size:17px;max-width:640px;margin:0 auto 26px}
+.ea-page .ctaband .btn{background:#fff;color:var(--red)}
+.ea-page .ctaband .btn:hover{background:var(--char);color:#fff}
+.ea-page .ctaband .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.85)}
+.ea-page .ctaband .btn-ghost:hover{background:#fff;color:var(--red)}
+@media(max-width:1200px){
+
+}
+@media(max-width:760px){
+.ea-page .ctaband h2{font-size:26px}
 }
       `}</Style>
     </div>
