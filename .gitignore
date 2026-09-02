@@ -20,3 +20,11 @@ node_modules
 
 # Build output
 dist-ssr
+
+# Files removed from the site. This session runs against the folder over a
+# bridge that cannot unlink, so anything deleted is moved here instead and the
+# folder is emptied by hand. Nothing in it should ever be committed.
+_to_delete/
+
+# Git lock files this session had to move aside rather than delete.
+.git/stale-locks/
