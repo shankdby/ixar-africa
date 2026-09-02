@@ -43,7 +43,21 @@ export function useReveal(rootRef) {
       { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
     );
     nodes.forEach((n) => obs.observe(n));
-    return () => obs.disconnect();
+
+    /* Failsafe. A reveal that never fires leaves its block permanently at
+       opacity 0, which means content the visitor can never read - a far worse
+       failure than an animation that does not play. IntersectionObserver can
+       miss an element on a fast scroll, a jump to an anchor, or a restored
+       scroll position, so after three seconds anything still hidden is simply
+       shown. The same guard is in EastAfricaPage. */
+    const failsafe = window.setTimeout(() => {
+      nodes.forEach((n) => n.classList.add('is-in'));
+    }, 3000);
+
+    return () => {
+      window.clearTimeout(failsafe);
+      obs.disconnect();
+    };
   }, [rootRef]);
 }
 

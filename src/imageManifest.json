@@ -1,12 +1,4 @@
 {
-  "/images/aut_detail_hero.jpg": [
-    1376,
-    768
-  ],
-  "/images/barc_training_center.jpg": [
-    1200,
-    896
-  ],
   "/images/clients/afrishell.png": [
     360,
     120
@@ -38,10 +30,6 @@
   "/images/clients/sinopec.png": [
     360,
     120
-  ],
-  "/images/east-africa/ea-backed-barc.webp": [
-    1000,
-    750
   ],
   "/images/east-africa/ea-hero-tilenga-cpf.webp": [
     1080,
@@ -83,10 +71,6 @@
     1200,
     675
   ],
-  "/images/hero_pipeline_ndt.jpg": [
-    1376,
-    768
-  ],
   "/images/ixar-logo-main.png": [
     243,
     77
@@ -96,24 +80,8 @@
     79
   ],
   "/images/og-cover.jpg": [
-    1000,
-    625
-  ],
-  "/images/power_plant_inspection.jpg": [
     1200,
-    896
-  ],
-  "/images/radiography_detail_hero.jpg": [
-    1376,
-    768
-  ],
-  "/images/railway_track_testing.jpg": [
-    1200,
-    896
-  ],
-  "/images/refinery_tank_inspection.jpg": [
-    1200,
-    896
+    630
   ],
   "/images/stock/stk-cement.jpg": [
     1280,

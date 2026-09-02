@@ -160,8 +160,8 @@ export default function ApplicationsPage({ onOpenContact }) {
         eyebrow="Industries We Serve"
         title="Built for the industries that cannot afford failure."
         sub="Sector-specific non-destructive testing and asset integrity work across the industrial base of Uganda, Tanzania and Kenya."
-        image="/images/stock/stk-hero-industries.webp"
-        imageAlt="Industrial processing facility at dusk"
+        image="/images/east-africa/ea-ind-oil-gas.webp"
+        imageAlt="IXAR inspection crew on site, Tilenga Project, Uganda"
         actions={
           <>
             <button type="button" className="ea-btn ea-btn--primary" onClick={() => onOpenContact()}>

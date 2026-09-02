@@ -58,8 +58,8 @@ export default function TrainingPage({ onOpenContact }) {
         eyebrow="Training & Certification"
         title="Build capability. Raise standards."
         sub="Technical training for inspection personnel and the engineering teams who commission them, drawn from IXAR's group training programme."
-        image="/images/stock/stk-training.webp"
-        imageAlt="Technical training session with inspection instruments"
+        image="/images/east-africa/ea-svc-ultrasonic.webp"
+        imageAlt="IXAR technicians working with ultrasonic instruments on site"
         actions={
           <>
             <button
@@ -118,7 +118,7 @@ export default function TrainingPage({ onOpenContact }) {
         <div className="tr-backing">
           <figure className="tr-backing__media ea-rev">
             <Media
-              src="/images/stock/stk-training-lab.webp"
+              src=""
               alt="Practical NDT training laboratory"
               mark="Training"
               title="A programme running since 1969"

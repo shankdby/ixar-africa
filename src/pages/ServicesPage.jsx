@@ -39,7 +39,7 @@ const CATEGORIES = [
       'Magnetic Particle Testing (MT)',
       'Liquid Penetrant Testing (PT)',
     ],
-    image: '/images/stock/stk-radiography.webp',
+    image: '/images/east-africa/ea-svc-radiography.webp',
     alt: 'Industrial radiography of a welded joint',
     panelMark: 'Conventional NDT',
     panelTitle: 'Radiography, ultrasonics & surface methods',
@@ -63,7 +63,7 @@ const CATEGORIES = [
       'Eddy Current (ECT)',
       'Pulsed Eddy Current (PECT)',
     ],
-    image: '/images/stock/stk-ultrasonic.webp',
+    image: '/images/east-africa/ea-svc-advanced-ut.webp',
     alt: 'Phased array ultrasonic scanner on a pipe weld',
     panelMark: 'Advanced NDT',
     panelTitle: 'PAUT, TOFD, AUT & eddy current',
@@ -87,7 +87,7 @@ const CATEGORIES = [
       'Cleaning pigs',
       'Intelligent pigging (ILI)',
     ],
-    image: '/images/stock/stk-pipeline.webp',
+    image: '/images/east-africa/ea-svc-pipeline.webp',
     alt: 'Cross-country transmission pipeline under construction',
     panelMark: 'Pipeline',
     panelTitle: 'Girth welds, crawlers & intelligent pigging',
@@ -105,7 +105,7 @@ const CATEGORIES = [
       'Scheduled into shutdown windows, where the inspection duration is usually the constraint rather than the inspection itself.',
     ],
     points: ['Magnetic Flux Leakage (MFL)', 'Tube wall loss & pitting', 'Boiler tube inspection'],
-    image: '/images/stock/stk-tube-exchanger.webp',
+    image: '',
     alt: 'Heat exchanger tube bundle withdrawn for inspection',
     panelMark: 'Tube & Exchanger',
     panelTitle: 'Magnetic flux leakage on tube bundles',
@@ -127,7 +127,7 @@ const CATEGORIES = [
       'Corrosion mapping',
       'Weld inspection',
     ],
-    image: '/images/stock/stk-tank-farm.webp',
+    image: '',
     alt: 'Bulk storage tanks at a fuel terminal',
     panelMark: 'Tank & Asset',
     panelTitle: 'Floor scanning & thickness survey',
@@ -144,7 +144,7 @@ const CATEGORIES = [
       'Commercial diver inspection of jetties, harbour structures, dams, bridges and other submerged assets, including ultrasonic thickness measurement in-water.',
     ],
     points: ['Diver ultrasonic thickness', 'Jetty & harbour structures', 'Dams & bridges'],
-    image: '/images/stock/stk-diver.webp',
+    image: '',
     alt: 'Commercial diver working on a submerged structure',
     panelMark: 'Underwater',
     panelTitle: 'Diver inspection below the waterline',
@@ -167,7 +167,7 @@ const CATEGORIES = [
       'Metallurgical evaluation',
       'Failure analysis',
     ],
-    image: '/images/stock/stk-laboratory.webp',
+    image: '',
     alt: 'Materials testing laboratory',
     panelMark: 'Laboratory',
     panelTitle: 'Destructive testing & failure analysis',
@@ -182,8 +182,8 @@ export default function ServicesPage({ onOpenContact }) {
         eyebrow="Our Services"
         title="Inspection Without Compromise."
         sub="Advanced non-destructive testing and asset integrity solutions for critical industrial infrastructure across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi."
-        image="/images/stock/stk-hero-services.webp"
-        imageAlt="Industrial pipework at a processing facility"
+        image="/images/east-africa/ea-hero-tilenga-cpf.webp"
+        imageAlt="IXAR crew at the central processing facility, Tilenga Project, Uganda"
         actions={
           <>
             <button type="button" className="ea-btn ea-btn--primary" onClick={() => onOpenContact()}>

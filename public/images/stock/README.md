@@ -1,5 +1,28 @@
 # Stock photography — drop files here
 
+> ## The eight industry images here are AI-generated and need replacing
+>
+> `stk-oil-gas`, `stk-power`, `stk-mining`, `stk-cement`, `stk-sugar`,
+> `stk-marine-port`, `stk-railway` and `stk-manufacturing` are AI renders, not
+> photographs. They are still on the industry cards so the section is not blank,
+> but they should be swapped for licensed stock or genuine IXAR photography.
+>
+> Three of them also do not show what their name claims:
+>
+> | File | Name says | Picture actually shows |
+> |---|---|---|
+> | `stk-cement` | Cement plant | A refinery storage tank |
+> | `stk-sugar` | Sugar mill | A heat exchanger bundle |
+> | `stk-manufacturing` | Manufacturing | A pipeline crawler in a trench |
+>
+> `stk-process-food` is the one real photograph in the folder, and it is a
+> duplicate of `east-africa/ea-svc-digital-radiography.webp` already used
+> elsewhere on the site.
+>
+> Nothing outside the industry cards uses this folder. The services, training
+> and sector pages were moved onto genuine IXAR photography, or onto the
+> designed panel where no honest photograph exists.
+
 Every filename below is already wired into the site. Save a photo with the exact
 name and run `npm run build`; the image appears with no code change. Until then
 the slot renders as a navy panel, so nothing looks broken while the library fills up.
