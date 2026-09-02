@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Check } from 'lucide-react';
 import Style from './Style';
+import { sendEnquiry } from '../lib/enquiry';
 
 /* Enquiry modal.
 
@@ -28,6 +29,8 @@ const SERVICES = [
 
 export default function ContactModal({ isOpen, onClose, defaultScope }) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [fallback, setFallback] = useState(false);
   const [form, setForm] = useState({
     name: '',
     company: '',
@@ -97,13 +100,24 @@ export default function ContactModal({ isOpen, onClose, defaultScope }) {
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
-  const handleSubmit = (e) => {
+  /* Shows the thank-you only once /api/enquiry confirms the email reached
+     bd@ixar.africa. This previously set `submitted` unconditionally, so the
+     modal told every visitor their enquiry had been sent while nothing left
+     the browser. */
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+    setFallback(false);
+    setSending(true);
+    const res = await sendEnquiry(form);
+    setSending(false);
+    if (res.ok) setSubmitted(true);
+    else setFallback(true);
   };
 
   const handleClose = () => {
     setSubmitted(false);
+    setFallback(false);
     onClose();
   };
 
@@ -182,10 +196,23 @@ export default function ContactModal({ isOpen, onClose, defaultScope }) {
                 </div>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-lg modal-submit">
-                <span>Send Enquiry</span>
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg modal-submit"
+                disabled={sending}
+                aria-busy={sending || undefined}
+              >
+                <span>{sending ? 'Sending\u2026' : 'Send Enquiry'}</span>
                 <Send size={16} aria-hidden="true" />
               </button>
+
+              {fallback && (
+                <p className="ea-form-fallback" role="alert">
+                  We could not send this from the website just now, so we have opened your
+                  email application with the enquiry already written out. Press send there,
+                  or write to <a href="mailto:bd@ixar.africa">bd@ixar.africa</a> directly.
+                </p>
+              )}
 
               <p className="modal-routing" style={{ marginTop: '12px', fontSize: '0.8125rem', color: 'var(--text-dim)' }}>
                 Submissions route directly to Business Development (<a href="mailto:bd@ixar.africa" style={{ color: 'var(--brand)' }}>bd@ixar.africa</a>).

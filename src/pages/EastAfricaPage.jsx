@@ -10,6 +10,8 @@ import AppImage from '../components/AppImage';
 import ExperienceTable from '../components/ExperienceTable';
 import servicesContent from '../content/services.json';
 import industriesContent from '../content/industries.json';
+import { waLinkProps, WA_DEFAULT_MESSAGE } from '../lib/whatsapp';
+import { sendEnquiry } from '../lib/enquiry';
 
 /* ==========================================================================
    IXAR in Africa  ·  /africa
@@ -372,6 +374,8 @@ export default function EastAfricaPage() {
   const [mobileMap, setMobileMap] = useState(false);
   const [validated, setValidated] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
   const [heroIdx, setHeroIdx] = useState(0);
   const [activeServiceIdx, setActiveServiceIdx] = useState(0);
   const activeService = SERVICES[activeServiceIdx] || SERVICES[0];
@@ -464,7 +468,13 @@ export default function EastAfricaPage() {
   }, []);
 
   /* enquiry form -------------------------------------------------------- */
-  const handleSubmit = (e) => {
+  /* Posts to /api/enquiry, which emails bd@ixar.africa. This used to set
+     `sent` immediately and send nothing at all, so the thank-you panel was
+     telling every visitor their enquiry had been received while it never left
+     the browser. `sent` is now only set once delivery is confirmed; if it
+     cannot be, sendEnquiry opens the visitor's mail client with the enquiry
+     already written out and we say so rather than claiming success. */
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setValidated(true);
     const form = formRef.current;
@@ -474,7 +484,15 @@ export default function EastAfricaPage() {
       if (bad) bad.focus();
       return;
     }
-    setSent(true);
+    if (sending) return;
+
+    const values = Object.fromEntries(new FormData(form).entries());
+    setSendError('');
+    setSending(true);
+    const res = await sendEnquiry(values);
+    setSending(false);
+    if (res.ok) setSent(true);
+    else setSendError('mail');
   };
 
   return (
@@ -913,15 +931,37 @@ export default function EastAfricaPage() {
                     </div>
                   </div>
 
+                  {/* Honeypot. Hidden from people and from screen readers and
+                      never tabbable; bots that fill every field mark themselves
+                      by filling it, and /api/enquiry drops those silently. */}
+                  <div className="ea-hp" aria-hidden="true">
+                    <label htmlFor="ea-f-website">Leave this field empty</label>
+                    <input id="ea-f-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
+
                   <div className="ea-form-foot">
-                    <button className="ea-btn ea-btn--primary" type="submit">
-                      Send Enquiry
+                    <button
+                      className="ea-btn ea-btn--primary"
+                      type="submit"
+                      disabled={sending}
+                      aria-busy={sending || undefined}
+                    >
+                      {sending ? 'Sending\u2026' : 'Send Enquiry'}
                     </button>
                   </div>
 
                   <p className="ea-form-routing" style={{ marginTop: '14px', fontSize: '0.8125rem', color: '#6B6B6B' }}>
                     Submissions route directly to Business Development (<strong>bd@ixar.africa</strong>).
                   </p>
+
+                  {sendError && (
+                    <p className="ea-form-fallback" role="alert">
+                      We could not send this from the website just now, so we have opened
+                      your email application with the enquiry already written out. Press
+                      send there, or write to{' '}
+                      <a href="mailto:bd@ixar.africa">bd@ixar.africa</a> directly.
+                    </p>
+                  )}
                 </form>
               )}
 
@@ -1022,14 +1062,12 @@ export default function EastAfricaPage() {
                   Click to launch instant WhatsApp enquiry with pre-filled message:
                 </p>
                 <span className="ea-wa-quote">
-                  &ldquo;Hello IXAR, I would like to enquire about NDT services in Africa.&rdquo;
+                  &ldquo;{WA_DEFAULT_MESSAGE}&rdquo;
                 </span>
                 <a
                   className="ea-btn ea-btn--primary"
                   style={{ marginTop: '14px', display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#25D366', borderColor: '#25D366' }}
-                  href="https://wa.me/256414251251?text=Hello%20IXAR,%20I%20would%20like%20to%20enquire%20about%20NDT%20services%20in%20East%20Africa."
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...waLinkProps()}
                 >
                   <WhatsAppGlyph />
                   Start WhatsApp Chat
@@ -1047,9 +1085,7 @@ export default function EastAfricaPage() {
         animate={{ scale: [1, 1.08, 1] }}
         transition={{ repeat: Infinity, duration: 2.5 }}
         className="ea-wa-float"
-        href="https://wa.me/256414251251?text=Hello%20IXAR,%20I%20would%20like%20to%20enquire%20about%20NDT%20services%20in%20East%20Africa."
-        target="_blank"
-        rel="noopener noreferrer"
+        {...waLinkProps()}
         aria-label="Chat with IXAR Africa on WhatsApp"
       >
         <WhatsAppGlyph />

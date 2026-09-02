@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, MapPin, Phone, Mail, CheckCircle2 } from 'lucide-react';
 import Style from '../components/Style';
 import { Page, Section, PageHero, Crumbs } from '../components/ui';
+import { sendEnquiry } from '../lib/enquiry';
 
 /* Contact.
  *
@@ -69,9 +70,15 @@ const OFFICES = [
 export default function ContactPage() {
   const formRef = useRef(null);
   const [validated, setValidated] = useState(false);
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(false);   /* mail client fallback path */
+  const [sent, setSent] = useState(false);       /* delivered by /api/enquiry */
+  const [sending, setSending] = useState(false);
 
-  function handleSubmit(e) {
+  /* The page used to hand every enquiry to the visitor's mail client, which
+     works but loses anyone browsing without one configured. It now posts to
+     /api/enquiry, which emails bd@ixar.africa; the mail client stays as the
+     fallback for when that endpoint cannot deliver. */
+  async function handleSubmit(e) {
     e.preventDefault();
     const form = formRef.current;
     if (!form) return;
@@ -80,26 +87,28 @@ export default function ContactPage() {
       form.querySelector(':invalid')?.focus();
       return;
     }
-    const v = (id) => form.querySelector(`#${id}`)?.value?.trim() || '—';
-    const body = [
-      `Name:      ${v('c-name')}`,
-      `Company:   ${v('c-company')}`,
-      `Country:   ${v('c-country')}`,
-      `Industry:  ${v('c-industry')}`,
-      `Service:   ${v('c-service')}`,
-      `Phone:     ${v('c-phone')}`,
-      `Email:     ${v('c-email')}`,
-      '',
-      'Project details',
-      '---------------',
-      v('c-details'),
-    ].join('\n');
+    if (sending) return;
 
-    window.location.href =
-      `mailto:bd@ixar.africa?subject=${encodeURIComponent(
-        `Enquiry — ${v('c-company')} (${v('c-country')})`
-      )}&body=${encodeURIComponent(body)}`;
-    setOpened(true);
+    const v = (id) => form.querySelector(`#${id}`)?.value?.trim() || '';
+    const industry = v('c-industry');
+    const details = v('c-details');
+    const values = {
+      name: v('c-name'),
+      company: v('c-company'),
+      country: v('c-country'),
+      email: v('c-email'),
+      phone: v('c-phone'),
+      service: v('c-service'),
+      /* /api/enquiry has no industry field, so it rides at the head of the
+         message rather than being dropped on the floor. */
+      message: industry ? `Industry: ${industry}\n\n${details}` : details,
+    };
+
+    setSending(true);
+    const res = await sendEnquiry(values);
+    setSending(false);
+    if (res.ok) setSent(true);
+    else setOpened(true);
   }
 
   return (
@@ -166,7 +175,22 @@ export default function ContactPage() {
           </aside>
 
           <div className="ct-form-card ea-rev">
-            {opened ? (
+            {sent ? (
+              <div className="ct-done">
+                <span className="ct-done__tick" aria-hidden="true">
+                  <CheckCircle2 size={30} />
+                </span>
+                <h3>Thank you, your enquiry has been sent.</h3>
+                <p>
+                  It has gone to <strong>bd@ixar.africa</strong> and a member of the regional
+                  team will reply to the address you gave. For anything urgent, call{' '}
+                  <a href="tel:+256414251251">+256 414 251251</a>.
+                </p>
+                <button type="button" className="ea-btn ea-btn--navy" onClick={() => setSent(false)}>
+                  Send another enquiry
+                </button>
+              </div>
+            ) : opened ? (
               <div className="ct-done">
                 <span className="ct-done__tick" aria-hidden="true">
                   <CheckCircle2 size={30} />
@@ -251,12 +275,19 @@ export default function ContactPage() {
                       />
                     </div>
                   </div>
-                  <button type="submit" className="ea-btn ea-btn--primary ct-submit">
-                    Submit Enquiry <ChevronRight size={16} aria-hidden="true" />
+                  <button
+                    type="submit"
+                    className="ea-btn ea-btn--primary ct-submit"
+                    disabled={sending}
+                    aria-busy={sending || undefined}
+                  >
+                    {sending ? 'Sending\u2026' : 'Submit Enquiry'}{' '}
+                    <ChevronRight size={16} aria-hidden="true" />
                   </button>
                   <p className="ct-note">
-                    This opens a pre-filled email in your own mail application. Nothing is sent from
-                    this page.
+                    Submissions go straight to Business Development
+                    (<a href="mailto:bd@ixar.africa">bd@ixar.africa</a>). If the site cannot send
+                    for any reason, a pre-filled email opens in your own mail application instead.
                   </p>
                 </form>
               </>

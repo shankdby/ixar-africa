@@ -308,3 +308,21 @@
     linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
   background-size:48px 48px;
 }
+
+/* ---------- enquiry form: honeypot + delivery fallback ---------------------
+   .ea-hp is the bot trap. It must be genuinely off-screen rather than
+   display:none - some bots skip hidden inputs, and a few screen readers
+   announce them - so it is moved out of the viewport and made untabbable. */
+.ea-hp{
+  position:absolute !important;left:-9999px !important;top:auto !important;
+  width:1px !important;height:1px !important;overflow:hidden !important;
+}
+/* Shown only when /api/enquiry could not take the message and the visitor's
+   mail client has been opened with the enquiry instead. */
+.ea-form-fallback{
+  margin-top:12px;padding:12px 14px;font-size:.875rem;line-height:1.55;
+  color:#7A2E12;background:#FFF4EC;border-left:3px solid #DE0603;
+}
+.ea-form-fallback a{color:#DE0603;font-weight:700}
+.ea-btn[disabled],.ea-btn[aria-busy="true"],
+.btn[disabled],.btn[aria-busy="true"]{opacity:.65;cursor:progress}
