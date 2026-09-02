@@ -34,9 +34,7 @@ function popupScript(payload, origin) {
 }
 
 export default async function handler(req, res) {
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const origin = `${proto}://${host}`;
+  const origin = 'https://ixar.africa';
 
   const url = new URL(req.url, origin);
   const code = url.searchParams.get('code');
