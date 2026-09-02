@@ -1,4 +1,60 @@
 {
+  "/images/aut_detail_hero.jpg": [
+    1376,
+    768
+  ],
+  "/images/barc_training_center.jpg": [
+    1200,
+    896
+  ],
+  "/images/clients/afrishell.png": [
+    360,
+    120
+  ],
+  "/images/clients/ccjv.png": [
+    360,
+    120
+  ],
+  "/images/clients/cpecc.png": [
+    360,
+    120
+  ],
+  "/images/clients/illovo.png": [
+    360,
+    120
+  ],
+  "/images/clients/lt.png": [
+    360,
+    120
+  ],
+  "/images/clients/ntake.png": [
+    360,
+    120
+  ],
+  "/images/clients/praj.png": [
+    360,
+    120
+  ],
+  "/images/clients/sinopec.png": [
+    360,
+    120
+  ],
+  "/images/east-africa/ea-backed-barc.webp": [
+    1000,
+    750
+  ],
+  "/images/east-africa/ea-hero-1.jpg": [
+    1376,
+    768
+  ],
+  "/images/east-africa/ea-hero-2.jpg": [
+    1376,
+    768
+  ],
+  "/images/east-africa/ea-hero-3.jpg": [
+    1376,
+    768
+  ],
   "/images/east-africa/ea-hero-tilenga-cpf.webp": [
     1080,
     504
@@ -15,6 +71,10 @@
     900,
     675
   ],
+  "/images/east-africa/ea-svc-pigging.jpg": [
+    1200,
+    896
+  ],
   "/images/east-africa/ea-svc-pipeline.webp": [
     900,
     675
@@ -27,6 +87,14 @@
     900,
     675
   ],
+  "/images/east-africa/ea-svc-underwater.jpg": [
+    1200,
+    896
+  ],
+  "/images/hero_pipeline_ndt.jpg": [
+    1376,
+    768
+  ],
   "/images/ixar-logo-main.png": [
     243,
     77
@@ -38,5 +106,93 @@
   "/images/og-cover.jpg": [
     1000,
     625
+  ],
+  "/images/power_plant_inspection.jpg": [
+    1200,
+    896
+  ],
+  "/images/radiography_detail_hero.jpg": [
+    1376,
+    768
+  ],
+  "/images/railway_track_testing.jpg": [
+    1200,
+    896
+  ],
+  "/images/refinery_tank_inspection.jpg": [
+    1200,
+    896
+  ],
+  "/images/stock/stk-cement.jpg": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-cement.webp": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-manufacturing.jpg": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-manufacturing.webp": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-marine-port.jpg": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-marine-port.webp": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-mining.jpg": [
+    1376,
+    768
+  ],
+  "/images/stock/stk-mining.webp": [
+    1376,
+    768
+  ],
+  "/images/stock/stk-oil-gas.jpg": [
+    1376,
+    768
+  ],
+  "/images/stock/stk-oil-gas.webp": [
+    1376,
+    768
+  ],
+  "/images/stock/stk-power.jpg": [
+    1376,
+    768
+  ],
+  "/images/stock/stk-power.webp": [
+    1376,
+    768
+  ],
+  "/images/stock/stk-process-food.jpg": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-process-food.webp": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-railway.jpg": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-railway.webp": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-sugar.jpg": [
+    1280,
+    720
+  ],
+  "/images/stock/stk-sugar.webp": [
+    1280,
+    720
   ]
 }

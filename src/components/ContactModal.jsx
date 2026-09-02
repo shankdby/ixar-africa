@@ -23,6 +23,7 @@ const SERVICES = [
   'Underwater Inspection',
   'Destructive Testing and Laboratory Services',
   'NDT Training and Certification',
+  'Other',
 ];
 
 export default function ContactModal({ isOpen, onClose, defaultScope }) {

@@ -47,7 +47,7 @@ const INDUSTRIES = industriesContent.industries;
    JSON, which triggers a rebuild. */
 const SERVICES = servicesContent.services;
 
-const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
+const SERVICE_OPTIONS = [...SERVICES.map((s) => s.title), 'Other'];
 
 const TRACK_RECORD = [
   {
@@ -323,11 +323,15 @@ const LICENCES = [
   },
 ];
 
-/* The strip runs on client names until logo files and written publication
-   permission are in hand. See src/content/projects.json. */
-const CLIENT_NAMES = [
-  'Sinopec', 'CPECC', 'CCJV', 'PRAJ Projects', 'Larsen & Toubro',
-  'Afrishell-Jeveeka', 'Ntake Bakery', 'Illovo Distillers',
+const CLIENT_LOGOS = [
+  { name: 'Sinopec', logo: '/images/clients/sinopec.png', url: 'https://www.sinopecgroup.com/group/en/' },
+  { name: 'CPECC', logo: '/images/clients/cpecc.png', url: 'http://cpecc.cnpc.com.cn/cpeccen/' },
+  { name: 'CCJV', logo: '/images/clients/ccjv.png', url: 'https://www.cnoocuganda.com/' },
+  { name: 'PRAJ Projects', logo: '/images/clients/praj.png', url: 'https://www.praj.net/' },
+  { name: 'Larsen & Toubro', logo: '/images/clients/lt.png', url: 'https://www.larsentoubro.com/' },
+  { name: 'Afrishell-Jeveeka', logo: '/images/clients/afrishell.png', url: 'https://www.jeveeka.com/' },
+  { name: 'Ntake Bakery', logo: '/images/clients/ntake.png', url: 'https://ntakegroup.com/' },
+  { name: 'Illovo Distillers', logo: '/images/clients/illovo.png', url: 'https://www.illovosugarafrica.com/' },
 ];
 
 const DOWNLOADS = [
@@ -737,8 +741,17 @@ export default function EastAfricaPage() {
         </div>
         <div className="marquee" style={{ background: 'var(--wash)' }}>
           <div className="track">
-            {[...CLIENT_NAMES, ...CLIENT_NAMES].map((n, i) => (
-              <div className="ltile" key={i}>{n}</div>
+            {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((c, i) => (
+              <a
+                className="ltile"
+                key={i}
+                href={c.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`Visit ${c.name} website`}
+              >
+                <img src={c.logo} alt={c.name} className="client-logo-img" />
+              </a>
             ))}
           </div>
         </div>
@@ -791,8 +804,8 @@ export default function EastAfricaPage() {
               <a className="btn" href="https://ixar.in/about-us/">About IXAR</a>
             </div>
             <div className="shot">
-              <AppImage src={`${IMG}ea-backed-barc.webp`} alt="IXAR group training and inspection capability" />
-              <span className="cap">IXAR site team, Tilenga project</span>
+              <AppImage src={`${IMG}ea-hero-tilenga-cpf.webp`} alt="IXAR African Site Team at Tilenga Project, Uganda" />
+              <span className="cap">IXAR African site team, Tilenga project, Uganda</span>
             </div>
           </div>
         </div>
@@ -1745,9 +1758,11 @@ from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
 .ea-page .marquee:after{right:0;background:linear-gradient(270deg,#fff,rgba(255,255,255,0))}
 .ea-page .marquee .track{display:flex;gap:0;width:max-content;animation:march 34s linear infinite}
 .ea-page .marquee:hover .track{animation-play-state:paused}
-.ea-page .ltile{width:250px;height:128px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);
-  font-size:14px;font-weight:800;color:var(--muted);text-align:center;padding:16px;filter:grayscale(1);opacity:.62;transition:.3s}
-.ea-page .ltile:hover{filter:grayscale(0);opacity:1;color:var(--red)}
+.ea-page .ltile{width:260px;height:120px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);
+  padding:16px;background:#FFFFFF;opacity:.92;transition:all .3s ease;text-decoration:none}
+.ea-page .ltile:hover{opacity:1;background:#F8FAFC}
+.ea-page .ltile img{max-width:210px;max-height:72px;width:auto;height:auto;object-fit:contain;transition:transform .3s ease}
+.ea-page .ltile:hover img{transform:scale(1.08)}
 .ea-page .dl{text-align:left;display:flex;gap:24px;align-items:flex-start;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:32px;transition:.25s}
 .ea-page .dl:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
 .ea-page .dl .doc{width:94px;height:120px;flex:none;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}

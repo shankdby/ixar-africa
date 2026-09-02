@@ -62,8 +62,78 @@ export default function SectorDetailPage({ onOpenContact }) {
         'Mine shaft gantry & conveyor structural steel integrity audits',
         'Thick plate weld Radiographic & Ultrasonic testing according to AWS D1.1'
       ],
-      imgMain: '/images/east-africa/ea-svc-pipeline.webp',
+      imgMain: '/images/stock/stk-mining.jpg',
       imgDetail: '/images/east-africa/ea-svc-ultrasonic.webp'
+    },
+    cement: {
+      title: 'Cement Industry (Kilns & Cyclone Towers)',
+      icon: Wrench,
+      subtitle: 'Rotary kiln alignment, shell thickness & structural support testing during tight shutdown windows.',
+      overview: 'Cement production plants operate 24/7 in harsh, high-abrasion environments. Emergency shutdowns demand rapid NDT turnarounds to inspect rotary kiln shells, cyclone towers, ducting systems, and raw mill structures before restart.',
+      applications: [
+        'Rotary kiln shell thickness ultrasonic mapping & ovality checks',
+        'Cyclone tower structural steel weld integrity & crack detection',
+        'Raw mill & clinker cooler shaft ultrasonic flaw detection',
+        'Ducting & baghouse casing corrosion thickness surveys'
+      ],
+      imgMain: '/images/stock/stk-cement.jpg',
+      imgDetail: '/images/east-africa/ea-svc-digital-radiography.webp'
+    },
+    'food-beverage': {
+      title: 'Breweries, Beverage & Food Processing',
+      icon: Shield,
+      subtitle: 'Hygienic vessel, stainless pipework & steam boiler NDT inspections.',
+      overview: 'Food, beverage, and brewery processing facilities require immaculate sanitary conditions. IXAR Africa inspects stainless steel tanks, fermentation cellars, and hygienic process pipework to guarantee weld integrity and safety.',
+      applications: [
+        'Fermentation tank & bright beer vessel weld dye penetrant & borescope inspection',
+        'Hygienic stainless steel process line orbital weld radiography & video endoscopy',
+        'Steam utility boiler & heat exchanger tube Eddy Current / Ultrasonic testing',
+        'Clean-in-place (CIP) line corrosion & wall loss thickness mapping'
+      ],
+      imgMain: '/images/stock/stk-process-food.jpg',
+      imgDetail: '/images/east-africa/ea-svc-radiography.webp'
+    },
+    sugar: {
+      title: 'Sugar Industry (Off-Crop Turnarounds)',
+      icon: Layers,
+      subtitle: 'Evaporator, boiler & mill structure NDT during off-crop maintenance turnarounds.',
+      overview: 'Sugar processing mills undergo heavy seasonal operation followed by intense off-crop maintenance turnarounds. IXAR Africa provides complete NDT screening on boilers, juice evaporators, crystallizers, and heavy mill drive shafts.',
+      applications: [
+        'Juice evaporator & vacuum pan tube Electromagnetic / Ultrasonic screening',
+        'Bagasse boiler drum, header, and steam pipework NDT inspections',
+        'Mill roller shaft & gear tooth magnetic particle crack detection',
+        'Crystallizer & diffuser structural steel weld integrity audits'
+      ],
+      imgMain: '/images/stock/stk-sugar.jpg',
+      imgDetail: '/images/east-africa/ea-svc-pipeline.webp'
+    },
+    marine: {
+      title: 'Marine & Ports (Jetties, Cranes & Submerged NDT)',
+      icon: Award,
+      subtitle: 'Port berth jetties, gantry cranes, vessel hulls & diver NDT below the waterline.',
+      overview: 'Maritime infrastructure across East African ports faces aggressive splash-zone and underwater saltwater corrosion. IXAR Africa mobilises certified commercial diving NDT inspectors for harbour jetties, pilings, cranes, and vessel hulls.',
+      applications: [
+        'Commercial diver underwater ultrasonic thickness measurement on steel sheet pilings & jetties',
+        'Port container gantry crane boom & leg weld magnetic particle crack inspection',
+        'Ship hull plate thickness surveys & cathodic protection corrosion mapping',
+        'Mooring dolphin & underwater structural bolt ultrasonic flaw detection'
+      ],
+      imgMain: '/images/stock/stk-marine-port.jpg',
+      imgDetail: '/images/east-africa/ea-svc-underwater.jpg'
+    },
+    manufacturing: {
+      title: 'Manufacturing & Engineering (Fabrication QC)',
+      icon: Shield,
+      subtitle: 'Weld procedure qualification, structural steel NDT & pressure piping certification.',
+      overview: 'Heavy fabrication workshops and industrial equipment manufacturers across East Africa require independent NDT quality assurance. IXAR Africa provides certified Level II and III inspectors for third-party shop & field weld certification.',
+      applications: [
+        'Structural steelwork AWS D1.1 weld Radiography (RT) & Ultrasonic (UT) inspection',
+        'Pressure piping ASME B31.3 weld testing & visual inspection (VT)',
+        'Weld Procedure Qualification (WPS / PQR) destructive & non-destructive lab testing',
+        'Overhead gantry crane runway girder fatigue crack evaluation'
+      ],
+      imgMain: '/images/stock/stk-manufacturing.jpg',
+      imgDetail: '/images/east-africa/ea-svc-digital-radiography.webp'
     }
   };
 

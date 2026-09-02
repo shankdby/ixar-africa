@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="360" height="120">
+  <g transform="translate(10, 15)">
+    <circle cx="42" cy="45" r="38" fill="#DA291C"/>
+    <g fill="#FFD700">
+      <polygon points="42,11 45,30 39,30"/>
+      <polygon points="62,17 53,33 49,29"/>
+      <polygon points="73,34 57,40 55,34"/>
+      <polygon points="73,56 57,50 55,56"/>
+      <polygon points="62,73 53,57 49,61"/>
+      <polygon points="42,79 45,60 39,60"/>
+      <polygon points="22,73 31,57 35,61"/>
+      <polygon points="11,56 27,50 29,56"/>
+      <polygon points="11,34 27,40 29,34"/>
+      <polygon points="22,17 31,33 35,29"/>
+      <circle cx="42" cy="45" r="15" fill="#DA291C"/>
+      <circle cx="42" cy="45" r="9" fill="#FFD700"/>
+    </g>
+    <text x="96" y="52" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="36" fill="#0A1E42" letter-spacing="1">CPECC</text>
+    <text x="97" y="70" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="9.5" fill="#DA291C" letter-spacing="0.4">PETROLEUM ENGINEERING &amp; CONSTRUCTION</text>
+  </g>
+</svg>

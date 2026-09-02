@@ -92,7 +92,7 @@ const SECTORS = [
     panelTitle: 'Rail, thermit welds & wheelsets',
   },
   {
-    slug: null,
+    slug: 'marine',
     id: 'marine',
     short: 'Marine & Ports',
     eyebrow: 'Marine and Ports',
@@ -107,7 +107,7 @@ const SECTORS = [
     panelTitle: 'Jetties, cranes, hulls & submerged structures',
   },
   {
-    slug: null,
+    slug: 'food-beverage',
     id: 'petrochemical',
     short: 'Process & Food',
     eyebrow: 'Breweries, Beverage and Food Processing',
@@ -122,7 +122,7 @@ const SECTORS = [
     panelTitle: 'Stainless tanks & hygienic pipework',
   },
   {
-    slug: null,
+    slug: 'cement',
     id: 'cement',
     short: 'Cement',
     eyebrow: 'Cement',
@@ -137,7 +137,7 @@ const SECTORS = [
     panelTitle: 'Kilns, cyclone towers & structural supports',
   },
   {
-    slug: null,
+    slug: 'sugar',
     id: 'sugar',
     short: 'Sugar',
     eyebrow: 'Sugar Industry',

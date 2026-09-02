@@ -3,3 +3,6 @@ Allow: /
 Allow: /favicon.png
 
 Sitemap: https://ixar.africa/sitemap.xml
+
+# The content editor. Nothing to index, and no reason to advertise it.
+Disallow: /admin

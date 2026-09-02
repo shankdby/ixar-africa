@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="360" height="120">
+  <g transform="translate(10, 15)">
+    <circle cx="42" cy="45" r="38" fill="#E31E24"/>
+    <circle cx="42" cy="45" r="29" fill="#FFFFFF"/>
+    <circle cx="42" cy="45" r="23" fill="#E31E24"/>
+    <path d="M 42 16 A 29 29 0 0 1 71 45 L 42 45 Z" fill="#FFFFFF"/>
+    <circle cx="42" cy="45" r="14" fill="#FFFFFF"/>
+    <text x="96" y="52" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="34" font-style="italic" fill="#E31E24" letter-spacing="-0.5">SINOPEC</text>
+    <text x="97" y="70" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="9.5" fill="#444444" letter-spacing="0.5">CHINA PETROLEUM &amp; CHEMICAL CORP</text>
+  </g>
+</svg>

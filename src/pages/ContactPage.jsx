@@ -41,6 +41,7 @@ const SERVICES = [
   'Training & certification',
   'Equipment supply',
   'Not sure yet',
+  'Other',
 ];
 
 const OFFICES = [
