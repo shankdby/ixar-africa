@@ -23,9 +23,10 @@ function popupScript(payload, origin) {
 (function () {
   var message = 'authorization:github:${payload.type}:' + JSON.stringify(${JSON.stringify(payload.content)});
   function send(e) {
-    if (!window.opener) return;
-    window.opener.postMessage(message, ${JSON.stringify(origin)});
-  }
+  if (!window.opener) return;
+  window.opener.postMessage(message, e.origin);
+  window.removeEventListener('message', send, false);
+}
   window.addEventListener('message', send, false);
   if (window.opener) window.opener.postMessage('authorizing:github', ${JSON.stringify(origin)});
   setTimeout(function () { window.close(); }, 1200);
