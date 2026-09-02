@@ -30,7 +30,7 @@
       "category": "Advanced Ultrasonics",
       "desc": "Phased array, time of flight diffraction and automated ultrasonic testing for weld inspection and accurate defect sizing, with encoded data for repeatable comparison between inspections.",
       "standards": "ASME Sec V Art 4 · ISO 13588 · ISO 10863",
-      "img": "/images/east-africa/ea-hero-2.jpg"
+      "img": "/images/east-africa/ea-svc-advanced-ut.webp"
     },
     {
       "num": "05",
@@ -62,7 +62,7 @@
       "category": "Pipeline",
       "desc": "Cleaning pigs to remove deposits and restore flow, and intelligent pigs to inspect and map pipeline wall condition along the full length of the line.",
       "standards": "API 1163 · NACE SP0102",
-      "img": "/images/east-africa/ea-svc-pigging.jpg"
+      "img": ""
     },
     {
       "num": "09",
@@ -78,7 +78,7 @@
       "category": "Marine",
       "desc": "Inspection of jetties, dams, bridge piers, hulls and other submerged structures by certified underwater inspection personnel.",
       "standards": "CSWIP 3.1U · IMCA D 018",
-      "img": "/images/east-africa/ea-svc-underwater.jpg"
+      "img": ""
     },
     {
       "num": "11",
@@ -118,7 +118,7 @@
       "category": "Leak and Visual",
       "desc": "Certified visual inspection to code, and helium leak testing for vessels, exchangers and sealed systems where tightness must be proven.",
       "standards": "ASME Sec V Art 9 and 10 · ISO 20485",
-      "img": "/images/east-africa/ea-svc-leak-testing.webp"
+      "img": "/images/east-africa/ea-svc-visual-leak.webp"
     },
     {
       "num": "16",

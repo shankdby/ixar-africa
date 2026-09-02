@@ -40,7 +40,13 @@ export default function AppImage({ src, alt = '', priority = false, width, heigh
      added one file at a time: an empty slot still looks designed, and the day
      the file lands it becomes a photograph with no code change. External URLs
      are left alone - they are never in the manifest. */
-  if (!known && typeof src === 'string' && src.startsWith('/images/')) {
+  /* An empty, null or undefined src is the CMS saying "no photograph for this
+     entry yet". It must take the same designed-slot branch as a /images/ path
+     with no file behind it, otherwise the browser paints its broken-image icon
+     and the alt text inside an otherwise finished card. */
+  const isEmpty = !src || (typeof src === 'string' && src.trim() === '');
+
+  if (isEmpty || (!known && typeof src === 'string' && src.startsWith('/images/'))) {
     return (
       <div className={`ea-imgslot ${rest.className || ''}`.trim()} role="img" aria-label={alt} />
     );

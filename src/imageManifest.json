@@ -43,18 +43,6 @@
     1000,
     750
   ],
-  "/images/east-africa/ea-hero-1.jpg": [
-    1376,
-    768
-  ],
-  "/images/east-africa/ea-hero-2.jpg": [
-    1376,
-    768
-  ],
-  "/images/east-africa/ea-hero-3.jpg": [
-    1376,
-    768
-  ],
   "/images/east-africa/ea-hero-tilenga-cpf.webp": [
     1080,
     504
@@ -67,13 +55,17 @@
     1000,
     625
   ],
+  "/images/east-africa/ea-svc-advanced-ut.webp": [
+    1200,
+    675
+  ],
   "/images/east-africa/ea-svc-digital-radiography.webp": [
     900,
     675
   ],
-  "/images/east-africa/ea-svc-pigging.jpg": [
+  "/images/east-africa/ea-svc-mpi-lpt.webp": [
     1200,
-    896
+    675
   ],
   "/images/east-africa/ea-svc-pipeline.webp": [
     900,
@@ -87,9 +79,9 @@
     900,
     675
   ],
-  "/images/east-africa/ea-svc-underwater.jpg": [
+  "/images/east-africa/ea-svc-visual-leak.webp": [
     1200,
-    896
+    675
   ],
   "/images/hero_pipeline_ndt.jpg": [
     1376,

@@ -119,7 +119,7 @@ export default function SectorDetailPage({ onOpenContact }) {
         'Mooring dolphin & underwater structural bolt ultrasonic flaw detection'
       ],
       imgMain: '/images/stock/stk-marine-port.jpg',
-      imgDetail: '/images/east-africa/ea-svc-underwater.jpg'
+      imgDetail: '/images/stock/stk-marine-port.webp'
     },
     manufacturing: {
       title: 'Manufacturing & Engineering (Fabrication QC)',
