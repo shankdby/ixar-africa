@@ -29,7 +29,7 @@ export default function handler(req, res) {
 
   const url = new URL('https://github.com/login/oauth/authorize');
   url.searchParams.set('client_id', clientId);
-  url.searchParams.set('redirect_uri', `${proto}://${host}/api/callback`);
+  url.searchParams.set('redirect_uri', `${origin}/api/callback`);
   // `repo` is the narrowest scope that still allows committing to a private
   // repository. On a public repo `public_repo` is enough; tighten if it is.
   url.searchParams.set('scope', 'repo,user');
