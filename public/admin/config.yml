@@ -5,30 +5,27 @@
 # redeploy. There is no server to run and no database to back up: the content
 # and its history are the git history.
 #
-# ACCESS. git-gateway means access is controlled by Netlify Identity, which is
-# invite-only: an address can only sign in if it has been invited from the
-# Netlify dashboard. Nobody needs a GitHub account, and revoking someone is one
-# click. See docs/cms.md for the one-time setup.
+# ACCESS. The site is on Vercel, so this uses the GitHub backend rather than
+# Netlify Identity. Signing in means signing in to GitHub, and only accounts
+# with write access to this repository can save. Add or remove an editor in
+# GitHub → Settings → Collaborators.
 #
-# If this site is ever moved off Netlify, swap the backend block for:
-#   backend:
-#     name: github
-#     repo: shankdby/ixar-africa
-#     branch: main
-# which authenticates against GitHub instead, and limits access to repository
-# collaborators.
+# The OAuth handshake is served by this same deployment: /api/auth starts it and
+# /api/callback finishes it. Both need GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET
+# set in the Vercel project. See docs/cms.md.
 
 backend:
-  name: git-gateway
+  name: github
+  repo: shankdby/ixar-africa
   branch: main
+  base_url: https://ixar.africa      # change if the domain changes
+  auth_endpoint: api/auth
   commit_messages:
     update: 'content: update {{collection}} ({{author-login}})'
     delete: 'content: remove from {{collection}} ({{author-login}})'
     uploadMedia: 'content: upload {{path}} ({{author-login}})'
     deleteMedia: 'content: delete {{path}} ({{author-login}})'
 
-# Edits land as a pull request rather than straight on main, so a second person
-# can look before it goes live. Set to 'simple' to publish immediately instead.
 publish_mode: editorial_workflow
 
 media_folder: public/images/east-africa

@@ -26,32 +26,56 @@ Two rules are baked into the editor rather than left to memory:
 
 ## Access
 
-Access is invite-only through Netlify Identity. An address can only sign in if
-it has been invited, nobody needs a GitHub account, and removing someone is one
-click. Editors' changes open as a pull request rather than going straight live,
-so a second person can look first.
+Signing in to the editor means signing in to GitHub. Only accounts with **write
+access to this repository** can save, so adding or removing an editor is done in
+GitHub → Settings → Collaborators. Editors' changes open as a pull request
+rather than going straight live, so a second person can look first.
 
 ## One-time setup
 
-This has to be done once, in the Netlify dashboard, by whoever owns the site.
+The site runs on Vercel, so the sign-in is a GitHub OAuth app plus two
+serverless functions that already exist in this repo (`api/auth.js` and
+`api/callback.js`). Nothing else needs hosting.
 
-1. **Site configuration → Identity → Enable Identity.**
-2. Under **Registration**, set it to **Invite only**. This is what keeps the
-   editor closed; leaving it open would let anyone register.
-3. Under **Services → Git Gateway**, click **Enable Git Gateway**. This is what
-   lets the editor commit to the repository without handing anyone a GitHub
-   login.
-4. Under **Identity → Invite users**, invite each person by email address. They
-   get a link, set a password, and land in the editor.
+**1. Create the OAuth app.** GitHub → your profile → Settings → Developer
+settings → OAuth Apps → **New OAuth App**.
 
-Then open `https://<your-site>/admin` and sign in.
+| Field | Value |
+|---|---|
+| Application name | IXAR Africa CMS |
+| Homepage URL | `https://ixar.africa` |
+| Authorization callback URL | `https://ixar.africa/api/callback` |
 
-### If the site moves off Netlify
+Register it, then **Generate a new client secret** and copy both the client ID
+and the secret. The secret is shown once.
 
-Identity and Git Gateway are Netlify features. On Vercel or anywhere else,
-change the `backend` block in `public/admin/config.yml` to the GitHub backend
-commented directly above it. Access is then controlled by GitHub repository
-collaborators instead of by invitation, and each editor needs a GitHub account.
+**2. Give them to Vercel.** Vercel → the project → Settings → Environment
+Variables. Add both, for Production *and* Preview:
+
+| Name | Value |
+|---|---|
+| `GITHUB_CLIENT_ID` | the client ID |
+| `GITHUB_CLIENT_SECRET` | the client secret |
+
+Redeploy so the functions pick them up.
+
+**3. Add the editors.** GitHub → this repository → Settings → Collaborators →
+add each person with **Write** access.
+
+**4. Sign in.** Go to `https://ixar.africa/admin` and click *Login with GitHub*.
+
+If the domain is not `ixar.africa`, change `base_url` in
+`public/admin/config.yml` to match, and use the same host in the OAuth app's
+callback URL.
+
+### Troubleshooting
+
+- *"Sign-in could not be verified"* — the state cookie expired. Close the popup
+  and try again; it lasts ten minutes.
+- *The popup closes and nothing happens* — `base_url` in `config.yml` does not
+  match the domain you are on, so the token is posted to a different origin.
+- *"GITHUB_CLIENT_ID is not set"* — the environment variables are missing, or
+  the deployment predates them. Redeploy.
 
 ## For the developer
 
@@ -62,5 +86,9 @@ collaborators instead of by invitation, and each editor needs a GitHub account.
   is that a content change needs a rebuild, which the commit triggers anyway.
 - `publish_mode: editorial_workflow` in the config is what turns saves into
   pull requests. Change it to `simple` to publish immediately.
+- The OAuth handshake is two Vercel functions in `api/`. The client secret is
+  only ever read server-side, and the token is posted to the site's own origin
+  rather than to `*`, so another window cannot read it. Nothing is stored: there
+  is no session and no database.
 - The Decap version in `public/admin/index.html` is pinned to a major version
   so an upstream release cannot change the editor without a deliberate bump.
