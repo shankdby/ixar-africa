@@ -71,7 +71,10 @@ const TRACK_RECORD = [
     location: 'Dar es Salaam & Coast Region, Tanzania',
     capability: 'Tank & Tube Ultrasonic Inspection',
     desc: 'Thickness mapping, magnetic flux leakage, and weld flaw evaluation on process storage tanks and heat exchangers.',
-    img: '/images/east-africa/ea-svc-radiography.webp',
+    /* Was ea-svc-radiography.webp: a single technician from the Indian side of
+       the group, on a card whose stated capability is ultrasonic work. This
+       frame is both the right method and the African crew who ran it. */
+    img: '/images/east-africa/ea-svc-ultrasonic.webp',
   },
   {
     title: 'Tilenga Well Pad CSB Operations',
@@ -352,12 +355,28 @@ const DOWNLOADS = [
   },
 ];
 
+/* Hero slideshow.
+ *
+ * Every frame shows the African crews who do this work. Two of the previous
+ * five did not: ea-svc-pipeline.webp is equipment laid out in a yard with
+ * nobody in it, and ea-svc-radiography.webp is a single technician from the
+ * Indian side of the group. Both are still used elsewhere, where the subject
+ * of the picture is the method rather than the people.
+ *
+ * ea-office-kampala.webp also came out. It is a mixed crew, and the two
+ * photographs that are permanently on screen - the regional office card above
+ * the Kampala map, and the shot beside "Backed by Over 55 Years" - now take
+ * the clearest crew pictures in the set, so nothing in the hero repeats
+ * something already sitting a few sections below.
+ *
+ * Ordered so consecutive frames do not look alike: wide establishing shot,
+ * close two-hand work, night plant, mid group, wide group. */
 const HERO_IMAGES = [
   '/images/east-africa/ea-hero-tilenga-cpf.webp',
-  '/images/east-africa/ea-svc-pipeline.webp',
-  '/images/east-africa/ea-svc-radiography.webp',
   '/images/east-africa/ea-svc-digital-radiography.webp',
-  '/images/east-africa/ea-office-kampala.webp',
+  '/images/east-africa/ea-ind-oil-gas.webp',
+  '/images/east-africa/ea-svc-ultrasonic.webp',
+  '/images/east-africa/ea-svc-mpi-lpt.webp',
 ];
 
 /* ==========================================================================
@@ -822,8 +841,8 @@ export default function EastAfricaPage() {
               <a className="btn" href="https://ixar.in/about-us/">About IXAR</a>
             </div>
             <div className="shot">
-              <AppImage src={`${IMG}ea-hero-tilenga-cpf.webp`} alt="IXAR African Site Team at Tilenga Project, Uganda" />
-              <span className="cap">IXAR African site team, Tilenga project, Uganda</span>
+              <AppImage src={`${IMG}ea-svc-advanced-ut.webp`} alt="IXAR technicians setting up an advanced ultrasonic scan, Uganda" />
+              <span className="cap">IXAR African site team at work, Uganda</span>
             </div>
           </div>
         </div>
@@ -991,12 +1010,12 @@ export default function EastAfricaPage() {
 
                 <figure className="ea-card__media ea-office-card__media">
                   <AppImage
-                    src={`${IMG}ea-office-kampala.webp`}
-                    alt="IXAR (EA) Ltd site board and crew, Tilenga Project, Uganda"
+                    src={`${IMG}ea-svc-visual-leak.webp`}
+                    alt="IXAR (EA) Ltd inspection crew on a manifold spool, Uganda"
                     loading="lazy"
                   />
                   <figcaption className="ea-card__credit">
-                    IXAR (EA) Ltd site board, Tilenga Project
+                    IXAR (EA) Ltd inspection crew, Uganda
                   </figcaption>
                 </figure>
 
