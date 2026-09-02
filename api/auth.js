@@ -19,8 +19,7 @@ export default function handler(req, res) {
     return;
   }
 
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const proto = req.headers['x-forwarded-proto'] || 'https';
+  const origin = 'https://ixar.africa';
   const state = crypto.randomBytes(16).toString('hex');
 
   res.setHeader(
