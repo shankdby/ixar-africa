@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IXAR hero — radiograph reveal prototype</title>
+<style>
+  :root{
+    --charcoal:#15191F; --red:#DE0603; --ink:#0B0E12;
+    --sweep:0;                     /* 0 = photograph, 1 = radiograph */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0B0E12;color:#fff;
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+
+  .note{max-width:900px;margin:0 auto;padding:26px 20px 10px;color:#9BA3AD;font-size:13.5px;line-height:1.6}
+  .note b{color:#fff}
+  .note code{background:#1B2029;padding:1px 5px;border-radius:3px;font-size:12.5px}
+
+  /* ---------------------------------------------------------------- hero */
+  .hero{position:relative;height:min(76vh,660px);overflow:hidden;background:var(--ink)}
+
+  /* Layer 1: the photograph. Layer 2: the radiograph, revealed by a mask
+     whose position is driven by --sweep, so the line and the reveal are the
+     same number and can never drift apart. */
+  .layer{position:absolute;inset:0;background-size:cover;background-position:center}
+  .layer--photo{filter:saturate(.9) contrast(1.02)}
+  .layer--film{
+    -webkit-mask-image:linear-gradient(96deg,#000 0 calc(var(--sweep)*100% - 3%),transparent calc(var(--sweep)*100% + 3%) 100%);
+    mask-image:linear-gradient(96deg,#000 0 calc(var(--sweep)*100% - 3%),transparent calc(var(--sweep)*100% + 3%) 100%);
+  }
+  /* The line sits at exactly the mask edge. */
+  .line{
+    position:absolute;top:0;bottom:0;width:2px;left:calc(var(--sweep)*100%);
+    background:linear-gradient(180deg,transparent,rgba(222,6,3,.95) 16%,#FF5B59 50%,rgba(222,6,3,.95) 84%,transparent);
+    box-shadow:0 0 30px 7px rgba(222,6,3,.42);
+    opacity:calc(min(var(--sweep),1 - var(--sweep)) * 6);
+    pointer-events:none;
+  }
+  .scrim{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,rgba(11,14,18,.88) 0%,rgba(11,14,18,.55) 38%,rgba(11,14,18,.10) 72%,rgba(11,14,18,.30) 100%)}
+
+  .inner{position:absolute;inset:0;display:flex;align-items:center}
+  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
+  .flag{display:inline-block;font-size:11px;letter-spacing:.22em;font-weight:800;
+    color:var(--red);text-transform:uppercase;margin-bottom:14px}
+  h1{margin:0 0 16px;font-size:clamp(38px,6.4vw,74px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{margin:0 0 10px;max-width:520px;font-size:16px;line-height:1.6;color:#D4D9DF}
+  .supp{margin:0 0 24px;font-size:12.5px;letter-spacing:.05em;color:#8E96A0}
+  .btn{display:inline-block;padding:14px 24px;font-size:14px;font-weight:700;text-decoration:none;
+    background:var(--red);color:#fff;margin-right:10px}
+  .btn--ghost{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.28)}
+
+  /* caption naming what is on screen right now */
+  .cap{position:absolute;right:20px;bottom:18px;z-index:3;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:#9BA3AD;background:rgba(11,14,18,.6);padding:6px 10px}
+  .cap b{color:#fff;font-weight:700}
+
+  /* ------------------------------------------------------------- controls */
+  .ctl{max-width:900px;margin:18px auto 40px;padding:0 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .ctl button{padding:10px 16px;font-size:13px;font-weight:700;border:1px solid #2A313C;
+    background:#1B2029;color:#fff;cursor:pointer}
+  .ctl button:hover{border-color:var(--red)}
+  .ctl label{font-size:12.5px;color:#9BA3AD;display:flex;align-items:center;gap:8px}
+  input[type=range]{width:210px}
+
+  @media (prefers-reduced-motion: reduce){
+    /* The held radiograph is the more interesting frame anyway. */
+    :root{--sweep:1}
+    .line{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="note">
+  <p><b>Hero prototype — radiograph reveal.</b> The photograph holds, a line
+  sweeps across, and behind the line the same joint becomes its radiograph.
+  The line and the reveal are driven by one value (<code>--sweep</code>), so
+  they cannot drift apart. The cycle <b>resolves and stops</b> rather than
+  looping forever.</p>
+  <p>Both images here are drawn in the browser as stand-ins so the motion can
+  be judged before anyone goes looking for media. In the real thing they are a
+  photograph of a girth weld and the digital radiograph of that same joint.</p>
+</div>
+
+<div class="hero" id="hero">
+  <div class="layer layer--photo" id="photo"></div>
+  <div class="layer layer--film"  id="film"></div>
+  <div class="line" aria-hidden="true"></div>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="inner">
+    <div class="wrap">
+      <span class="flag">Non-Destructive Testing Across Africa</span>
+      <h1>IXAR in <em>Africa</em></h1>
+      <p class="sub">Non-destructive testing and industrial inspection, delivered from
+        registered offices in Uganda and Tanzania.</p>
+      <p class="supp">Licensed for sealed radiation sources &middot; ASNT Level II / III certified &middot; ISO 9001 certified</p>
+      <a class="btn" href="#">Request a Quote</a>
+      <a class="btn btn--ghost" href="#">Build Your Scope</a>
+    </div>
+  </div>
+
+  <div class="cap" id="cap"><b>Girth weld</b> &middot; stand-in photograph</div>
+</div>
+
+<div class="ctl">
+  <button id="play">Run the sweep</button>
+  <label>Scrub <input type="range" id="scrub" min="0" max="100" value="0"></label>
+  <label><input type="checkbox" id="loop"> loop it (to compare with today's hero)</label>
+</div>
+
+<script>
+/* ---------------------------------------------------------------------------
+   Stand-in imagery. Drawn to canvas so this file is self-contained and can be
+   opened from disk with no assets beside it. Replace both with real files:
+     #photo -> photograph of the joint
+     #film  -> the digital radiograph of that same joint
+   --------------------------------------------------------------------------- */
+function canvas(w, h, draw){
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  return c.toDataURL('image/jpeg', 0.86);
+}
+
+/* A pipe joint under work light. */
+const photo = canvas(1400, 800, (x, w, h) => {
+  const bg = x.createLinearGradient(0, 0, 0, h);
+  bg.addColorStop(0, '#6B6E68'); bg.addColorStop(1, '#2C2E31');
+  x.fillStyle = bg; x.fillRect(0, 0, w, h);
+  // pipe
+  const pipe = x.createLinearGradient(0, h*0.30, 0, h*0.72);
+  pipe.addColorStop(0, '#8E9299'); pipe.addColorStop(0.32, '#CDD2D8');
+  pipe.addColorStop(0.60, '#9AA0A7'); pipe.addColorStop(1, '#63686E');
+  x.fillStyle = pipe; x.fillRect(0, h*0.30, w, h*0.42);
+  // weld cap running vertically at the joint
+  for (let i = 0; i < 130; i++){
+    const y = h*0.30 + (i/130)*h*0.42;
+    x.beginPath();
+    x.ellipse(w*0.52 + Math.sin(i*0.7)*3, y, 16 + Math.sin(i*1.3)*3, 5, 0, 0, 7);
+    x.fillStyle = i % 2 ? 'rgba(206,212,219,.9)' : 'rgba(150,156,163,.9)';
+    x.fill();
+  }
+  // grit and vignette
+  for (let i = 0; i < 5000; i++){
+    x.fillStyle = 'rgba(255,255,255,'+(Math.random()*0.05)+')';
+    x.fillRect(Math.random()*w, Math.random()*h, 1.5, 1.5);
+  }
+  const v = x.createRadialGradient(w/2, h/2, h*0.2, w/2, h/2, h*0.9);
+  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.38)');
+  x.fillStyle = v; x.fillRect(0, 0, w, h);
+});
+
+/* The radiograph of that joint: dense weld band, density strip, IQI wire set,
+   a couple of porosity indications and film grain. */
+const film = canvas(1400, 800, (x, w, h) => {
+  x.fillStyle = '#101317'; x.fillRect(0, 0, w, h);
+  // parent metal
+  const m = x.createLinearGradient(0, h*0.24, 0, h*0.78);
+  m.addColorStop(0, '#22262C'); m.addColorStop(0.5, '#4E555E'); m.addColorStop(1, '#22262C');
+  x.fillStyle = m; x.fillRect(0, h*0.24, w, h*0.54);
+  // weld band, brighter than parent metal
+  const b = x.createLinearGradient(w*0.40, 0, w*0.64, 0);
+  b.addColorStop(0, 'rgba(90,98,108,0)'); b.addColorStop(0.5, 'rgba(205,213,223,.97)');
+  b.addColorStop(1, 'rgba(90,98,108,0)');
+  x.fillStyle = b; x.fillRect(w*0.40, h*0.24, w*0.24, h*0.54);
+  // ripple of the cap
+  for (let i = 0; i < 90; i++){
+    const y = h*0.24 + (i/90)*h*0.54;
+    x.strokeStyle = 'rgba(236,242,250,'+(0.10 + Math.random()*0.12)+')';
+    x.lineWidth = 1.4; x.beginPath();
+    x.moveTo(w*0.44, y); x.bezierCurveTo(w*0.50, y-4, w*0.54, y+4, w*0.60, y); x.stroke();
+  }
+  // porosity: small dark rounds inside the weld
+  [[0.515,0.40,5],[0.535,0.52,3.4],[0.505,0.61,4.2],[0.545,0.34,2.6]].forEach(([px,py,r])=>{
+    x.beginPath(); x.arc(w*px, h*py, r, 0, 7);
+    x.fillStyle = 'rgba(12,14,17,.92)'; x.fill();
+  });
+  // IQI wire set
+  for (let i = 0; i < 7; i++){
+    x.strokeStyle = 'rgba(236,242,250,.78)'; x.lineWidth = 3.4 - i*0.42;
+    x.beginPath(); x.moveTo(w*0.70 + i*15, h*0.33); x.lineTo(w*0.70 + i*15, h*0.47); x.stroke();
+  }
+  // density / identification strip
+  x.fillStyle = 'rgba(236,242,250,.20)'; x.fillRect(w*0.05, h*0.30, 26, h*0.40);
+  for (let i = 0; i < 8; i++){
+    x.fillStyle = 'rgba(236,242,250,'+(0.10 + i*0.070)+')';
+    x.fillRect(w*0.05, h*0.30 + i*(h*0.05), 26, h*0.05);
+  }
+  x.fillStyle = 'rgba(236,242,250,.85)';
+  x.font = '600 16px Arial';
+  x.fillText('IXAR  ·  TILENGA  ·  GW-118  ·  Ir-192  ·  SFD 700', w*0.05, h*0.245);
+  // film grain
+  for (let i = 0; i < 26000; i++){
+    x.fillStyle = 'rgba(255,255,255,'+(Math.random()*0.035)+')';
+    x.fillRect(Math.random()*w, Math.random()*h, 1, 1);
+  }
+});
+
+document.getElementById('photo').style.backgroundImage = 'url('+photo+')';
+document.getElementById('film').style.backgroundImage  = 'url('+film+')';
+
+/* ---------------------------------------------------------------------------
+   The timeline. sweep 0 -> 1, hold on the radiograph, sweep back, hold on the
+   photograph, then stop. Motion that resolves reads as deliberate; motion that
+   loops reads as a screensaver, which is the main complaint about the hero
+   running today.
+   --------------------------------------------------------------------------- */
+const root  = document.documentElement;
+const cap   = document.getElementById('cap');
+const scrub = document.getElementById('scrub');
+const loop  = document.getElementById('loop');
+let raf = null;
+
+const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+
+function setSweep(v){
+  root.style.setProperty('--sweep', v.toFixed(4));
+  scrub.value = Math.round(v*100);
+  cap.innerHTML = v > 0.5
+    ? '<b>Girth weld GW-118</b> &middot; stand-in radiograph'
+    : '<b>Girth weld GW-118</b> &middot; stand-in photograph';
+}
+
+/* phases, in ms: sweep out, hold, sweep back, hold */
+const PHASES = [[1400,'out'],[2600,'hold'],[1400,'back'],[2600,'hold']];
+
+function run(){
+  cancelAnimationFrame(raf);
+  const total = PHASES.reduce((a,[d])=>a+d,0);
+  const t0 = performance.now();
+  (function step(now){
+    let t = now - t0;
+    if (t >= total){
+      if (loop.checked){ run(); return; }
+      setSweep(0); return;                    /* resolve and stop */
+    }
+    let acc = 0, v = 0;
+    for (const [d, kind] of PHASES){
+      if (t < acc + d){
+        const p = (t - acc)/d;
+        v = kind === 'out' ? ease(p) : kind === 'back' ? 1 - ease(p) : (acc < 3000 ? 1 : 0);
+        break;
+      }
+      acc += d;
+    }
+    setSweep(v);
+    raf = requestAnimationFrame(step);
+  })(t0);
+}
+
+document.getElementById('play').addEventListener('click', run);
+scrub.addEventListener('input', e => { cancelAnimationFrame(raf); setSweep(e.target.value/100); });
+
+/* Run once when the hero is first seen, then leave the visitor alone. */
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(run, 700);
+else setSweep(1);
+</script>
+</body>
+</html>
