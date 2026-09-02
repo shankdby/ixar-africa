@@ -347,7 +347,7 @@ const DOWNLOADS = [
     title: 'Completed Projects, Africa',
     body: 'A record of projects delivered across the continent, with client, scope, location and dates.',
     cta: 'Download Project List (PDF)',
-    href: '/downloads/IXAR-East-Africa-Project-List.pdf',
+    href: '/downloads/IXAR-Africa-Project-List.pdf',
     dark: true,
   },
 ];
