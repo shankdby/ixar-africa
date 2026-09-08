@@ -109,6 +109,7 @@ const CSS = `
   tbody tr{ page-break-inside:avoid; }
   tbody tr:nth-child(even) td{ background:#F7F8F9; }
   td.num{ color:#DE0603; font-weight:700; width:9mm; }
+  td .sub{ font-size:7.2pt; color:#6B6B6B; font-style:italic; }
   .pill{
     display:inline-block; padding:.6mm 2mm; font-size:7.4pt; font-weight:700;
     border-radius:1mm; white-space:nowrap;
@@ -368,18 +369,20 @@ const projectsBody = `
   <table>
     <thead><tr>
       <th style="width:9mm">No</th>
+      <th style="width:33mm">Client</th>
       <th>Project</th>
-      <th style="width:30mm">Client</th>
-      <th style="width:19mm">Period</th>
+      <th style="width:14mm">Year</th>
       <th style="width:21mm">Status</th>
-      <th style="width:44mm">Location</th>
+      <th style="width:41mm">Location</th>
     </tr></thead>
     <tbody>
       ${PROJECTS.map((p) => `<tr>
         <td class="num">${esc(p.no)}</td>
-        <td><strong>${esc(p.project)}</strong></td>
-        <td>${esc(p.client)}</td>
-        <td>${esc(p.period)}</td>
+        <td><strong>${esc(p.client)}</strong></td>
+        <td>${esc(p.project)}${p.scope
+          ? `<br><span class="sub">${esc(p.scope)}</span>`
+          : p.separateOrder ? '<br><span class="sub">Separate work order</span>' : ''}</td>
+        <td>${esc(p.year)}</td>
         <td>${pill(p.status)}</td>
         <td>${esc(p.location)}</td>
       </tr>`).join('')}
@@ -391,10 +394,11 @@ const projectsBody = `
     <ul>
       <li>Work order values are held commercially confidential and are not published.
         They are available on request under a non-disclosure agreement.</li>
-      <li>Entries 4 and 9 are separate work orders for the same client at the same
-        location and are listed individually rather than combined.</li>
-      <li>Entry 10 is a group project delivered in India, included because the scope
-        and the client relationship carry into the African work.</li>
+      <li>Entries 4 and 9, and entries 6 and 8, are separate work orders for the
+        same client at the same location. They are listed individually rather
+        than combined.</li>
+      <li>Year is the year of completion, or the current year for work still
+        running. Ranges are not used.</li>
       <li>Client names are published with the permission of the clients concerned.
         Projects under confidentiality are not listed.</li>
       <li>Status is current as at ${ISSUED}.</li>

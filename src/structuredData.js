@@ -1,3 +1,5 @@
+import { deliveredProse } from './countries.js';
+
 /**
  * JSON-LD structured data, injected into the static HTML by
  * scripts/prerender.mjs so it is present without running JavaScript.
@@ -28,7 +30,7 @@ const organization = () => ({
   url: `${SITE_URL}/`,
   logo: { '@type': 'ImageObject', url: LOGO },
   description:
-    'Non-destructive testing, quality assurance and asset integrity services across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.',
+    `Non-destructive testing, quality assurance and asset integrity services across ${deliveredProse()}, with mobilisation on request elsewhere in Africa.`,
   parentOrganization: {
     '@type': 'Organization',
     name: 'Industrial X-Ray & Allied Radiographers (I) Pvt. Ltd.',

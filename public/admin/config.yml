@@ -39,7 +39,8 @@ collections:
     label_singular: project
     description: >-
       The experience record shown on the homepage. Work order value is
-      deliberately not published; do not add it.
+      deliberately not published; do not add it. Client and project are
+      separate columns, and Year is a single year with no ranges.
     files:
       - name: projects
         label: Project list
@@ -49,12 +50,29 @@ collections:
             label: Projects
             label_singular: project
             widget: list
-            summary: '{{fields.no}} — {{fields.project}} ({{fields.period}})'
+            summary: '{{fields.no}} — {{fields.client}}: {{fields.project}} ({{fields.year}})'
             fields:
-              - { name: no, label: 'Row number', widget: number, value_type: int, min: 1 }
-              - { name: project, label: 'Project name', widget: string }
-              - { name: client, label: Client, widget: string, hint: 'Used for search and filtering.' }
-              - { name: period, label: Period, widget: string, hint: 'e.g. 2024 or 2024–2026' }
+              # Quoted deliberately: YAML 1.1 reads a bare `no` as the boolean
+              # false, which would name this field "false" and silently detach
+              # it from the JSON key the site reads.
+              - { name: 'no', label: 'Row number', widget: number, value_type: int, min: 1 }
+              - { name: client, label: Client, widget: string, hint: 'Its own column. Do not repeat it in the project name.' }
+              - { name: project, label: 'Project / scope of work', widget: string, hint: 'What was done, without the client name.' }
+              - name: scope
+                label: 'Distinguishing detail'
+                widget: string
+                required: false
+                hint: >-
+                  Only needed where two rows are the same client, work and year.
+                  Something that tells them apart — a line number, an area, a
+                  work order reference. Shown under the project name.
+              - name: year
+                label: Year
+                widget: number
+                value_type: int
+                min: 2015
+                max: 2100
+                hint: 'A single year. Completed work shows the year it finished; ongoing work shows the current year. No ranges.'
               - name: status
                 label: Status
                 widget: select
@@ -63,8 +81,17 @@ collections:
               - name: country
                 label: Country
                 widget: select
-                options: [Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan, Malawi, India]
-                hint: 'Drives the country filter above the table.'
+                options: [Uganda, Tanzania, Kenya]
+                hint: >-
+                  Drives the country filter above the table. Completed projects
+                  exist in these three only. Adding a country here also claims
+                  it on the map and in the hero ticker — see src/countries.js.
+              - name: separateOrder
+                label: 'Mark as a separate work order'
+                widget: boolean
+                required: false
+                default: false
+                hint: 'Tick where another row looks identical, until the distinguishing detail above is filled in.'
 
   - name: services
     label: Services
@@ -89,6 +116,15 @@ collections:
                 label: Standards
                 widget: string
                 hint: 'Must be confirmed by a Level III before publishing. Separate with a middle dot.'
+              - name: to
+                label: 'Read more link'
+                widget: string
+                required: false
+                default: '/services'
+                hint: >-
+                  Where the "View Methodologies" button goes. A page path such
+                  as /services/paut, or /services#conventional for a section of
+                  the services index.
               - name: img
                 label: Photograph
                 widget: image

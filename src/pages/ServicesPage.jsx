@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Page, Section, SectionHead, PageHero, Crumbs, EditorialRow, Media } from '../components/ui';
+import { deliveredProse } from '../countries';
 
 /* Services.
  *
@@ -181,7 +182,7 @@ export default function ServicesPage({ onOpenContact }) {
       <PageHero
         eyebrow="Our Services"
         title="Inspection Without Compromise."
-        sub="Advanced non-destructive testing and asset integrity solutions for critical industrial infrastructure across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi."
+        sub={`Advanced non-destructive testing and asset integrity solutions for critical industrial infrastructure across ${deliveredProse()}, with mobilisation on request elsewhere in Africa.`}
         image="/images/east-africa/ea-hero-tilenga-cpf.webp"
         imageAlt="IXAR crew at the central processing facility, Tilenga Project, Uganda"
         actions={

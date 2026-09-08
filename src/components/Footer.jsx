@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ChevronRight } from 'lucide-react';
 import Style from './Style';
 import { IXAR_IN } from '../globalNav';
+import { deliveredProse } from '../countries';
 
 /* Footer.
    Office details are the Kampala ones from IXAR's own site board (Tilenga
@@ -31,8 +32,9 @@ export default function Footer({ onOpenContact }) {
             </div>
 
             <p className="footer-bio">
-              Non-destructive testing and industrial inspection across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi,
-              delivered by Industrial X-Ray and Allied Radiographers (EA) Ltd.
+              Non-destructive testing and industrial inspection across {deliveredProse()},
+              with mobilisation on request elsewhere in Africa, delivered by
+              Industrial X-Ray and Allied Radiographers (EA) Ltd.
             </p>
 
             <div className="footer-accred-row">
@@ -45,7 +47,9 @@ export default function Footer({ onOpenContact }) {
           <div className="footer-col">
             <h4 className="footer-col-title">Services</h4>
             <ul className="footer-links">
-              <li><Link to="/services/radiography">Radiography (RT / CR / DR)</Link></li>
+              {/* Labelled "Radiography (RT / CR / DR)" while the page behind it
+                  is specifically Digital and Computed Radiography. */}
+              <li><Link to="/services/radiography">Digital &amp; Computed Radiography</Link></li>
               <li><Link to="/services/aut">Automated Ultrasonics (AUT)</Link></li>
               <li><Link to="/services/paut">Phased Array (PAUT)</Link></li>
               <li><Link to="/services/tofd">Time of Flight Diffraction</Link></li>
@@ -61,7 +65,9 @@ export default function Footer({ onOpenContact }) {
               <li><Link to="/applications/oil-gas">Oil and Gas</Link></li>
               <li><Link to="/applications/power-plants">Power and Geothermal</Link></li>
               <li><Link to="/applications/mining">Mining</Link></li>
-              <li><Link to="/applications/railways">Railways and Transport</Link></li>
+              {/* "Railways and Transport" was here. Rail is not a sector IXAR
+                  pursues in Africa and appears nowhere else on the site, so a
+                  footer link was the only thing claiming it. */}
               <li><Link to="/applications">All industries</Link></li>
               <li><Link to="/training">NDT Training</Link></li>
               <li><Link to="/case-studies">Projects</Link></li>
@@ -76,11 +82,16 @@ export default function Footer({ onOpenContact }) {
             <h4 className="footer-col-title">Africa</h4>
             <ul className="footer-links">
               <li><Link to="/products">Equipment and Supply</Link></li>
-              <li><Link to="/estimator">Scope and Cost Estimator</Link></li>
+              <li><Link to="/estimator">Scope Builder</Link></li>
               <li><Link to="/careers">Careers in Africa</Link></li>
               <li><Link to="/contact">Regional Office Contact</Link></li>
               <li>
-                <a href={IXAR_IN + '/'} className="footer-global-link">
+                <a
+                  href={IXAR_IN + '/'}
+                  className="footer-global-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   IXAR Global (ixar.in)
                 </a>
               </li>

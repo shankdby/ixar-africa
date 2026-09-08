@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Style from './Style';
 import { AFRICA_PATHS, MAP_VIEWBOX } from '../africaPaths';
+import { deliveredProse } from '../countries';
 
 /* Africa, drawn from Natural Earth 1:50m country geometry.
  *
@@ -21,16 +22,16 @@ const KAMPALA = { x: 492, y: 340 };
 const TANZANIA_OFFICE = { x: 546, y: 397 };
 
 /* Where each highlighted country's label sits. `leader` draws a line back to
-   the country for the ones too small to letter directly. */
+   the country for the ones too small to letter directly.
+
+   One label per highlighted country and no more: a label on an unshaded
+   country reads as a claim about it. Sudan, Ethiopia, Rwanda, Malawi and
+   Mozambique were labelled here while being shaded as completed, which is
+   what the 8 September review picked up. */
 const LABELS = [
-  { name: 'Sudan',      x: 471, y: 214, anchor: 'middle' },
-  { name: 'Ethiopia',   x: 560, y: 276, anchor: 'middle' },
-  { name: 'Kenya',      x: 545, y: 341, anchor: 'middle' },
-  { name: 'Uganda',     x: 432, y: 318, anchor: 'end',   leader: [438, 318, 484, 330] },
-  { name: 'Rwanda',     x: 396, y: 360, anchor: 'end',   leader: [402, 358, 466, 358] },
-  { name: 'Tanzania',   x: 512, y: 398, anchor: 'middle' },
-  { name: 'Malawi',     x: 452, y: 452, anchor: 'end',   leader: [458, 450, 501, 450] },
-  { name: 'Mozambique', x: 585, y: 492, anchor: 'start', leader: [579, 488, 528, 482] },
+  { name: 'Kenya',    x: 545, y: 341, anchor: 'middle' },
+  { name: 'Uganda',   x: 432, y: 318, anchor: 'end',   leader: [438, 318, 484, 330] },
+  { name: 'Tanzania', x: 512, y: 398, anchor: 'middle' },
 ];
 
 export default function AfricaMap({ mobile = false }) {
@@ -41,7 +42,7 @@ export default function AfricaMap({ mobile = false }) {
       <svg
         viewBox={mobile ? '380 180 340 460' : MAP_VIEWBOX}
         role="img"
-        aria-label="Map of Africa. Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi are highlighted as countries with completed projects, with office pins on Kampala and Tanzania."
+        aria-label={`Map of Africa. ${deliveredProse()} are highlighted as countries with completed projects, with office pins on Kampala and Tanzania. Every other country is shown as mobilisation on request.`}
       >
         <defs>
           <filter id="afPinShadow" x="-60%" y="-60%" width="220%" height="220%">

@@ -53,17 +53,20 @@ const LOCATIONS = [
   },
   {
     id: 'wider-africa',
-    country: 'Rwanda, Mozambique, Ethiopia, Sudan and Malawi',
-    status: 'Served — projects completed',
-    tier: 'served',
+    /* These were listed as "projects completed" until 8 September 2026.
+       There are none: completed work is Uganda, Tanzania and Kenya only.
+       They are a statement of reach, not of track record. */
+    country: 'Elsewhere in Africa',
+    status: 'Mobilisation on request',
+    tier: 'request',
     blurb:
-      'Countries where projects have been completed, crewed and equipped from the regional offices. Added on client instruction in 2026; the project record and the radiation authorisation status for each must be confirmed before publication.',
+      'Crews, equipment and sealed sources mobilise from the regional offices to sites elsewhere on the continent. Radiation authorisation for the destination country is arranged per project. No completed projects are claimed here.',
     contactVia: 'Kampala regional office',
   },
   {
     id: 'kenya',
     country: 'Kenya',
-    status: 'Served — mobilised from the region',
+    status: 'Served — projects completed',
     tier: 'served',
     blurb:
       'Work delivered in country by crews mobilised from the regional offices. IXAR does not hold a Kenyan radiation authorisation, so scopes requiring sealed sources are arranged accordingly.',
@@ -186,6 +189,7 @@ export default function RegionalFootprint({ onOpenContact }) {
         /* A served market is not a registered office. The quieter top rule says
            so before the label is read. */
         .rn-card--served{border-top-color:var(--muted)}
+        .rn-card--request{border-top-color:var(--line)}
         .rn-card__media{margin:0;aspect-ratio:16/10;overflow:hidden}
         .rn-card__media img{width:100%;height:100%;object-fit:cover}
         .rn-card__body{display:flex;flex-direction:column;flex:1;padding:28px 26px 26px}
@@ -194,6 +198,7 @@ export default function RegionalFootprint({ onOpenContact }) {
           color:var(--brand);margin-bottom:12px;
         }
         .rn-card--served .rn-card__status{color:var(--text-dim)}
+        .rn-card--request .rn-card__status{color:var(--text-dim)}
         .rn-card h3{
           font-size:24px;font-weight:800;line-height:1.15;color:var(--navy);margin:0 0 14px;
           display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;

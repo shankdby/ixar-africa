@@ -8,13 +8,23 @@ import { EXPERIENCE_RECORD, RECORD_COUNTRIES, RECORD_STATUSES } from '../experie
  *
  * Columns match the source sheet minus the work order value, which is a bid
  * figure and stays out of a public page. See src/experienceRecord.js.
+ *
+ * Client was folded into the project name until the review of 8 September
+ * 2026, so every row began by repeating a company name and the column could
+ * not be sorted or scanned. It is its own column now.
+ *
+ * Period was a mixture of single years and ranges ("2024-2025"), which made
+ * two work orders on the same site look like one long engagement. A single
+ * year now: the year of completion, or the current year for work still
+ * running.
  */
 
 const COLUMNS = [
-  { key: 'no', label: 'No', width: '64px' },
+  { key: 'no', label: 'No', width: '58px' },
+  { key: 'client', label: 'Client', width: '190px' },
   { key: 'project', label: 'Project' },
-  { key: 'period', label: 'Period', width: '130px' },
-  { key: 'status', label: 'Status', width: '150px' },
+  { key: 'year', label: 'Year', width: '90px' },
+  { key: 'status', label: 'Status', width: '140px' },
   { key: 'location', label: 'Location' },
 ];
 
@@ -32,7 +42,7 @@ export default function ExperienceTable({ rows = EXPERIENCE_RECORD }) {
       .filter((r) => (!status || r.status === status))
       .filter((r) =>
         !q ||
-        [r.project, r.client, r.location, r.period, r.status].some((v) =>
+        [r.project, r.client, r.location, r.year, r.status, r.scope].some((v) =>
           String(v).toLowerCase().includes(q)))
       .sort((a, b) => {
         const x = a[sortKey];
@@ -98,10 +108,22 @@ export default function ExperienceTable({ rows = EXPERIENCE_RECORD }) {
           </thead>
           <tbody>
             {visible.map((r) => (
-              <tr key={`${r.no}-${r.project}`}>
+              <tr key={r.no}>
                 <td className="xr-no">{String(r.no).padStart(2, '0')}</td>
-                <td className="xr-project">{r.project}</td>
-                <td>{r.period}</td>
+                <td className="xr-client">{r.client}</td>
+                <td className="xr-project">
+                  {r.project}
+                  {r.scope && <span className="xr-scope">{r.scope}</span>}
+                  {/* Two pairs of rows are the same client, scope, year and
+                      site. They are separate work orders on the source sheet,
+                      not a duplicated row, and without saying so the table
+                      looks like a mistake. The scope field above replaces this
+                      marker as soon as IXAR fills it in. */}
+                  {!r.scope && r.separateOrder && (
+                    <span className="xr-scope xr-scope--pending">Separate work order</span>
+                  )}
+                </td>
+                <td className="xr-year">{r.year}</td>
                 <td>
                   <span className={`xr-status xr-status--${r.status.toLowerCase()}`}>{r.status}</span>
                 </td>
@@ -126,7 +148,7 @@ export default function ExperienceTable({ rows = EXPERIENCE_RECORD }) {
         .xr-count{margin-left:auto;font-size:.85rem;font-weight:700;color:var(--text-dim)}
 
         .xr-scroll{overflow-x:auto;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-sm)}
-        .xr-table{width:100%;border-collapse:collapse;min-width:820px}
+        .xr-table{width:100%;border-collapse:collapse;min-width:940px}
         .xr-table th{background:var(--navy);padding:0;text-align:left}
         .xr-table th button{width:100%;display:flex;align-items:center;gap:8px;background:none;border:0;
           cursor:pointer;font-family:inherit;font-size:.6875rem;font-weight:800;letter-spacing:.1em;
@@ -138,7 +160,12 @@ export default function ExperienceTable({ rows = EXPERIENCE_RECORD }) {
           vertical-align:top;color:var(--text-body)}
         .xr-table tbody tr:hover{background:#FCFCFD}
         .xr-no{font-weight:800;color:var(--text-dim);font-size:.8125rem}
-        .xr-project{font-weight:700;color:var(--text-main)}
+        .xr-client{font-weight:800;color:var(--text-main)}
+        .xr-project{color:var(--text-body)}
+        .xr-year{font-variant-numeric:tabular-nums;color:var(--text-body)}
+        .xr-scope{display:block;margin-top:5px;font-size:.75rem;font-weight:700;
+          letter-spacing:.05em;text-transform:uppercase;color:var(--text-dim)}
+        .xr-scope--pending{color:#9AA3AE;font-weight:600;text-transform:none;letter-spacing:0;font-style:italic}
         .xr-loc{color:var(--text-dim)}
         .xr-status{display:inline-block;font-size:.6875rem;font-weight:800;letter-spacing:.06em;
           text-transform:uppercase;padding:5px 10px;white-space:nowrap;

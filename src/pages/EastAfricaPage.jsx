@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CalendarDays, Globe2, ClipboardList, Activity,
@@ -10,8 +10,10 @@ import AppImage from '../components/AppImage';
 import ExperienceTable from '../components/ExperienceTable';
 import servicesContent from '../content/services.json';
 import industriesContent from '../content/industries.json';
+import projectsContent from '../content/projects.json';
 import { waLinkProps, WA_DEFAULT_MESSAGE } from '../lib/whatsapp';
 import { sendEnquiry } from '../lib/enquiry';
+import { DELIVERED, DELIVERED_COUNT, deliveredProse } from '../countries';
 
 /* ==========================================================================
    IXAR in Africa  ·  /africa
@@ -88,6 +90,76 @@ const TRACK_RECORD = [
 /* ==========================================================================
    Small presentational helpers
    ========================================================================== */
+
+/* A Trusted By tile.
+ *
+ * Two faces that cross-fade: the client's mark, then what that client
+ * actually engaged IXAR to do. The strip was a marquee of logos linking out
+ * to third-party websites, which sent visitors off ixar.africa from the one
+ * section whose job is to keep them on it. No links now.
+ *
+ * Each tile runs on its own timer with a phase offset derived from its
+ * index, so they never turn together - a wall that flips in unison reads as
+ * a slideshow, and the eye stops seeing the individual clients. The offsets
+ * are prime-ish multiples so the cycle does not resynchronise. */
+function ClientTile({ client, index }) {
+  const [face, setFace] = useState(0);
+  /* Memoised on the name. clientReference builds a fresh object each call,
+     and an object in the effect's dependency list is a new value on every
+     render - so the effect below tore itself down and restarted its timer
+     before the timer could ever fire, and no tile ever turned. */
+  const ref = useMemo(() => clientReference(client.name), [client.name]);
+
+  useEffect(() => {
+    if (prefersReducedMotion() || !ref) return undefined;
+    const PERIOD = 7000;
+    let interval = null;
+    const flip = () => setFace((f) => 1 - f);
+    /* The offset is what staggers the wall. 1300ms against a 7000ms period
+       never divides evenly, so six tiles spread across the cycle and stay
+       spread. */
+    const first = window.setTimeout(() => {
+      flip();
+      interval = window.setInterval(flip, PERIOD);
+    }, PERIOD + index * 1300);
+    return () => {
+      window.clearTimeout(first);
+      if (interval) window.clearInterval(interval);
+    };
+  }, [index, ref]);
+
+  return (
+    <div className="logotile">
+      <div className={`logoface ${face === 0 ? 'is-on' : ''}`}>
+        {client.logo ? (
+          <img
+            src={client.logo}
+            alt={client.name}
+            /* Optical weight, not pixel height: the scale corrects for how
+               much ink each mark lays down inside its own bounding box. */
+            style={{ transform: `scale(${client.scale})` }}
+          />
+        ) : (
+          <span className="logoword">{client.name}</span>
+        )}
+      </div>
+
+      {ref && (
+        <div className={`logoface logoface--ref ${face === 1 ? 'is-on' : ''}`}>
+          {client.work
+            ? <AppImage src={client.work} alt={`${client.name} project, ${ref.where}`} />
+            : (
+              <>
+                <span className="rf-project">{ref.project}</span>
+                <span className="rf-where">{ref.where} &middot; {ref.year}</span>
+                {ref.count > 1 && <span className="rf-count">{ref.count} work orders</span>}
+              </>
+            )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /** Amber chip: content IXAR has still to confirm. */
 function Chip({ children }) {
@@ -282,14 +354,21 @@ function LogoTile({ offset, total = 12, hold = 5500, stagger = 1000 }) {
  * downloads. Services, industries and projects come from src/content via the
  * CMS; these are page furniture and change rarely. */
 
-const COUNTRIES = [
-  'Uganda', 'Tanzania', 'Kenya', 'Rwanda', 'Mozambique', 'Ethiopia', 'Sudan', 'Malawi',
-];
+/* The hero ticker. Completed projects only - it is headed "Projects
+   Completed In", so a country in it is a claim that work was done there.
+   Five countries with no completed project were listed until the review
+   of 8 September 2026. */
+const COUNTRIES = DELIVERED;
 
 const STATS = [
+  /* 2019 is still being verified by IXAR; left as found. */
   { icon: CalendarDays,  value: '2019',  label: 'Established in Africa' },
-  { icon: Globe2,        value: '8+',    label: 'Countries with Projects Completed' },
-  { icon: ClipboardList, value: '12+',   label: 'Projects Completed in Africa' },
+  /* Was "8+". Completed projects exist in Uganda, Tanzania and Kenya only,
+     so this counts DELIVERED rather than carrying its own number. */
+  { icon: Globe2,        value: String(DELIVERED_COUNT), label: 'Countries with Projects Completed' },
+  /* Was "12+", which was the number of rows in the table rather than the
+     number of projects. 27 per IXAR, subject to their final verification. */
+  { icon: ClipboardList, value: '27',   label: 'Projects Completed in Africa' },
   { icon: Activity,      value: '20+',   label: 'NDT Methods Offered' },
 ];
 
@@ -328,29 +407,96 @@ const LICENCES = [
   },
 ];
 
-const CLIENT_LOGOS = [
-  { name: 'Sinopec', logo: '/images/clients/sinopec.png', url: 'https://www.sinopecgroup.com/group/en/' },
-  { name: 'CPECC', logo: '/images/clients/cpecc.png', url: 'http://cpecc.cnpc.com.cn/cpeccen/' },
-  { name: 'CCJV', logo: '/images/clients/ccjv.png', url: 'https://www.cnoocuganda.com/' },
-  { name: 'PRAJ Projects', logo: '/images/clients/praj.png', url: 'https://www.praj.net/' },
-  { name: 'Larsen & Toubro', logo: '/images/clients/lt.png', url: 'https://www.larsentoubro.com/' },
-  { name: 'Afrishell-Jeveeka', logo: '/images/clients/afrishell.png', url: 'https://www.jeveeka.com/' },
-  { name: 'Ntake Bakery', logo: '/images/clients/ntake.png', url: 'https://ntakegroup.com/' },
-  { name: 'Illovo Distillers', logo: '/images/clients/illovo.png', url: 'https://www.illovosugarafrica.com/' },
+/* Clients shown in the Trusted By strip.
+ *
+ * REMOVED 8 SEPTEMBER 2026, on Rahil Malde's review:
+ *   Shell        never a client, no relationship with IXAR, and its mark must
+ *                not be used. The project record entry is Afrishell-Jeveeka,
+ *                a different company entirely - the logo file was named
+ *                afrishell.png and was the Shell pecten.
+ *   Larsen &     not a current client, and the only project was in India, on
+ *   Toubro       a page about Africa.
+ *
+ * SINOPEC has no logo here. It is a real client - rows 1, 6 and 8 of the
+ * project record - but the mark on file is not the Sinopec trademark. A
+ * wrong trademark is worse than none, so the tile carries the name set as
+ * type until a correct, permitted mark is supplied. `logo: null` is what
+ * selects that treatment, so dropping the right file in and naming it here
+ * is the whole change.
+ *
+ * `scale` is the optical-weight correction, and the files are the trimmed
+ * copies under clients/trimmed. Both are needed. Every source PNG is a
+ * 360x120 canvas with the mark somewhere inside it, so a common max-width
+ * sized the *canvas* and left CPECC - whose mark occupies about a quarter of
+ * its canvas - rendering at roughly half the visual weight of the others.
+ * Trimming to the ink makes a common width mean a common mark; the scale
+ * then corrects for how much ink each mark lays down within that, damped so
+ * that Ntake, which is artwork reversed out of a solid red panel, is not
+ * shrunk to a dot for being dense. Regenerate with tools/trim-logos.py.
+ *
+ * `work` is a photograph of that client's own project, which the tile
+ * cross-fades to. Left empty until IXAR confirms which photograph belongs to
+ * which client: the site photography is filed by project, not by contract,
+ * and attributing the wrong site to a named client is not a small error. The
+ * tile falls back to the project reference from the record, which is sourced
+ * and safe. */
+const CLIENTS = [
+  { name: 'Sinopec',           logo: null,                                  scale: 1.00, work: '' },
+  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',   scale: 1.40, work: '' },
+  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',    scale: 1.11, work: '' },
+  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',    scale: 1.00, work: '' },
+  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',  scale: 0.80, work: '' },
+  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',   scale: 0.82, work: '' },
 ];
 
+/* What the second face of each tile says, taken from the project record so it
+   cannot claim work that is not in the table. Matching is on the client name
+   the record uses, which is not always the name on the logo. */
+const CLIENT_RECORD_KEY = {
+  'Sinopec': 'Sinopec',
+  'CPECC': 'CPECC',
+  'CCJV': 'CCJV',
+  'PRAJ Projects': 'PRAJ Projects',
+  'Illovo Distillers': 'PRAJ Projects',
+  'Ntake Bakery': 'Ntake Bakery-Jeveeka',
+};
+
+function clientReference(name) {
+  const key = CLIENT_RECORD_KEY[name] || name;
+  const rows = projectsContent.projects.filter((r) => r.client === key);
+  if (!rows.length) return null;
+  const newest = rows.reduce((a, b) => (b.year > a.year ? b : a));
+  return {
+    project: newest.project,
+    where: newest.location.split(',').slice(-2).join(',').trim(),
+    year: newest.year,
+    count: rows.length,
+  };
+}
+
+/* The two downloads.
+ *
+ * `cover` is a render of each document's own first page, generated from the
+ * built PDF by scripts/build-covers.mjs. The cards showed a grey block with
+ * the word PDF on it, which told a visitor nothing about what they were
+ * about to download - and the two blocks were identical, so the pair read as
+ * one document offered twice. */
 const DOWNLOADS = [
   {
     title: 'Company Profile',
     body: 'A full introduction to IXAR: history, service portfolio, certifications, equipment and international presence.',
     cta: 'Download Company Profile (PDF)',
     href: '/downloads/IXAR-Company-Profile.pdf',
+    cover: '/images/downloads/cover-profile.webp',
   },
   {
-    title: 'Completed Projects, Africa',
-    body: 'A record of projects delivered across the continent, with client, scope, location and dates.',
-    cta: 'Download Project List (PDF)',
+    /* Was "Completed Projects, Africa", which is the contradiction the
+       section heading above was corrected for: several rows are ongoing. */
+    title: 'Project Record',
+    body: 'Every project delivered on the continent, with client, scope, location, year and current status.',
+    cta: 'Download Project Record (PDF)',
     href: '/downloads/IXAR-Africa-Project-List.pdf',
+    cover: '/images/downloads/cover-projects.webp',
     dark: true,
   },
 ];
@@ -631,29 +777,31 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= 3. WHERE WE OPERATE ================= */}
+      {/* The country chips that sat beside the map repeated the hero ticker
+          word for word, so the same three names appeared twice within a
+          screen of each other. Removing them lets the map be centred with
+          the copy above it, which is what the section is actually about. */}
       <section id="operate" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <div className="mapgrid">
-            <div className="mapwrap desktop-map"><AfricaMap mobile={mobileMap} /></div>
-            <div>
-              <span className="eyebrow">Continental Footprint</span>
-              <h2 className="sec">Where We Operate</h2>
-              <p className="sec-intro">
-                IXAR holds registered offices in Uganda and Tanzania and has completed projects
-                across the continent. Crews, equipment and sealed sources mobilise to site from
-                within Africa, not from overseas.
-              </p>
-              <div className="cgrid">
-                {COUNTRIES.map((c) => <span key={c}><i />{c}</span>)}
-                <span className="more"><i />And more across Africa &mdash; mobilisation on request</span>
-              </div>
-              <ul className="legend">
-                <li><em className="k-hl" />Projects Completed in Africa</li>
-                <li><em className="k-pin" />Offices</li>
-                <li><em className="k-n" />Mobilisation on Request</li>
-              </ul>
-              <a className="btn" style={{ marginTop: '26px' }} href="/network">Our Offices &amp; Coverage</a>
-            </div>
+          <div className="opcopy">
+            <span className="eyebrow">Continental Footprint</span>
+            <h2 className="sec">Where We Operate</h2>
+            <p className="sec-intro">
+              IXAR holds registered offices in Uganda and Tanzania, and has completed projects
+              in {deliveredProse()}. Crews, equipment and sealed sources mobilise to site from
+              within Africa, not from overseas, so work elsewhere on the continent is a
+              mobilisation rather than a mobilisation and an import licence.
+            </p>
+          </div>
+
+          <div className="mapcentre">
+            <div className="mapwrap"><AfricaMap mobile={mobileMap} /></div>
+            <ul className="legend legend--centre">
+              <li><em className="k-hl" />Projects Completed</li>
+              <li><em className="k-pin" />Offices</li>
+              <li><em className="k-n" />Mobilisation on Request</li>
+            </ul>
+            <a className="btn" style={{ marginTop: '26px' }} href="/network">Our Offices &amp; Coverage</a>
           </div>
         </div>
       </section>
@@ -723,7 +871,13 @@ export default function EastAfricaPage() {
                 <p>{activeService.desc}</p>
                 <div className="svcfoot">
                   <span className="std"><b>&#10003;</b>{activeService.standards}</span>
-                  <a className="btn" href="/services">View Methodologies &rarr;</a>
+                  {/* Every one of the sixteen cards pointed at /services, so the
+                      button said "View Methodologies" and then showed the same
+                      index each time. Each service now carries its own
+                      destination, and card 01 in particular no longer lands on
+                      the Digital and Computed Radiography page, which is card
+                      02's subject. */}
+                  <a className="btn" href={activeService.to || '/services'}>View Methodologies &rarr;</a>
                 </div>
               </div>
             </div>
@@ -762,7 +916,9 @@ export default function EastAfricaPage() {
         <div className="wrap">
           <div className="center">
             <span className="eyebrow">Track Record</span>
-            <h2 className="sec">Projects <span className="accent">Completed in Africa</span></h2>
+            {/* "Projects Completed in Africa" contradicted the table beneath
+                it, where several rows are ongoing. */}
+            <h2 className="sec">Project <span className="accent">Record</span></h2>
             <p className="sec-intro">Search by client, location or scope. Sort any column.</p>
           </div>
           <div style={{ marginTop: '40px' }}><ExperienceTable /></div>
@@ -776,21 +932,16 @@ export default function EastAfricaPage() {
           <h2 className="sec">Trusted <span className="accent">By</span></h2>
           <p className="sec-intro">Operators, EPC contractors and plant owners across the continent.</p>
         </div>
-        <div className="marquee" style={{ background: 'var(--wash)' }}>
-          <div className="track">
-            {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((c, i) => (
-              <a
-                className="ltile"
-                key={i}
-                href={c.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`Visit ${c.name} website`}
-              >
-                <img src={c.logo} alt={c.name} className="client-logo-img" />
-              </a>
+        <div className="wrap">
+          <div className="logowall">
+            {CLIENTS.map((c, i) => (
+              <ClientTile key={c.name} client={c} index={i} />
             ))}
           </div>
+          <p className="trustnote">
+            Each mark is shown with its client&rsquo;s own project from the record above.
+            Logos are reproduced with permission and are the property of their owners.
+          </p>
         </div>
       </section>
 
@@ -805,7 +956,10 @@ export default function EastAfricaPage() {
           <div className="grid2">
             {DOWNLOADS.map((d) => (
               <div className="dl" key={d.title}>
-                <div className="doc"><FileText size={30} aria-hidden="true" /><b>PDF</b></div>
+                <a className="doc" href={d.href} download aria-label={d.cta}>
+                  <AppImage src={d.cover} alt={`Cover page of the IXAR ${d.title}`} />
+                  <span className="doc__tag"><FileText size={13} aria-hidden="true" />PDF</span>
+                </a>
                 <div>
                   <h3>{d.title}</h3>
                   <p>{d.body}</p>
@@ -838,11 +992,13 @@ export default function EastAfricaPage() {
                   <span key={o}>{o}</span>
                 ))}
               </div>
-              <a className="btn" href="https://ixar.in/about-us/">About IXAR</a>
+              <a className="btn" href="https://ixar.in/about-us/" target="_blank" rel="noopener noreferrer">About IXAR</a>
             </div>
             <div className="shot">
-              <AppImage src={`${IMG}ea-svc-advanced-ut.webp`} alt="IXAR technicians setting up an advanced ultrasonic scan, Uganda" />
-              <span className="cap">IXAR African site team at work, Uganda</span>
+              {/* A second picture of hands on a weld weakened a section about
+                  the organisation rather than the work. The crew, assembled. */}
+              <AppImage src={`${IMG}ea-ind-oil-gas.webp`} alt="The IXAR Africa site team, Tilenga Project, Uganda" />
+              <span className="cap">The IXAR Africa team, Tilenga Project, Uganda</span>
             </div>
           </div>
         </div>
@@ -1008,16 +1164,10 @@ export default function EastAfricaPage() {
                 <p className="ea-office-card__tag">Regional office</p>
                 <h3>Kampala, Uganda</h3>
 
-                <figure className="ea-card__media ea-office-card__media">
-                  <AppImage
-                    src={`${IMG}ea-svc-visual-leak.webp`}
-                    alt="IXAR (EA) Ltd inspection crew on a manifold spool, Uganda"
-                    loading="lazy"
-                  />
-                  <figcaption className="ea-card__credit">
-                    IXAR (EA) Ltd inspection crew, Uganda
-                  </figcaption>
-                </figure>
+                {/* The office photograph was removed on 8 September 2026. The
+                    block is an address card: the address, the numbers and the
+                    map are what a visitor came for, and a crew photograph
+                    above them pushed all three below the fold. */}
 
                 <ul className="ea-office-lines" style={{ marginTop: '14px' }}>
                   <li>
@@ -1060,7 +1210,9 @@ export default function EastAfricaPage() {
               </div>
 
               <div className="ea-office-card">
-                <p className="ea-office-card__tag">Regional office</p>
+                {/* Kampala is the regional office. This block carries the
+                    further locations, and takes more as the network grows. */}
+                <p className="ea-office-card__tag">Other office locations</p>
                 <h3>Tanzania</h3>
                 <ul className="ea-office-lines" style={{ marginTop: '14px' }}>
                   <li>
@@ -1324,25 +1476,36 @@ export default function EastAfricaPage() {
 .ea-cert-row__note{margin-top:18px;text-align:center;font-size:13px;color:var(--ea-body-soft)}
 
 /* ---------- trusted by --------------------------------------------------- */
-.ea-logo-wall{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
-.ea-logo-tile{
-  position:relative;aspect-ratio:16/9;border-radius:var(--ea-radius-lg);
-  background:var(--ea-white);border:1px solid var(--ea-line);overflow:hidden;
-  transition:box-shadow .3s ease,border-color .3s ease;
+.ea-page .logowall{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ea-page .logotile{
+  position:relative;aspect-ratio:16/9;background:#fff;border:1px solid var(--line);
+  overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease;
 }
-.ea-logo-tile:hover{box-shadow:var(--ea-shadow-lift);border-color:var(--ea-muted)}
-.ea-logo-slide{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
-  opacity:0;transition:opacity .85s ease;filter:grayscale(1);
+.ea-page .logotile:hover{border-color:var(--red);box-shadow:0 10px 26px rgba(0,0,0,.07)}
+.ea-page .logoface{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:6px;padding:22px;text-align:center;
+  opacity:0;transition:opacity .9s ease;pointer-events:none;
 }
-.ea-logo-slide.is-on{opacity:1}
-.ea-logo-tile:hover .ea-logo-slide{filter:grayscale(0)}
-.ea-logo-slide__mark{font-size:14.5px;font-weight:800;letter-spacing:.05em;color:#A9B0B5}
-.ea-logo-slide__ref{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:#C3C9CD}
-.ea-trusted-note{
-  margin-top:34px;text-align:center;font-size:13.5px;line-height:1.6;color:var(--ea-body-soft);
-  max-width:720px;margin-left:auto;margin-right:auto;
-}
+.ea-page .logoface.is-on{opacity:1}
+/* The mark sits at a common optical weight, so the box it is given is
+   generous and the inline scale does the sizing. */
+.ea-page .logoface img{max-width:62%;max-height:56%;width:auto;height:auto;
+  object-fit:contain;filter:grayscale(1);opacity:.9;transition:filter .3s ease,opacity .3s ease}
+.ea-page .logotile:hover .logoface img{filter:grayscale(0);opacity:1}
+.ea-page .logoword{font-size:23px;font-weight:800;letter-spacing:.02em;color:#8D959D}
+.ea-page .logotile:hover .logoword{color:var(--head)}
+.ea-page .logoface--ref{background:var(--head);justify-content:center}
+.ea-page .logoface--ref img{max-width:100%;max-height:100%;width:100%;height:100%;
+  object-fit:cover;filter:none;opacity:1}
+.ea-page .rf-project{font-size:14.5px;font-weight:800;line-height:1.35;color:#fff}
+.ea-page .rf-where{font-size:12px;font-weight:600;color:rgba(255,255,255,.7)}
+.ea-page .rf-count{margin-top:4px;font-size:10.5px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;color:#FF6B69}
+.ea-page .trustnote{margin:26px auto 0;max-width:640px;text-align:center;
+  font-size:13px;line-height:1.6;color:var(--muted)}
+@media(max-width:860px){ .ea-page .logowall{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:520px){ .ea-page .logowall{grid-template-columns:1fr} }
 
 /* ---------- learn more --------------------------------------------------- */
 .ea-dl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
@@ -1376,7 +1539,12 @@ export default function EastAfricaPage() {
 .ea-offices__note{font-size:13.5px;line-height:1.6;margin:0}
 
 /* ---------- contact ------------------------------------------------------ */
-.ea-contact-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start}
+/* The form column was 1.05fr against a .95fr card, inside a centred wrap, so
+   the section opened with a wide empty margin before anything began. Tighter
+   columns and a narrower maximum pull the content back to the left edge of
+   the container. */
+.ea-contact-layout{display:grid;grid-template-columns:1fr .82fr;gap:40px;align-items:start;
+  max-width:1120px;margin:0 auto}
 .ea-form-card{
   background:var(--ea-white);border:1px solid var(--ea-line);border-radius:var(--ea-radius-lg);
   padding:38px 36px;box-shadow:var(--ea-shadow);
@@ -1682,7 +1850,12 @@ from{transform:translateX(0)}to{transform:translateX(-50%)}
 .ea-page .stat:nth-child(even) .badge svg{fill:var(--char)}
 .ea-page .stat .num{font-size:34px;font-weight:800;color:var(--head);line-height:1.1;letter-spacing:-.02em}
 .ea-page .stat .lbl{font-size:14.5px;color:var(--muted);margin-top:5px}
-.ea-page .mapgrid{display:grid;grid-template-columns:.92fr 1.08fr;gap:56px;align-items:center}
+/* The map was in a two-column grid beside its copy and the country chips.
+   With the chips gone the section reads better as one column: the copy
+   centred above, the map centred beneath it at a size that lets the small
+   countries be seen. */
+.ea-page .opcopy{max-width:760px;margin:0 auto 40px;text-align:center}
+.ea-page .mapcentre{max-width:640px;margin:0 auto;text-align:center}
 .ea-page .mapwrap{position:relative;background:linear-gradient(160deg,#FAFBFB,#EFF1F2);padding:10px;border:1px solid var(--line)}
 .ea-page .mapwrap svg{width:100%;height:auto;display:block}
 .ea-page .ct{fill:#D9DDE1;stroke:#F6F7F8;stroke-width:.9;transition:fill .2s}
@@ -1693,13 +1866,8 @@ from{transform:translateX(0)}to{transform:translateX(-50%)}
 .ea-page .pin-c{fill:var(--char);stroke:#fff;stroke-width:2.6}
 .ea-page .mlabel{font:700 14px Mulish;fill:var(--char)}
 .ea-page .mnote{font:600 12px Mulish;fill:#9AA3AD}
-.ea-page .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:26px 0 0}
-.ea-page .cgrid a, .ea-page .cgrid span{display:flex;align-items:center;gap:11px;border:1px solid var(--line);padding:12px 15px;font-size:14.5px;font-weight:700;color:var(--head);background:#fff;transition:.2s}
-.ea-page .cgrid a:hover{border-color:var(--red);transform:translateX(3px)}
-.ea-page .cgrid i{width:12px;height:12px;background:var(--red);flex:none}
-.ea-page .cgrid .more{color:var(--muted);font-weight:600;grid-column:1/-1;border-style:dashed}
-.ea-page .cgrid .more i{background:#D9DDE1}
 .ea-page .legend{list-style:none;margin:24px 0 0;padding:0;display:flex;gap:26px;flex-wrap:wrap}
+.ea-page .legend--centre{justify-content:center}
 .ea-page .legend li{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--head)}
 .ea-page .legend em{width:14px;height:14px;display:inline-block;flex:none;font-style:normal}
 .ea-page .legend .k-hl{background:var(--red)}
@@ -1820,10 +1988,21 @@ from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
 .ea-page .ltile:hover img{transform:scale(1.08)}
 .ea-page .dl{text-align:left;display:flex;gap:24px;align-items:flex-start;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:32px;transition:.25s}
 .ea-page .dl:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
-.ea-page .dl .doc{width:94px;height:120px;flex:none;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.ea-page .dl:nth-child(even) .doc{background:var(--char)}
-.ea-page .dl .doc svg{width:30px;height:30px;fill:#fff}
-.ea-page .dl .doc b{font-size:10px;letter-spacing:.12em}
+/* The document's own cover, at A4 proportions so it reads as a page rather
+   than as a thumbnail of something. */
+.ea-page .dl .doc{
+  position:relative;width:124px;flex:none;aspect-ratio:1/1.414;display:block;
+  border:1px solid var(--line);background:var(--wash);overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);transition:transform .25s ease,box-shadow .25s ease;
+}
+.ea-page .dl .doc:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.16)}
+.ea-page .dl .doc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.ea-page .dl .doc__tag{
+  position:absolute;left:0;bottom:0;display:flex;align-items:center;gap:5px;
+  background:var(--red);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.12em;
+  padding:4px 8px;
+}
+.ea-page .dl .doc__tag svg{width:13px;height:13px}
 .ea-page .dl h3{font-size:20px;margin-bottom:8px}
 .ea-page .dl p{font-size:14.5px;line-height:1.6;margin:0 0 18px}
 .ea-page .dl .upd{display:block;margin-top:10px;font-size:12.5px;color:var(--muted)}
@@ -1884,7 +2063,7 @@ from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
 .ea-page .hero{height:600px}
 .ea-page .hero h1{font-size:44px}
 .ea-page .grid4{grid-template-columns:repeat(2,1fr)}
-.ea-page .mapgrid, .ea-page .cwrap, .ea-page .legacy .g{grid-template-columns:1fr;gap:34px}
+.ea-page .cwrap, .ea-page .legacy .g{grid-template-columns:1fr;gap:34px}
 }
 @media(max-width:760px){
 .ea-page{--gut:18px}
@@ -1897,19 +2076,14 @@ from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
 .ea-page .stats{grid-template-columns:repeat(2,1fr);gap:14px}
 .ea-page .stat{padding:22px 10px}
 .ea-page .stat .num{font-size:27px}
-.ea-page .grid4, .ea-page .grid2, .ea-page .cgrid{grid-template-columns:1fr}
+.ea-page .grid4, .ea-page .grid2{grid-template-columns:1fr}
 .ea-page .frow{grid-template-columns:1fr}
 .ea-page .dl{flex-direction:column}
-.ea-page .mapwrap.desktop-map{display:none}
 .ea-page .ltile{width:190px;height:110px}
 .ea-page .hero .brackets{inset:16px}
 .ea-page .svcpanel .body{padding:24px}
 .ea-page .svcpanel h3{font-size:21px}
 .ea-page .svcpanel p{font-size:15px}
-}
-.ea-page .mobile-map{display:none}
-@media(max-width:760px){
-.ea-page .mobile-map{display:block}
 }
 @media(prefers-reduced-motion:reduce){
 .ea-page *{animation:none!important;transition:none!important}

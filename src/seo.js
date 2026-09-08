@@ -10,13 +10,21 @@
  * in the sitemap. Nothing else needs touching.
  */
 
+import { deliveredProse } from './countries.js';
+
 export const SITE_URL = 'https://ixar.africa';
 export const SITE_NAME = 'IXAR';
 // A JPEG, not the WebP used on-page: several link unfurlers still refuse WebP.
 export const OG_IMAGE = '/images/og-cover.jpg';
 
+/* Every description that enumerated eight countries claimed completed
+   projects in five where there are none. They are built from
+   countries.js now, so the list cannot go stale in the metadata while
+   being right on the page. */
+const REACH = deliveredProse();
+
 const DEFAULT_DESCRIPTION =
-  'Non-destructive testing and industrial inspection across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi, delivered from registered regional offices. Licensed for sealed radioactive sources, ASNT-certified personnel, ISO 9001 since 2003.';
+  `Non-destructive testing and industrial inspection across ${REACH}, delivered from registered regional offices, with mobilisation on request elsewhere in Africa. Licensed for sealed radioactive sources, ASNT-certified personnel, ISO 9001 since 2003.`;
 
 /**
  * changefreq / priority are sitemap hints only.
@@ -47,7 +55,7 @@ export const ROUTE_SEO = {
   '/services/paut': {
     title: 'Phased Array Ultrasonic Testing (PAUT) | IXAR Africa',
     description:
-      'Multi-beam acoustic beam steering for complex geometry structural and pressure vessel welds, delivered across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.',
+      `Multi-beam acoustic beam steering for complex geometry structural and pressure vessel welds, delivered across ${REACH}.`,
     priority: '0.7',
     changefreq: 'yearly'
   },
@@ -90,7 +98,7 @@ export const ROUTE_SEO = {
   '/applications/oil-gas': {
     title: 'Oil & Gas NDT | Pipelines, Refineries & Storage Tanks | IXAR Africa',
     description:
-      'Asset integrity solutions for upstream offshore rigs, midstream gas pipelines and downstream refineries across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.',
+      `Asset integrity solutions for upstream offshore rigs, midstream gas pipelines and downstream refineries across ${REACH}.`,
     priority: '0.7',
     changefreq: 'yearly'
   },
@@ -140,7 +148,7 @@ export const ROUTE_SEO = {
   '/network': {
     title: 'Regional Footprint | Registered Offices & Countries Served | IXAR',
     description:
-      'IXAR’s registered offices in Uganda and Tanzania, and project reach across Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi.',
+      `IXAR’s registered offices in Uganda and Tanzania, and completed projects across ${REACH}.`,
     priority: '0.7',
     changefreq: 'monthly'
   },
@@ -152,16 +160,20 @@ export const ROUTE_SEO = {
     changefreq: 'monthly'
   },
   '/estimator': {
-    title: 'NDT Cost Estimator | Scope Your Inspection | IXAR Africa',
+    /* Renamed from "NDT Cost Estimator". The page deliberately does not
+       give a figure, and a title promising one set an expectation the
+       page then refused - which reads as a bait rather than as the
+       considered position it is. */
+    title: 'Scope Builder | Define Your Inspection Scope | IXAR Africa',
     description:
-      'Estimate the scope and indicative cost of a non-destructive testing campaign in Uganda, Tanzania or Kenya before requesting a formal quotation.',
+      'Build a non-destructive testing scope for a project in Uganda, Tanzania or Kenya and send it to the regional office for a written proposal priced against your specification.',
     priority: '0.6',
     changefreq: 'monthly'
   },
   '/contact': {
     title: 'Contact IXAR Africa | Kampala Regional Office',
     description:
-      'Enquiries for Uganda, Tanzania, Kenya, Rwanda, Mozambique, Ethiopia, Sudan and Malawi are handled by the IXAR regional office in Kampala. Request an inspection quotation.',
+      `Enquiries for ${REACH}, and for mobilisation elsewhere in Africa, are handled by the IXAR regional office in Kampala. Request an inspection quotation.`,
     priority: '0.8',
     changefreq: 'monthly'
   }

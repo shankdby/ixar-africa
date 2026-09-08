@@ -12,12 +12,24 @@
  * same as publishing it on a public website: confirm publication permission per
  * client before this goes live.
  *
- * Rows 4 and 9 are two separate work orders for the same client and scope in
- * the same year. They are distinct contracts on the source sheet and are kept
- * distinct here rather than silently merged.
+ * TWO PAIRS LOOK LIKE DUPLICATES. Rows 4 and 9, and rows 6 and 8, are the
+ * same client, work, year and site. They are separate work orders on the
+ * source sheet, not repeated rows, and are kept distinct rather than silently
+ * merged. Each carries `separateOrder: true`, which the table renders as a
+ * note, until IXAR supplies the detail that tells them apart - a line number,
+ * an area, a work order reference - in the `scope` field.
  *
- * `client` and `country` are derived for filtering only; the four displayed
- * columns match the source sheet exactly, minus the value.
+ * THE INDIA ROW IS GONE. Larsen & Toubro, 2020, was a group project delivered
+ * in India, on a page about Africa. Removed 8 September 2026. The country
+ * filter is derived from the rows, so India left the filter with it.
+ *
+ * YEAR, NOT PERIOD. The sheet mixes single years and ranges. A range made two
+ * work orders on one site read as a single long engagement, so this holds one
+ * year: the year of completion, or the current year for work still running.
+ *
+ * `country` is derived for filtering only. Country names here also drive the
+ * map and the hero ticker through src/countries.js - a country added here
+ * without being added there will filter but will not be shaded.
  *
  * The rows themselves live in src/content/projects.json so the team can edit
  * them in the CMS at /admin. This module keeps the documentation above with

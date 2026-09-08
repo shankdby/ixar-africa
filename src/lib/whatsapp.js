@@ -18,7 +18,15 @@
    (same result, no browser tab) but does nothing at all when the app
    is not installed, so web.whatsapp.com is the safer default.       */
 
+/* +256 414 251251 is the Kampala board line. It is a landline, so WhatsApp
+   cannot register it and every WhatsApp button on the site opened a chat with
+   a number that does not exist there - the click simply failed. WA_MOBILE is
+   the number the buttons use.
+
+   WA_NUMBER stays as the switchboard for `tel:` links, which is what it is
+   actually for. Confirm with IXAR which mobile should receive enquiries. */
 export const WA_NUMBER = '256414251251';
+export const WA_MOBILE = '256777166392';
 
 export const WA_DEFAULT_MESSAGE =
   'Hello IXAR, I would like to enquire about NDT services in Africa.';
@@ -34,7 +42,7 @@ function digits(number) {
 /* The link rendered into the HTML. It is what a crawler sees, what a
    right-click copies, and what runs if JavaScript never boots, so it
    stays the universal wa.me form. */
-export function waHref(message = WA_DEFAULT_MESSAGE, number = WA_NUMBER) {
+export function waHref(message = WA_DEFAULT_MESSAGE, number = WA_MOBILE) {
   return `https://wa.me/${digits(number)}?text=${encodeURIComponent(message)}`;
 }
 
@@ -45,7 +53,7 @@ function isMobile() {
 
 /* Resolved at click time, not at render time: prerendering runs in
    Node, where there is no navigator to test. */
-export function waTarget(message = WA_DEFAULT_MESSAGE, number = WA_NUMBER) {
+export function waTarget(message = WA_DEFAULT_MESSAGE, number = WA_MOBILE) {
   const n = digits(number);
   const t = encodeURIComponent(message);
   if (isMobile()) return `https://wa.me/${n}?text=${t}`;
@@ -57,7 +65,7 @@ export function waTarget(message = WA_DEFAULT_MESSAGE, number = WA_NUMBER) {
    link, and upgrades the destination on click. Modified clicks
    (middle-click, ctrl/cmd-click) are left to the browser so "open in
    new tab" still behaves normally. */
-export function waLinkProps(message = WA_DEFAULT_MESSAGE, number = WA_NUMBER) {
+export function waLinkProps(message = WA_DEFAULT_MESSAGE, number = WA_MOBILE) {
   return {
     href: waHref(message, number),
     target: '_blank',
