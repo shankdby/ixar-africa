@@ -417,12 +417,11 @@ const LICENCES = [
  *   Larsen &     not a current client, and the only project was in India, on
  *   Toubro       a page about Africa.
  *
- * SINOPEC has no logo here. It is a real client - rows 1, 6 and 8 of the
- * project record - but the mark on file is not the Sinopec trademark. A
- * wrong trademark is worse than none, so the tile carries the name set as
- * type until a correct, permitted mark is supplied. `logo: null` is what
- * selects that treatment, so dropping the right file in and naming it here
- * is the whole change.
+ * SINOPEC carries its correct mark, supplied by IXAR on 8 September 2026.
+ * The file previously on hand was not the Sinopec trademark, and rather than
+ * show a wrong one the tile stood in with the name set as type. That text
+ * treatment is still available behind `logo: null` for any client whose mark
+ * is missing or not yet cleared for publication.
  *
  * `scale` is the optical-weight correction, and the files are the trimmed
  * copies under clients/trimmed. Both are needed. Every source PNG is a
@@ -441,7 +440,7 @@ const LICENCES = [
  * tile falls back to the project reference from the record, which is sourced
  * and safe. */
 const CLIENTS = [
-  { name: 'Sinopec',           logo: null,                                  scale: 1.00, work: '' },
+  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png', scale: 0.80, work: '' },
   { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',   scale: 1.40, work: '' },
   { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',    scale: 1.11, work: '' },
   { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',    scale: 1.00, work: '' },
