@@ -54,81 +54,58 @@ export const EA_LINKS = [
 
 /* The top-level header row.
  *
- * Every one of these used to be a plain link to ixar.in. A visitor who clicked
- * About Us, Services, NDT Course, NDT Products, Clients or Jobs left
- * ixar.africa, landed on an India-branded page, and had no route back - which
- * works directly against the purpose of this site.
+ * Five of these are the group's concerns, and ixar.in is the system of record
+ * for them: About Us, Services, NDT Course, NDT Products and Clients all lead
+ * there. That is IXAR's decision of 9 September 2026, and it reverses the
+ * arrangement of the 8 September review, which had them pointing at Africa
+ * equivalents.
  *
- * Each item now leads with its Africa equivalent and stays on this domain.
- * The ixar.in pages are still reachable, at the foot of each dropdown, and
- * they open in a new tab so the Africa page survives the click.
+ * They open in a new tab. That is the part of the earlier change worth
+ * keeping: the original complaint was not that the links left the site, it
+ * was that a visitor who followed one could not get back. A new tab leaves
+ * ixar.africa where it was.
  *
- * `to` is a route on this site. `href` is the ixar.in page the item mirrors,
- * offered as "On ixar.in" inside the dropdown rather than as the item itself.
+ * JOBS IS THE EXCEPTION and has no ixar.in route at all. An applicant in
+ * Kampala should not be reading vacancies in Mumbai, so that item leads to
+ * /careers and its menu carries only Africa content.
+ *
+ * `kind` decides how Navbar renders an item: 'external' is a real navigation
+ * off this domain, 'ea' is a router link that stays on it.
  */
 export const HEADER_ITEMS = [
+  { kind: 'external', label: 'About Us', href: at('about-us') },
   {
-    kind: 'ea',
-    label: 'About Us',
-    /* No standalone about page on this domain. The group's history is the
-       "Backed by Over 55 Years" section of the homepage, which is the same
-       content ixar.in's About Us carries. */
-    to: '/#legacy',
-    href: at('about-us'),
-    children: [
-      { to: '/#legacy', label: 'The IXAR Group' },
-      { to: '/network', label: 'Regional Offices' },
-      { to: '/case-studies', label: 'Regional Track Record' },
-    ],
-  },
-  {
-    kind: 'ea',
+    kind: 'external',
     label: 'Services',
-    to: '/services',
     href: at('conventional-testing'),
-    children: [
-      { to: '/services', label: 'All Services in Africa' },
-      { to: '/services/radiography', label: 'Digital & Computed Radiography' },
-      { to: '/services/paut', label: 'Phased Array (PAUT)' },
-      { to: '/services/aut', label: 'Automated Ultrasonics (AUT)' },
-      { to: '/services/tofd', label: 'Time of Flight Diffraction' },
-      { to: '/services/pect', label: 'Eddy Current (ECT / PECT)' },
-      { to: '/services/mfl-tube', label: 'Tank and Tube Inspection' },
-    ],
-    external: GLOBAL_SERVICE_LINKS,
+    children: GLOBAL_SERVICE_LINKS,
   },
   {
-    kind: 'ea',
+    kind: 'external',
     label: 'NDT Course',
-    to: '/training',
     href: at('ndt-course'),
-    children: [{ to: '/training', label: 'Training and Certification in Africa' }],
-    external: GLOBAL_COURSE_LINKS,
+    children: GLOBAL_COURSE_LINKS,
   },
   {
-    kind: 'ea',
+    kind: 'external',
     label: 'NDT Products',
-    to: '/products',
     href: at('ndt-products'),
-    children: [{ to: '/products', label: 'Equipment and Supply in Africa' }],
-    external: GLOBAL_PRODUCT_LINKS,
+    children: GLOBAL_PRODUCT_LINKS,
   },
-  {
-    kind: 'ea',
-    label: 'Clients',
-    to: '/case-studies',
-    href: at('our-clients'),
-    children: [
-      { to: '/case-studies', label: 'Projects in Africa' },
-      { to: '/#trusted', label: 'Who We Work For' },
-    ],
-  },
+  { kind: 'external', label: 'Clients', href: at('our-clients') },
+
+  /* Africa only. No ixar.in entry, by instruction. */
   {
     kind: 'ea',
     label: 'Jobs @ Ixar',
     to: '/careers',
-    href: at('jobs-ixar'),
-    children: [{ to: '/careers', label: 'Careers in Africa' }],
+    children: [
+      { to: '/careers', label: 'Careers in Africa' },
+      { to: '/careers#roles', label: 'Disciplines We Recruit' },
+      { to: '/careers#apply', label: 'Send an Application' },
+      { to: '/training', label: 'Training & Certification' },
+    ],
   },
+
   { kind: 'ea', label: 'Africa', to: '/', children: EA_LINKS, highlight: true },
 ];

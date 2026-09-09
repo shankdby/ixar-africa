@@ -88,13 +88,61 @@ export default function Navbar({ onOpenContact }) {
 
   const navClass = ({ isActive }) => (isActive ? 'nav-link active' : 'nav-link');
 
-  const renderDropdown = (item) => {
-    const { label, to, children = [], external = [], href, highlight } = item;
+  /* An item that leads to ixar.in. A real anchor, not a router link, and
+     target="_blank" so following it does not take ixar.africa away from the
+     visitor - which was the actual complaint about these links. */
+  const renderExternal = (item) => {
+    const id = item.label;
+    const open = openDropdown === id;
+    const out = { target: '_blank', rel: 'noopener noreferrer' };
+
+    if (!item.children) {
+      return (
+        <a key={id} href={item.href} className="nav-link nav-link--global" {...out}>
+          <span>{item.label}</span>
+          <ExternalLink size={11} aria-hidden="true" className="nav-out" />
+        </a>
+      );
+    }
+    return (
+      <div
+        key={id}
+        className="dropdown-wrapper"
+        onMouseEnter={() => setOpenDropdown(id)}
+        onMouseLeave={() => setOpenDropdown((cur) => (cur === id ? null : cur))}
+      >
+        <a
+          href={item.href}
+          className="nav-link nav-link--global"
+          aria-expanded={open}
+          aria-haspopup="true"
+          onFocus={() => setOpenDropdown(id)}
+          {...out}
+        >
+          <span>{item.label}</span>
+          <ChevronDown size={14} aria-hidden="true" />
+        </a>
+        {open && (
+          <div className="dropdown-menu">
+            {item.children.map((l) => (
+              <a key={l.href} href={l.href} className="dropdown-item dropdown-item--out" {...out}>
+                {l.label} <ExternalLink size={11} aria-hidden="true" />
+              </a>
+            ))}
+            <a href={item.href} className="dropdown-item view-all" {...out}>
+              All on ixar.in <ExternalLink size={12} aria-hidden="true" />
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /* An item that stays on ixar.africa. */
+  const renderLocal = (item) => {
+    const { label, to, children = [], highlight } = item;
     const id = label;
     const open = openDropdown === id;
-    /* Every path starts with "/", so the Africa item — which owns this
-       whole domain — is treated as active on any local route. An anchor
-       target like "/#legacy" is a homepage link, not a section prefix. */
     const base = to.split('#')[0] || '/';
     const sectionActive = base === '/' ? pathname === '/' : pathname.startsWith(base);
     const isAnchor = to.includes('#');
@@ -136,41 +184,13 @@ export default function Navbar({ onOpenContact }) {
                 ? <a key={i} href={l.to} className="dropdown-item">{l.label}</a>
                 : <Link key={i} to={l.to} className="dropdown-item">{l.label}</Link>
             ))}
-
-            {/* The ixar.in pages this item mirrors. They sit below the Africa
-                routes and open in a new tab, so a visitor who wants the group
-                site gets it without losing the page they were on. */}
-            {(external.length > 0 || href) && (
-              <>
-                <span className="dropdown-sep">On ixar.in</span>
-                {external.map((l) => (
-                  <a
-                    key={l.href}
-                    href={l.href}
-                    className="dropdown-item dropdown-item--out"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {l.label} <ExternalLink size={11} aria-hidden="true" />
-                  </a>
-                ))}
-                {href && !external.length && (
-                  <a
-                    href={href}
-                    className="dropdown-item dropdown-item--out"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {label} on ixar.in <ExternalLink size={11} aria-hidden="true" />
-                  </a>
-                )}
-              </>
-            )}
           </div>
         )}
       </div>
     );
   };
+
+  const renderItem = (item) => (item.kind === 'external' ? renderExternal(item) : renderLocal(item));
 
   return (
     <header ref={headerRef} className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
@@ -203,7 +223,7 @@ export default function Navbar({ onOpenContact }) {
         </Link>
 
         <nav className="desktop-nav" aria-label="Main">
-          {HEADER_ITEMS.map(renderDropdown)}
+          {HEADER_ITEMS.map(renderItem)}
         </nav>
 
         <div className="nav-actions">
@@ -252,27 +272,34 @@ export default function Navbar({ onOpenContact }) {
       {mobileMenuOpen && (
         <div className="mobile-menu-dropdown" id="mobile-menu">
           <nav className="mobile-nav-links" aria-label="Main, mobile">
-            {HEADER_ITEMS.map((item) => (
-              <React.Fragment key={item.label}>
-                {item.to.includes('#') ? (
-                  <a href={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>{item.label}</a>
-                ) : (
-                  <Link to={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>{item.label}</Link>
-                )}
-                {(item.children || []).slice(1).map((l) => (
-                  l.to.includes('#')
-                    ? <a key={l.to} href={l.to} className="mobile-sub-link">{l.label}</a>
-                    : <Link key={l.to} to={l.to} className="mobile-sub-link">{l.label}</Link>
-                ))}
-              </React.Fragment>
-            ))}
+            {HEADER_ITEMS.map((item) =>
+              item.kind === 'external' ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="mobile-global-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.label}
+                  <ExternalLink size={13} aria-hidden="true" />
+                </a>
+              ) : (
+                <React.Fragment key={item.label}>
+                  {item.to.includes('#') ? (
+                    <a href={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>{item.label}</a>
+                  ) : (
+                    <Link to={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>{item.label}</Link>
+                  )}
+                  {(item.children || []).slice(1).map((l) => (
+                    l.to.includes('#')
+                      ? <a key={l.to} href={l.to} className="mobile-sub-link">{l.label}</a>
+                      : <Link key={l.to} to={l.to} className="mobile-sub-link">{l.label}</Link>
+                  ))}
+                </React.Fragment>
+              )
+            )}
 
-            {/* One route out to the group site, at the foot of the menu and in
-                a new tab, rather than six items that each ended the visit. */}
-            <a href={IXAR_IN + '/'} className="mobile-global-link" target="_blank" rel="noopener noreferrer">
-              IXAR Global (ixar.in)
-              <ExternalLink size={13} aria-hidden="true" />
-            </a>
           </nav>
 
           <button
@@ -409,7 +436,8 @@ export default function Navbar({ onOpenContact }) {
           font-size: 0.625rem; font-weight: 800; letter-spacing: 0.14em;
           text-transform: uppercase; color: var(--text-dim);
         }
-        .dropdown-item--out { display: flex; align-items: center; gap: 6px; color: var(--text-dim); }
+        .dropdown-item--out { display: flex; align-items: center; gap: 6px; }
+        .nav-out { opacity: 0.4; margin-left: 4px; }
         .dropdown-item--out svg { opacity: 0.5; flex: none; }
         .mobile-sub-link {
           padding-left: 16px !important;

@@ -54,6 +54,22 @@ export function enquiryMailto(v) {
   return `mailto:${isApplication ? HR_EMAIL : BD_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+/* What the visitor sees when a send fails is deliberately vague - a form is
+   not the place to explain a server's configuration. But the cause has to be
+   findable, and a mail client opening with no explanation is exactly the
+   silent failure this whole path exists to avoid. So the reason goes to the
+   console, where whoever is maintaining the site can read it and nobody else
+   has to. The endpoint never returns secrets, only which check failed. */
+function report(detail) {
+  if (typeof console === 'undefined') return;
+  console.error(
+    `[ixar] The enquiry endpoint did not accept this submission: ${detail}\n` +
+    'The form has fallen back to opening a mail client. Most often this is ' +
+    'RESEND_API_KEY missing from the Vercel project, or set without a ' +
+    'redeploy afterwards. See docs/enquiry-email.md.'
+  );
+}
+
 export async function sendEnquiry(values) {
   try {
     const res = await fetch('/api/enquiry', {
@@ -63,8 +79,10 @@ export async function sendEnquiry(values) {
     });
     const out = await res.json().catch(() => ({}));
     if (res.ok && out.ok) return { ok: true };
-  } catch {
-    /* network down, offline, endpoint missing - fall through */
+    report(`HTTP ${res.status}${out.error ? ` - ${out.error}` : ''}${
+      out.fields ? ` (fields: ${out.fields.join(', ')})` : ''}`);
+  } catch (err) {
+    report(`the request never completed - ${err && err.message ? err.message : 'network error'}`);
   }
   if (typeof window !== 'undefined') window.location.href = enquiryMailto(values);
   return { ok: false, fallback: true };
