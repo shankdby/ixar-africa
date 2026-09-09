@@ -21,12 +21,13 @@
 /* +256 414 251251 is the Kampala board line. It is a landline, so WhatsApp
    cannot register it and every WhatsApp button on the site opened a chat with
    a number that does not exist there - the click simply failed. WA_MOBILE is
-   the number the buttons use.
+   the number the buttons use: +256 705 731596, confirmed by IXAR on
+   9 September 2026.
 
    WA_NUMBER stays as the switchboard for `tel:` links, which is what it is
-   actually for. Confirm with IXAR which mobile should receive enquiries. */
+   actually for. */
 export const WA_NUMBER = '256414251251';
-export const WA_MOBILE = '256777166392';
+export const WA_MOBILE = '256705731596';
 
 export const WA_DEFAULT_MESSAGE =
   'Hello IXAR, I would like to enquire about NDT services in Africa.';

@@ -2,9 +2,9 @@
   "services": [
     {
       "num": "01",
-      "title": "Radiography Testing (RT / CR / DR)",
+      "title": "Radiography Testing (Conventional — X-ray / Isotope)",
       "category": "Radiation NDT",
-      "desc": "X-ray and gamma radiography using Iridium-192, Selenium-75 and Cobalt-60 sources, with mobile radiography units and close proximity systems. Computed and digital radiography give instant high-resolution capture on site.",
+      "desc": "Conventional radiography using X-ray generators and gamma isotope sources — Iridium-192, Selenium-75 and Cobalt-60 — with mobile radiography units and close proximity systems for work in live plant.",
       "standards": "ASME Sec V · ISO 17636 · UAEC / TAEC Licensed",
       "img": "/images/east-africa/ea-svc-radiography.webp",
       "to": "/services#conventional"

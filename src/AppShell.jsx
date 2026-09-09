@@ -78,7 +78,9 @@ export default function AppShell() {
           <Route path="/products" element={<ProductsPage onOpenContact={handleOpenContact} />} />
 
           {/* Jobs @ Ixar Careers Page */}
-          <Route path="/careers" element={<CareersPage onOpenContact={handleOpenContact} />} />
+          {/* No onOpenContact: applications use the page's own form, which
+              routes to HR rather than to Business Development. */}
+          <Route path="/careers" element={<CareersPage />} />
 
           {/* Regional footprint */}
           <Route path="/network" element={<NetworkPage onOpenContact={handleOpenContact} />} />

@@ -10,7 +10,7 @@ export default function NetworkPage({ onOpenContact }) {
       <PageHero
         eyebrow="Regional Network"
         title="Local presence. Regional capability."
-        sub="Registered offices in Uganda and Tanzania, with crews and licensed equipment mobilised to sites across Africa."
+        sub="Registered offices in Uganda and Tanzania, an office in Mozambique, and crews and licensed equipment mobilised to sites across Africa."
         image="/images/east-africa/ea-office-kampala.webp"
         imageAlt="IXAR Africa crew and site board, Uganda"
         actions={

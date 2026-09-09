@@ -14,6 +14,7 @@
 
      RESEND_API_KEY   required. re_... from resend.com/api-keys
      ENQUIRY_TO       optional. default bd@ixar.africa
+     CAREERS_TO       optional. default hr@ixar.africa
      ENQUIRY_FROM     optional. default "IXAR Africa Website
                       <website@ixar.africa>". The domain here must be
                       verified in Resend (DNS records on ixar.africa),
@@ -29,13 +30,36 @@
 const TO_DEFAULT = 'bd@ixar.africa';
 const FROM_DEFAULT = 'IXAR Africa Website <website@ixar.africa>';
 
-const FIELDS = ['name', 'company', 'country', 'email', 'phone', 'service', 'message'];
-const REQUIRED = ['name', 'company', 'country', 'email', 'phone', 'message'];
+/* Where each kind of enquiry lands.
+ *
+ * Job applications went to Business Development along with everything else,
+ * because there was one address and one form. HR now has its own, chosen by
+ * the `department` field the form posts. An unknown or absent value falls
+ * back to Business Development, so an older cached page cannot drop an
+ * enquiry on the floor. */
+const DEPARTMENTS = {
+  bd: { env: 'ENQUIRY_TO', fallback: TO_DEFAULT,       label: 'enquiry' },
+  hr: { env: 'CAREERS_TO', fallback: 'hr@ixar.africa', label: 'application' },
+};
+
+function routeFor(value) {
+  const key = String(value || 'bd').toLowerCase();
+  const dept = DEPARTMENTS[key] || DEPARTMENTS.bd;
+  return { to: process.env[dept.env] || dept.fallback, label: dept.label, key: DEPARTMENTS[key] ? key : 'bd' };
+}
+
+const FIELDS = ['name', 'company', 'country', 'email', 'phone', 'service', 'message', 'role', 'certification', 'experience', 'cv'];
+const REQUIRED_BY_DEPT = {
+  bd: ['name', 'company', 'country', 'email', 'phone', 'message'],
+  /* An applicant has no company to give. */
+  hr: ['name', 'country', 'email', 'phone', 'role', 'message'],
+};
 
 /* Length caps. A form post is unauthenticated input from the open
    internet; without caps a single request can push a megabyte of text
    into the mailbox. */
-const MAX = { name: 200, company: 200, country: 100, email: 254, phone: 60, service: 200, message: 5000 };
+const MAX = { name: 200, company: 200, country: 100, email: 254, phone: 60, service: 200,
+  message: 5000, role: 200, certification: 200, experience: 60, cv: 500 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -90,10 +114,12 @@ export default async function handler(req, res) {
      form bots; a 200 keeps the bot from learning it was rejected. */
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
 
+  const route = routeFor(body.department);
+
   const data = {};
   for (const f of FIELDS) data[f] = clean(body[f], MAX[f]);
 
-  const missing = REQUIRED.filter((f) => !data[f]);
+  const missing = (REQUIRED_BY_DEPT[route.key] || REQUIRED_BY_DEPT.bd).filter((f) => !data[f]);
   if (missing.length) {
     return res.status(400).json({ ok: false, error: 'Missing required fields', fields: missing });
   }
@@ -108,20 +134,33 @@ export default async function handler(req, res) {
     return res.status(503).json({ ok: false, error: 'Email delivery is not configured' });
   }
 
-  const to = headerSafe(process.env.ENQUIRY_TO || TO_DEFAULT);
+  const to = headerSafe(route.to);
   const from = headerSafe(process.env.ENQUIRY_FROM || FROM_DEFAULT);
   const subject = headerSafe(
-    `Website enquiry - ${data.name}, ${data.company} (${data.country})`
+    route.key === 'hr'
+      ? `Job application - ${data.name}, ${data.role} (${data.country})`
+      : `Website enquiry - ${data.name}, ${data.company} (${data.country})`
   );
 
-  const rows = [
-    ['Name', data.name],
-    ['Company', data.company],
-    ['Country', data.country],
-    ['Email', data.email],
-    ['Phone / WhatsApp', data.phone],
-    ['Service of interest', data.service || '-'],
-  ];
+  const rows = route.key === 'hr'
+    ? [
+        ['Name', data.name],
+        ['Applying for', data.role],
+        ['Country', data.country],
+        ['Email', data.email],
+        ['Phone / WhatsApp', data.phone],
+        ['Certification', data.certification || '-'],
+        ['Years of experience', data.experience || '-'],
+        ['CV / portfolio link', data.cv || '-'],
+      ]
+    : [
+        ['Name', data.name],
+        ['Company', data.company],
+        ['Country', data.country],
+        ['Email', data.email],
+        ['Phone / WhatsApp', data.phone],
+        ['Service of interest', data.service || '-'],
+      ];
 
   const text = [
     ...rows.map(([k, v]) => `${k}: ${v}`),
@@ -133,7 +172,7 @@ export default async function handler(req, res) {
   ].join('\n');
 
   const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#15191F">
-  <h2 style="margin:0 0 4px;font-size:18px">New enquiry from ixar.africa</h2>
+  <h2 style="margin:0 0 4px;font-size:18px">New ${route.key === 'hr' ? 'job application' : 'enquiry'} from ixar.africa</h2>
   <p style="margin:0 0 18px;color:#6B6B6B;font-size:13px">${escapeHtml(new Date().toUTCString())}</p>
   <table cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-size:14px">
     ${rows
@@ -145,7 +184,7 @@ export default async function handler(req, res) {
       )
       .join('')}
   </table>
-  <h3 style="margin:20px 0 6px;font-size:15px">Message</h3>
+  <h3 style="margin:20px 0 6px;font-size:15px">${route.key === 'hr' ? 'Covering note' : 'Message'}</h3>
   <p style="white-space:pre-wrap;margin:0;line-height:1.6">${escapeHtml(data.message)}</p>
 </div>`;
 

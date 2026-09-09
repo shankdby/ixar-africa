@@ -13,21 +13,45 @@
    so a caller only ever shows the thank-you panel on a real send.  */
 
 export const BD_EMAIL = 'bd@ixar.africa';
+export const HR_EMAIL = 'hr@ixar.africa';
 
+/* The fallback has to land in the same inbox the endpoint would have used.
+   It was hardcoded to Business Development, so a job application that failed
+   to send opened an email to the wrong department - the one case where the
+   fallback silently undoes the routing it is standing in for. */
 export function enquiryMailto(v) {
-  const body = [
-    `Name: ${v.name || ''}`,
-    `Company: ${v.company || ''}`,
-    `Country: ${v.country || ''}`,
-    `Email: ${v.email || ''}`,
-    `Phone / WhatsApp: ${v.phone || ''}`,
-    `Service of interest: ${v.service || '-'}`,
-    '',
-    'Message:',
-    v.message || '',
-  ].join('\n');
-  const subject = `Website enquiry - ${v.name || ''}${v.company ? `, ${v.company}` : ''}`;
-  return `mailto:${BD_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const isApplication = v.department === 'hr';
+
+  const body = (isApplication
+    ? [
+        `Name: ${v.name || ''}`,
+        `Applying for: ${v.role || ''}`,
+        `Country: ${v.country || ''}`,
+        `Email: ${v.email || ''}`,
+        `Phone / WhatsApp: ${v.phone || ''}`,
+        `Certifications: ${v.certification || '-'}`,
+        `Years of experience: ${v.experience || '-'}`,
+        `CV: ${v.cv || '-'}`,
+        '',
+        'Covering note:',
+      ]
+    : [
+        `Name: ${v.name || ''}`,
+        `Company: ${v.company || ''}`,
+        `Country: ${v.country || ''}`,
+        `Email: ${v.email || ''}`,
+        `Phone / WhatsApp: ${v.phone || ''}`,
+        `Service of interest: ${v.service || '-'}`,
+        '',
+        'Message:',
+      ]
+  ).concat(v.message || '').join('\n');
+
+  const subject = isApplication
+    ? `Job application - ${v.name || ''}${v.role ? `, ${v.role}` : ''}`
+    : `Website enquiry - ${v.name || ''}${v.company ? `, ${v.company}` : ''}`;
+
+  return `mailto:${isApplication ? HR_EMAIL : BD_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 export async function sendEnquiry(values) {

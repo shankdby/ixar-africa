@@ -177,7 +177,7 @@ export default function Navbar({ onOpenContact }) {
       <div className="top-info-bar">
         <div className="container top-info-container">
           <span className="top-badge">
-            <MapPin size={13} aria-hidden="true" /> Offices: Uganda &middot; Tanzania
+            <MapPin size={13} aria-hidden="true" /> Offices: Uganda &middot; Tanzania &middot; Mozambique
           </span>
           <div className="top-right">
             <a href="mailto:bd@ixar.africa" className="top-link">

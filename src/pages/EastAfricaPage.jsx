@@ -361,8 +361,9 @@ function LogoTile({ offset, total = 12, hold = 5500, stagger = 1000 }) {
 const COUNTRIES = DELIVERED;
 
 const STATS = [
-  /* 2019 is still being verified by IXAR; left as found. */
-  { icon: CalendarDays,  value: '2019',  label: 'Established in Africa' },
+  /* 2012, confirmed by IXAR on 9 September 2026. It read 2019 from the first
+     draft onward, which understated the division by seven years. */
+  { icon: CalendarDays,  value: '2012',  label: 'Established in Africa' },
   /* Was "8+". Completed projects exist in Uganda, Tanzania and Kenya only,
      so this counts DELIVERED rather than carrying its own number. */
   { icon: Globe2,        value: String(DELIVERED_COUNT), label: 'Countries with Projects Completed' },
@@ -384,18 +385,18 @@ const LICENCES = [
   {
     icon: BadgeCheck,
     title: 'Certified Personnel',
-    body: 'Technicians qualified and certified to Level II and Level III in accordance with ASNT SNT-TC-1A. Level III personnel carry 7 to 25 years of field experience, Level II personnel 5 to 10 years. Qualified Radiation Protection Officers are assigned to all source handling work.',
+    body: 'Technicians qualified and certified to Level II and Level III under PCN and ISO 9712, and in accordance with ASNT SNT-TC-1A. Level III personnel carry 7 to 25 years of field experience, Level II personnel 5 to 10 years. BARC-qualified Radiation Safety Officers are assigned to all source handling work.',
     credsLabel: 'Certified to',
-    creds: ['ASNT SNT-TC-1A', 'Level II', 'Level III', 'RPO'],
-    strong: 1,
+    creds: ['PCN Level II', 'PCN Level III', 'ISO 9712', 'ASNT SNT-TC-1A', 'BARC (RSO)'],
+    strong: 2,
   },
   {
     icon: ShieldCheck,
     title: 'Quality Management',
-    body: 'ISO 9001 certified since 2003, with written practices and procedures aligned to ASTM, ASME, API, BS, DIN and NACE, or to a client specified standard where one is imposed.',
+    body: 'ISO 9001 certified since 2003, with ISO 14001 environmental and ISO 45001 occupational health and safety management systems alongside it. Written practices and procedures are aligned to ASTM, ASME, API, BS, DIN and NACE, or to a client specified standard where one is imposed.',
     credsLabel: 'Certified to',
-    creds: ['ISO 9001', 'Bureau Veritas', 'ASME', 'API', 'ASTM'],
-    strong: 1,
+    creds: ['ISO 9001', 'ISO 14001', 'ISO 45001', 'Bureau Veritas', 'ASME', 'API', 'ASTM'],
+    strong: 3,
   },
   {
     icon: Award,
@@ -716,7 +717,8 @@ export default function EastAfricaPage() {
               </h1>
               <p className="sub fade">
                 Non-destructive testing and industrial inspection, delivered from registered offices
-                in Uganda and Tanzania by Industrial X-Ray and Allied Radiographers (EA) Ltd.
+                in Uganda and Tanzania and an office in Mozambique, by Industrial X-Ray and Allied
+                Radiographers (EA) Ltd.
               </p>
               <p className="supp fade">
                 Licensed for sealed radiation sources &middot; ASNT Level II / III certified &middot; ISO 9001 certified
@@ -786,8 +788,8 @@ export default function EastAfricaPage() {
             <span className="eyebrow">Continental Footprint</span>
             <h2 className="sec">Where We Operate</h2>
             <p className="sec-intro">
-              IXAR holds registered offices in Uganda and Tanzania, and has completed projects
-              in {deliveredProse()}. Crews, equipment and sealed sources mobilise to site from
+              IXAR holds registered offices in Uganda and Tanzania, an office in Mozambique, and
+              has completed projects in {deliveredProse()}. Crews, equipment and sealed sources mobilise to site from
               within Africa, not from overseas, so work elsewhere on the continent is a
               mobilisation rather than a mobilisation and an import licence.
             </p>
@@ -987,7 +989,7 @@ export default function EastAfricaPage() {
                 practices whenever a project calls for it.
               </p>
               <div className="offices">
-                {['India', 'Uganda', 'Tanzania', 'Nigeria', 'Netherlands', 'UAE', 'Oman', 'Saudi Arabia'].map((o) => (
+                {['India', 'Uganda', 'Tanzania', 'Mozambique', 'Nigeria', 'Netherlands', 'UAE', 'Oman', 'Saudi Arabia'].map((o) => (
                   <span key={o}>{o}</span>
                 ))}
               </div>
@@ -1183,7 +1185,13 @@ export default function EastAfricaPage() {
                       <path d="M6.4 3.5h3.1l1.6 4-2 1.3a12 12 0 0 0 6.1 6.1l1.3-2 4 1.6v3.1a1.8 1.8 0 0 1-2 1.8A16.8 16.8 0 0 1 4.6 5.5a1.8 1.8 0 0 1 1.8-2Z" />
                     </svg>
                     <span>
-                      +256 414 251251 &middot; +256 777 166392
+                      +256 414 251251 &middot; +256 777 166392<br />
+                      {/* The WhatsApp line is named, because it is a different
+                          number from the board line and the buttons all use
+                          it. Without saying so it reads as a third office
+                          number nobody knows what to do with. */}
+                      WhatsApp{' '}
+                      <a href="tel:+256705731596" className="ea-office-tel">+256 705 731596</a>
                     </span>
                   </li>
                   <li>
@@ -1212,7 +1220,7 @@ export default function EastAfricaPage() {
                 {/* Kampala is the regional office. This block carries the
                     further locations, and takes more as the network grows. */}
                 <p className="ea-office-card__tag">Other office locations</p>
-                <h3>Tanzania</h3>
+                <h3>Tanzania &amp; Mozambique</h3>
                 <ul className="ea-office-lines" style={{ marginTop: '14px' }}>
                   <li>
                     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1220,7 +1228,22 @@ export default function EastAfricaPage() {
                       <circle cx="12" cy="10" r="2.6" />
                     </svg>
                     <span>
-                      Dar es Salaam, Tanzania &middot; Servicing onshore and offshore installations across Tanzania.
+                      <strong>Dar es Salaam, Tanzania</strong><br />
+                      Servicing onshore and offshore installations across Tanzania.
+                    </span>
+                  </li>
+                  {/* Added 9 September 2026. The contact number IXAR gave for
+                      Wasiullah Shaikh is a Ugandan line (+256), not a
+                      Mozambican one — flagged with them, published as given. */}
+                  <li>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z" />
+                      <circle cx="12" cy="10" r="2.6" />
+                    </svg>
+                    <span>
+                      <strong>Mozambique</strong><br />
+                      Wasiullah Shaikh &middot;{' '}
+                      <a href="tel:+256746215685" className="ea-office-tel">+256 746 215685</a>
                     </span>
                   </li>
                 </ul>
@@ -1593,6 +1616,8 @@ export default function EastAfricaPage() {
 }
 .ea-office-card h3{font-size:20px;color:var(--ea-navy);margin:0 0 6px}
 .ea-office-card__tag{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ea-brand);margin-bottom:16px}
+.ea-office-tel{color:var(--ea-brand);font-weight:700;text-decoration:none}
+.ea-office-tel:hover{text-decoration:underline}
 .ea-office-lines li{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid var(--ea-line);font-size:14.5px;line-height:1.55}
 .ea-office-lines li:last-child{border-bottom:0}
 .ea-office-lines svg{width:17px;height:17px;flex:none;margin-top:3px;fill:none;stroke:var(--ea-brand);stroke-width:1.7}

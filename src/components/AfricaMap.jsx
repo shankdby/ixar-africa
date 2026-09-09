@@ -18,8 +18,14 @@ import { deliveredProse } from '../countries';
  * the borders, so a pin cannot drift off its country.
  */
 
+/* Office pins, projected through the same transform as the borders so a pin
+   cannot drift off its country. Maputo was derived from the two existing
+   pins rather than placed by eye: 8.15px per degree of longitude, 456px per
+   Mercator unit. An office is not a completed project, so Mozambique carries
+   a pin without being shaded — that distinction is what the legend is for. */
 const KAMPALA = { x: 492, y: 340 };
 const TANZANIA_OFFICE = { x: 546, y: 397 };
+const MOZAMBIQUE_OFFICE = { x: 492, y: 557 };
 
 /* Where each highlighted country's label sits. `leader` draws a line back to
    the country for the ones too small to letter directly.
@@ -40,9 +46,9 @@ export default function AfricaMap({ mobile = false }) {
   return (
     <div className="afmap">
       <svg
-        viewBox={mobile ? '380 180 340 460' : MAP_VIEWBOX}
+        viewBox={mobile ? '380 180 340 560' : MAP_VIEWBOX}
         role="img"
-        aria-label={`Map of Africa. ${deliveredProse()} are highlighted as countries with completed projects, with office pins on Kampala and Tanzania. Every other country is shown as mobilisation on request.`}
+        aria-label={`Map of Africa. ${deliveredProse()} are highlighted as countries with completed projects, with office pins on Kampala, Tanzania and Mozambique. Every other country is shown as mobilisation on request.`}
       >
         <defs>
           <filter id="afPinShadow" x="-60%" y="-60%" width="220%" height="220%">
@@ -87,10 +93,13 @@ export default function AfricaMap({ mobile = false }) {
           <circle cx={KAMPALA.x} cy={KAMPALA.y} r="6.4" fill="#15191F" stroke="#fff" strokeWidth="2.2" />
           <circle cx={TANZANIA_OFFICE.x} cy={TANZANIA_OFFICE.y} r="15" fill="#DE0603" opacity=".18" />
           <circle cx={TANZANIA_OFFICE.x} cy={TANZANIA_OFFICE.y} r="6.4" fill="#15191F" stroke="#fff" strokeWidth="2.2" />
+          <circle cx={MOZAMBIQUE_OFFICE.x} cy={MOZAMBIQUE_OFFICE.y} r="15" fill="#DE0603" opacity=".18" />
+          <circle cx={MOZAMBIQUE_OFFICE.x} cy={MOZAMBIQUE_OFFICE.y} r="6.4" fill="#15191F" stroke="#fff" strokeWidth="2.2" />
         </g>
         <g className="afpin" aria-hidden="true">
           <text x={KAMPALA.x - 17} y={KAMPALA.y + 4} textAnchor="end">Kampala</text>
           <text x={TANZANIA_OFFICE.x + 13} y={TANZANIA_OFFICE.y + 1}>Tanzania office</text>
+          <text x={MOZAMBIQUE_OFFICE.x + 13} y={MOZAMBIQUE_OFFICE.y + 4}>Mozambique office</text>
         </g>
       </svg>
 

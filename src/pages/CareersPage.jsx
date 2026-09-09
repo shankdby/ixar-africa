@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, MapPin, Clock } from 'lucide-react';
 import Style from '../components/Style';
 import { Page, Section, SectionHead, PageHero, Crumbs } from '../components/ui';
+import { sendEnquiry } from '../lib/enquiry';
 
 /* Careers.
  *
@@ -13,6 +14,17 @@ import { Page, Section, SectionHead, PageHero, Crumbs } from '../components/ui';
  *
  * Roles are described as the disciplines IXAR Africa recruits for. Nothing
  * here states a vacancy count or a start date.
+ *
+ * APPLICATIONS GO TO HR, NOT BUSINESS DEVELOPMENT. Every Apply button used to
+ * open the general contact modal, so a CV landed in the same inbox as a
+ * request for a quotation. The form below posts department: 'hr', which
+ * /api/enquiry routes to hr@ixar.africa, and it asks the things an
+ * application needs - discipline, certification, years, a link to a CV -
+ * rather than the things a quotation needs.
+ *
+ * This page is also the reason "Jobs @ Ixar" no longer leaves the domain. It
+ * pointed at ixar.in, where an African applicant landed on India-based
+ * vacancies and had no way back.
  */
 
 const WHY = [
@@ -69,7 +81,52 @@ const ROLES = [
   },
 ];
 
-export default function CareersPage({ onOpenContact }) {
+export default function CareersPage() {
+  const formRef = useRef(null);
+  const [role, setRole] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [validated, setValidated] = useState(false);
+
+  /* Apply on a discipline preselects it and moves the visitor to the form,
+     rather than opening a modal that then has to ask what they are applying
+     for. */
+  const applyFor = (title) => {
+    setRole(title);
+    setSent(false);
+    const el = document.getElementById('apply');
+    if (!el) return;
+    const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10);
+    const top = el.getBoundingClientRect().top + window.pageYOffset - ((Number.isFinite(navH) ? navH : 124) + 20);
+    window.scrollTo({ top, behavior: 'smooth' });
+    window.setTimeout(() => {
+      const first = el.querySelector('#ap-name');
+      if (first) first.focus({ preventScroll: true });
+    }, 420);
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setValidated(true);
+    const form = formRef.current;
+    if (!form) return;
+    if (!form.checkValidity()) {
+      form.querySelector(':invalid')?.focus();
+      return;
+    }
+    if (sending) return;
+    const values = Object.fromEntries(new FormData(form).entries());
+    setFailed(false);
+    setSending(true);
+    /* department: 'hr' is what routes this to hr@ixar.africa instead of
+       Business Development. */
+    const res = await sendEnquiry({ ...values, department: 'hr' });
+    setSending(false);
+    if (res.ok) setSent(true);
+    else setFailed(true);
+  };
+
   return (
     <Page className="cr-page">
       <PageHero
@@ -83,7 +140,7 @@ export default function CareersPage({ onOpenContact }) {
             <button
               type="button"
               className="ea-btn ea-btn--primary"
-              onClick={() => onOpenContact('Career enquiry')}
+              onClick={() => applyFor('')}
             >
               Send Your CV <ChevronRight size={16} aria-hidden="true" />
             </button>
@@ -145,13 +202,118 @@ export default function CareersPage({ onOpenContact }) {
                 <button
                   type="button"
                   className="ea-btn ea-btn--primary"
-                  onClick={() => onOpenContact(`Application — ${r.title}`)}
+                  onClick={() => applyFor(r.title)}
                 >
                   Apply <ChevronRight size={15} aria-hidden="true" />
                 </button>
               </div>
             </article>
           ))}
+        </div>
+      </Section>
+
+      <Section id="apply">
+        <SectionHead eyebrow="Apply" title="Send an application.">
+          <p>
+            Applications go to the regional HR team at <strong>hr@ixar.africa</strong> and are held
+            against upcoming scopes. Tell us what you hold and where you are; attach or link your CV
+            and we will come back to you on the address you give.
+          </p>
+        </SectionHead>
+
+        <div className="cr-apply">
+          {sent ? (
+            <div className="cr-done" role="status" aria-live="polite">
+              <h3>Thank you, your application has been sent.</h3>
+              <p>
+                It has gone to <strong>hr@ixar.africa</strong>. If you have a CV to attach, reply to
+                the acknowledgement and it reaches the same place.
+              </p>
+              <button type="button" className="ea-btn ea-btn--navy" onClick={() => setSent(false)}>
+                Send another application
+              </button>
+            </div>
+          ) : (
+            <form ref={formRef} onSubmit={submit} noValidate className={validated ? 'cr-validated' : ''}>
+              <div className="cr-grid">
+                <div className="cr-field">
+                  <label htmlFor="ap-name">Full name *</label>
+                  <input id="ap-name" name="name" type="text" required autoComplete="name" />
+                </div>
+                <div className="cr-field">
+                  <label htmlFor="ap-role">Discipline applying for *</label>
+                  <select
+                    id="ap-role"
+                    name="role"
+                    required
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option value="">Please select</option>
+                    {ROLES.map((r) => <option key={r.id}>{r.title}</option>)}
+                    <option>Speculative application</option>
+                  </select>
+                </div>
+                <div className="cr-field">
+                  <label htmlFor="ap-email">Email *</label>
+                  <input id="ap-email" name="email" type="email" required autoComplete="email" />
+                </div>
+                <div className="cr-field">
+                  <label htmlFor="ap-phone">Phone or WhatsApp *</label>
+                  <input id="ap-phone" name="phone" type="text" required autoComplete="tel" />
+                </div>
+                <div className="cr-field">
+                  <label htmlFor="ap-country">Country you are based in *</label>
+                  <input id="ap-country" name="country" type="text" required autoComplete="country-name" />
+                </div>
+                <div className="cr-field">
+                  <label htmlFor="ap-experience">Years of experience</label>
+                  <input id="ap-experience" name="experience" type="text" inputMode="numeric" />
+                </div>
+                <div className="cr-field cr-field--full">
+                  <label htmlFor="ap-cert">
+                    Certifications held <span className="cr-opt">e.g. PCN Level II RT, ISO 9712 UT, BARC RSO</span>
+                  </label>
+                  <input id="ap-cert" name="certification" type="text" />
+                </div>
+                <div className="cr-field cr-field--full">
+                  <label htmlFor="ap-cv">
+                    Link to your CV <span className="cr-opt">Optional — a Drive or Dropbox link</span>
+                  </label>
+                  <input id="ap-cv" name="cv" type="url" placeholder="https://" />
+                </div>
+                <div className="cr-field cr-field--full">
+                  <label htmlFor="ap-msg">Covering note *</label>
+                  <textarea id="ap-msg" name="message" rows="5" required />
+                </div>
+              </div>
+
+              {/* Hidden from people, never tabbable. Bots that fill every
+                  field mark themselves, and /api/enquiry drops those. */}
+              <div className="cr-hp" aria-hidden="true">
+                <label htmlFor="ap-website">Leave this field empty</label>
+                <input id="ap-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+
+              <button
+                type="submit"
+                className="ea-btn ea-btn--primary cr-submit"
+                disabled={sending}
+                aria-busy={sending || undefined}
+              >
+                {sending ? 'Sending\u2026' : 'Send Application'}{' '}
+                <ChevronRight size={16} aria-hidden="true" />
+              </button>
+
+              {failed && (
+                <p className="cr-fallback" role="alert">
+                  We could not send this from the website just now, so we have opened your email
+                  application with the details already written out. Press send there, or write to{' '}
+                  <a href="mailto:hr@ixar.africa">hr@ixar.africa</a> directly.
+                </p>
+              )}
+            </form>
+          )}
         </div>
       </Section>
 
@@ -169,7 +331,7 @@ export default function CareersPage({ onOpenContact }) {
             <button
               type="button"
               className="ea-btn ea-btn--primary"
-              onClick={() => onOpenContact('Speculative application')}
+              onClick={() => applyFor('Speculative application')}
             >
               Send Your CV <ChevronRight size={16} aria-hidden="true" />
             </button>
@@ -181,6 +343,31 @@ export default function CareersPage({ onOpenContact }) {
       </Section>
 
       <Style>{`
+        .cr-apply{max-width:820px}
+        .cr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .cr-field{display:flex;flex-direction:column;gap:8px}
+        .cr-field--full{grid-column:1/-1}
+        .cr-field label{font-size:13.5px;font-weight:700;color:var(--navy)}
+        .cr-opt{font-weight:600;color:var(--text-dim);margin-left:6px}
+        .cr-field input,.cr-field select,.cr-field textarea{
+          font-family:inherit;font-size:15px;padding:13px 14px;border:1px solid var(--line);
+          background:#fff;color:var(--text-body);border-radius:0;
+        }
+        .cr-field input:focus,.cr-field select:focus,.cr-field textarea:focus{
+          outline:none;border-color:var(--brand)}
+        .cr-field textarea{resize:vertical}
+        .cr-validated :invalid{border-color:var(--brand)}
+        .cr-submit{margin-top:24px}
+        .cr-hp{position:absolute!important;left:-9999px!important;width:1px!important;
+          height:1px!important;overflow:hidden!important}
+        .cr-fallback{margin-top:14px;padding:12px 14px;font-size:14px;line-height:1.55;
+          color:#7A2E12;background:#FFF4EC;border-left:3px solid var(--brand)}
+        .cr-fallback a{color:var(--brand);font-weight:700}
+        .cr-done{border-left:3px solid var(--brand);padding:26px 28px;background:var(--bg-tint)}
+        .cr-done h3{font-size:21px;font-weight:800;color:var(--navy);margin:0 0 10px}
+        .cr-done p{margin:0 0 20px;line-height:1.6}
+        @media(max-width:680px){ .cr-grid{grid-template-columns:1fr} }
+
         .cr-why{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
         .cr-why__item{border-top:3px solid var(--brand);padding-top:24px}
         .cr-why__num{

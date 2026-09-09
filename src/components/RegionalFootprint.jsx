@@ -52,6 +52,18 @@ const LOCATIONS = [
     contactVia: 'Kampala regional office',
   },
   {
+    /* Added 9 September 2026. An office presence, not a project record: no
+       completed project is claimed in Mozambique and it is not in DELIVERED,
+       so it is not shaded on the map. */
+    id: 'mozambique',
+    country: 'Mozambique',
+    status: 'Office location',
+    tier: 'registered',
+    blurb:
+      'An office presence supporting scopes in country and along the Mozambique coast, with crews and equipment mobilised from the regional offices.',
+    contactVia: 'Wasiullah Shaikh · +256 746 215685',
+  },
+  {
     id: 'wider-africa',
     /* These were listed as "projects completed" until 8 September 2026.
        There are none: completed work is Uganda, Tanzania and Kenya only.
@@ -78,11 +90,12 @@ export default function RegionalFootprint({ onOpenContact }) {
   return (
     <>
       <Section>
-        <SectionHead eyebrow="Where We Operate" title="Eight markets, two registered offices.">
+        <SectionHead eyebrow="Where We Operate" title="Two registered offices, three office locations.">
           <p>
-            The distinction matters on a bid. Uganda and Tanzania are registered entities; the rest
-            are served from them. Radiation authorisation is held per jurisdiction and is listed
-            below for each, because that is the first thing a procurement team checks.
+            The distinction matters on a bid. Uganda and Tanzania are registered entities;
+            Mozambique is an office location; everywhere else is served from them. Radiation
+            authorisation is held per jurisdiction and is listed below for each, because that is
+            the first thing a procurement team checks.
           </p>
         </SectionHead>
 

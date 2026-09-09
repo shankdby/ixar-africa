@@ -32,7 +32,7 @@ const DEFAULT_DESCRIPTION =
  */
 export const ROUTE_SEO = {
   '/': {
-    title: 'IXAR in Africa | NDT and Industrial Inspection, Uganda & Tanzania',
+    title: 'IXAR in Africa | NDT & Industrial Inspection, Uganda & Tanzania',
     description: DEFAULT_DESCRIPTION,
     priority: '1.0',
     changefreq: 'weekly'
@@ -139,9 +139,9 @@ export const ROUTE_SEO = {
     changefreq: 'monthly'
   },
   '/careers': {
-    title: 'Jobs @ IXAR Africa | NDT Inspector Careers',
+    title: 'Jobs @ IXAR Africa | NDT Inspector Careers in Uganda & Tanzania',
     description:
-      'Join Africa’s premier non-destructive testing team. We recruit qualified ASNT Level II & III inspectors, radiation safety officers and site managers.',
+      'NDT careers with IXAR Africa. We recruit PCN and ISO 9712 certified Level II and Level III inspectors, BARC-qualified radiation safety officers and site managers. Applications go to hr@ixar.africa.',
     priority: '0.7',
     changefreq: 'weekly'
   },
