@@ -231,8 +231,15 @@ const COUNTRY_ROWS = [
   ['Malawi',     'Served from the region',       'Within regional mobilisation range'],
 ];
 
+/* Larsen &amp; Toubro removed 16 September 2026: not a current client, and the
+   only project was in India, on a document about Africa - the same reasoning
+   the live page's own client strip was corrected for on 8 September 2026,
+   which this list had not been brought in line with. Total Energies,
+   McDermott and CPP added on direct instruction; Total Energies has sourced
+   project rows in the record, McDermott and CPP do not yet. */
 const CLIENTS = ['Sinopec', 'CPECC', 'CCJV / CNOOC Uganda', 'PRAJ Projects',
-  'Larsen &amp; Toubro', 'Afrishell-Jeveeka', 'Ntake Bakery', 'Illovo Distillers'];
+  'Afrishell-Jeveeka', 'Ntake Bakery', 'Illovo Distillers',
+  'Total Energies', 'McDermott', 'CPP'];
 
 const profileBody = `
   <div class="cover">

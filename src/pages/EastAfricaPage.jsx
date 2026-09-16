@@ -116,7 +116,7 @@ function ClientTile({ client, index }) {
     let interval = null;
     const flip = () => setFace((f) => 1 - f);
     /* The offset is what staggers the wall. 1300ms against a 7000ms period
-       never divides evenly, so six tiles spread across the cycle and stay
+       never divides evenly, so the tiles spread across the cycle and stay
        spread. */
     const first = window.setTimeout(() => {
       flip();
@@ -368,8 +368,10 @@ const STATS = [
      so this counts DELIVERED rather than carrying its own number. */
   { icon: Globe2,        value: String(DELIVERED_COUNT), label: 'Countries with Projects Completed' },
   /* Was "12+", which was the number of rows in the table rather than the
-     number of projects. 27 per IXAR, subject to their final verification. */
-  { icon: ClipboardList, value: '27',   label: 'Projects Completed in Africa' },
+     number of projects - the record itself only carried the first 11 rows
+     of IXAR's experience sheet. Counted from the full record now, rather
+     than typed in and left to drift the next time a row is added. */
+  { icon: ClipboardList, value: String(projectsContent.projects.length), label: 'Projects Completed in Africa' },
   { icon: Activity,      value: '20+',   label: 'NDT Methods Offered' },
 ];
 
@@ -439,7 +441,17 @@ const LICENCES = [
  * which client: the site photography is filed by project, not by contract,
  * and attributing the wrong site to a named client is not a small error. The
  * tile falls back to the project reference from the record, which is sourced
- * and safe. */
+ * and safe.
+ *
+ * ADDED 16 SEPTEMBER 2026, on direct instruction: Total Energies, McDermott
+ * and CPP (China Petroleum Pipeline Engineering Company Limited). Total
+ * Energies has sourced project rows in the record (nos. 18 and 26) and gets
+ * the same second-face treatment as the others. McDermott and CPP do not
+ * appear in IXAR's experience record or company profile - there is no
+ * project to reference and no confirmed mark yet, so both tiles run text-
+ * only (`logo: null`) with no second face, the same placeholder treatment
+ * already used for a mark that is missing or unconfirmed. Add their marks
+ * and, if IXAR supplies one, a matching project row, when available. */
 const CLIENTS = [
   { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png', scale: 0.80, work: '' },
   { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',   scale: 1.40, work: '' },
@@ -447,6 +459,9 @@ const CLIENTS = [
   { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',    scale: 1.00, work: '' },
   { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',  scale: 0.80, work: '' },
   { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',   scale: 0.82, work: '' },
+  { name: 'Total Energies',    logo: null, scale: 1, work: '' },
+  { name: 'McDermott',         logo: null, scale: 1, work: '' },
+  { name: 'CPP',               logo: null, scale: 1, work: '' },
 ];
 
 /* What the second face of each tile says, taken from the project record so it
@@ -459,6 +474,7 @@ const CLIENT_RECORD_KEY = {
   'PRAJ Projects': 'PRAJ Projects',
   'Illovo Distillers': 'PRAJ Projects',
   'Ntake Bakery': 'Ntake Bakery-Jeveeka',
+  'Total Energies': 'Total Energies',
 };
 
 function clientReference(name) {
