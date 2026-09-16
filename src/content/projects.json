@@ -113,6 +113,168 @@
       "status": "Completed",
       "location": "Uganda",
       "country": "Uganda"
+    },
+    {
+      "no": 12,
+      "client": "Essar Infrastructure",
+      "project": "NDT and destructive testing for procedure qualification",
+      "scope": "",
+      "year": 2024,
+      "status": "Completed",
+      "location": "Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 13,
+      "client": "Southern Engineering (SECO)",
+      "project": "Radiography and ultrasonic testing",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Mombasa, Kenya",
+      "country": "Kenya"
+    },
+    {
+      "no": 14,
+      "client": "Inspecta Africa",
+      "project": "Inspection services",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Kampala, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 15,
+      "client": "Afrishell-Jeveeka",
+      "project": "Radiography testing",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Dar es Salaam, Tanzania",
+      "country": "Tanzania"
+    },
+    {
+      "no": 16,
+      "client": "Kakira Sugar Factory",
+      "project": "Radiography testing on steam pipe",
+      "scope": "",
+      "year": 2024,
+      "status": "Completed",
+      "location": "Jinja, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 17,
+      "client": "Kakira Sugar Factory",
+      "project": "Radiography testing on steam pipe",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Jinja, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 18,
+      "client": "Total Energies",
+      "project": "Inspection services",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Jinja, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 19,
+      "client": "Southern Engineering (SECO)",
+      "project": "Radiography and ultrasonic testing",
+      "scope": "",
+      "year": 2024,
+      "status": "Completed",
+      "location": "Mombasa, Kenya",
+      "country": "Kenya"
+    },
+    {
+      "no": 20,
+      "client": "Ntake Bakery-Weldcon",
+      "project": "Tank inspection — radiography testing",
+      "scope": "",
+      "year": 2023,
+      "status": "Completed",
+      "location": "Namanve, Uganda",
+      "country": "Uganda",
+      "separateOrder": true
+    },
+    {
+      "no": 21,
+      "client": "Southern Engineering (SECO)",
+      "project": "Radiography and ultrasonic testing on mooring boat",
+      "scope": "",
+      "year": 2024,
+      "status": "Completed",
+      "location": "Mombasa, Kenya",
+      "country": "Kenya"
+    },
+    {
+      "no": 22,
+      "client": "Ntake Bakery-Weldcon",
+      "project": "Tank inspection — radiography testing",
+      "scope": "",
+      "year": 2023,
+      "status": "Completed",
+      "location": "Namanve, Uganda",
+      "country": "Uganda",
+      "separateOrder": true
+    },
+    {
+      "no": 23,
+      "client": "Nile Breweries",
+      "project": "Radiography testing on pipe",
+      "scope": "",
+      "year": 2024,
+      "status": "Completed",
+      "location": "Jinja, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 24,
+      "client": "Hull Marine",
+      "project": "Inspection services",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Mombasa, Kenya",
+      "country": "Kenya"
+    },
+    {
+      "no": 25,
+      "client": "AG Pro Industries",
+      "project": "Radiography testing and stress relief",
+      "scope": "",
+      "year": 2024,
+      "status": "Completed",
+      "location": "Luwero, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 26,
+      "client": "Total Energies",
+      "project": "Radiography testing on pipe, Jinja LPG depot",
+      "scope": "",
+      "year": 2025,
+      "status": "Completed",
+      "location": "Jinja, Uganda",
+      "country": "Uganda"
+    },
+    {
+      "no": 27,
+      "client": "Uni Engineering",
+      "project": "Welder qualification",
+      "scope": "",
+      "year": 2023,
+      "status": "Completed",
+      "location": "Uganda",
+      "country": "Uganda"
     }
   ]
 }
