@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CalendarDays, Globe2, ClipboardList, Activity,
@@ -91,46 +91,18 @@ const TRACK_RECORD = [
    Small presentational helpers
    ========================================================================== */
 
-/* A Trusted By tile.
+/* A Trusted By tile: the client's mark, grayscale until hovered.
  *
- * Two faces that cross-fade: the client's mark, then what that client
- * actually engaged IXAR to do. The strip was a marquee of logos linking out
- * to third-party websites, which sent visitors off ixar.africa from the one
- * section whose job is to keep them on it. No links now.
- *
- * Each tile runs on its own timer with a phase offset derived from its
- * index, so they never turn together - a wall that flips in unison reads as
- * a slideshow, and the eye stops seeing the individual clients. The offsets
- * are prime-ish multiples so the cycle does not resynchronise. */
-function ClientTile({ client, index }) {
-  const [face, setFace] = useState(0);
-  /* Memoised on the name. clientReference builds a fresh object each call,
-     and an object in the effect's dependency list is a new value on every
-     render - so the effect below tore itself down and restarted its timer
-     before the timer could ever fire, and no tile ever turned. */
-  const ref = useMemo(() => clientReference(client.name), [client.name]);
-
-  useEffect(() => {
-    if (prefersReducedMotion() || !ref) return undefined;
-    const PERIOD = 7000;
-    let interval = null;
-    const flip = () => setFace((f) => 1 - f);
-    /* The offset is what staggers the wall. 1300ms against a 7000ms period
-       never divides evenly, so the tiles spread across the cycle and stay
-       spread. */
-    const first = window.setTimeout(() => {
-      flip();
-      interval = window.setInterval(flip, PERIOD);
-    }, PERIOD + index * 1300);
-    return () => {
-      window.clearTimeout(first);
-      if (interval) window.clearInterval(interval);
-    };
-  }, [index, ref]);
-
+ * Used to auto-flip on a timer to a second face naming the client's project
+ * from the record, cross-fading over it. Removed 16 September 2026: it
+ * periodically replaced the one thing this wall exists to show - the
+ * recognisable mark - with a plain panel of text, on every tile that had a
+ * project reference to show. The record itself is still browsable in full
+ * in the Project Record section above; this wall's job is just the logos. */
+function ClientTile({ client }) {
   return (
     <div className="logotile">
-      <div className={`logoface ${face === 0 ? 'is-on' : ''}`}>
+      <div className="logoface">
         {client.logo ? (
           <img
             src={client.logo}
@@ -143,20 +115,6 @@ function ClientTile({ client, index }) {
           <span className="logoword">{client.name}</span>
         )}
       </div>
-
-      {ref && (
-        <div className={`logoface logoface--ref ${face === 1 ? 'is-on' : ''}`}>
-          {client.work
-            ? <AppImage src={client.work} alt={`${client.name} project, ${ref.where}`} />
-            : (
-              <>
-                <span className="rf-project">{ref.project}</span>
-                <span className="rf-where">{ref.where} &middot; {ref.year}</span>
-                {ref.count > 1 && <span className="rf-count">{ref.count} work orders</span>}
-              </>
-            )}
-        </div>
-      )}
     </div>
   );
 }
@@ -436,13 +394,6 @@ const LICENCES = [
  * that Ntake, which is artwork reversed out of a solid red panel, is not
  * shrunk to a dot for being dense. Regenerate with tools/trim-logos.py.
  *
- * `work` is a photograph of that client's own project, which the tile
- * cross-fades to. Left empty until IXAR confirms which photograph belongs to
- * which client: the site photography is filed by project, not by contract,
- * and attributing the wrong site to a named client is not a small error. The
- * tile falls back to the project reference from the record, which is sourced
- * and safe.
- *
  * ADDED 16 SEPTEMBER 2026, on direct instruction: Total Energies, McDermott
  * and CPP (China Petroleum Pipeline Engineering Company Limited). Marks
  * supplied directly and cropped to 360x120 source canvases the same way as
@@ -451,21 +402,24 @@ const LICENCES = [
  * script already set) rather than a target recomputed across all eight, so
  * cpecc/ccjv/praj/illovo/ntake's already-reviewed values are undisturbed -
  * only Sinopec, corrected by hand on 8 September, sits outside the script
- * entirely and stays that way. Total Energies has sourced project rows in
- * the record (nos. 18 and 26) and gets the same second-face treatment as
- * the others; McDermott and CPP don't appear in IXAR's experience record,
- * so their tiles run with no second face - add one if IXAR supplies a
- * matching project. */
+ * entirely and stays that way.
+ *
+ * The tile used to auto-flip to a second face naming the client's project
+ * from the record (a `work` field held a photograph for it, left empty
+ * pending IXAR confirmation of which photo belongs to which client). Removed
+ * 16 September 2026: it periodically covered the mark itself with a plain
+ * text panel, on every tile that had a project to show. The full record is
+ * one section up; this wall just shows the logos now. */
 const CLIENTS = [
-  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png',   scale: 0.80, work: '' },
-  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',     scale: 1.40, work: '' },
-  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',      scale: 1.11, work: '' },
-  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',      scale: 1.00, work: '' },
-  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',    scale: 0.80, work: '' },
-  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',     scale: 0.82, work: '' },
-  { name: 'Total Energies',    logo: '/images/clients/trimmed/total.png',     scale: 0.90, work: '' },
-  { name: 'McDermott',         logo: '/images/clients/trimmed/mcdermott.png', scale: 0.82, work: '' },
-  { name: 'CPP',               logo: '/images/clients/trimmed/cpp.png',       scale: 0.80, work: '' },
+  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png',   scale: 0.80 },
+  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',     scale: 1.40 },
+  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',      scale: 1.11 },
+  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',      scale: 1.00 },
+  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',    scale: 0.80 },
+  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',     scale: 0.82 },
+  { name: 'Total Energies',    logo: '/images/clients/trimmed/total.png',     scale: 0.90 },
+  { name: 'McDermott',         logo: '/images/clients/trimmed/mcdermott.png', scale: 0.82 },
+  { name: 'CPP',               logo: '/images/clients/trimmed/cpp.png',       scale: 0.80 },
 ];
 
 /* The wall's entrance: each mark rises and settles in on its own beat rather
@@ -480,32 +434,6 @@ const LOGOTILE_VARIANTS = {
   hidden: { opacity: 0, y: 26, scale: 0.94 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
 };
-
-/* What the second face of each tile says, taken from the project record so it
-   cannot claim work that is not in the table. Matching is on the client name
-   the record uses, which is not always the name on the logo. */
-const CLIENT_RECORD_KEY = {
-  'Sinopec': 'Sinopec',
-  'CPECC': 'CPECC',
-  'CCJV': 'CCJV',
-  'PRAJ Projects': 'PRAJ Projects',
-  'Illovo Distillers': 'PRAJ Projects',
-  'Ntake Bakery': 'Ntake Bakery-Jeveeka',
-  'Total Energies': 'Total Energies',
-};
-
-function clientReference(name) {
-  const key = CLIENT_RECORD_KEY[name] || name;
-  const rows = projectsContent.projects.filter((r) => r.client === key);
-  if (!rows.length) return null;
-  const newest = rows.reduce((a, b) => (b.year > a.year ? b : a));
-  return {
-    project: newest.project,
-    where: newest.location.split(',').slice(-2).join(',').trim(),
-    year: newest.year,
-    count: rows.length,
-  };
-}
 
 /* The two downloads.
  *
@@ -974,14 +902,14 @@ export default function EastAfricaPage() {
             viewport={{ once: true, amount: 0.25 }}
             variants={LOGOWALL_VARIANTS}
           >
-            {CLIENTS.map((c, i) => (
+            {CLIENTS.map((c) => (
               <motion.div key={c.name} variants={LOGOTILE_VARIANTS}>
-                <ClientTile client={c} index={i} />
+                <ClientTile client={c} />
               </motion.div>
             ))}
           </motion.div>
           <p className="trustnote">
-            Each mark is shown with its client&rsquo;s own project from the record above.
+            Each client&rsquo;s project is on record in the Project Record above.
             Logos are reproduced with permission and are the property of their owners.
           </p>
         </div>
@@ -1562,9 +1490,7 @@ export default function EastAfricaPage() {
 .ea-page .logoface{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:6px;padding:22px;text-align:center;
-  opacity:0;transition:opacity .9s ease;pointer-events:none;
 }
-.ea-page .logoface.is-on{opacity:1}
 /* The mark sits at a common optical weight, so the box it is given is
    generous and the inline scale does the sizing. */
 .ea-page .logoface img{max-width:62%;max-height:56%;width:auto;height:auto;
@@ -1572,13 +1498,6 @@ export default function EastAfricaPage() {
 .ea-page .logotile:hover .logoface img{filter:grayscale(0);opacity:1}
 .ea-page .logoword{font-size:23px;font-weight:800;letter-spacing:.02em;color:#8D959D}
 .ea-page .logotile:hover .logoword{color:var(--head)}
-.ea-page .logoface--ref{background:var(--head);justify-content:center}
-.ea-page .logoface--ref img{max-width:100%;max-height:100%;width:100%;height:100%;
-  object-fit:cover;filter:none;opacity:1}
-.ea-page .rf-project{font-size:14.5px;font-weight:800;line-height:1.35;color:#fff}
-.ea-page .rf-where{font-size:12px;font-weight:600;color:rgba(255,255,255,.7)}
-.ea-page .rf-count{margin-top:4px;font-size:10.5px;font-weight:800;letter-spacing:.12em;
-  text-transform:uppercase;color:#FF6B69}
 .ea-page .trustnote{margin:26px auto 0;max-width:640px;text-align:center;
   font-size:13px;line-height:1.6;color:var(--muted)}
 @media(max-width:860px){ .ea-page .logowall{grid-template-columns:repeat(2,1fr)} }
