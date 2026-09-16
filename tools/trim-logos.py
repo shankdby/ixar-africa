@@ -10,7 +10,7 @@ scale for each, which goes into CLIENTS in src/pages/EastAfricaPage.jsx.
 from PIL import Image
 import numpy as np, os, math
 
-LOGOS = ['cpecc', 'ccjv', 'praj', 'illovo', 'ntake']
+LOGOS = ['cpecc', 'ccjv', 'praj', 'illovo', 'ntake', 'total', 'mcdermott', 'cpp']
 SRC = 'public/images/clients'
 OUT = f'{SRC}/trimmed'
 

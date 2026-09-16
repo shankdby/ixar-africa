@@ -444,25 +444,42 @@ const LICENCES = [
  * and safe.
  *
  * ADDED 16 SEPTEMBER 2026, on direct instruction: Total Energies, McDermott
- * and CPP (China Petroleum Pipeline Engineering Company Limited). Total
- * Energies has sourced project rows in the record (nos. 18 and 26) and gets
- * the same second-face treatment as the others. McDermott and CPP do not
- * appear in IXAR's experience record or company profile - there is no
- * project to reference and no confirmed mark yet, so both tiles run text-
- * only (`logo: null`) with no second face, the same placeholder treatment
- * already used for a mark that is missing or unconfirmed. Add their marks
- * and, if IXAR supplies one, a matching project row, when available. */
+ * and CPP (China Petroleum Pipeline Engineering Company Limited). Marks
+ * supplied directly and cropped to 360x120 source canvases the same way as
+ * the rest (tools/trim-logos.py). Their scale is computed against the same
+ * target (the median ink-weight of the five logos above whose scale that
+ * script already set) rather than a target recomputed across all eight, so
+ * cpecc/ccjv/praj/illovo/ntake's already-reviewed values are undisturbed -
+ * only Sinopec, corrected by hand on 8 September, sits outside the script
+ * entirely and stays that way. Total Energies has sourced project rows in
+ * the record (nos. 18 and 26) and gets the same second-face treatment as
+ * the others; McDermott and CPP don't appear in IXAR's experience record,
+ * so their tiles run with no second face - add one if IXAR supplies a
+ * matching project. */
 const CLIENTS = [
-  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png', scale: 0.80, work: '' },
-  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',   scale: 1.40, work: '' },
-  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',    scale: 1.11, work: '' },
-  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',    scale: 1.00, work: '' },
-  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',  scale: 0.80, work: '' },
-  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',   scale: 0.82, work: '' },
-  { name: 'Total Energies',    logo: null, scale: 1, work: '' },
-  { name: 'McDermott',         logo: null, scale: 1, work: '' },
-  { name: 'CPP',               logo: null, scale: 1, work: '' },
+  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png',   scale: 0.80, work: '' },
+  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',     scale: 1.40, work: '' },
+  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',      scale: 1.11, work: '' },
+  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',      scale: 1.00, work: '' },
+  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',    scale: 0.80, work: '' },
+  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',     scale: 0.82, work: '' },
+  { name: 'Total Energies',    logo: '/images/clients/trimmed/total.png',     scale: 0.90, work: '' },
+  { name: 'McDermott',         logo: '/images/clients/trimmed/mcdermott.png', scale: 0.82, work: '' },
+  { name: 'CPP',               logo: '/images/clients/trimmed/cpp.png',       scale: 0.80, work: '' },
 ];
+
+/* The wall's entrance: each mark rises and settles in on its own beat rather
+   than the whole grid appearing at once - the same whileInView/viewport
+   pattern already used for the enquiry section above, with staggerChildren
+   added so the tiles cascade instead of arriving together. */
+const LOGOWALL_VARIANTS = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+};
+const LOGOTILE_VARIANTS = {
+  hidden: { opacity: 0, y: 26, scale: 0.94 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
 
 /* What the second face of each tile says, taken from the project record so it
    cannot claim work that is not in the table. Matching is on the client name
@@ -950,11 +967,19 @@ export default function EastAfricaPage() {
           <p className="sec-intro">Operators, EPC contractors and plant owners across the continent.</p>
         </div>
         <div className="wrap">
-          <div className="logowall">
+          <motion.div
+            className="logowall"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={LOGOWALL_VARIANTS}
+          >
             {CLIENTS.map((c, i) => (
-              <ClientTile key={c.name} client={c} index={i} />
+              <motion.div key={c.name} variants={LOGOTILE_VARIANTS}>
+                <ClientTile client={c} index={i} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           <p className="trustnote">
             Each mark is shown with its client&rsquo;s own project from the record above.
             Logos are reproduced with permission and are the property of their owners.
@@ -1517,9 +1542,23 @@ export default function EastAfricaPage() {
 .ea-page .logowall{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .ea-page .logotile{
   position:relative;aspect-ratio:16/9;background:#fff;border:1px solid var(--line);
-  overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease;
+  overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;
 }
-.ea-page .logotile:hover{border-color:var(--red);box-shadow:0 10px 26px rgba(0,0,0,.07)}
+.ea-page .logotile:hover{border-color:var(--red);box-shadow:0 14px 30px rgba(0,0,0,.09);transform:translateY(-3px)}
+/* The shine: a soft diagonal band parked off the left edge, swept across on
+   hover. Skewed rather than a plain vertical bar so it reads as light
+   catching the mark, not a loading-state shimmer. z-index keeps it above the
+   logo face but under nothing - there is nothing above a tile to cover. */
+.ea-page .logotile::after{
+  content:'';position:absolute;top:0;left:-60%;width:34%;height:100%;z-index:2;
+  background:linear-gradient(115deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);transition:left .65s ease;pointer-events:none;
+}
+.ea-page .logotile:hover::after{left:130%}
+@media(prefers-reduced-motion:reduce){
+  .ea-page .logotile,.ea-page .logotile::after{transition:none}
+  .ea-page .logotile:hover{transform:none}
+}
 .ea-page .logoface{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:6px;padding:22px;text-align:center;
