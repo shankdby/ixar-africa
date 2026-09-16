@@ -11,11 +11,19 @@
     360,
     120
   ],
+  "/images/clients/cpp.png": [
+    360,
+    120
+  ],
   "/images/clients/illovo.png": [
     360,
     120
   ],
   "/images/clients/lt.png": [
+    360,
+    120
+  ],
+  "/images/clients/mcdermott.png": [
     360,
     120
   ],
@@ -31,6 +39,10 @@
     360,
     120
   ],
+  "/images/clients/total.png": [
+    360,
+    120
+  ],
   "/images/clients/trimmed/ccjv.png": [
     103,
     92
@@ -39,9 +51,17 @@
     93,
     35
   ],
+  "/images/clients/trimmed/cpp.png": [
+    233,
+    103
+  ],
   "/images/clients/trimmed/illovo.png": [
     276,
     100
+  ],
+  "/images/clients/trimmed/mcdermott.png": [
+    336,
+    50
   ],
   "/images/clients/trimmed/ntake.png": [
     125,
@@ -54,6 +74,10 @@
   "/images/clients/trimmed/sinopec.png": [
     728,
     158
+  ],
+  "/images/clients/trimmed/total.png": [
+    142,
+    104
   ],
   "/images/downloads/cover-profile.webp": [
     760,

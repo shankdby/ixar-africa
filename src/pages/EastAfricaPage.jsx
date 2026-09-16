@@ -444,24 +444,28 @@ const LICENCES = [
  * and safe.
  *
  * ADDED 16 SEPTEMBER 2026, on direct instruction: Total Energies, McDermott
- * and CPP (China Petroleum Pipeline Engineering Company Limited). Total
- * Energies has sourced project rows in the record (nos. 18 and 26) and gets
- * the same second-face treatment as the others. McDermott and CPP do not
- * appear in IXAR's experience record or company profile - there is no
- * project to reference and no confirmed mark yet, so both tiles run text-
- * only (`logo: null`) with no second face, the same placeholder treatment
- * already used for a mark that is missing or unconfirmed. Add their marks
- * and, if IXAR supplies one, a matching project row, when available. */
+ * and CPP (China Petroleum Pipeline Engineering Company Limited). Marks
+ * supplied directly and cropped to 360x120 source canvases the same way as
+ * the rest (tools/trim-logos.py). Their scale is computed against the same
+ * target (the median ink-weight of the five logos above whose scale that
+ * script already set) rather than a target recomputed across all eight, so
+ * cpecc/ccjv/praj/illovo/ntake's already-reviewed values are undisturbed -
+ * only Sinopec, corrected by hand on 8 September, sits outside the script
+ * entirely and stays that way. Total Energies has sourced project rows in
+ * the record (nos. 18 and 26) and gets the same second-face treatment as
+ * the others; McDermott and CPP don't appear in IXAR's experience record,
+ * so their tiles run with no second face - add one if IXAR supplies a
+ * matching project. */
 const CLIENTS = [
-  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png', scale: 0.80, work: '' },
-  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',   scale: 1.40, work: '' },
-  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',    scale: 1.11, work: '' },
-  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',    scale: 1.00, work: '' },
-  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',  scale: 0.80, work: '' },
-  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',   scale: 0.82, work: '' },
-  { name: 'Total Energies',    logo: null, scale: 1, work: '' },
-  { name: 'McDermott',         logo: null, scale: 1, work: '' },
-  { name: 'CPP',               logo: null, scale: 1, work: '' },
+  { name: 'Sinopec',           logo: '/images/clients/trimmed/sinopec.png',   scale: 0.80, work: '' },
+  { name: 'CPECC',             logo: '/images/clients/trimmed/cpecc.png',     scale: 1.40, work: '' },
+  { name: 'CCJV',              logo: '/images/clients/trimmed/ccjv.png',      scale: 1.11, work: '' },
+  { name: 'PRAJ Projects',     logo: '/images/clients/trimmed/praj.png',      scale: 1.00, work: '' },
+  { name: 'Illovo Distillers', logo: '/images/clients/trimmed/illovo.png',    scale: 0.80, work: '' },
+  { name: 'Ntake Bakery',      logo: '/images/clients/trimmed/ntake.png',     scale: 0.82, work: '' },
+  { name: 'Total Energies',    logo: '/images/clients/trimmed/total.png',     scale: 0.90, work: '' },
+  { name: 'McDermott',         logo: '/images/clients/trimmed/mcdermott.png', scale: 0.82, work: '' },
+  { name: 'CPP',               logo: '/images/clients/trimmed/cpp.png',       scale: 0.80, work: '' },
 ];
 
 /* The wall's entrance: each mark rises and settles in on its own beat rather
