@@ -203,8 +203,8 @@ export default function Navbar({ onOpenContact }) {
             <a href="mailto:bd@ixar.africa" className="top-link">
               <Mail size={13} aria-hidden="true" /> bd@ixar.africa
             </a>
-            <a href="tel:+256705731596" className="top-link">
-              <Phone size={13} aria-hidden="true" /> +256 705 731596
+            <a href="tel:+256414251251" className="top-link">
+              <Phone size={13} aria-hidden="true" /> +256 414 251251
             </a>
           </div>
         </div>
@@ -313,8 +313,8 @@ export default function Navbar({ onOpenContact }) {
           </button>
 
           <div className="mobile-contact">
-            <a href="tel:+256705731596">
-              <Phone size={14} aria-hidden="true" /> +256 705 731596
+            <a href="tel:+256414251251">
+              <Phone size={14} aria-hidden="true" /> +256 414 251251
             </a>
             <a href="mailto:bd@ixar.africa">
               <Mail size={14} aria-hidden="true" /> bd@ixar.africa

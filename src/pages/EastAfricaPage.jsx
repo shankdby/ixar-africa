@@ -7,6 +7,7 @@ import {
 import Style from '../components/Style';
 import AfricaMap from '../components/AfricaMap';
 import AppImage from '../components/AppImage';
+import ExperienceTable from '../components/ExperienceTable';
 import servicesContent from '../content/services.json';
 import industriesContent from '../content/industries.json';
 import projectsContent from '../content/projects.json';
@@ -441,34 +442,22 @@ const LOGOTILE_VARIANTS = {
  * the word PDF on it, which told a visitor nothing about what they were
  * about to download - and the two blocks were identical, so the pair read as
  * one document offered twice. */
-/* The two downloads.
- *
- * The Company Profile is IXAR's own brochure, supplied 23 September 2026 -
- * 33 pages covering the group's history, the full NDT and destructive
- * testing range, awards, subsidiaries, international offices, clientele and
- * the training centre. It replaces the four-page profile generated here from
- * site content, which was a stand-in until the real one arrived.
- *
- * `cover` is a render of each document's own first page. The two are
- * different shapes now - the brochure is landscape, the project record A4
- * portrait - so the card sizes the thumbnail to the image rather than
- * cropping both to one box. */
 const DOWNLOADS = [
   {
     title: 'Company Profile',
-    body: 'IXAR\u2019s full company brochure: history since 1969, the complete NDT and destructive testing range, accreditations, training centre and international offices.',
+    body: 'A full introduction to IXAR: history, service portfolio, certifications, equipment and international presence.',
     cta: 'Download Company Profile (PDF)',
     href: '/downloads/IXAR-Company-Profile.pdf',
     cover: '/images/downloads/cover-profile.webp',
-    meta: '33 pages \u00b7 3.8 MB',
   },
   {
+    /* Was "Completed Projects, Africa", which is the contradiction the
+       section heading above was corrected for: several rows are ongoing. */
     title: 'Project Record',
-    body: 'Every project delivered on the continent, with client, scope, location, year and current status. This is the list in full \u2014 it is no longer duplicated on this page.',
+    body: 'Every project delivered on the continent, with client, scope, location, year and current status.',
     cta: 'Download Project Record (PDF)',
     href: '/downloads/IXAR-Africa-Project-List.pdf',
     cover: '/images/downloads/cover-projects.webp',
-    meta: '2 pages \u00b7 140 KB',
     dark: true,
   },
 ];
@@ -885,12 +874,18 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= 7. PROJECTS COMPLETED IN AFRICA ================= */}
-      {/* The searchable project record table stood here. It is out because
-          the Project Record PDF below carries the same rows, and keeping
-          both meant the list had to be corrected in two places every time
-          IXAR revised it - which is how the two came to disagree. The data
-          itself is untouched: src/content/projects.json still feeds the
-          PDF, the Trusted By tiles and the CMS. */}
+      <section id="projects">
+        <div className="wrap">
+          <div className="center">
+            <span className="eyebrow">Track Record</span>
+            {/* "Projects Completed in Africa" contradicted the table beneath
+                it, where several rows are ongoing. */}
+            <h2 className="sec">Project <span className="accent">Record</span></h2>
+            <p className="sec-intro">Search by client, location or scope. Sort any column.</p>
+          </div>
+          <div style={{ marginTop: '40px' }}><ExperienceTable /></div>
+        </div>
+      </section>
 
       {/* ================= 8. TRUSTED BY ================= */}
       <section id="trusted" style={{ background: 'var(--wash)' }}>
@@ -939,7 +934,6 @@ export default function EastAfricaPage() {
                   <h3>{d.title}</h3>
                   <p>{d.body}</p>
                   <a className={`btn ${d.dark ? 'btn-dark' : ''}`} href={d.href} download>{d.cta}</a>
-                  {d.meta && <span className="dl-meta">{d.meta}</span>}
                 </div>
               </div>
             ))}
@@ -1159,13 +1153,14 @@ export default function EastAfricaPage() {
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M6.4 3.5h3.1l1.6 4-2 1.3a12 12 0 0 0 6.1 6.1l1.3-2 4 1.6v3.1a1.8 1.8 0 0 1-2 1.8A16.8 16.8 0 0 1 4.6 5.5a1.8 1.8 0 0 1 1.8-2Z" />
                     </svg>
-                    {/* One number now. It used to carry the board line, a
-                        second office line and a separately labelled WhatsApp
-                        number - three to choose from, on a card whose job is
-                        to give one. */}
                     <span>
+                      +256 414 251251 &middot; +256 777 166392<br />
+                      {/* The WhatsApp line is named, because it is a different
+                          number from the board line and the buttons all use
+                          it. Without saying so it reads as a third office
+                          number nobody knows what to do with. */}
+                      WhatsApp{' '}
                       <a href="tel:+256705731596" className="ea-office-tel">+256 705 731596</a>
-                      {' '}&middot; Phone and WhatsApp
                     </span>
                   </li>
                   <li>
@@ -1173,11 +1168,7 @@ export default function EastAfricaPage() {
                       <rect x="3" y="5" width="18" height="14" rx="2" />
                       <path d="m3.8 6.2 8.2 6.3 8.2-6.3" />
                     </svg>
-                    {/* Printed as www.ixar.africa until 23 September 2026, which
-                        is the hostname that was throwing a certificate warning:
-                        the site was advertising the address that did not work.
-                        The canonical host is the apex, and SITE_URL agrees. */}
-                    <span>bd@ixar.africa &middot; ixar.africa</span>
+                    <span>bd@ixar.africa &middot; www.ixar.africa</span>
                   </li>
                 </ul>
 
@@ -1997,24 +1988,19 @@ from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
 .ea-page .dl:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
 /* The document's own cover, at A4 proportions so it reads as a page rather
    than as a thumbnail of something. */
-/* Sized to the cover rather than cropping to a fixed shape: the brochure
-   is landscape and the project record portrait, and one box cropped one of
-   them badly whichever way it was set. */
 .ea-page .dl .doc{
-  position:relative;flex:none;display:block;max-width:150px;
+  position:relative;width:124px;flex:none;aspect-ratio:1/1.414;display:block;
   border:1px solid var(--line);background:var(--wash);overflow:hidden;
   box-shadow:0 6px 18px rgba(0,0,0,.10);transition:transform .25s ease,box-shadow .25s ease;
 }
 .ea-page .dl .doc:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.16)}
-.ea-page .dl .doc img{width:100%;height:auto;display:block}
+.ea-page .dl .doc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 .ea-page .dl .doc__tag{
   position:absolute;left:0;bottom:0;display:flex;align-items:center;gap:5px;
   background:var(--red);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.12em;
   padding:4px 8px;
 }
 .ea-page .dl .doc__tag svg{width:13px;height:13px}
-.ea-page .dl-meta{display:block;margin-top:12px;font-size:12px;font-weight:700;
-  letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .ea-page .dl h3{font-size:20px;margin-bottom:8px}
 .ea-page .dl p{font-size:14.5px;line-height:1.6;margin:0 0 18px}
 .ea-page .dl .upd{display:block;margin-top:10px;font-size:12.5px;color:var(--muted)}

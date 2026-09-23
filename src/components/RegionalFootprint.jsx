@@ -30,11 +30,9 @@ const LOCATIONS = [
     status: 'Registered office',
     tier: 'registered',
     address: ['Plot No. 72, Kanjokya Street, Kamwokya', 'P.O. Box 28673 Nakawa, Kampala'],
-    /* One number across the site from 23 September 2026. It replaced the
-       Kampala board line and the second office line, which between them put
-       three different numbers in front of a visitor. */
     phones: [
-      { label: '+256 705 731596', href: 'tel:+256705731596' },
+      { label: '+256 414 251251', href: 'tel:+256414251251' },
+      { label: '+256 777 166392', href: 'tel:+256777166392' },
     ],
     email: 'bd@ixar.africa',
     licence: 'Licensed by the Uganda Atomic Energy Council for sealed radioactive sources',
