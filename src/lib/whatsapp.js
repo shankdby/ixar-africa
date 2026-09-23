@@ -18,15 +18,16 @@
    (same result, no browser tab) but does nothing at all when the app
    is not installed, so web.whatsapp.com is the safer default.       */
 
-/* +256 414 251251 is the Kampala board line. It is a landline, so WhatsApp
-   cannot register it and every WhatsApp button on the site opened a chat with
-   a number that does not exist there - the click simply failed. WA_MOBILE is
-   the number the buttons use: +256 705 731596, confirmed by IXAR on
-   9 September 2026.
+/* +256 705 731596 is the number IXAR publishes for Africa, confirmed
+   23 September 2026. It replaces the Kampala board line (+256 414 251251),
+   which was a landline: WhatsApp cannot register one, so every WhatsApp
+   button on the site used to open a chat with a number that does not exist
+   there and the click simply failed.
 
-   WA_NUMBER stays as the switchboard for `tel:` links, which is what it is
-   actually for. */
-export const WA_NUMBER = '256414251251';
+   WA_NUMBER is the `tel:` switchboard and WA_MOBILE is what the WhatsApp
+   buttons dial. They are the same number now; both names are kept so the
+   two uses can diverge again without hunting through the site. */
+export const WA_NUMBER = '256705731596';
 export const WA_MOBILE = '256705731596';
 
 export const WA_DEFAULT_MESSAGE =

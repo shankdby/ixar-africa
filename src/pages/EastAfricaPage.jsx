@@ -7,7 +7,6 @@ import {
 import Style from '../components/Style';
 import AfricaMap from '../components/AfricaMap';
 import AppImage from '../components/AppImage';
-import ExperienceTable from '../components/ExperienceTable';
 import servicesContent from '../content/services.json';
 import industriesContent from '../content/industries.json';
 import projectsContent from '../content/projects.json';
@@ -874,18 +873,12 @@ export default function EastAfricaPage() {
       </section>
 
       {/* ================= 7. PROJECTS COMPLETED IN AFRICA ================= */}
-      <section id="projects">
-        <div className="wrap">
-          <div className="center">
-            <span className="eyebrow">Track Record</span>
-            {/* "Projects Completed in Africa" contradicted the table beneath
-                it, where several rows are ongoing. */}
-            <h2 className="sec">Project <span className="accent">Record</span></h2>
-            <p className="sec-intro">Search by client, location or scope. Sort any column.</p>
-          </div>
-          <div style={{ marginTop: '40px' }}><ExperienceTable /></div>
-        </div>
-      </section>
+      {/* The searchable Project Record table stood here. Removed 23 September
+          2026 on IXAR's instruction: the same rows are in the Project Record
+          PDF offered under Learn More, and keeping both meant every revision
+          had to be made twice. src/content/projects.json is untouched - it
+          still feeds that PDF, and ExperienceTable is still in the tree for
+          any page that wants the table back. */}
 
       {/* ================= 8. TRUSTED BY ================= */}
       <section id="trusted" style={{ background: 'var(--wash)' }}>
@@ -909,7 +902,7 @@ export default function EastAfricaPage() {
             ))}
           </motion.div>
           <p className="trustnote">
-            Each client&rsquo;s project is on record in the Project Record above.
+            Each client&rsquo;s project is on record in the Project Record, which is available as a PDF below.
             Logos are reproduced with permission and are the property of their owners.
           </p>
         </div>
@@ -1154,13 +1147,12 @@ export default function EastAfricaPage() {
                       <path d="M6.4 3.5h3.1l1.6 4-2 1.3a12 12 0 0 0 6.1 6.1l1.3-2 4 1.6v3.1a1.8 1.8 0 0 1-2 1.8A16.8 16.8 0 0 1 4.6 5.5a1.8 1.8 0 0 1 1.8-2Z" />
                     </svg>
                     <span>
-                      +256 414 251251 &middot; +256 777 166392<br />
-                      {/* The WhatsApp line is named, because it is a different
-                          number from the board line and the buttons all use
-                          it. Without saying so it reads as a third office
-                          number nobody knows what to do with. */}
-                      WhatsApp{' '}
+                      {/* One number now. It used to read "board line, then
+                          WhatsApp on a different number"; since the published
+                          number and the WhatsApp number are the same, saying
+                          it twice just looked like a mistake. */}
                       <a href="tel:+256705731596" className="ea-office-tel">+256 705 731596</a>
+                      {' '}(also WhatsApp) &middot; +256 777 166392
                     </span>
                   </li>
                   <li>

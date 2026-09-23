@@ -31,7 +31,7 @@ const LOCATIONS = [
     tier: 'registered',
     address: ['Plot No. 72, Kanjokya Street, Kamwokya', 'P.O. Box 28673 Nakawa, Kampala'],
     phones: [
-      { label: '+256 414 251251', href: 'tel:+256414251251' },
+      { label: '+256 705 731596', href: 'tel:+256705731596' },
       { label: '+256 777 166392', href: 'tel:+256777166392' },
     ],
     email: 'bd@ixar.africa',

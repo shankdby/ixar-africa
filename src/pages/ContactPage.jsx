@@ -51,7 +51,7 @@ const OFFICES = [
     status: 'Registered office',
     lines: ['Plot No. 72, Kanjokya Street, Kamwokya', 'P.O. Box 28673 Nakawa, Kampala'],
     phones: [
-      { label: '+256 414 251251', href: 'tel:+256414251251' },
+      { label: '+256 705 731596', href: 'tel:+256705731596' },
       { label: '+256 777 166392', href: 'tel:+256777166392' },
     ],
   },
@@ -135,7 +135,7 @@ export default function ContactPage() {
               </p>
               <p className="ct-line">
                 <Phone size={16} aria-hidden="true" />
-                <a href="tel:+256414251251">+256 414 251251</a>
+                <a href="tel:+256705731596">+256 705 731596</a>
               </p>
             </div>
 
@@ -184,7 +184,7 @@ export default function ContactPage() {
                 <p>
                   It has gone to <strong>bd@ixar.africa</strong> and a member of the regional
                   team will reply to the address you gave. For anything urgent, call{' '}
-                  <a href="tel:+256414251251">+256 414 251251</a>.
+                  <a href="tel:+256705731596">+256 705 731596</a>.
                 </p>
                 <button type="button" className="ea-btn ea-btn--navy" onClick={() => setSent(false)}>
                   Send another enquiry
@@ -200,7 +200,7 @@ export default function ContactPage() {
                   The enquiry has been drafted with everything you entered. Send it and it reaches
                   the regional office directly. If nothing opened, email{' '}
                   <a href="mailto:bd@ixar.africa">bd@ixar.africa</a> or call{' '}
-                  <a href="tel:+256414251251">+256 414 251251</a>.
+                  <a href="tel:+256705731596">+256 705 731596</a>.
                 </p>
                 <button type="button" className="ea-btn ea-btn--navy" onClick={() => setOpened(false)}>
                   Back to the form

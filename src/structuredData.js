@@ -40,7 +40,7 @@ const organization = () => ({
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales',
-    telephone: '+256-414-251251',
+    telephone: '+256-705-731596',
     email: 'bd@ixar.africa',
     areaServed: ['UG', 'TZ', 'KE'],
     availableLanguage: ['en'],
@@ -55,7 +55,7 @@ const kampalaOffice = () => ({
   parentOrganization: { '@id': ORG_ID },
   url: `${SITE_URL}/network`,
   image: `${SITE_URL}/images/east-africa/ea-office-kampala.webp`,
-  telephone: '+256-414-251251',
+  telephone: '+256-705-731596',
   email: 'bd@ixar.africa',
   address: {
     '@type': 'PostalAddress',
