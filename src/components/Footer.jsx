@@ -110,7 +110,7 @@ export default function Footer({ onOpenContact }) {
               </div>
               <div className="f-contact-row">
                 <Phone size={15} aria-hidden="true" />
-                <a href="tel:+256414251251">+256 414 251251</a>
+                <a href="tel:+256705731596">+256 705 731596</a>
               </div>
               <div className="f-contact-row">
                 <Mail size={15} aria-hidden="true" />
