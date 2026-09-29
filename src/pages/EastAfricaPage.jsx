@@ -1979,14 +1979,18 @@ from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}
 .ea-page .dl{text-align:left;display:flex;gap:24px;align-items:flex-start;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:32px;transition:.25s}
 .ea-page .dl:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
 /* The document's own cover, at A4 proportions so it reads as a page rather
-   than as a thumbnail of something. */
+   than as a thumbnail of something. Landscape A4 since 29 September 2026:
+   both documents are now landscape, and a landscape page cropped into a
+   portrait frame showed a vertical strip out of the middle of the cover -
+   the headline sliced in half and the photograph unreadable. The frame
+   matches the page, so nothing is cropped. */
 .ea-page .dl .doc{
-  position:relative;width:124px;flex:none;aspect-ratio:1/1.414;display:block;
+  position:relative;width:186px;flex:none;aspect-ratio:1.414/1;display:block;
   border:1px solid var(--line);background:var(--wash);overflow:hidden;
   box-shadow:0 6px 18px rgba(0,0,0,.10);transition:transform .25s ease,box-shadow .25s ease;
 }
 .ea-page .dl .doc:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.16)}
-.ea-page .dl .doc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.ea-page .dl .doc img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .ea-page .dl .doc__tag{
   position:absolute;left:0;bottom:0;display:flex;align-items:center;gap:5px;
   background:var(--red);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.12em;
