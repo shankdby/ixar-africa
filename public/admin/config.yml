@@ -123,8 +123,9 @@ collections:
                 default: '/services'
                 hint: >-
                   Where the "View Methodologies" button goes. A page path such
-                  as /services/paut, or /services#conventional for a section of
-                  the services index.
+                  as /services/paut, or a section of the Services page:
+                  /services#radiography, #pigging, #tank, #vessels,
+                  #ultrasonic, #surface, #more or #equipment.
               - name: img
                 label: Photograph
                 widget: image
@@ -149,5 +150,5 @@ collections:
               - { name: title, label: Title, widget: string }
               - { name: subtitle, label: Subtitle, widget: string, hint: 'Assets covered, separated with middle dots.' }
               - { name: desc, label: Description, widget: text }
-              - { name: slug, label: Slug, widget: string, hint: 'Used in the /applications/… URL. Changing it breaks existing links.' }
+              - { name: slug, label: Slug, widget: string, hint: 'An internal key only. The industry cards link to the Industries section of the Experience page.' }
               - { name: img, label: Photograph, widget: image, required: false }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   CalendarDays, Globe2, ClipboardList, Activity,
   Radiation, BadgeCheck, ShieldCheck, Award, FileText,
@@ -762,7 +763,7 @@ export default function EastAfricaPage() {
               <li><em className="k-pin" />Offices</li>
               <li><em className="k-n" />Mobilisation on Request</li>
             </ul>
-            <a className="btn" style={{ marginTop: '26px' }} href="/network">Our Offices &amp; Coverage</a>
+            <Link className="btn" style={{ marginTop: '26px' }} to="/about#offices">Our Offices &amp; Coverage</Link>
           </div>
         </div>
       </section>
@@ -791,6 +792,7 @@ export default function EastAfricaPage() {
               </div>
             ))}
           </div>
+          <Link className="seemore" to="/about#licences">More about our licences &amp; approvals &rarr;</Link>
         </div>
       </section>
 
@@ -838,7 +840,7 @@ export default function EastAfricaPage() {
                       destination, and card 01 in particular no longer lands on
                       the Digital and Computed Radiography page, which is card
                       02's subject. */}
-                  <a className="btn" href={activeService.to || '/services'}>View Methodologies &rarr;</a>
+                  <Link className="btn" to={activeService.to || '/services'}>View Methodologies &rarr;</Link>
                 </div>
               </div>
             </div>
@@ -858,7 +860,7 @@ export default function EastAfricaPage() {
         <div className="wrap">
           <div className="grid4">
             {INDUSTRIES.map((ind) => (
-              <a className="ind" key={ind.title} href={`/applications/${ind.slug}`}>
+              <Link className="ind" key={ind.title} to="/experience#industries">
                 <div className="stub" />
                 <div className="bg" style={ind.img ? { backgroundImage: `url(${ind.img})` } : undefined} />
                 <div className="veil" />
@@ -866,7 +868,7 @@ export default function EastAfricaPage() {
                   <h3>{ind.title}</h3>
                   <p>{ind.desc}</p>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -905,6 +907,9 @@ export default function EastAfricaPage() {
             Each client&rsquo;s project is on record in the Project Record, which is available as a PDF below.
             Logos are reproduced with permission and are the property of their owners.
           </p>
+          <div className="center">
+            <Link className="seemore" to="/experience#clients">See all our clients &rarr;</Link>
+          </div>
         </div>
       </section>
 
@@ -955,7 +960,9 @@ export default function EastAfricaPage() {
                   <span key={o}>{o}</span>
                 ))}
               </div>
-              <a className="btn" href="https://ixar.in/about-us/" target="_blank" rel="noopener noreferrer">About IXAR</a>
+              {/* Was a link out to ixar.in/about-us. The group's story now has a
+                  home on this site, on the About page. */}
+              <Link className="btn" to="/about#heritage">About IXAR</Link>
             </div>
             <div className="shot">
               {/* A second picture of hands on a weld weakened a section about
@@ -1490,6 +1497,11 @@ export default function EastAfricaPage() {
 .ea-page .logotile:hover .logoface img{filter:grayscale(0);opacity:1}
 .ea-page .logoword{font-size:23px;font-weight:800;letter-spacing:.02em;color:#8D959D}
 .ea-page .logotile:hover .logoword{color:var(--head)}
+/* "See more" links from homepage sections into About / Experience. */
+.ea-page .seemore{display:inline-block;margin-top:30px;font-size:13px;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--red);border-bottom:2px solid transparent;transition:border-color .2s ease}
+.ea-page .seemore:hover{border-bottom-color:var(--red)}
+.ea-page #licences .seemore{display:table;margin:34px auto 0}
 .ea-page .trustnote{margin:26px auto 0;max-width:640px;text-align:center;
   font-size:13px;line-height:1.6;color:var(--muted)}
 @media(max-width:860px){ .ea-page .logowall{grid-template-columns:repeat(2,1fr)} }

@@ -118,7 +118,7 @@ export default function ContactPage() {
         title="Let's talk about your inspection requirements."
         sub="Scope, access, programme and the code being worked to. A written proposal comes back from the regional office against your specification."
         variant="plain"
-        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Contact' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Home', to: '/' }, { label: 'Contact' }]} />}
       />
 
       <Section>
@@ -169,8 +169,8 @@ export default function ContactPage() {
               </div>
             ))}
 
-            <Link to="/network" className="ct-more">
-              Full regional network <ChevronRight size={15} aria-hidden="true" />
+            <Link to="/about#offices" className="ct-more">
+              Where we operate <ChevronRight size={15} aria-hidden="true" />
             </Link>
           </aside>
 

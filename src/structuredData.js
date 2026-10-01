@@ -53,7 +53,7 @@ const kampalaOffice = () => ({
   '@id': KAMPALA_ID,
   name: 'IXAR Africa - Kampala Office',
   parentOrganization: { '@id': ORG_ID },
-  url: `${SITE_URL}/network`,
+  url: `${SITE_URL}/about/`,
   image: `${SITE_URL}/images/east-africa/ea-office-kampala.webp`,
   telephone: '+256-705-731596',
   email: 'bd@ixar.africa',
@@ -88,7 +88,7 @@ const website = () => ({
 function breadcrumbs(route) {
   if (route === '/' || route.startsWith('/__')) return null;
   const parts = route.split('/').filter(Boolean);
-  const items = [{ name: 'Africa', item: `${SITE_URL}/` }];
+  const items = [{ name: 'Home', item: `${SITE_URL}/` }];
   let acc = '';
   for (const part of parts) {
     acc += `/${part}`;
@@ -136,7 +136,7 @@ export function jsonLdFor(route, seo) {
 
   const graph = [];
   if (route === '/') graph.push(organization(), website(), kampalaOffice());
-  if (route === '/network' || route === '/contact') graph.push(kampalaOffice());
+  if (route === '/about' || route === '/contact') graph.push(kampalaOffice());
 
   const crumbs = breadcrumbs(route);
   if (crumbs) graph.push(crumbs);

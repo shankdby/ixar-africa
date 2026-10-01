@@ -1,22 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, Menu, X, ChevronRight, ChevronDown, MapPin, ExternalLink, Search } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Mail, Phone, Menu, X, ChevronDown, MapPin, Search, ArrowRight } from 'lucide-react';
 import Style from './Style';
-import { HEADER_ITEMS, IXAR_IN } from '../globalNav';
+import { HEADER_ITEMS, searchSite } from '../globalNav';
 
 /* The primary navigation. Keep the outer class name `navbar-header`:
    EastAfricaPage measures this element to work out its own top padding.
 
-   The menu mirrors ixar.in. Global items link out to ixar.in; the Africa
-   item opens this domain's own pages. See src/globalNav.js for the mapping. */
+   IXAR Africa's own menu: About Us, Services, Experience, Jobs @ IXAR, and
+   Contact Us as the red button. Every item stays on ixar.africa. See
+   src/globalNav.js for the entries and the reasoning. */
 
 export default function Navbar({ onOpenContact }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState('');
   const searchInputRef = useRef(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const results = searchOpen ? searchSite(query) : [];
   const headerRef = useRef(null);
 
   useEffect(() => {
@@ -51,10 +55,12 @@ export default function Navbar({ onOpenContact }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const location = useLocation();
   useEffect(() => {
     setMobileMenuOpen(false);
     setOpenDropdown(null);
-  }, [pathname]);
+    setSearchOpen(false);
+  }, [pathname, location.hash, location.key]);
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
@@ -77,120 +83,55 @@ export default function Navbar({ onOpenContact }) {
     if (searchOpen && searchInputRef.current) searchInputRef.current.focus();
   }, [searchOpen]);
 
-  /* Search queries the main ixar.in index. This app has no search backend of
-     its own, and a box that silently does nothing is worse than no box. */
-  const runSearch = () => {
-    const q = searchInputRef.current ? searchInputRef.current.value.trim() : '';
-    if (!q) return;
-    window.open('https://ixar.in/?s=' + encodeURIComponent(q), '_blank', 'noopener');
+  /* Search runs over this site's own pages and sections (globalNav.js). It
+     used to send the query to ixar.in, which took the visitor off the site. */
+  const go = (to) => {
     setSearchOpen(false);
+    setQuery('');
+    navigate(to);
+  };
+  const runSearch = () => {
+    if (results.length) go(results[0].to);
   };
 
-  const navClass = ({ isActive }) => (isActive ? 'nav-link active' : 'nav-link');
+  /* One header item: the label opens its page, hover or focus opens the
+     section menu. Fragment links go through the router too, and AppShell
+     scrolls to the section once the page is there. */
+  const renderItem = (item) => {
+    const { label, to, children = [] } = item;
+    const open = openDropdown === label;
+    const base = to.split('#')[0] || '/';
+    const active = base === '/' ? pathname === '/' : pathname.startsWith(base);
 
-  /* An item that leads to ixar.in. A real anchor, not a router link, and
-     target="_blank" so following it does not take ixar.africa away from the
-     visitor - which was the actual complaint about these links. */
-  const renderExternal = (item) => {
-    const id = item.label;
-    const open = openDropdown === id;
-    const out = { target: '_blank', rel: 'noopener noreferrer' };
-
-    if (!item.children) {
-      return (
-        <a key={id} href={item.href} className="nav-link nav-link--global" {...out}>
-          <span>{item.label}</span>
-          <ExternalLink size={11} aria-hidden="true" className="nav-out" />
-        </a>
-      );
-    }
     return (
       <div
-        key={id}
+        key={label}
         className="dropdown-wrapper"
-        onMouseEnter={() => setOpenDropdown(id)}
-        onMouseLeave={() => setOpenDropdown((cur) => (cur === id ? null : cur))}
+        onMouseEnter={() => setOpenDropdown(label)}
+        onMouseLeave={() => setOpenDropdown((cur) => (cur === label ? null : cur))}
       >
-        <a
-          href={item.href}
-          className="nav-link nav-link--global"
+        <Link
+          to={to}
+          className={active ? 'nav-link active' : 'nav-link'}
           aria-expanded={open}
           aria-haspopup="true"
-          onFocus={() => setOpenDropdown(id)}
-          {...out}
+          onFocus={() => setOpenDropdown(label)}
         >
-          <span>{item.label}</span>
+          <span>{label}</span>
           <ChevronDown size={14} aria-hidden="true" />
-        </a>
+        </Link>
         {open && (
           <div className="dropdown-menu">
-            {item.children.map((l) => (
-              <a key={l.href} href={l.href} className="dropdown-item dropdown-item--out" {...out}>
-                {l.label} <ExternalLink size={11} aria-hidden="true" />
-              </a>
-            ))}
-            <a href={item.href} className="dropdown-item view-all" {...out}>
-              All on ixar.in <ExternalLink size={12} aria-hidden="true" />
-            </a>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  /* An item that stays on ixar.africa. */
-  const renderLocal = (item) => {
-    const { label, to, children = [], highlight } = item;
-    const id = label;
-    const open = openDropdown === id;
-    const base = to.split('#')[0] || '/';
-    const sectionActive = base === '/' ? pathname === '/' : pathname.startsWith(base);
-    const isAnchor = to.includes('#');
-
-    return (
-      <div
-        key={id}
-        className={highlight ? 'dropdown-wrapper dropdown-wrapper--ea' : 'dropdown-wrapper'}
-        onMouseEnter={() => setOpenDropdown(id)}
-        onMouseLeave={() => setOpenDropdown((cur) => (cur === id ? null : cur))}
-      >
-        {isAnchor ? (
-          <a
-            href={to}
-            className={sectionActive ? 'nav-link active' : 'nav-link'}
-            aria-expanded={open}
-            aria-haspopup="true"
-            onFocus={() => setOpenDropdown(id)}
-          >
-            <span>{label}</span>
-            <ChevronDown size={14} aria-hidden="true" />
-          </a>
-        ) : (
-          <NavLink
-            to={to}
-            className={sectionActive ? 'nav-link active' : 'nav-link'}
-            aria-expanded={open}
-            aria-haspopup="true"
-            onFocus={() => setOpenDropdown(id)}
-          >
-            <span>{label}</span>
-            <ChevronDown size={14} aria-hidden="true" />
-          </NavLink>
-        )}
-        {open && (
-          <div className="dropdown-menu">
-            {children.map((l, i) => (
-              l.to.includes('#')
-                ? <a key={i} href={l.to} className="dropdown-item">{l.label}</a>
-                : <Link key={i} to={l.to} className="dropdown-item">{l.label}</Link>
+            {children.map((l) => (
+              <Link key={l.to + l.label} to={l.to} className="dropdown-item" onClick={() => setOpenDropdown(null)}>
+                {l.label}
+              </Link>
             ))}
           </div>
         )}
       </div>
     );
   };
-
-  const renderItem = (item) => (item.kind === 'external' ? renderExternal(item) : renderLocal(item));
 
   return (
     <header ref={headerRef} className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
@@ -236,8 +177,11 @@ export default function Navbar({ onOpenContact }) {
               ref={searchInputRef}
               type="search"
               name="s"
-              placeholder="Search ixar.in"
-              aria-label="Search"
+              placeholder="Search IXAR Africa"
+              aria-label="Search this site"
+              autoComplete="off"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               tabIndex={searchOpen ? 0 : -1}
               onBlur={() => setSearchOpen(false)}
             />
@@ -251,11 +195,41 @@ export default function Navbar({ onOpenContact }) {
             >
               <Search size={18} aria-hidden="true" />
             </button>
+            {searchOpen && query.trim() && (
+              <div className="nav-search__results" role="listbox" aria-label="Search results">
+                {results.length ? (
+                  results.map((r) => (
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected="false"
+                      key={r.to + r.label}
+                      className="nav-search__hit"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => go(r.to)}
+                    >
+                      <span>
+                        <b>{r.label}</b>
+                        {r.section && <small>{r.section}</small>}
+                      </span>
+                      <ArrowRight size={14} aria-hidden="true" />
+                    </button>
+                  ))
+                ) : (
+                  <p className="nav-search__none">
+                    Nothing matches &ldquo;{query.trim()}&rdquo;.{' '}
+                    <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => go('/contact')}>
+                      Ask the office
+                    </button>
+                  </p>
+                )}
+              </div>
+            )}
           </form>
 
-          <button type="button" className="header-cta" onClick={() => onOpenContact()}>
-            Contact us
-          </button>
+          <Link to="/contact" className="header-cta">
+            Contact Us
+          </Link>
 
           <button
             className="mobile-toggle"
@@ -272,34 +246,17 @@ export default function Navbar({ onOpenContact }) {
       {mobileMenuOpen && (
         <div className="mobile-menu-dropdown" id="mobile-menu">
           <nav className="mobile-nav-links" aria-label="Main, mobile">
-            {HEADER_ITEMS.map((item) =>
-              item.kind === 'external' ? (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="mobile-global-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.label}
-                  <ExternalLink size={13} aria-hidden="true" />
-                </a>
-              ) : (
-                <React.Fragment key={item.label}>
-                  {item.to.includes('#') ? (
-                    <a href={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>{item.label}</a>
-                  ) : (
-                    <Link to={item.to} style={{ color: '#DE0603', fontWeight: 800 }}>{item.label}</Link>
-                  )}
-                  {(item.children || []).slice(1).map((l) => (
-                    l.to.includes('#')
-                      ? <a key={l.to} href={l.to} className="mobile-sub-link">{l.label}</a>
-                      : <Link key={l.to} to={l.to} className="mobile-sub-link">{l.label}</Link>
+            {HEADER_ITEMS.map((item) => (
+              <React.Fragment key={item.label}>
+                <Link to={item.to} className="mobile-top-link">{item.label}</Link>
+                {item.children
+                  .filter((l) => l.to !== item.to)
+                  .map((l) => (
+                    <Link key={l.to + l.label} to={l.to} className="mobile-sub-link">{l.label}</Link>
                   ))}
-                </React.Fragment>
-              )
-            )}
-
+              </React.Fragment>
+            ))}
+            <Link to="/contact" className="mobile-top-link">Contact Us</Link>
           </nav>
 
           <button
@@ -439,6 +396,7 @@ export default function Navbar({ onOpenContact }) {
         .dropdown-item--out { display: flex; align-items: center; gap: 6px; }
         .nav-out { opacity: 0.4; margin-left: 4px; }
         .dropdown-item--out svg { opacity: 0.5; flex: none; }
+        .mobile-nav-links a.mobile-top-link { color: var(--brand); font-weight: 800; }
         .mobile-sub-link {
           padding-left: 16px !important;
           font-size: 0.875rem !important;
@@ -553,7 +511,48 @@ export default function Navbar({ onOpenContact }) {
           white-space: nowrap;
           transition: background 0.2s ease;
         }
-        .header-cta:hover { background: #B90502; }
+        .header-cta:hover { background: #B90502; color: #fff; }
+        /* A Link now, not a button: it leads to the Contact page. */
+        .header-cta { display: flex; align-items: center; text-decoration: none; }
+
+        .nav-search { position: relative; }
+        .nav-search__results {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          width: 340px;
+          background: #FFFFFF;
+          border: 1px solid var(--line);
+          border-top: 3px solid var(--brand);
+          box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+          z-index: 120;
+          display: flex;
+          flex-direction: column;
+        }
+        .nav-search__hit {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 13px 18px;
+          border: 0;
+          border-bottom: 1px solid var(--line);
+          background: #FFFFFF;
+          cursor: pointer;
+          text-align: left;
+          font-family: inherit;
+          color: var(--navy);
+        }
+        .nav-search__hit:last-child { border-bottom: 0; }
+        .nav-search__hit:hover, .nav-search__hit:focus { background: var(--bg-tint); color: var(--brand); outline: none; }
+        .nav-search__hit b { display: block; font-size: 0.9375rem; font-weight: 700; }
+        .nav-search__hit small { display: block; font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+        .nav-search__hit svg { flex: none; color: var(--brand); }
+        .nav-search__none { margin: 0; padding: 16px 18px; font-size: 0.875rem; color: var(--text-body); }
+        .nav-search__none button {
+          background: none; border: 0; padding: 0; font: inherit; font-weight: 800;
+          color: var(--brand); cursor: pointer; text-decoration: underline;
+        }
         .mobile-toggle {
           display: none;
           background: transparent;

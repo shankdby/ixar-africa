@@ -2,14 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ChevronRight } from 'lucide-react';
 import Style from './Style';
-import { IXAR_IN } from '../globalNav';
+import { GROUP_SITE } from '../globalNav';
 import { deliveredProse } from '../countries';
 
 /* Footer.
    Office details are the Kampala ones from IXAR's own site board (Tilenga
-   Project, August 2026). The Mumbai head office is the parent company's, and
-   is labelled as such — the content plan is explicit that regional presence
-   and Indian presence must not be blurred together. */
+   Project, August 2026).
+
+   IXAR Africa stands on its own here. The group is acknowledged in one line
+   at the foot - "A member of the IXAR Group, founded 1969", as the Company
+   Profile's back page puts it - and that line holds the site's only link to
+   ixar.in. The Mumbai address and the group's office list that used to sit
+   here are gone; the group's footprint is on the About page. */
 
 export default function Footer({ onOpenContact }) {
   const year = new Date().getFullYear();
@@ -45,56 +49,39 @@ export default function Footer({ onOpenContact }) {
           </div>
 
           <div className="footer-col">
+            <h4 className="footer-col-title">About Us</h4>
+            <ul className="footer-links">
+              <li><Link to="/about#who">Who We Are</Link></li>
+              <li><Link to="/about#leadership">Leadership</Link></li>
+              <li><Link to="/about#licences">Licences &amp; Approvals</Link></li>
+              <li><Link to="/about#heritage">Our Heritage</Link></li>
+              <li><Link to="/about#training">People &amp; Training</Link></li>
+              <li><Link to="/about#offices">Where We Operate</Link></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
             <h4 className="footer-col-title">Services</h4>
             <ul className="footer-links">
-              {/* Labelled "Radiography (RT / CR / DR)" while the page behind it
-                  is specifically Digital and Computed Radiography. */}
-              <li><Link to="/services/radiography">Digital &amp; Computed Radiography</Link></li>
-              <li><Link to="/services/aut">Automated Ultrasonics (AUT)</Link></li>
-              <li><Link to="/services/paut">Phased Array (PAUT)</Link></li>
-              <li><Link to="/services/tofd">Time of Flight Diffraction</Link></li>
-              <li><Link to="/services/pect">Eddy Current (ECT / PECT)</Link></li>
-              <li><Link to="/services/mfl-tube">Tank and Tube Inspection</Link></li>
+              <li><Link to="/services#radiography">Radiography &amp; Pipeline</Link></li>
+              <li><Link to="/services#pigging">Pigging</Link></li>
+              <li><Link to="/services#tank">Tank Inspection</Link></li>
+              <li><Link to="/services#ultrasonic">Ultrasonic &amp; Advanced UT</Link></li>
+              <li><Link to="/services#equipment">Equipment Supply</Link></li>
+              <li><Link to="/estimator">Scope Builder</Link></li>
               <li><Link to="/services">All services</Link></li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4 className="footer-col-title">Industries</h4>
+            <h4 className="footer-col-title">Experience</h4>
             <ul className="footer-links">
-              <li><Link to="/applications/oil-gas">Oil and Gas</Link></li>
-              <li><Link to="/applications/power-plants">Power and Geothermal</Link></li>
-              <li><Link to="/applications/mining">Mining</Link></li>
-              {/* "Railways and Transport" was here. Rail is not a sector IXAR
-                  pursues in Africa and appears nowhere else on the site, so a
-                  footer link was the only thing claiming it. */}
-              <li><Link to="/applications">All industries</Link></li>
-              <li><Link to="/training">NDT Training</Link></li>
-              <li><Link to="/case-studies">Projects</Link></li>
-              <li><Link to="/network">Our Network</Link></li>
-            </ul>
-          </div>
-
-          {/* The header sends Products and Jobs to ixar.in, so the Africa
-              versions of those pages need their inbound links from here.
-              Without them these pages are orphaned and drop out of the index. */}
-          <div className="footer-col">
-            <h4 className="footer-col-title">Africa</h4>
-            <ul className="footer-links">
-              <li><Link to="/products">Equipment and Supply</Link></li>
-              <li><Link to="/estimator">Scope Builder</Link></li>
-              <li><Link to="/careers">Careers in Africa</Link></li>
-              <li><Link to="/contact">Regional Office Contact</Link></li>
-              <li>
-                <a
-                  href={IXAR_IN + '/'}
-                  className="footer-global-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  IXAR Global (ixar.in)
-                </a>
-              </li>
+              <li><Link to="/experience#industries">Industries We Serve</Link></li>
+              <li><Link to="/experience#projects">Flagship Projects</Link></li>
+              <li><Link to="/experience#clients">Our Clients</Link></li>
+              <li><Link to="/experience#record">Experience Record</Link></li>
+              <li><Link to="/careers">Jobs @ IXAR</Link></li>
+              <li><Link to="/contact">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -134,14 +121,9 @@ export default function Footer({ onOpenContact }) {
         </div>
 
         <div className="footer-parent">
-          <span className="footer-parent-label">Parent company</span>
           <p>
-            Industrial X-Ray &amp; Allied Radiographers (I) Pvt. Ltd., 102 Faizan Apartment,
-            S. V. Road, Jogeshwari (West), Mumbai 400 102, India &middot; info@ixar.in
-          </p>
-          <p className="footer-offices">
-            India &middot; Uganda &middot; Tanzania &middot; Nigeria &middot; Netherlands &middot;
-            UAE &middot; Oman &middot; Saudi Arabia
+            A member of the IXAR Group, founded 1969 &middot;{' '}
+            <a href={GROUP_SITE} target="_blank" rel="noopener noreferrer">ixar.in</a>
           </p>
         </div>
 
@@ -242,7 +224,9 @@ export default function Footer({ onOpenContact }) {
           color: #FF6B69;
           margin-bottom: 8px;
         }
-        .footer-offices { margin-top: 6px; font-weight: 600; color: rgba(255, 255, 255, 0.7); }
+        .footer-parent p { margin: 0; }
+        .footer-parent a { color: rgba(255, 255, 255, 0.82); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+        .footer-parent a:hover { color: #FFFFFF; }
 
         .footer-bottom {
           border-top: 1px solid rgba(255, 255, 255, 0.14);

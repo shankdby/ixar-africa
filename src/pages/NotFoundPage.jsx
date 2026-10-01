@@ -22,13 +22,11 @@ export default function NotFoundPage() {
           }}
         >
           <Link to="/">Home</Link>
+          <Link to="/about">About Us</Link>
           <Link to="/services">Services</Link>
-          <Link to="/applications">Industries</Link>
-          <Link to="/training">Training</Link>
-          <Link to="/products">Products</Link>
-          <Link to="/network">Our Network</Link>
-          <Link to="/careers">Careers</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/experience">Experience</Link>
+          <Link to="/careers">Jobs @ IXAR</Link>
+          <Link to="/contact">Contact Us</Link>
         </nav>
       </section>
     </div>

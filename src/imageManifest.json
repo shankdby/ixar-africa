@@ -1,4 +1,24 @@
 {
+  "/images/about/award-isnt-2008.webp": [
+    570,
+    832
+  ],
+  "/images/about/award-naarri-1997.webp": [
+    819,
+    926
+  ],
+  "/images/about/award-naarri-2010.webp": [
+    943,
+    669
+  ],
+  "/images/about/award-wcndt-1996.webp": [
+    558,
+    404
+  ],
+  "/images/about/founder-vs-jain.webp": [
+    546,
+    705
+  ],
   "/images/clients/afrishell.png": [
     360,
     120
@@ -81,11 +101,11 @@
   ],
   "/images/downloads/cover-profile.webp": [
     760,
-    1075
+    537
   ],
   "/images/downloads/cover-projects.webp": [
     760,
-    1075
+    537
   ],
   "/images/east-africa/ea-hero-tilenga-cpf.webp": [
     1080,
@@ -138,6 +158,78 @@
   "/images/og-cover.jpg": [
     1200,
     630
+  ],
+  "/images/services/pig-cleaning.webp": [
+    970,
+    844
+  ],
+  "/images/services/pig-ili-data.webp": [
+    970,
+    844
+  ],
+  "/images/services/pig-intelligent.webp": [
+    970,
+    844
+  ],
+  "/images/services/pv-exchanger-tubes.webp": [
+    970,
+    847
+  ],
+  "/images/services/pv-internal.webp": [
+    970,
+    847
+  ],
+  "/images/services/pv-sphere.webp": [
+    970,
+    847
+  ],
+  "/images/services/rt-close-proximity.webp": [
+    970,
+    844
+  ],
+  "/images/services/rt-conventional-digital.webp": [
+    970,
+    844
+  ],
+  "/images/services/rt-crawler.webp": [
+    970,
+    844
+  ],
+  "/images/services/st-lab-utm.webp": [
+    970,
+    847
+  ],
+  "/images/services/st-mpi.webp": [
+    970,
+    847
+  ],
+  "/images/services/st-penetrant-leak.webp": [
+    970,
+    847
+  ],
+  "/images/services/tank-floor-map.webp": [
+    970,
+    844
+  ],
+  "/images/services/tank-floor-mfl.webp": [
+    970,
+    844
+  ],
+  "/images/services/tank-shell-weld.webp": [
+    970,
+    844
+  ],
+  "/images/services/ut-aut.webp": [
+    970,
+    844
+  ],
+  "/images/services/ut-manual.webp": [
+    970,
+    844
+  ],
+  "/images/services/ut-paut-tofd.webp": [
+    970,
+    844
   ],
   "/images/stock/stk-cement.jpg": [
     1280,

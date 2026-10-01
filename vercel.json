@@ -4,19 +4,89 @@
   "outputDirectory": "dist",
   "trailingSlash": true,
   "redirects": [
-    { "source": "/africa", "destination": "/", "permanent": true }
+    {
+      "source": "/africa",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/network",
+      "destination": "/about/#offices",
+      "permanent": true
+    },
+    {
+      "source": "/network/",
+      "destination": "/about/#offices",
+      "permanent": true
+    },
+    {
+      "source": "/training",
+      "destination": "/about/#training",
+      "permanent": true
+    },
+    {
+      "source": "/training/",
+      "destination": "/about/#training",
+      "permanent": true
+    },
+    {
+      "source": "/products",
+      "destination": "/services/#equipment",
+      "permanent": true
+    },
+    {
+      "source": "/products/",
+      "destination": "/services/#equipment",
+      "permanent": true
+    },
+    {
+      "source": "/applications",
+      "destination": "/experience/#industries",
+      "permanent": true
+    },
+    {
+      "source": "/applications/",
+      "destination": "/experience/#industries",
+      "permanent": true
+    },
+    {
+      "source": "/applications/:slug",
+      "destination": "/experience/#industries",
+      "permanent": true
+    },
+    {
+      "source": "/applications/:slug/",
+      "destination": "/experience/#industries",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies",
+      "destination": "/experience/#projects",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/",
+      "destination": "/experience/#projects",
+      "permanent": true
+    }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]

@@ -38,10 +38,24 @@ export const ROUTE_SEO = {
     changefreq: 'weekly'
   },
 
-  '/services': {
-    title: 'NDT Services | Ultrasonic, Radiography & Inspection | IXAR Africa',
+  '/about': {
+    title: 'About IXAR Africa | NDT Partner in East Africa since 2012',
     description:
-      '12 core non-destructive testing and industrial inspection services delivered across Uganda, Tanzania, Kenya and regional project sites.',
+      'Industrial X-Ray and Allied Radiographers (EA) Ltd: offices in Kampala, Dar es Salaam and Mozambique, radiation licences from UAEC and TAEC, ISO 9001, 14001 and 45001, and a group NDT record going back to 1969.',
+    priority: '0.9',
+    changefreq: 'monthly'
+  },
+  '/services': {
+    title: 'NDT Services | Radiography, Ultrasonics, Pigging & Tank Inspection | IXAR Africa',
+    description:
+      'Sixteen NDT and inspection services from IXAR Africa: radiography and pipeline inspection, intelligent pigging, tank and pressure vessel inspection, advanced ultrasonics, surface methods, destructive testing and equipment supply.',
+    priority: '0.9',
+    changefreq: 'monthly'
+  },
+  '/experience': {
+    title: 'Experience | Industries, Projects & Clients | IXAR Africa',
+    description:
+      `28 projects on record across ${REACH}, including EACOP, Sinopec on the Tilenga Project and CCJV on the Kingfisher Oil Field. Industries served, flagship projects and clients.`,
     priority: '0.9',
     changefreq: 'monthly'
   },
@@ -88,76 +102,12 @@ export const ROUTE_SEO = {
     changefreq: 'yearly'
   },
 
-  '/applications': {
-    title: 'Industries We Serve | Oil & Gas, Rail, Power, Mining | IXAR Africa',
-    description:
-      'Sector-specific non-destructive testing and asset integrity management tailored to the key industrial economic sectors of Africa.',
-    priority: '0.8',
-    changefreq: 'monthly'
-  },
-  '/applications/oil-gas': {
-    title: 'Oil & Gas NDT | Pipelines, Refineries & Storage Tanks | IXAR Africa',
-    description:
-      `Asset integrity solutions for upstream offshore rigs, midstream gas pipelines and downstream refineries across ${REACH}.`,
-    priority: '0.7',
-    changefreq: 'yearly'
-  },
-  '/applications/railways': {
-    title: 'Railway USFD Track & Rolling Stock Inspection | IXAR Africa',
-    description:
-      'Ultrasonic flaw detection for African continuous welded rails, joints and rolling stock wheelsets.',
-    priority: '0.7',
-    changefreq: 'yearly'
-  },
-  '/applications/power-plants': {
-    title: 'Power Plant Inspection | Boilers & Turbines | IXAR Africa',
-    description:
-      'Rapid turnaround tube testing and turbine inspection for thermal, hydro and geothermal generation facilities.',
-    priority: '0.7',
-    changefreq: 'yearly'
-  },
-  '/applications/mining': {
-    title: 'Mining & Heavy Infrastructure NDT | IXAR Africa',
-    description:
-      'Structural weld testing and heavy machinery fatigue inspection for African mine sites and heavy infrastructure projects.',
-    priority: '0.7',
-    changefreq: 'yearly'
-  },
-
-  '/training': {
-    title: 'NDT Training and Certification | BARC & ASNT | IXAR Africa',
-    description:
-      'NDT training and certification pathways for inspectors in Africa, backed by BARC-recognised programmes and ASNT Level II & III qualification.',
-    priority: '0.8',
-    changefreq: 'monthly'
-  },
-  '/products': {
-    title: 'NDT Products & Equipment Supply | IXAR Africa',
-    description:
-      'Certified non-destructive testing equipment, radiography cameras, calibration blocks and consumables supplied across Africa.',
-    priority: '0.8',
-    changefreq: 'monthly'
-  },
   '/careers': {
     title: 'Jobs @ IXAR Africa | NDT Inspector Careers in Uganda & Tanzania',
     description:
       'NDT careers with IXAR Africa. We recruit PCN and ISO 9712 certified Level II and Level III inspectors, BARC-qualified radiation safety officers and site managers. Applications go to hr@ixar.africa.',
     priority: '0.7',
     changefreq: 'weekly'
-  },
-  '/network': {
-    title: 'Regional Footprint | Registered Offices & Countries Served | IXAR',
-    description:
-      `IXAR’s registered offices in Uganda and Tanzania, and completed projects across ${REACH}.`,
-    priority: '0.7',
-    changefreq: 'monthly'
-  },
-  '/case-studies': {
-    title: 'NDT Case Studies & Project Record | IXAR Africa',
-    description:
-      'Selected inspection projects delivered across African pipelines, refineries, power plants and rail networks.',
-    priority: '0.7',
-    changefreq: 'monthly'
   },
   '/estimator': {
     /* Renamed from "NDT Cost Estimator". The page deliberately does not

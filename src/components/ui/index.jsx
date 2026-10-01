@@ -291,3 +291,58 @@ export function StatStrip({ stats, note }) {
     </div>
   );
 }
+
+
+/* --- PageIndex ------------------------------------------------------------
+   The sticky "on this page" strip under a page hero. Plain fragment links:
+   the sections carry scroll-margin-top, so the jump lands below the header
+   and the strip rather than underneath them. Must be a direct child of
+   <Page> for position:sticky to run the length of the page. */
+export function PageIndex({ items, label = 'On this page' }) {
+  return (
+    <nav className="svc-index" aria-label={label}>
+      <div className="ea-wrap">
+        <ul>
+          {items.map((it, i) => (
+            <li key={it.id}>
+              <a href={`#${it.id}`}>
+                <span className="svc-index__num">{String(i + 1).padStart(2, '0')}</span>
+                {it.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
+/* --- CloseBand ------------------------------------------------------------
+   The charcoal closing band every company page ends on. */
+export function CloseBand({ eyebrow, title, children, actions }) {
+  return (
+    <Section tone="navy">
+      <div className="svc-close">
+        <div>
+          {eyebrow && <span className="ea-eyebrow">{eyebrow}</span>}
+          <h2>{title}</h2>
+          {children}
+        </div>
+        <div className="svc-close__actions">{actions}</div>
+      </div>
+    </Section>
+  );
+}
+
+/* --- Chips ----------------------------------------------------------------
+   The brochure's small square tags. `on` counts how many lead in red. */
+export function Chips({ items, on = 0, className = '' }) {
+  if (!items || !items.length) return null;
+  return (
+    <ul className={`co-chips ${className}`.trim()}>
+      {items.map((c, i) => (
+        <li key={c} className={`co-chip${i < on ? ' co-chip--on' : ''}`}>{c}</li>
+      ))}
+    </ul>
+  );
+}

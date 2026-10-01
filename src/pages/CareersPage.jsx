@@ -149,7 +149,7 @@ export default function CareersPage() {
             </a>
           </>
         }
-        crumbs={<Crumbs trail={[{ label: 'Africa', to: '/' }, { label: 'Careers' }]} />}
+        crumbs={<Crumbs trail={[{ label: 'Home', to: '/' }, { label: 'Careers' }]} />}
       />
 
       <Section>
@@ -389,7 +389,7 @@ export default function CareersPage() {
             >
               Send Your CV <ChevronRight size={16} aria-hidden="true" />
             </button>
-            <Link to="/training" className="ea-btn ea-btn--ghost">
+            <Link to="/about#training" className="ea-btn ea-btn--ghost">
               Training & Certification
             </Link>
           </div>

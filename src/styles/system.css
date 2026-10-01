@@ -326,3 +326,110 @@
 .ea-form-fallback a{color:#DE0603;font-weight:700}
 .ea-btn[disabled],.ea-btn[aria-busy="true"],
 .btn[disabled],.btn[aria-busy="true"]{opacity:.65;cursor:progress}
+
+/* ==========================================================================
+   Company pages - About Us, Services, Experience
+   ==========================================================================
+   Patterns shared by the three pages built from IXAR Africa's Company
+   Profile. They borrow the brochure's own devices - the split spread header,
+   square chips, charcoal number tiles, numbered cards - in this site's tokens,
+   so the website and the PDF read as the same company.
+   ========================================================================== */
+
+/* Sections under the sticky index land below it, not beneath it. */
+.ea-page section[id]{scroll-margin-top:calc(var(--nav-h,124px) + 58px)}
+
+/* split heading: title left, lead right behind a red rule */
+.co-split{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:start;margin-bottom:50px}
+.co-split__num{
+  display:block;font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ea-brand);margin-bottom:14px;
+}
+.co-split h2{font-size:clamp(1.75rem,2.9vw,2.4rem);font-weight:800;line-height:1.12;letter-spacing:-.015em;color:var(--ea-navy);margin:0}
+.co-split .ea-rule{margin-top:22px}
+.co-split__copy{border-left:3px solid var(--ea-brand);padding:2px 0 2px 24px}
+.co-split__lead{font-size:18px;font-weight:800;line-height:1.38;color:var(--ea-navy);margin:0 0 12px}
+.co-split__copy p{font-size:16px;line-height:1.72;color:var(--ea-body);margin:0}
+.co-split__copy p + p{margin-top:12px}
+.co-split__more{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ea-brand)}
+.co-split__more:hover{color:var(--ea-brand-dark)}
+
+/* chips */
+.co-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.co-chip{
+  font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.2;color:var(--ea-navy);
+  background:var(--ea-tint);border:1px solid var(--ea-line);padding:7px 12px;
+}
+.ea-section--tint .co-chip{background:#FFFFFF}
+.co-chip--on{background:var(--ea-brand);border-color:var(--ea-brand);color:#FFFFFF}
+.ea-section--tint .co-chip--on{background:var(--ea-brand)}
+
+/* three-up grid */
+.co-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.co-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.co-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+
+/* photo card - capability and field cards */
+.co-pcard{
+  display:flex;flex-direction:column;height:100%;background:#FFFFFF;
+  border:1px solid var(--ea-line);box-shadow:var(--ea-shadow);
+  transition:transform .26s ease,box-shadow .26s ease,border-color .26s ease;
+}
+.co-pcard:hover{transform:translateY(-6px);box-shadow:var(--ea-shadow-lift);border-color:var(--ea-muted)}
+.co-pcard__media{position:relative;aspect-ratio:8/7;overflow:hidden;background:var(--ea-tint)}
+.co-pcard__media img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.co-pcard:hover .co-pcard__media img{transform:scale(1.045)}
+.co-pcard__body{display:flex;flex-direction:column;flex:1;padding:24px 24px 26px}
+.co-kicker{
+  display:block;font-size:11.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ea-brand);margin:0 0 10px;
+}
+.co-pcard h3{font-size:19px;font-weight:800;line-height:1.28;color:var(--ea-navy);margin:0 0 10px}
+.co-pcard p{font-size:14.5px;line-height:1.66;color:var(--ea-body);margin:0}
+.co-more{
+  margin-top:auto;padding-top:18px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ea-brand);
+}
+.co-more svg{transition:transform .22s ease}
+.co-more:hover svg,.co-pcard:hover .co-more svg{transform:translateX(4px)}
+
+/* charcoal number tiles */
+.co-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.co-tile{background:var(--ea-navy);color:#FFFFFF;padding:24px 22px 22px}
+.co-tile b{display:block;font-size:36px;font-weight:800;line-height:1;letter-spacing:-.02em;color:#FFFFFF;margin-bottom:10px}
+.co-tile span{display:block;font-size:13.5px;line-height:1.45;color:rgba(255,255,255,.72)}
+.co-tile em{
+  display:inline-block;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.08em;
+  background:#FFFFFF;color:var(--ea-navy);padding:3px 7px;margin-bottom:12px;
+}
+
+/* the stat band at the head of a page */
+.co-stats{background:var(--ea-tint);border-top:1px solid var(--ea-line);border-bottom:1px solid var(--ea-line)}
+.co-stats .ea-stat__fig{color:var(--ea-navy)}
+.co-stats .ea-stat__label{display:block;max-width:240px;margin:0 auto;line-height:1.45}
+
+@media (max-width:1024px){
+  .co-split{grid-template-columns:1fr;gap:26px}
+  .co-grid3{grid-template-columns:1fr 1fr}
+  .co-grid4{grid-template-columns:1fr 1fr}
+  .co-stats .ea-stats__grid{grid-template-columns:1fr 1fr}
+  .co-stats .ea-stat:nth-child(2){border-right:0}
+  .co-stats .ea-stat:nth-child(-n+2){border-bottom:1px solid var(--ea-muted)}
+}
+@media (max-width:767px){
+  .co-grid3,.co-grid2{grid-template-columns:1fr}
+  .co-tiles{grid-template-columns:1fr 1fr}
+  .co-split__copy{padding-left:18px}
+  .co-stats .ea-stat{padding:30px 14px}
+  .co-stats .ea-stat__fig{font-size:36px}
+}
+@media (max-width:520px){
+  .co-grid4{grid-template-columns:1fr}
+}
+
+/* The section index scrolls sideways when its entries outrun the width.
+   Fade its right edge so a cut-off entry reads as "more this way" rather
+   than as a broken strip. */
+@media (max-width:1100px){
+  .svc-index ul{-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
+}

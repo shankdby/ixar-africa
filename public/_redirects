@@ -9,3 +9,11 @@
 #
 # The agreed vanity path from the content plan:
 /africa    /    301!
+
+# Pages folded into About Us, Services and Experience, 1 October 2026.
+/network              /about/#offices          301!
+/training             /about/#training         301!
+/products             /services/#equipment     301!
+/applications         /experience/#industries  301!
+/applications/*       /experience/#industries  301!
+/case-studies         /experience/#projects    301!
